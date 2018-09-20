@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
+import './App.css';
 import StudentenListe from './routes/studenten/StudentenListe';
 import LESBListe from './routes/lesb/LESBListe';
+// import Ergebnisse from './routes/ergebnisse/Ergebnisse';
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className='container'>
         <StudentenListe />
+        {/* <hr />
+        <Ergebnisse /> */}
         <hr />
         <LESBListe />
       </div>
