@@ -1,4 +1,4 @@
-export default studenten = [
+export default [
     { id: 0, name: 'Jon' },
     { id: 1, name: 'Max' },
     { id: 2, name: 'Lena' },

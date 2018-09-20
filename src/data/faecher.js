@@ -1,4 +1,4 @@
-export default faecher = [
+export default [
     { id: 0, name: 'Zivilrecht I', semester: 1 },
     { id: 1, name: 'Zivilrecht II', semester: 2 },
     { id: 2, name: 'Zivilrecht III', semester: 3 },

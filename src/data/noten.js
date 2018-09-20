@@ -1,8 +1,9 @@
-export default studenten = [
-    { id: 0, name: 'Jon' },
-    { id: 1, name: 'Max' },
-    { id: 2, name: 'Lena' },
-    { id: 3, name: 'Marie' },
-    { id: 4, name: 'Alfred' },
-    { id: 5, name: 'Manuel' }
+export default [
+    { id: 0, studentID: 0, veranstaltungID: 0, punkte: 3, versuch: 1 },
+    { id: 0, studentID: 0, veranstaltungID: 0, punkte: 7, versuch: 2 },
+    { id: 0, studentID: 0, veranstaltungID: 2, punkte: 8, versuch: 1 },
+    { id: 0, studentID: 0, veranstaltungID: 4, punkte: 11, versuch: 1 },
+    { id: 0, studentID: 0, veranstaltungID: 6, punkte: 9, versuch: 1 },
+    { id: 0, studentID: 0, veranstaltungID: 8, punkte: 6, versuch: 1 },
+    { id: 0, studentID: 0, veranstaltungID: 9, punkte: 7, versuch: 1 },
 ];
