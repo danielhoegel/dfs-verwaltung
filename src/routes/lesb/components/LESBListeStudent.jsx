@@ -25,8 +25,7 @@ class LESBListeStudent extends Component {
                         <tr>
                             <th>Fach</th>
                             <th>Veranstaltung</th>
-                            <th>Typ</th>
-                            <th>(Note)</th>
+                            <th>(Punkte)</th>
                             <th>(Versuch)</th>
                         </tr>
                     </thead>

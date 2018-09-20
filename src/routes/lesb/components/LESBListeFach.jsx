@@ -24,9 +24,8 @@ class LESBListeFach extends Component {
                 <tr key={note.id}>
                     {index === 0 && (
                         <Fragment>
-                            <td colSpan={noten.length}>{fach.name}</td>
-                            <td colSpan={noten.length}>{veranstaltung.name}</td>
-                            <td colSpan={noten.length}>{veranstaltung.typ}</td>
+                            <td rowSpan={noten.length > 1 ? noten.length : null}>{fach.name}</td>
+                            <td rowSpan={noten.length > 1 ? noten.length : null}>{veranstaltung.name}</td>
                         </Fragment>
                     )}
                     <td>{note.punkte}</td>
@@ -38,7 +37,6 @@ class LESBListeFach extends Component {
                 <tr>
                     <td>{fach.name}</td>
                     <td>{veranstaltung.name}</td>
-                    <td>{veranstaltung.typ}</td>
                     <td></td>
                     <td></td>
                 </tr>

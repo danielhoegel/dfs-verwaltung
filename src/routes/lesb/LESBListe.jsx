@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-
-import './LESBListe.css';
 import LESBListeStudent from './components/LESBListeStudent';
 import studentenData from '../../data/studenten';
 
