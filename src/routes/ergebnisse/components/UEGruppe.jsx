@@ -12,11 +12,10 @@ class UEGruppe extends Component {
 
     render() {
         return (
-            <table className='ue-table'>
-                <caption>UE: {this.props.ue}</caption>
+            <table className='ue-table striped--body'>
                 <thead>
                     <tr>
-                        <th style={{width: '30%'}}>Fach</th>
+                        <th style={{width: '30%'}}>UE {this.props.ue}</th>
                         <th style={{width: '55%'}}>Veranstaltung</th>
                         <th style={{width: '7.5%'}}>Credits</th>
                         <th style={{width: '7.5%'}}>Note</th>

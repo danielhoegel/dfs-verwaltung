@@ -1,0 +1,51 @@
+select {
+    background-color: transparent;
+    color: #ccc;
+    border-color: #888;
+
+    &.active {
+        border-color: #fff;
+        color: #fff;
+    }
+
+    option {
+        background-color: #444;
+    }
+}
+
+.clear-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: none;
+    margin: 0.5rem;
+    text-indent: 200%;
+    padding: 0.25rem 0.5rem;
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        background-color: #ccc;
+        width: 2px;
+        height: 1rem;
+    }
+
+    &:before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &:hover {
+        background-color: #888;
+
+        &:before,
+        &:after {
+            background-color: #fff;
+        }
+    }
+}

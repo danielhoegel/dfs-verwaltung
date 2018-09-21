@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import notenData from '../../../data/noten';
@@ -60,24 +60,28 @@ class Faecher extends Component {
 
     render() {
         return (
-            <tbody>
+            <Fragment>
                 {this.state.faecher.map(fach => {
                     const veranstaltungen =  this.veranstaltungenForFach(fach.id);
-                    return veranstaltungen.map((veranstaltung, index) => (
-                        <tr key={`${fach.id}_${veranstaltung.id}`}>
-                            {index === 0 && (
-                                <td rowSpan={veranstaltungen.length}>{fach.name}</td>
-                            )}
-                            <td>
-                                {veranstaltung.typ}
-                                {veranstaltung.name && `, (${veranstaltung.name})`}
-                            </td>
-                            <td>{veranstaltung.credits}</td>
-                            <td>{this.punkteForVeranstaltung(veranstaltung.id)}</td>
-                        </tr>
-                    ));
+                    return (
+                        <tbody>
+                            {veranstaltungen.map((veranstaltung, index) => (
+                                <tr key={`${fach.id}_${veranstaltung.id}`}>
+                                    {index === 0 && (
+                                        <td rowSpan={veranstaltungen.length}>{fach.name}</td>
+                                    )}
+                                    <td>
+                                        {veranstaltung.typ}
+                                        {veranstaltung.name && `, (${veranstaltung.name})`}
+                                    </td>
+                                    <td>{veranstaltung.credits}</td>
+                                    <td>{this.punkteForVeranstaltung(veranstaltung.id)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    )
                 })}
-            </tbody>
+            </Fragment>
         );
     }
 }

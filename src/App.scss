@@ -1,26 +1,58 @@
+$text-color: #444;
+$light-color: #ccc;
+
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: sans-serif;
-}
-
-.container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: $text-color;
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5em;
     margin-top: 1em;
+    font-weight: 500;
+
+    &:first-child { margin-top: 0; }
+    &:last-child { margin-bottom: 0; }
 }
 
 hr {
     border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $light-color;
 }
 
+
+/**
+  * BUTTONS
+  */
+
+button {
+    padding: 0.5rem 1rem;
+    // border-radius: 0.15rem;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    outline: 0;
+    background-color: transparent;
+    border: 1px solid $light-color;
+    font-size: 1rem;
+    transition: 0.1s;
+
+    &:hover {
+        background-color: $light-color;
+    }
+
+    &:active {
+        background-color: #444;
+        color: #fff;
+    }
+}
 
 /**
   * FORM INPUTS
@@ -33,8 +65,8 @@ label {
 
 select {
     padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid #ccc;
+    // border-radius: 0.15rem;
+    border: 1px solid $light-color;
     outline: 0;
     margin: 0.5rem;
 }
@@ -48,32 +80,63 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
+    border: 1px solid $light-color;
+
+    &.striped {
+        & > tbody > tr:nth-child(2n) {
+            background-color: rgba(#000, 0.025);
+        }
+
+        &--body {
+            & > tbody:nth-child(2n + 1) {
+                background-color: rgba(#000, 0.025);
+            }
+        }
+    }
+
+    &.hoverable {
+        & > tbody > tr {
+            cursor: pointer;
+            
+            &:hover {
+                background-color: rgba(#000, 0.1);
+            }
+
+            &:active {
+                background-color: #444;
+                color: #fff;
+            }
+        }
+    }
 }
 
 caption {
     text-align: left;
+    letter-spacing: 0.2em;
+    padding: 0.5rem;
+    background-color: lighten($light-color, 10%);
 }
 
 tr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px dashed $light-color;
 
-    &:nth-child(2n) {
-        td:not([rowspan]) {
-            background-color: rgba(0,0,0,0.05);
-        }
-    }
+    // &:nth-child(2n) {
+    //     td:not([rowspan]) {
+    //         background-color: rgba(0,0,0,0.05);
+    //     }
+    // }
 }
 
 td, th {
     padding: 0.5rem;
 
-    // &:not(:last-child) {
-    //     border-right: 1px solid #ccc;
-    // }
+    &:not(:last-child) {
+        border-right: 1px dashed $light-color;
+    }
 }
 
 th {
     text-align: left;
-    border-bottom: 2px solid #ccc;
-
+    border-bottom: 1px solid $light-color;
+    background-color: #eee;
 }

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import LESBListeStudent from './components/LESBListeStudent';
 import studentenData from '../../data/studenten';
+import { FilterContextConsumer } from '../../components/filter/FilterContext';
 
 class StudentenListe extends Component {
     state = {
@@ -10,14 +11,24 @@ class StudentenListe extends Component {
 
     render() {
         return (
-            <div>
-                <h1>LESB-Liste</h1>
-                <div className='studenten'>
-                    {this.state.studenten.map(student =>
-                        <LESBListeStudent student={student} key={student.id} />
-                    )}
-                </div>
-            </div>
+            <FilterContextConsumer>
+                {({ filter }) => (
+                    <div className='studenten'>
+                        {this.state.studenten
+                            .filter(student => (
+                                (!filter.jahrgang || parseInt(filter.jahrgang, 10) === student.jahrgang) &&
+                                (!filter.studienkurs || filter.studienkurs === student.studienkurs)
+                            ))
+                            .map(student => (
+                                <Fragment key={student.id}>
+                                    <h3>{student.name}</h3>
+                                    <LESBListeStudent student={student} />
+                                </Fragment>
+                            ))
+                        }
+                    </div>
+                )}
+            </FilterContextConsumer>
         );
     }
 }
