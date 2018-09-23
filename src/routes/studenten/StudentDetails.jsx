@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Button, Divider } from 'semantic-ui-react';
 
 import './StudentDetails.scss';
 import { translateStudienkurse } from '../../helper/helper';
@@ -6,8 +7,6 @@ import { getStudentForId } from '../../helper/selectors';
 import Faecher from './components/Faecher';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/modal/Modal';
-import Button from '../../components/Button';
-import Divider from '../../components/Divider';
 
 
 class StudentDetails extends Component {
@@ -55,9 +54,9 @@ class StudentDetails extends Component {
                     {translateStudienkurse(student.studienkurs)},{' '}
                     Jahrgang {student.jahrgang}
                 </div>
-                <Divider hidden height='1rem' />
+                <Divider hidden />
                 <div>
-                    <Button onClick={this.goBack} content='Zurück' icon='chevron-left' />
+                    <Button onClick={this.goBack} content='Zurück' icon='chevron left' />
                     <Button onClick={this.updateStudent} content='Bearbeiten' icon='edit' />
                     <Button onClick={this.createNote} content='Note hinzufügen' icon='plus' />
                 </div>

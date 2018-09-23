@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-
+import { Button, Dropdown, Select } from 'semantic-ui-react';
 
 import './StudentenFilter.scss';
-import Button from '../Button';
 import StudentSearch from './StudentSearch';
 import studentenData from '../../data/studenten';
 import { FilterContextConsumer } from '../filter/FilterContext';
-import Dropdown from '../dropdown/Dropdown';
 
 class StudentenFilter extends Component {
     state = {
@@ -46,16 +44,11 @@ class StudentenFilter extends Component {
                 <FilterContextConsumer>
                     {({ filter, change, reset }) => (
                         <div>
-                            <Dropdown
-                                label={ <i className='fa fa-plus-square' /> }
-                                iconSize={'0.5rem'}
-                                title='Hinzufügen'
-                                basic
-                                color='grey'
-                                labelStyle={{padding: '0.25rem 0.5rem', }}
-                            >
-                                <div onClick={() => alert('Student hinzufügen')}>Student hinzufügen</div>
-                                <div onClick={() => alert('Note hinzufügen')}>Note hinzufügen</div>
+                            <Dropdown text='Add' basic title='Hinzufügen'>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item text='Student hinzufügen' onClick={() => alert('Student hinzufügen')} />
+                                    <Dropdown.Item text='Note hinzufügen' onClick={() => alert('Note hinzufügen')} />
+                                </Dropdown.Menu>
                             </Dropdown>
                             {Object.values(filter).some(filterValue => filterValue) && (
                                 <Button
@@ -72,19 +65,15 @@ class StudentenFilter extends Component {
                             />
                             {Object.entries(filter).map(([filterName, filterValue]) => 
                                 filterOptions[filterName] && (
-                                    <select
-                                        name={filterName}
+                                    <Select
                                         key={filterName}
                                         onChange={({ target: { name, value }}) => change(name, value)}
                                         value={filterValue}
                                         className={filterValue ? 'active' : ''}
-                                    >
-                                        {filterOptions[filterName].map(filterOptions => (
-                                            <option value={filterOptions.value} key={filterOptions.value} >
-                                                {filterOptions.label}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        text={filterName}
+                                        options={filterOptions[filterName].map(f => ({key: f.value, value: f.value, text: f.label}))}
+                                        style={{marginLeft: '0.5rem'}}
+                                    />
                                 )
                             )}
                         </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'semantic-ui-css/semantic.min.css';
 import './styles/main.scss';
 import routes from './routes';
 import { FilterContextProvider } from './components/filter/FilterContext';

@@ -1,27 +1,6 @@
 .filter-container {
     display: flex;
-    font-size: 0.8rem;
-
-    input, select {
-        background-color: transparent;
-        color: #ccc;
-        border: 1px solid #888;
-        font-size: inherit;
-        box-shadow: none;
     
-        &.active {
-            border-color: #fff;
-            color: #fff;
-        }
-
-        &::placeholder {
-            color: #ccc;
-        }
-    
-        option {
-            background-color: #444;
-        }
-    }
     
     .clear-button {
         width: 1.5rem;
