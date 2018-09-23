@@ -2,50 +2,48 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import LESBListeFach from './LESBListeFach'
+import {
+    getFaecherGroupedByTyp,
+    getVeranstaltungenForFach
+} from '../../../helper/selectors';
 
-import veranstaltungenData from '../../../data/veranstaltungen';
-import faecherData from '../../../data/faecher';
 
 class LESBListeStudent extends Component {
     static propTypes = {
         student: PropTypes.object.isRequired,
     }
 
-    state = {
-        veranstaltungen: veranstaltungenData,
-        faecher: faecherData
-    }
-
     render() {
         const student = this.props.student;
-        
+        const groupedFaecher = getFaecherGroupedByTyp();
         return (
-            <table className='lesb-table striped--body' style={{marginBottom: '2rem'}}>
-                <thead>
-                    <tr>
-                        <th>Fach</th>
-                        <th>Veranstaltung</th>
-                        <th>(Punkte)</th>
-                        <th>(Versuch)</th>
-                    </tr>
-                </thead>
-                {this.state.faecher.map(fach =>
-                    this.state.veranstaltungen
-                        .filter(veranstaltung =>
-                            veranstaltung.fachID === fach.id &&
-                            veranstaltung.typ === 'Vorlesung'
+            Object.entries(groupedFaecher).map(([typ, faecher]) => (
+                <table className='lesb-table striped--body' style={{marginBottom: '2rem'}} key={typ}>
+                    <thead>
+                        <tr>
+                            <th>Fach</th>
+                            <th>Status</th>
+                            <th>(Punkte)</th>
+                            <th>(Versuch)</th>
+                        </tr>
+                    </thead>
+                    {faecher.map(fach =>
+                        getVeranstaltungenForFach(fach.id)
+                            .filter(veranstaltung =>
+                                veranstaltung.typ === (typ === 'de' ? 'Vorlesung' : 'TD')
+                            )
+                            .map(veranstaltung => 
+                                <LESBListeFach
+                                    fach={fach}
+                                    veranstaltung={veranstaltung}
+                                    student={student}
+                                    key={`${fach.id}_${veranstaltung.id}`}
+                                />
+                            )
                         )
-                        .map(veranstaltung => 
-                            <LESBListeFach
-                                fach={fach}
-                                veranstaltung={veranstaltung}
-                                student={student}
-                                key={`${fach.id}_${veranstaltung.id}`}
-                            />
-                        )
-                    )
-                }
-            </table>
+                    }
+                </table>
+            ))
         );
     }
 }

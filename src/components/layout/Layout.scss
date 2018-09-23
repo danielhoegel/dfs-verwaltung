@@ -15,13 +15,14 @@ html, body, #root {
     display: flex;
     align-items: center;
     background-color: #444;
-    color: #fff;
     padding: 1rem;
 
     .left { margin-right: auto; }
     .right { margin-left: auto; }
 
     .breadcrumbs {
+        color: #fff;
+
         a {
             color: inherit;
             text-decoration: none;
@@ -117,4 +118,19 @@ main {
 
 .main__inside {
     max-width: 960px;
+}
+
+/* PRINTING */
+
+@media print {
+    html, body, #root { overflow-y: auto; font-family: 'Arial', sans-serif; }
+    html { font-size: 10pt; color: #000; }
+    #root, .container { height: auto; }
+    .navmenu { display: none; }
+    main { width: 100%; padding: 0; }
+    .main__inside { max-width: none; }
+    .topbar {
+        flex-direction: column;
+        .right { margin-left: 0; margin-right: auto; }
+    }
 }

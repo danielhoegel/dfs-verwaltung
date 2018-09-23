@@ -8,7 +8,8 @@ export class FilterContextProvider extends Component {
     state = {
         semester: '',
         studienkurs: '',
-        jahrgang: ''
+        jahrgang: '',
+        student: ''
     }
 
     changeFilter = (name, value) => {
@@ -19,7 +20,8 @@ export class FilterContextProvider extends Component {
         this.setState({
             semester: '',
             studienkurs: '',
-            jahrgang: ''
+            jahrgang: '',
+            student: ''
         });
     }
 

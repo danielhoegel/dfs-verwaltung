@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import notenData from '../../../data/noten';
+import { getNotenForStudentAndVeranstaltung } from '../../../helper/selectors';
 
 class LESBListeFach extends Component {
     static propTypes = {
@@ -10,20 +10,9 @@ class LESBListeFach extends Component {
         student: PropTypes.object.isRequired,
     }
 
-    state = {
-        noten: notenData,
-    }
-
-    notenForVeranstaltung() {
-        return this.state.noten.filter(note =>
-            note.studentID === this.props.student.id &&
-            note.veranstaltungID === this.props.veranstaltung.id
-        );
-    }
-
     render() {
-        const { fach, veranstaltung } = this.props;
-        const noten = this.notenForVeranstaltung();
+        const { student, fach, veranstaltung } = this.props;
+        const noten = getNotenForStudentAndVeranstaltung(student.id, veranstaltung.id);
 
         if (noten.length > 0) {
             return (
@@ -32,10 +21,15 @@ class LESBListeFach extends Component {
                         <tr key={note.id}>
                             {index === 0 && (
                                 <Fragment>
-                                    <td rowSpan={noten.length > 1 ? noten.length : null}>{fach.name}</td>
-                                    <td rowSpan={noten.length > 1 ? noten.length : null}>{veranstaltung.name}</td>
+                                    <td
+                                        rowSpan={noten.length > 1 ? noten.length : null}
+                                        style={{fontWeight: veranstaltung.zpk ? '800' : 'inherit'}}
+                                    >
+                                        {fach.name} {veranstaltung.name && `(${veranstaltung.name})`}
+                                    </td>
                                 </Fragment>
                             )}
+                            <td>{note.punkte >= 4 ? 'B' : 'NB'}</td>
                             <td>{note.punkte}</td>
                             <td>{note.versuch}</td>
                         </tr>
@@ -46,8 +40,10 @@ class LESBListeFach extends Component {
             return (
                 <tbody>
                     <tr>
-                        <td>{fach.name}</td>
-                        <td>{veranstaltung.name}</td>
+                        <td style={{fontWeight: veranstaltung.zpk ? '800' : 'inherit'}}>
+                            {fach.name} {veranstaltung.name && `(${veranstaltung.name})`}
+                        </td>
+                        <td>–</td>
                         <td></td>
                         <td></td>
                     </tr>

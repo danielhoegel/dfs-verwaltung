@@ -1,0 +1,59 @@
+$input-margin: 0.5rem;
+
+input, select {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    min-height: 2em; // font-size + margin-top + margin-bottom
+    border: none;
+    // border-radius: 0.15rem;
+    border-bottom: 1px solid $grey;
+    background-color: $accent;
+    outline: 0;
+    margin: $input-margin;
+
+    &:focus {
+        // background-color: transparent;
+        border-color: $primary;
+        box-shadow: 0 1px 0 $primary;
+    }
+}
+
+label {
+    font-size: 0.85em;
+    opacity: 0.75;
+    margin-bottom: 0.25em;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: $input-margin;
+
+    input, select {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
+
+    &.required {
+        label:after {
+            content: '*';
+            color: $red;
+            padding-left: 0.25em;
+        }
+    }
+}
+
+.input-group {
+    display: flex;
+    // margin: -1 * $input-margin;
+
+    // &:not(:last-child) {
+    //     margin-bottom: $input-margin;
+    // }
+
+    &.stacked {
+        flex-direction: column;
+    }
+}

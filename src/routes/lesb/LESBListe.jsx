@@ -17,7 +17,8 @@ class StudentenListe extends Component {
                         {this.state.studenten
                             .filter(student => (
                                 (!filter.jahrgang || parseInt(filter.jahrgang, 10) === student.jahrgang) &&
-                                (!filter.studienkurs || filter.studienkurs === student.studienkurs)
+                                (!filter.studienkurs || filter.studienkurs === student.studienkurs) &&
+                                (!filter.student || student.name.toLocaleLowerCase().indexOf(filter.student.toLocaleLowerCase()) !== -1)
                             ))
                             .map(student => (
                                 <Fragment key={student.id}>

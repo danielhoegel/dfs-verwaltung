@@ -1,46 +1,80 @@
 import React, { Component, Fragment } from 'react';
 
-import studentenData from '../../data/studenten';
-// import faecherData from '../../data/faecher';
-// import veranstaltungenData from '../../data/veranstaltungen';
-// import notenData from '../../data/noten';
+import './StudentDetails.scss';
+import { translateStudienkurse } from '../../helper/helper';
+import { getStudentForId } from '../../helper/selectors';
+import Faecher from './components/Faecher';
+import CreateNote from './components/CreateNote';
+import Modal from '../../components/modal/Modal';
+import Button from '../../components/Button';
+import Divider from '../../components/Divider';
 
-import LESBListeStudent from '../lesb/components/LESBListeStudent';
 
 class StudentDetails extends Component {
-    translateStudienkurse(studienkurs) {
-        switch (parseInt(studienkurs, 10)) {
-            case 1: return 'Grundstudienkurs';
-            case 2: return 'Aufbaustudienkurs';
-            default: return studienkurs;
-        }
+    state = {
+        noteModalOpen: false,
+        noteUpdateModalOpen: false,
+        noteUpdateModalData: null,
+        noteModalData: null
+    }
+
+    goBack = () => {
+        this.props.history.goBack();
+    }
+
+    updateStudent = () => {
+        this.props.history.push(`/studenten/${this.props.match.params.id}/update`);
+    }
+
+    openNoteModal = (data) => {
+        this.setState({
+            noteModalOpen: true,
+            noteModalData: data
+        });
+    }
+
+    closeNoteModal = () => {
+        this.setState({
+            noteModalOpen: false,
+            noteModalData: null
+        });
+    }
+
+    createNote = () => {
+        this.openNoteModal({
+            studentId: parseInt(this.props.match.params.id, 10)
+        });
     }
 
     render() {
-        const student = studentenData.filter(s => s.id === parseInt(this.props.match.params.id, 10))[0];
+        const student = getStudentForId(this.props.match.params.id);
         return (
             <Fragment>
-                <button onClick={() => this.props.history.push('/studenten')}>Zurück</button>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colSpan={2}>
-                                <h2>{student.name}</h2>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style={{width: '20%'}}>Studienkurs</td>
-                            <td>{this.translateStudienkurse(student.studienkurs)}</td>
-                        </tr>
-                        <tr>
-                            <td>Jahrgang</td>
-                            <td>{student.jahrgang}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <LESBListeStudent student={student} />
+                <div>
+                    <h2>{student.name}</h2>
+                    {translateStudienkurse(student.studienkurs)},{' '}
+                    Jahrgang {student.jahrgang}
+                </div>
+                <Divider hidden height='1rem' />
+                <div>
+                    <Button onClick={this.goBack} content='Zurück' icon='chevron-left' />
+                    <Button onClick={this.updateStudent} content='Bearbeiten' icon='edit' />
+                    <Button onClick={this.createNote} content='Note hinzufügen' icon='plus' />
+                </div>
+
+                <Divider hidden />
+                
+                <Faecher
+                    studentId={student.id}
+                    createNote={this.openNoteModal}
+                />
+                <Modal
+                    component={CreateNote}
+                    title='Note hinzufügen'
+                    close={this.closeNoteModal}
+                    open={this.state.noteModalOpen}
+                    data={this.state.noteModalData}
+                />
             </Fragment>
         );
     }

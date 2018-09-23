@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import notenData from '../../../data/noten';
-import faecherData from '../../../data/faecher';
-import veranstaltungenData from '../../../data/veranstaltungen';
+import {
+    getFaecherDataForUEAndSemester,
+    getVeranstaltungenForFach,
+    getPunkteForVeranstaltungAndStudent
+} from '../../../helper/selectors';
 
 class Faecher extends Component {
     static propTypes = {
@@ -16,10 +18,7 @@ class Faecher extends Component {
         if (nextProps.semester !== prevState.lastSemester) {
             return {
                 ...prevState,
-                faecher: faecherData.filter(fach =>
-                    fach.ue === nextProps.ue &&
-                    fach.semester === nextProps.semester
-                ),
+                faecher: getFaecherDataForUEAndSemester(nextProps.ue, nextProps.semester),
                 lastSemester: nextProps.semester
             };
         }
@@ -27,44 +26,17 @@ class Faecher extends Component {
     }
 
     state = {
-        faecher: faecherData,
-        veranstaltungen: veranstaltungenData,
-        noten: notenData,
-    }
-
-    veranstaltungenForFach(fachID) {
-        return this.state.veranstaltungen.filter(veranstltung =>
-          veranstltung.fachID === fachID  
-        );
-    }
-
-    punkteForVeranstaltung(veranstaltungID) {
-        const noten = this.state.noten.filter(note =>
-            note.studentID === this.props.student.id &&
-            note.veranstaltungID === veranstaltungID
-        );
-        if (noten.length > 1) {
-            let lastVersuch = noten[0];
-            noten.forEach(note => {
-                if (note.versuch > lastVersuch.versuch) {
-                    lastVersuch = note;
-                }
-            });
-            return lastVersuch.punkte;
-        } else if (noten.length > 0){
-            return noten[0].punkte;
-        } else {
-            return null;
-        }
+        faecher: [],
+        lastSemester: null
     }
 
     render() {
         return (
             <Fragment>
                 {this.state.faecher.map(fach => {
-                    const veranstaltungen =  this.veranstaltungenForFach(fach.id);
+                    const veranstaltungen = getVeranstaltungenForFach(fach.id);
                     return (
-                        <tbody>
+                        <tbody key={fach.id}>
                             {veranstaltungen.map((veranstaltung, index) => (
                                 <tr key={`${fach.id}_${veranstaltung.id}`}>
                                     {index === 0 && (
@@ -75,7 +47,9 @@ class Faecher extends Component {
                                         {veranstaltung.name && `, (${veranstaltung.name})`}
                                     </td>
                                     <td>{veranstaltung.credits}</td>
-                                    <td>{this.punkteForVeranstaltung(veranstaltung.id)}</td>
+                                    <td>
+                                        {getPunkteForVeranstaltungAndStudent(veranstaltung.id, this.props.student.id)}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

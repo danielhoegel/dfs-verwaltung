@@ -1,0 +1,51 @@
+@import '../../styles/variables';
+@import '../../styles/components/buttons';
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+
+    &__label {
+        @extend .button;
+        // padding: 0.25rem 0.5rem;
+        // border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon {
+        margin-left: 1em;
+    }
+
+    &__menu {
+        display: none;
+        position: absolute;
+        top: calc(100% - 1rem);
+        min-width: calc(100% - 1rem);
+        white-space: nowrap;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(#000, 0.2);
+        border-radius: 0.25rem;
+        overflow: hidden;
+        border-top-left-radius: 0;
+        z-index: 1;
+    }
+
+    &__item {
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #ccc;
+        font-size: 0.85rem;
+
+        &:hover {
+            background-color: rgba(#000, 0.075);
+        }
+    }
+
+    &--open {
+        .dropdown__menu {
+            display: block;
+        }
+    }
+}

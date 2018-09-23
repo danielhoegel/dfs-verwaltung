@@ -1,51 +1,127 @@
-select {
-    background-color: transparent;
-    color: #ccc;
-    border-color: #888;
+.filter-container {
+    display: flex;
+    font-size: 0.8rem;
 
-    &.active {
-        border-color: #fff;
-        color: #fff;
+    input, select {
+        background-color: transparent;
+        color: #ccc;
+        border: 1px solid #888;
+        font-size: inherit;
+        box-shadow: none;
+    
+        &.active {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        &::placeholder {
+            color: #ccc;
+        }
+    
+        option {
+            background-color: #444;
+        }
     }
-
-    option {
-        background-color: #444;
-    }
-}
-
-.clear-button {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: none;
-    margin: 0.5rem;
-    text-indent: 200%;
-    padding: 0.25rem 0.5rem;
-
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        background-color: #ccc;
-        width: 2px;
-        height: 1rem;
-    }
-
-    &:before {
-        transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    &:after {
-        transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    &:hover {
-        background-color: #888;
-
+    
+    .clear-button {
+        width: 1.5rem;
+        height: 1.5rem;
+        border: none;
+        margin: 0.5rem;
+        text-indent: 200%;
+        padding: 0.25rem 0.5rem;
+        font-size: inherit;
+        background-color: transparent;
+    
         &:before,
         &:after {
-            background-color: #fff;
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background-color: #ccc;
+            width: 2px;
+            height: 1rem;
+        }
+    
+        &:before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+    
+        &:after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    
+        &:hover {
+            background-color: #888;
+    
+            &:before,
+            &:after {
+                background-color: #fff;
+            }
+        }
+    }
+    
+    .search {
+        position: relative;
+        display: inline-block;
+    
+        .suggestions {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            width: calc(100% - 2 * 0.5rem);
+            left: 0.5rem;
+            top: calc(100% - 0.5rem);
+            background-color: #444;
+            border: 1px solid #888;
+            border-top-width: 0;
+
+            border: none;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 4px rgba(#000, 0.2);
+            overflow: hidden;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            
+            li {
+                padding: 0.35rem 0.5rem;
+                cursor: pointer;
+                display: flex;
+                color: #ccc;
+    
+                &:not(:last-child) {
+                    border-bottom: 1px solid #888;
+                }
+    
+                &:hover, &.active {
+                    background-color: #888;
+                    color: #fff;
+                }
+    
+                a {
+                    display: inline-block;
+                    padding: 0 0.25rem;
+                    margin-left: auto;
+                    color: #ccc;
+                    text-decoration: none;
+                    border: 1px solid #ccc;
+    
+                    &:hover, &.active {
+                        color: #fff;
+                        border-color: #fff;
+                    }
+                }
+            }
+        }
+    }
+    
+    @media print {
+        .clear-button { display: none; }
+        input, select {
+
         }
     }
 }
+
