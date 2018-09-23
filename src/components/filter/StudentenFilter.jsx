@@ -52,7 +52,8 @@ class StudentenFilter extends Component {
                                 title='Hinzufügen'
                                 basic
                                 color='grey'
-                                labelStyle={{padding: '0.25rem 0.5rem', }}
+                                labelStyle={{padding: '0.25rem 0.5rem', margin: '0.5rem'}}
+                                menuAlign='right'
                             >
                                 <div onClick={() => alert('Student hinzufügen')}>Student hinzufügen</div>
                                 <div onClick={() => alert('Note hinzufügen')}>Note hinzufügen</div>

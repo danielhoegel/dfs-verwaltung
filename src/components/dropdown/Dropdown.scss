@@ -2,6 +2,9 @@
 @import '../../styles/components/buttons';
 
 .dropdown {
+    $margin: 0.5rem;
+    $border-radius: 0.25rem;
+
     display: inline-block;
     position: relative;
     user-select: none;
@@ -9,10 +12,10 @@
 
     &__label {
         @extend .button;
-        // padding: 0.25rem 0.5rem;
-        // border: 1px solid #ccc;
+        
         display: flex;
         align-items: center;
+        margin: $margin;
     }
 
     &__icon {
@@ -22,12 +25,13 @@
     &__menu {
         display: none;
         position: absolute;
-        top: calc(100% - 1rem);
-        min-width: calc(100% - 1rem);
+        top: calc(100% - #{$margin});
+        left: $margin;
+        min-width: calc(100% - #{$margin});
         white-space: nowrap;
         background-color: #fff;
         box-shadow: 0 2px 4px rgba(#000, 0.2);
-        border-radius: 0.25rem;
+        border-radius:$border-radius;
         overflow: hidden;
         border-top-left-radius: 0;
         z-index: 1;
@@ -48,4 +52,32 @@
             display: block;
         }
     }
+
+    &--left {
+        .dropdown__menu {
+            left:  $margin;
+            right: auto;
+            border-top-right-radius: $border-radius;
+            border-top-left-radius: 0;
+        }
+    }
+
+    &--right {
+        .dropdown__menu {
+            left: auto;
+            right: $margin;
+            border-top-right-radius: 0;
+            border-top-left-radius: $border-radius;
+        }
+    }
+
+    &--center {
+        .dropdown__menu {
+            left: calc(-50% - #{$margin});
+            right: auto;
+            border-top-right-radius: $border-radius;
+            border-top-left-radius: $border-radius;
+        }
+    }
+
 }

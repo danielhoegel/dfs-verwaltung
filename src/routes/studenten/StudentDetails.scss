@@ -6,6 +6,7 @@
     cursor: pointer;
     border-bottom: 1px dashed $accent-dark;
     line-height: 1.75;
+    user-select: none;
 
     &:after {
         content: '\A';
@@ -34,4 +35,9 @@
     margin: 0;
 
     i { opacity: 0.5;}
+}
+
+.teilnahme-label {
+    opacity: 0.5;
+    user-select: none;
 }

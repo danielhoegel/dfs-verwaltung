@@ -3,7 +3,8 @@ import React, { Component, Fragment } from 'react';
 import './StudentDetails.scss';
 import { translateStudienkurse } from '../../helper/helper';
 import { getStudentForId } from '../../helper/selectors';
-import Faecher from './components/Faecher';
+// import Faecher from './components/Faecher';
+import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/modal/Modal';
 import Button from '../../components/Button';
@@ -62,12 +63,11 @@ class StudentDetails extends Component {
                     <Button onClick={this.createNote} content='Note hinzufügen' icon='plus' />
                 </div>
 
-                <Divider hidden />
-                
-                <Faecher
+                <FaecherGrouped
                     studentId={student.id}
-                    createNote={this.openNoteModal}
+                    openNoteModal={this.openNoteModal}
                 />
+
                 <Modal
                     component={CreateNote}
                     title='Note hinzufügen'

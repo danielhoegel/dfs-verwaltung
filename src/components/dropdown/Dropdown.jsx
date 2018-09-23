@@ -18,6 +18,7 @@ class Dropdown extends Component {
         title: PropTypes.string,
         basic: PropTypes.bool,
         labelStyle: PropTypes.object,
+        menuAlign: PropTypes.oneOf(['left', 'right', 'center']),
     }
 
     static defaultProps = {
@@ -51,14 +52,22 @@ class Dropdown extends Component {
 
     render() {
         const items = this.props.children || this.props.items;
+        
+        const dropdownClassList = [
+            'dropdown',
+            this.state.isOpen && 'dropdown--open',
+            this.props.menuAlign && `dropdown--${this.props.menuAlign}`
+        ].join(' ');
+
         const labelClassList = [
             'dropdown__label',
             this.props.basic && 'basic',
             this.props.color
         ].join(' ');
+
         return (
             <div
-                className={'dropdown' + (this.state.isOpen ? ' dropdown--open' : '')}
+                className={dropdownClassList}
                 onClick={this.clickHandler}
                 ref={node => { this.dropdown = node; }}
             >

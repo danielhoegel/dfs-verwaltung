@@ -46,6 +46,26 @@ export function getFaecherGroupedByTyp() {
     return result;
 }
 
+export function getFaecherGroupedBySemesterAndTyp() {
+    const groupedFaecher = {};
+
+    getFaecherData().forEach(fach => {
+        if (groupedFaecher[fach.semester]) {
+            if (groupedFaecher[fach.semester][fach.typ]) {
+                groupedFaecher[fach.semester][fach.typ].push(fach);
+            } else {
+                groupedFaecher[fach.semester][fach.typ] = [fach];
+            }
+        } else {
+            groupedFaecher[fach.semester] = {
+                [fach.typ]: [fach]
+            };
+        }
+    });
+
+    return groupedFaecher;
+}
+
 
 /**
  * VERANSTALTUNGEN

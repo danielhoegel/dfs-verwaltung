@@ -21,4 +21,3 @@ export default [
     { id: 53, ue: 3, name: 'Formation de langue', typ: 'fr', studienkurs: 1, semester: 1 },
     { id: 54, ue: 3, name: 'Civilisation francaise', typ: 'fr', studienkurs: 1, semester: 2 },
 ];
-

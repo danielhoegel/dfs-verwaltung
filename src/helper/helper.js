@@ -37,3 +37,10 @@ export function isDescendant(parent, child) {
     }
     return false;
 }
+
+
+export function getTodayDate() {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const today = new Date();
+    return today.toLocaleDateString('de-DE', options);
+}

@@ -166,10 +166,11 @@ class StudentSearch extends Component {
 
     render() {
         this.filterStudenten();
+        const isOpen = this.suggestionsVisible();
         const { studentFilter, setStudentFilter } = this.props;
         return (
             <div
-                className='search'
+                className={'search' + (isOpen ? ' search--open' : '' )}
                 onFocus={this.focusHandler}
                 onBlur={this.blurHandler}
                 onKeyDown={this.activeItemHandler}
@@ -182,7 +183,7 @@ class StudentSearch extends Component {
                     onChange={this.changeHandler}
                     className={studentFilter ? 'active' : ''}
                 />
-                {this.suggestionsVisible() && (
+                {isOpen && (
                     <Suggestions
                         studentFilter={studentFilter}
                         studenten={this.filteredStudenten}
