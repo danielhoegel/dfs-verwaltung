@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
+import { withRouter } from 'react-router-dom';
 
 import './StudentenFilter.scss';
 import Button from '../Button';
 import StudentSearch from './StudentSearch';
 import studentenData from '../../data/studenten';
 import { FilterContextConsumer } from '../filter/FilterContext';
-import Dropdown from '../dropdown/Dropdown';
+import AddDropdown from './AddDropdown';
 
 class StudentenFilter extends Component {
     state = {
@@ -17,6 +17,10 @@ class StudentenFilter extends Component {
         this.setState({
             [target.name]: target.value
         });
+    }
+
+    createStudent = () => {
+        this.props.history.push('/studenten/create');
     }
 
     render() {
@@ -46,18 +50,7 @@ class StudentenFilter extends Component {
                 <FilterContextConsumer>
                     {({ filter, change, reset }) => (
                         <div>
-                            <Dropdown
-                                label={ <i className='fa fa-plus-square' /> }
-                                iconSize={'0.5rem'}
-                                title='Hinzufügen'
-                                basic
-                                color='grey'
-                                labelStyle={{padding: '0.25rem 0.5rem', margin: '0.5rem'}}
-                                menuAlign='right'
-                            >
-                                <div onClick={() => alert('Student hinzufügen')}>Student hinzufügen</div>
-                                <div onClick={() => alert('Note hinzufügen')}>Note hinzufügen</div>
-                            </Dropdown>
+                            <AddDropdown createStudent={this.createStudent} />
                             {Object.values(filter).some(filterValue => filterValue) && (
                                 <Button
                                     className='clear-button'
@@ -96,6 +89,4 @@ class StudentenFilter extends Component {
     }
 }
 
-export default StudentenFilter;
-
-
+export default withRouter(StudentenFilter);

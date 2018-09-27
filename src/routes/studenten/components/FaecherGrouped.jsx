@@ -45,28 +45,35 @@ const Fach = ({ fach, studentId, openNoteModal }) => {
     const veranstaltungen = getVeranstaltungenForFach(fach.id);
     return (
         <tbody>
-            {veranstaltungen.map((veranstaltung, index) => {
-                const noten = getNotenForStudentAndVeranstaltung(studentId, veranstaltung.id);
-                return (
-                    <tr key={veranstaltung.id}>
-                        {index === 0 && (
-                            <td rowSpan={veranstaltungen.length}>{fach.name}</td>
-                        )}
-                        <td>
-                            {veranstaltung.typ}
-                            {veranstaltung.name && ` (${veranstaltung.name})`}
-                         </td>
-                        <td style={{textAlign: 'right'}}>
-                            <Noten
-                                noten={noten}
-                                veranstaltung={veranstaltung}
-                                studentId={studentId}
-                                openNoteModal={openNoteModal}
-                            />
-                        </td>
-                    </tr>
-                );
-            })}
+            {veranstaltungen
+                .sort((a, b) => (
+                    a.typ.localeCompare(b.typ) ||
+                    a.name.localeCompare(b.name) ||
+                    a.id - b.id
+                ))
+                .map((veranstaltung, index) => {
+                    const noten = getNotenForStudentAndVeranstaltung(studentId, veranstaltung.id);
+                    return (
+                        <tr key={veranstaltung.id}>
+                            {index === 0 && (
+                                <td rowSpan={veranstaltungen.length}>{fach.name}</td>
+                            )}
+                            <td>
+                                {veranstaltung.typ}
+                                {veranstaltung.name && ` (${veranstaltung.name})`}
+                            </td>
+                            <td style={{textAlign: 'right'}}>
+                                <Noten
+                                    noten={noten}
+                                    veranstaltung={veranstaltung}
+                                    studentId={studentId}
+                                    openNoteModal={openNoteModal}
+                                />
+                            </td>
+                        </tr>
+                    );
+                })
+            }
         </tbody>
     );
 }
@@ -81,14 +88,20 @@ const TypenGroup = ({ typ, faecher, studentId, openNoteModal }) => (
                 <th style={{width: '20%'}}>(Punkte)</th>
             </tr>
         </thead>
-        {faecher.map(fach =>
-            <Fach
-                key={fach.id}
-                fach={fach}
-                studentId={studentId}
-                openNoteModal={openNoteModal}
-            />
-        )}
+        {faecher    
+            .sort((a, b) => (
+                a.name.localeCompare(b.name) ||
+                a.id - b.id
+            ))
+            .map(fach =>
+                <Fach
+                    key={fach.id}
+                    fach={fach}
+                    studentId={studentId}
+                    openNoteModal={openNoteModal}
+                />
+            )
+        }
     </table>
 );
 

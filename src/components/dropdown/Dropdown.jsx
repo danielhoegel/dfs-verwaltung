@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import './Dropdown.scss';
 import { isDescendant } from '../../helper/helper';
 
+const DropdownItem = ({ content, children, className, ...props }) => (
+    <div className={'dropdown__item ' + className} {...props}>
+        {children || content}
+    </div>
+);
+
 class Dropdown extends Component {
     static propTypes = {
         label: PropTypes.oneOfType([
@@ -11,7 +17,14 @@ class Dropdown extends Component {
             PropTypes.object,
             PropTypes.array,
         ]).isRequired,
-        items: PropTypes.arrayOf(PropTypes.node),
+        items: PropTypes.oneOfType([
+            PropTypes.objectOf(DropdownItem),
+            PropTypes.arrayOf(PropTypes.objectOf(DropdownItem),),
+        ]),
+        children: PropTypes.oneOfType([
+            PropTypes.objectOf(DropdownItem),
+            PropTypes.arrayOf(PropTypes.objectOf(DropdownItem),),
+        ]),
         icon: PropTypes.string,
         noIcon: PropTypes.bool,
         iconSize: PropTypes.string,
@@ -37,6 +50,8 @@ class Dropdown extends Component {
     componentWillUnmount() {
         document.removeEventListener('click', this.outsideClickHandler);
     }
+
+    static Item = DropdownItem
     
     outsideClickHandler = (e) => {
         if (!isDescendant(this.dropdown, e.target)) {
@@ -51,8 +66,6 @@ class Dropdown extends Component {
     }
 
     render() {
-        const items = this.props.children || this.props.items;
-        
         const dropdownClassList = [
             'dropdown',
             this.state.isOpen && 'dropdown--open',
@@ -80,11 +93,7 @@ class Dropdown extends Component {
                     )}
                 </div>
                 <div className='dropdown__menu'>
-                    {items.map((item, index) => (
-                        <div className='dropdown__item' key={index}>
-                            {item}
-                        </div>
-                    ))}
+                    {this.props.children || this.props.items}
                 </div>
             </div>
         );

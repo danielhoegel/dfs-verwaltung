@@ -8,6 +8,7 @@
         border: 1px solid #888;
         font-size: inherit;
         box-shadow: none;
+        border-radius: 0.2rem;
     
         &.active {
             border-color: #fff;
@@ -94,7 +95,7 @@
                 color: #ccc;
     
                 &:not(:last-child) {
-                    border-bottom: 1px solid #888;
+                    border-bottom: 1px solid #ccc;
                 }
     
                 &:hover, &.active {

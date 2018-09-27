@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import './LESBListe.scss';
 import LESBListeFaecher from './components/LESBListeFaecher';
