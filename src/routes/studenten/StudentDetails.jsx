@@ -1,22 +1,53 @@
 import React, { Component, Fragment } from 'react';
 
 import './StudentDetails.scss';
+
+import apiRequest from '../../helper/apiRequest';
 import { translateStudienkurse } from '../../helper/helper';
-import { getStudentForId } from '../../helper/selectors';
 // import Faecher from './components/Faecher';
 import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/modal/Modal';
 import Button from '../../components/Button';
 import Divider from '../../components/Divider';
+import Placeholder from '../../components/placeholder/Placeholder';
+import Tabs from '../../components/tabs/Tabs';
+
+
+const StudentDetailsLoading = () => (
+    <Placeholder>
+        <Placeholder.Item width='20%' height='1.25rem' />
+        <Placeholder.Item width='35%' />
+        <Placeholder.Item width='100px' height='2rem' inline />
+        <Placeholder.Item width='125px' height='2rem' inline />
+        <Placeholder.Item width='150px' height='2rem' inline />
+        <Divider hidden height='2.5rem' />
+        <Placeholder.Item width='15%' height='1.5rem' />
+        <Placeholder.Item height='2rem' />
+        <Placeholder.Item height='3rem' width='80%' />
+        <Placeholder.Item height='4rem' width='90%' />
+        <Placeholder.Item               width='60%' />
+        <Placeholder.Item height='2rem' width='80%' />
+        <Placeholder.Item height='3rem' width='85%' />
+        <Placeholder.Item height='4rem' width='75%' />
+    </Placeholder>
+)
 
 
 class StudentDetails extends Component {
     state = {
+        student: null,
         noteModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
         noteModalData: null
+    }
+
+    componentDidMount() {
+        const studentId = this.props.match.params.id;
+        apiRequest(`/studenten/${studentId}`).then(student =>
+            this.setState({ student })
+        );
     }
 
     goBack = () => {
@@ -48,8 +79,8 @@ class StudentDetails extends Component {
     }
 
     render() {
-        const student = getStudentForId(this.props.match.params.id);
-        return (
+        const { student } = this.state;
+        return student ? (
             <Fragment>
                 <div>
                     <h2>{student.name}</h2>
@@ -63,10 +94,23 @@ class StudentDetails extends Component {
                     <Button onClick={this.createNote} content='Note hinzufügen' icon='plus' />
                 </div>
 
-                <FaecherGrouped
-                    studentId={student.id}
-                    openNoteModal={this.openNoteModal}
-                />
+                <Divider hidden height='1rem' />
+                
+                <Tabs tabs={[
+                    { key: 0, title: 'Fächer', body: (
+                        <FaecherGrouped
+                            studentId={student.id}
+                            openNoteModal={this.openNoteModal}
+                        />
+                    )},
+                    { key: 1, title: 'Kontaktdaten', body: (
+                        <div>
+                            <h3>Kontaktdaten</h3>
+                        </div>
+                    )}
+                ]} />
+
+                
 
                 <Modal
                     component={CreateNote}
@@ -76,7 +120,7 @@ class StudentDetails extends Component {
                     data={this.state.noteModalData}
                 />
             </Fragment>
-        );
+        ) : <StudentDetailsLoading />;
     }
 }
 

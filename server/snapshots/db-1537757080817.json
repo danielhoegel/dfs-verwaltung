@@ -1,0 +1,651 @@
+{
+  "studenten": [
+    {
+      "id": 0,
+      "matrikelnummer": 200011,
+      "name": "John",
+      "firstName": "John",
+      "lastName": "Doe",
+      "jahrgang": 2015,
+      "studienkurs": "1"
+    },
+    {
+      "id": 1,
+      "matrikelnummer": 200022,
+      "name": "Max",
+      "firstName": "Max",
+      "lastName": "Müller",
+      "jahrgang": 2015,
+      "studienkurs": "1"
+    },
+    {
+      "id": 2,
+      "matrikelnummer": 200033,
+      "name": "Lena",
+      "firstName": "Lena",
+      "lastName": "Maier",
+      "jahrgang": 2015,
+      "studienkurs": "1"
+    },
+    {
+      "id": 3,
+      "matrikelnummer": 210011,
+      "name": "Marie",
+      "firstName": "Marie",
+      "lastName": "Hiller",
+      "jahrgang": 2016,
+      "studienkurs": "1"
+    },
+    {
+      "id": 4,
+      "matrikelnummer": 210022,
+      "name": "Alfred",
+      "firstName": "Alfred",
+      "lastName": "von Linden",
+      "jahrgang": 2016,
+      "studienkurs": "1"
+    },
+    {
+      "id": 5,
+      "matrikelnummer": 210033,
+      "name": "Manuel",
+      "firstName": "Manuel",
+      "lastName": "Kirchner",
+      "jahrgang": 2017,
+      "studienkurs": "2"
+    }
+  ],
+  "faecher": [
+    {
+      "id": 0,
+      "ue": 1,
+      "name": "Zivilrecht I",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 1,
+      "ue": 1,
+      "name": "Zivilrecht II",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 2
+    },
+    {
+      "id": 2,
+      "ue": 1,
+      "name": "Zivilrecht III",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 3
+    },
+    {
+      "id": 3,
+      "ue": 1,
+      "name": "Öffentliches Recht I",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 4,
+      "ue": 1,
+      "name": "Öffentliches Recht II",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 2
+    },
+    {
+      "id": 5,
+      "ue": 1,
+      "name": "Öffentliches Recht III",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 3
+    },
+    {
+      "id": 6,
+      "ue": 1,
+      "name": "Strafrecht I",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 7,
+      "ue": 1,
+      "name": "Strafrecht II",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 2
+    },
+    {
+      "id": 8,
+      "ue": 2,
+      "name": "Verfassungsgeschichte",
+      "typ": "de",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 40,
+      "ue": 3,
+      "name": "Introduction au droit civil",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 41,
+      "ue": 3,
+      "name": "Droit civil",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 2
+    },
+    {
+      "id": 42,
+      "ue": 3,
+      "name": "Droit civil des obligations I",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 3
+    },
+    {
+      "id": 43,
+      "ue": 3,
+      "name": "Droit civil des obligations II",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 4
+    },
+    {
+      "id": 45,
+      "ue": 3,
+      "name": "Introduction à la théorie de l'État",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 46,
+      "ue": 3,
+      "name": "Droit constitutionnel",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 2
+    },
+    {
+      "id": 47,
+      "ue": 3,
+      "name": "Droit administratif I",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 3
+    },
+    {
+      "id": 48,
+      "ue": 3,
+      "name": "Droit administratif II",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 4
+    },
+    {
+      "id": 52,
+      "ue": 3,
+      "name": "Formation en francais juridique",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 53,
+      "ue": 3,
+      "name": "Formation de langue",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 1
+    },
+    {
+      "id": 54,
+      "ue": 3,
+      "name": "Civilisation francaise",
+      "typ": "fr",
+      "studienkurs": 1,
+      "semester": 2
+    }
+  ],
+  "veranstaltungen": [
+    {
+      "id": 0,
+      "fachID": 0,
+      "name": "BGB AT",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 1,
+      "fachID": 0,
+      "name": "BGB AT",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 2,
+      "fachID": 1,
+      "name": "SchuldR AT",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 4,
+      "fachID": 1,
+      "name": "SchuldR BT",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 5,
+      "fachID": 1,
+      "name": "SchuldR AT + BT",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 6,
+      "fachID": 2,
+      "name": "Sachenrecht",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 7,
+      "fachID": 2,
+      "name": "Sachenrecht",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 8,
+      "fachID": 2,
+      "name": "Familienrecht",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 9,
+      "fachID": 2,
+      "name": "Erbrecht",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 10,
+      "fachID": 2,
+      "name": "FamR + ErbR",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 11,
+      "fachID": 3,
+      "name": "StaatsOrga + GrundR",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 12,
+      "fachID": 3,
+      "name": "StaatsOrga + GrundR",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 13,
+      "fachID": 4,
+      "name": "VerwaltungsR AT + VerwaltungsProzR",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 14,
+      "fachID": 4,
+      "name": "VerwaltungsR AT + VerwaltungsProzR",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 15,
+      "fachID": 5,
+      "name": "Baurecht",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 16,
+      "fachID": 5,
+      "name": "Kommunalrecht",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 17,
+      "fachID": 5,
+      "name": "Europarecht",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 18,
+      "fachID": 5,
+      "name": "Baurecht + Kommunalrecht",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 19,
+      "fachID": 6,
+      "name": "StGB AT",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": true,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 20,
+      "fachID": 6,
+      "name": "StGB AT",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 21,
+      "fachID": 7,
+      "name": "StGB BT",
+      "typ": "Vorlesung",
+      "credits": 4,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 22,
+      "fachID": 7,
+      "name": "StGB BT",
+      "typ": "Arbeitsgemeinschaft",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 23,
+      "fachID": 8,
+      "name": "",
+      "typ": "Vorlesung",
+      "credits": 3,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 30,
+      "fachID": 54,
+      "name": "",
+      "typ": "TD",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 37,
+      "fachID": 47,
+      "name": "",
+      "typ": "TD",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 36,
+      "fachID": 47,
+      "name": "",
+      "typ": "CM",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 45,
+      "fachID": 48,
+      "name": "",
+      "typ": "TD",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 44,
+      "fachID": 48,
+      "name": "",
+      "typ": "CM",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 27,
+      "fachID": 41,
+      "name": "",
+      "typ": "TD",
+      "credits": 2.5,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 26,
+      "fachID": 41,
+      "name": "",
+      "typ": "CM",
+      "credits": 2.5,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 35,
+      "fachID": 42,
+      "name": "",
+      "typ": "TD",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 34,
+      "fachID": 42,
+      "name": "",
+      "typ": "CM",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 42,
+      "fachID": 43,
+      "name": "",
+      "typ": "CM",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 43,
+      "fachID": 43,
+      "name": "",
+      "typ": "TD",
+      "credits": 3.5,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 29,
+      "fachID": 46,
+      "name": "",
+      "typ": "TD",
+      "credits": 2.5,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 28,
+      "fachID": 46,
+      "name": "",
+      "typ": "CM",
+      "credits": 2.5,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 51,
+      "fachID": 53,
+      "name": "",
+      "typ": "TD",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 52,
+      "fachID": 52,
+      "name": "",
+      "typ": "TD",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 53,
+      "fachID": 45,
+      "name": "",
+      "typ": "TD",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    },
+    {
+      "id": 54,
+      "fachID": 45,
+      "name": "",
+      "typ": "CM",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 55,
+      "fachID": 40,
+      "name": "",
+      "typ": "CM",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Teilnahme"
+    },
+    {
+      "id": 56,
+      "fachID": 40,
+      "name": "",
+      "typ": "TD",
+      "credits": 2,
+      "zpk": false,
+      "teilnahmeart": "Note"
+    }
+  ],
+  "noten": [
+    {
+      "id": 0,
+      "studentID": 0,
+      "veranstaltungID": 0,
+      "punkte": 3,
+      "versuch": 1
+    },
+    {
+      "id": 1,
+      "studentID": 0,
+      "veranstaltungID": 0,
+      "punkte": 7,
+      "versuch": 2
+    },
+    {
+      "id": 2,
+      "studentID": 0,
+      "veranstaltungID": 2,
+      "punkte": 8,
+      "versuch": 1
+    },
+    {
+      "id": 3,
+      "studentID": 0,
+      "veranstaltungID": 4,
+      "punkte": 11,
+      "versuch": 1
+    },
+    {
+      "id": 4,
+      "studentID": 0,
+      "veranstaltungID": 6,
+      "punkte": 9,
+      "versuch": 1
+    },
+    {
+      "id": 5,
+      "studentID": 0,
+      "veranstaltungID": 8,
+      "punkte": 6,
+      "versuch": 1
+    },
+    {
+      "id": 6,
+      "studentID": 0,
+      "veranstaltungID": 9,
+      "punkte": 7,
+      "versuch": 1
+    }
+  ]
+}
