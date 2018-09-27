@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
-import routes from '../../routes.js';
+import routes from '../../../routes.js';
 
 // map & render your breadcrumb components however you want.
 // each `breadcrumb` has the props `key`, `location`, and `match` included!

@@ -6,8 +6,8 @@ export const FilterContextConsumer = Consumer;
 
 export class FilterContextProvider extends Component {
     state = {
-        semester: '',
-        studienkurs: '',
+        semester: '2',
+        studienkurs: null,
         jahrgang: '',
         student: ''
     }

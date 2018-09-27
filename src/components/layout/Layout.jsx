@@ -1,48 +1,68 @@
-import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
 
-import './Layout.scss';
-import Breadcrumbs from './Breadcrumbs';
-import StudentenFilter from '../filter/StudentenFilter';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import Drawer from '@material-ui/core/Drawer';
+// import Button from '@material-ui/core/Button';
+// import List from '@material-ui/core/List';
+// import Divider from '@material-ui/core/Divider';
 
-const Layout = (props) => {
+import Topbar from './components/Topbar';
+import Sidebar from './components/Sidebar';
+
+// import './Layout.scss';
+
+const Layout = ({ children, classes }) => {
     return (
-        <Fragment>
-            <div className='topbar'>
-                <div className='left'>
-                    <Breadcrumbs />
-                </div>
-                <div className='right'>
-                    <StudentenFilter />
-                </div>
-            </div>
+        <div className={classes.root}>
+            <AppBar position="fixed" className={classes.appBar}>
+               <Topbar />
+            </AppBar>
 
-            <div className='container'>
-                <aside className='navmenu'>
-                    <nav>
-                        <ul>
-                            <li>
-                                <NavLink to='/studenten'>Studenten</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to='/lesb-liste'>LESB-Liste</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to='/ergebnisse'>Prüfungsergebnisse</NavLink>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
+            <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
+                <div className={classes.toolbar} />
+                <Sidebar />
+            </Drawer>
 
-                <main>
-                    <div className='main__inside'>
-                        {props.children}
-                    </div>
-                </main>
-            </div>
-            
-        </Fragment>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <Typography component='div' className={classes.contentInside}>
+                    { children }
+                </Typography>
+            </main>
+        </div>
     );
 };
 
-export default Layout;
+const drawerWidth = 240;
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        zIndex: 1,
+        height: '100vh',
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
+    drawerPaper: {
+        position: 'relative',
+        width: drawerWidth,
+    },
+    content: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing.unit * 4,
+        overflow: 'auto',
+    },
+    contentInside: {
+        maxWidth: '960px'
+    },
+    toolbar: theme.mixins.toolbar,
+});
+
+export default withStyles(styles)(Layout);

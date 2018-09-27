@@ -1,17 +1,25 @@
 import React, { Component, Fragment } from 'react';
 
-import './StudentDetails.scss';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+
+// import './StudentDetails.scss';
 
 import apiRequest from '../../helper/apiRequest';
 import { translateStudienkurse } from '../../helper/helper';
-// import Faecher from './components/Faecher';
 import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/modal/Modal';
-import Button from '../../components/Button';
 import Divider from '../../components/Divider';
 import Placeholder from '../../components/placeholder/Placeholder';
-import Tabs from '../../components/tabs/Tabs';
 
 
 const StudentDetailsLoading = () => (
@@ -40,7 +48,8 @@ class StudentDetails extends Component {
         noteModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
-        noteModalData: null
+        noteModalData: null,
+        tab: 'faecher'
     }
 
     componentDidMount() {
@@ -78,39 +87,65 @@ class StudentDetails extends Component {
         });
     }
 
+    tabChange = (e, tab) => {
+        this.setState({ tab });
+    };
+
     render() {
-        const { student } = this.state;
+        const { student, tab } = this.state;
+        const { classes } = this.props;
         return student ? (
             <Fragment>
                 <div>
-                    <h2>{student.name}</h2>
-                    {translateStudienkurse(student.studienkurs)},{' '}
-                    Jahrgang {student.jahrgang}
+                    <Typography variant="display1" gutterBottom>
+                        {student.name}
+                    </Typography>
+                    <Typography>
+                        {translateStudienkurse(student.studienkurs)},{' '}
+                        Jahrgang {student.jahrgang}
+                    </Typography>
                 </div>
                 <Divider hidden height='1rem' />
                 <div>
-                    <Button onClick={this.goBack} content='Zurück' icon='chevron-left' />
-                    <Button onClick={this.updateStudent} content='Bearbeiten' icon='edit' />
-                    <Button onClick={this.createNote} content='Note hinzufügen' icon='plus' />
+                    <Button  onClick={this.goBack} className={classes.button} >
+                        <ChevronLeftIcon className={classes.leftIcon} />
+                        Zurück
+                    </Button>
+                    <Button onClick={this.updateStudent} className={classes.button} >
+                        <EditIcon className={classes.leftIcon} />
+                        Bearbeiten
+                    </Button>
+                    <Button onClick={this.createNote} className={classes.button} >
+                        <AddIcon className={classes.leftIcon} />
+                        Note hinzufügen
+                    </Button>
                 </div>
 
                 <Divider hidden height='1rem' />
-                
-                <Tabs tabs={[
-                    { key: 0, title: 'Fächer', body: (
-                        <FaecherGrouped
-                            studentId={student.id}
-                            openNoteModal={this.openNoteModal}
-                        />
-                    )},
-                    { key: 1, title: 'Kontaktdaten', body: (
-                        <div>
-                            <h3>Kontaktdaten</h3>
-                        </div>
-                    )}
-                ]} />
 
-                
+                <Paper component="div" className={classes.tabsContainer}>
+                    <Tabs
+                        value={tab}
+                        onChange={this.tabChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        className={classes.tabsHeader}
+                    >
+                        <Tab value="faecher" label="Fächer" />
+                        <Tab value="contact" label="Kontaktdaten" />
+                    </Tabs>
+                    <Typography component="div" className={classes.tabContainer}>
+                        {tab === 'faecher' && (
+                            <FaecherGrouped
+                                studentId={student.id}
+                                openNoteModal={this.openNoteModal}
+                            />
+                        )}
+                        {tab === 'contact' && (
+                            <Typography>Kontaktdaten</Typography>
+                        )}
+                    </Typography>
+                </Paper>
 
                 <Modal
                     component={CreateNote}
@@ -124,4 +159,23 @@ class StudentDetails extends Component {
     }
 }
 
-export default StudentDetails;
+const styles = theme => ({
+    button: {
+        marginRight: theme.spacing.unit
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit
+    },
+    tabsContainer: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+    tabsHeader: {
+        borderBottom: `1px solid ${theme.palette.secondary.main}`
+    },
+    tabContainer: {
+        padding: theme.spacing.unit * 3
+    }
+})
+
+export default withStyles(styles)(StudentDetails);
