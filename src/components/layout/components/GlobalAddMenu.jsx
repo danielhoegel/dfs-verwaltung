@@ -1,53 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
+import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import SpellcheckIcon from '@material-ui/icons/Spellcheck';
+import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
+import DropdownMenu from '../../DropdownMenu';
 
 
 class GlobalAddMenu extends Component {
-    state = {
-        anchorEl: null
-    }
-
-    handleClick = event => {
-        this.setState({ anchorEl: event.currentTarget });
-    };
-    
-    handleClose = () => {
-        this.setState({ anchorEl: null });
-    };
-    
     render() {
-        const { anchorEl } = this.state;
-        const { classes } = this.props;
-    
         return (
-            <div>
-                <Button
-                    aria-owns={anchorEl ? 'simple-menu' : null}
-                    aria-haspopup="true"
-                    onClick={this.handleClick}
-                    color='inherit'
-                    className={classes.addButton}
-                >
-                    <AddBoxOutlinedIcon className={classes.addIcon} />
-                    Hinzufügen
-                </Button>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={this.handleClose}
-                >
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                </Menu>
-            </div>
+            <DropdownMenu id='global-add-menu' icon={AddBoxOutlinedIcon}>
+                <MenuItem component={NavLink} to='/studenten/create'>
+                    <ListItemIcon>
+                        <PersonOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary='Neuer Student' />
+                </MenuItem>
+                <MenuItem onClick={() => alert('Neue Note')}>
+                    <ListItemIcon>
+                        <SpellcheckIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary='Neue Note' />
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={() => alert('Neue Note')}>
+                    Neue Prüfungsordnung
+                </MenuItem>
+            </DropdownMenu>
         );
     }
 };
@@ -56,13 +41,4 @@ GlobalAddMenu.propTypes = {
     createStudent: PropTypes.func.isRequired,
 };
 
-const styles = theme => ({
-    addButton: {
-        marginLeft: theme.spacing.unit
-    },
-    addIcon: {
-        marginRight: theme.spacing.unit
-    }
-});
-
-export default withStyles(styles)(GlobalAddMenu);
+export default GlobalAddMenu;

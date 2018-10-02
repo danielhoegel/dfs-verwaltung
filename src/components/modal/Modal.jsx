@@ -1,45 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import './Modal.scss';
-
-class ModalComponent extends Component {
-    componentDidMount() {
-        document.body.classList.add('modal-open');
-        if (this.props.closeOnDimmerClick) {
-            document.addEventListener('click', this.dimmerClickHandler);
-        }
-    }
-    
-    componentWillUnmount() {
-        document.body.classList.remove('modal-open');
-        if (this.props.closeOnDimmerClick) {
-            document.removeEventListener('click', this.dimmerClickHandler);
-        }
-    }
-
-    dimmerClickHandler = (e) => {
-        if (!e.target.closest('.modal')) {
-            this.props.close();
-        }
-    }
-
-    render() {
-        const { title, component: Component, close, data } = this.props;
-        return (
-            <div className='modal-wrapper'>
-                <div className='modal'>
-                    <div className='modal__header'>
-                        <h3>{title}</h3>
-                    </div>
-                    <div className='modal__body'>
-                        <Component closeModal={close} data={data} />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
+import { withStyles } from '@material-ui/core/styles';
+import MUIModal from '@material-ui/core/Modal';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 class Modal extends Component {
     static propTypes = {
@@ -62,10 +26,49 @@ class Modal extends Component {
     }
 
     render() {
-        return this.props.open
-            ? <ModalComponent {...this.props} />
-            : null;
+        const { classes } = this.props;
+        return (
+            <MUIModal
+                aria-labelledby={this.props.title}
+                open={this.props.open}
+                onClose={this.props.close}
+            >
+                <Paper className={classes.wrapper} elevation={8}>
+                    <Typography variant='title' className={classes.header}>
+                        {this.props.title}
+                    </Typography>
+                    <div className={classes.body}>
+                        <this.props.component
+                            closeModal={this.props.close}
+                            data={this.props.data}
+                        />
+                    </div>
+                </Paper>
+            </MUIModal>
+        );
     }
 }
 
-export default Modal;
+const styles = theme => ({
+    wrapper: {
+        position: 'absolute',
+        maxWidth: theme.spacing.unit * 100,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        overflow: 'hidden',
+        outline: 0
+    },
+    header: {
+        paddingLeft: theme.spacing.unit * 3,
+        paddingRight: theme.spacing.unit * 3,
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+    },
+    body: {
+        backgroundColor: theme.palette.secondary.light,
+        padding: theme.spacing.unit * 3,
+    }
+});
+
+export default withStyles(styles)(Modal);
