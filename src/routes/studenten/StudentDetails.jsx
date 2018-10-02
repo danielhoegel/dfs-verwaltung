@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -7,13 +8,13 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
-// import './StudentDetails.scss';
+import { fetchStudentForId } from './redux/studentenActions';
+import { getStudentForId } from './redux/studentenSelectors';
 
-import apiRequest from '../../helper/apiRequest';
 import { translateStudienkurse } from '../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
@@ -43,8 +44,16 @@ const StudentDetailsLoading = () => (
 
 
 class StudentDetails extends Component {
+    static getDerivedStateFromProps(nextProps, prevState){
+        const studentId = parseInt(nextProps.match.params.id, 10);
+        if (studentId !== prevState.studentId) {
+            return { ...prevState, studentId }
+        }
+        return null;
+    }
+
     state = {
-        student: null,
+        studentId: parseInt(this.props.match.params.id, 10),
         noteModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
@@ -53,10 +62,9 @@ class StudentDetails extends Component {
     }
 
     componentDidMount() {
-        const studentId = this.props.match.params.id;
-        apiRequest(`/studenten/${studentId}`).then(student =>
-            this.setState({ student })
-        );
+        if (!this.props.student) {
+            this.props.fetchStudentForId(this.state.studentId);
+        }
     }
 
     goBack = () => {
@@ -64,7 +72,7 @@ class StudentDetails extends Component {
     }
 
     updateStudent = () => {
-        this.props.history.push(`/studenten/${this.props.match.params.id}/update`);
+        this.props.history.push(`/studenten/${this.state.studentId}/update`);
     }
 
     openNoteModal = (data) => {
@@ -83,7 +91,7 @@ class StudentDetails extends Component {
 
     createNote = () => {
         this.openNoteModal({
-            studentId: parseInt(this.props.match.params.id, 10)
+            studentId: this.state.studentId
         });
     }
 
@@ -92,13 +100,13 @@ class StudentDetails extends Component {
     };
 
     render() {
-        const { student, tab } = this.state;
-        const { classes } = this.props;
+        const { tab } = this.state;
+        const { student, classes } = this.props;
         return student ? (
             <Fragment>
                 <div>
                     <Typography variant="display1" gutterBottom>
-                        {student.name}
+                        {student.firstName} {student.lastName} ({student.matrikelnummer})
                     </Typography>
                     <Typography>
                         {translateStudienkurse(student.studienkurs)},{' '}
@@ -107,7 +115,7 @@ class StudentDetails extends Component {
                 </div>
                 <Divider hidden height='1rem' />
                 <div>
-                    <Button  onClick={this.goBack} className={classes.button} >
+                    <Button onClick={this.goBack} className={classes.button} >
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
                     </Button>
@@ -178,4 +186,10 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(StudentDetails);
+const mapStateToProps = (state, ownProps) => ({
+    student: getStudentForId(state, ownProps.match.params.id)
+});
+
+export default connect(mapStateToProps, { fetchStudentForId })(
+    withStyles(styles)(StudentDetails)
+);
