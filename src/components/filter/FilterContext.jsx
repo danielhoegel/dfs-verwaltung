@@ -6,13 +6,14 @@ export const FilterContextConsumer = Consumer;
 
 export class FilterContextProvider extends Component {
     state = {
-        semester: '2',
-        studienkurs: null,
+        semester: '',
+        studienkurs: '',
         jahrgang: '',
         student: ''
     }
 
     changeFilter = (name, value) => {
+        console.log('changeFilter', { name, value });
         this.setState({ [name]: value });
     }
 
