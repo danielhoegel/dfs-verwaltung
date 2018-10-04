@@ -3,13 +3,16 @@
  * https://github.com/typicode/json-server
  */
 
-module.exports = () => {
-    return {
-        studenten: require('./tables/studenten.js'),
-        faecher: require('./tables/faecher.js'),
-        veranstaltungen: require('./tables/veranstaltungen.js'),
-        noten: require('./tables/noten.js'),
-        studienkurse: require('./tables/studienkurse.js'),
-        studienordnungen: require('./tables/studienordnungen.js'),
-    }
-}
+const jsonServer = require('json-server');
+
+var server = jsonServer.create();
+var router = jsonServer.router(require('./router.js')());
+var middlewares = jsonServer.defaults();
+
+server.use(middlewares);
+server.use(router);
+
+const PORT = process.env.PORT || 3333;
+server.listen(PORT, () => {
+    console.log(`JSON Server is running on http://localhost:${PORT}`);
+});
