@@ -14,7 +14,7 @@ function Sidebar({ location }) {
     return (
         <List component="nav">
             <ListSubheader component='h2' >Datensätze</ListSubheader>
-            <ListItem component={NavLink} to='/studenten' button selected={location.pathname === '/studenten'}>
+            <ListItem component={NavLink} to='/studenten' button selected={location.pathname.indexOf('/studenten') !== -1}>
                 <ListItemIcon>
                     <PeopleOutlineIcon />
                 </ListItemIcon>
