@@ -27,7 +27,7 @@ export function getStudentForId(id) {
 export function getFachForVeranstaltung(veranstaltungId) {
     const veranstaltung = getVeranstaltungForId(veranstaltungId);
     return getFaecherData().filter(fach =>
-        fach.id === veranstaltung.fachID
+        fach.id === veranstaltung.subjectId
     )[0];
 }
 
@@ -46,20 +46,22 @@ export function getFaecherGroupedByTyp() {
     return result;
 }
 
-export function getFaecherGroupedBySemesterAndTyp() {
+export function getFaecherForStudyCourseGroupedBySemesterAndTyp(studyCourseId) {
     const groupedFaecher = {};
 
     getFaecherData().forEach(fach => {
-        if (groupedFaecher[fach.semester]) {
-            if (groupedFaecher[fach.semester][fach.typ]) {
-                groupedFaecher[fach.semester][fach.typ].push(fach);
+        if (fach.studyCourseId === studyCourseId) {
+            if (groupedFaecher[fach.semester]) {
+                if (groupedFaecher[fach.semester][fach.typ]) {
+                    groupedFaecher[fach.semester][fach.typ].push(fach);
+                } else {
+                    groupedFaecher[fach.semester][fach.typ] = [fach];
+                }
             } else {
-                groupedFaecher[fach.semester][fach.typ] = [fach];
+                groupedFaecher[fach.semester] = {
+                    [fach.typ]: [fach]
+                };
             }
-        } else {
-            groupedFaecher[fach.semester] = {
-                [fach.typ]: [fach]
-            };
         }
     });
 
@@ -79,7 +81,7 @@ export function getVeranstaltungForId(veranstaltungId) {
 
 export function getVeranstaltungenForFach(fachId = null) {
     const veranstaltungen = getVeranstaltungenData();
-    return veranstaltungen.filter(v => v.fachID === fachId);
+    return veranstaltungen.filter(v => v.subjectId === fachId);
     // return fachId
     //     ? veranstaltungen.filter(v => v.fachID === fachId)
     //     : veranstaltungen;
@@ -94,10 +96,10 @@ export function getNoteForId(noteId) {
      return getNotenData().filter(note => note.id === noteId)[0];
  }
 
-export function getNotenForStudentAndVeranstaltung(studentID, veranstaltungID) {
+export function getNotenForStudentAndVeranstaltung(studentId, veranstaltungId) {
     return getNotenData().filter(note =>
-        note.studentID === studentID &&
-        note.veranstaltungID === veranstaltungID
+        note.studentId === studentId &&
+        note.subjectCourseId === veranstaltungId
     );
 }
 
