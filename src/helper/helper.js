@@ -39,6 +39,20 @@ export function translateStudienkurse(studienkurs) {
     }
 }
 
+/**
+ * Translate study status into title
+ * @param {string} studyStatus 
+ */
+export function translateStudyStatus(studyStatus) {
+    switch (studyStatus) {
+        case 0: return 'Beworben';
+        case 1: return 'Aktiv';
+        case 2: return 'Abgeschlossen';
+        case 3: return 'Abgebrochen';
+        default: return studyStatus;
+    }
+}
+
 export function shortVorlesungTyp(typ) {
     switch (typ) {
         case 'Vorlesung': return 'Vorl.';
