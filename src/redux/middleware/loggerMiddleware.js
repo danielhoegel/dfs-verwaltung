@@ -2,7 +2,7 @@
 
 const loggerMiddleware = (store) => (next) => (action) => {
     // console.groupCollapsed(action.type);
-    console.log('[ACTION]', action.type)
+    console.log(`%c[ACTION] ${action.type}`, 'font-weight: bold');
     // console.log(`[${action.type}] prevState:`, store.getState());
     // console.log(`[${action.type}] action:`, action)
     const result = next(action);
