@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
@@ -20,10 +21,10 @@ import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/modal/Modal';
 import Divider from '../../components/Divider';
-import Placeholder from '../../components/placeholder/Placeholder';
+// import Placeholder from '../../components/placeholder/Placeholder';
 
 
-const StudentDetailsLoading = () => (
+/* const StudentDetailsLoading = () => (
     <Placeholder>
         <Placeholder.Item width='20%' height='1.25rem' />
         <Placeholder.Item width='35%' />
@@ -40,7 +41,7 @@ const StudentDetailsLoading = () => (
         <Placeholder.Item height='3rem' width='85%' />
         <Placeholder.Item height='4rem' width='75%' />
     </Placeholder>
-)
+) */
 
 
 class StudentDetails extends Component {
@@ -58,7 +59,7 @@ class StudentDetails extends Component {
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
         noteModalData: null,
-        tab: 'contact'
+        tab: 0
     }
 
     componentDidMount() {
@@ -105,9 +106,17 @@ class StudentDetails extends Component {
         this.setState({ tab });
     };
 
+    sortStudies() {
+        return this.props.student
+            ? this.props.student.studies.sort(
+                (a, b) => b.year - a.year
+            ) : [];
+    }
+
     render() {
         const { tab } = this.state;
         const { student, classes } = this.props;
+        const sortedStudies = this.sortStudies();
         return student ? (
             <Fragment>
                 <div>
@@ -137,18 +146,21 @@ class StudentDetails extends Component {
                 <Divider hidden height='1rem' />
 
                 <Paper component="div" className={classes.tabsContainer}>
+                {console.log(this.props.theme)}
                     <Tabs
                         value={tab}
                         onChange={this.tabChange}
                         indicatorColor="primary"
                         textColor="primary"
+                        scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
+                        scrollButtons='auto'
                         className={classes.tabsHeader}
                     >
-                        <Tab value="contact" label="Kontaktdaten" />
-                        {student.studies.map(study => (
+                        <Tab value='contact' label='Kontaktdaten' />
+                        {sortedStudies.map((study, index) => (
                             <Tab
-                                key={`${study.studentId}_${study.studyCourseId}}`}
-                                value={`${study.studentId}_${study.studyCourseId}}`}
+                                key={index}
+                                value={index}
                                 label={`${translateStudienkurse(study.studyCourseId)} ${study.year} (${translateStudyStatus(study.status)})`}
                             />
                         ))}
@@ -157,9 +169,9 @@ class StudentDetails extends Component {
                         {tab === 'contact' && (
                             <Typography>Kontaktdaten</Typography>
                         )}
-                        {student.studies.map(study => (
-                            <Fragment key={`${study.studentId}_${study.studyCourseId}}`}>
-                                {tab === `${study.studentId}_${study.studyCourseId}}` && (
+                        {sortedStudies.map((study, index) => (
+                            <Fragment key={index}>
+                                {tab === index && (
                                     <FaecherGrouped
                                         studentId={student.id}
                                         studyCourseId={study.studyCourseId}
@@ -179,7 +191,7 @@ class StudentDetails extends Component {
                     data={this.state.noteModalData}
                 />
             </Fragment>
-        ) : <StudentDetailsLoading />;
+        ) : <CircularProgress className={classes.loader} />;
     }
 }
 
@@ -199,6 +211,10 @@ const styles = theme => ({
     },
     tabContainer: {
         padding: theme.spacing.unit * 3
+    },
+    loader: {
+        margin: 2 * theme.spacing.unit + ' auto',
+
     }
 })
 
@@ -207,5 +223,5 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(
-    withStyles(styles)(StudentDetails)
+    withStyles(styles, { withTheme: true })(StudentDetails)
 );

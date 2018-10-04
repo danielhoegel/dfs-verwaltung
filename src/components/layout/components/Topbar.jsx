@@ -11,7 +11,7 @@ import GlobalAddMenu from './GlobalAddMenu';
 const Topbar = ({ classes }) => {
     return (
         <Toolbar>
-            <div className={classes.menuGrow} style={{ width: '30%'}}>
+            <div className={classes.breadcrumbs}>
                 <Breadcrumbs />
             </div>
             <GlobalSearch />
@@ -21,12 +21,8 @@ const Topbar = ({ classes }) => {
 };
 
 const styles = theme => ({
-    menuGrow: {
-        width: '30%',
-        marginRight: 'auto'
-    },
-    menuCenter: {
-        marginLeft: 'auto',
+    breadcrumbs: {
+        width: '50%',
         marginRight: 'auto'
     }
 });
