@@ -3,7 +3,6 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 
 import Breadcrumbs from './Breadcrumbs';
 import GlobalSearch from './GlobalSearch';
@@ -12,22 +11,19 @@ import GlobalAddMenu from './GlobalAddMenu';
 const Topbar = ({ classes }) => {
     return (
         <Toolbar>
-            <Typography color="inherit" className={classes.menuGrow}>
+            <div className={classes.menuGrow} style={{ width: '30%'}}>
                 <Breadcrumbs />
-            </Typography>
-            <div style={{ width: '30%'}}>
-                <GlobalSearch />
             </div>
-            <div style={{marginLeft: 'auto'}}>
-                <GlobalAddMenu />
-            </div>
+            <GlobalSearch />
+            <GlobalAddMenu createStudent={data => { console.log(data); }} />
         </Toolbar>
     );
 };
 
 const styles = theme => ({
     menuGrow: {
-        width: '30%'
+        width: '30%',
+        marginRight: 'auto'
     },
     menuCenter: {
         marginLeft: 'auto',
