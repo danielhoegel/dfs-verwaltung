@@ -24,7 +24,7 @@ export function isNotEmpty(value) {
  * @param {string} needle String to search for
  */
 export function stringsMatch(haystack, needle) {
-    return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+    return String(haystack).toLowerCase().indexOf(String(needle).toLowerCase()) !== -1;
 };
 
 /**
@@ -32,7 +32,7 @@ export function stringsMatch(haystack, needle) {
  * @param {string} studienkurs 
  */
 export function translateStudienkurse(studienkurs) {
-    switch (parseInt(studienkurs, 10)) {
+    switch (Number(studienkurs)) {
         case 1: return 'Grundstudienkurs';
         case 2: return 'Aufbaustudienkurs';
         default: return studienkurs;
