@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,12 +8,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
+import HiddenDivider from '../../components/HiddenDivider';
 import Placeholder from '../../components/placeholder/Placeholder';
-import { FilterContextConsumer } from '../../components/filter/FilterContext';
-import { translateStudienkurse } from '../../helper/helper';
-import apiRequest from '../../helper/apiRequest';
+import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
 import StudentenFilter from './components/StudentenFilter';
+import { fetchStudenten } from './redux/studentenActions';
+import { getFilteredStudenten, getStudentenFetching } from './redux/studentenSelectors';
 
 
 const StudentenlisteLoading = () => (
@@ -22,84 +26,110 @@ const StudentenlisteLoading = () => (
         <Placeholder.Item height='2rem' width='90%' />
         <Placeholder.Item height='2rem' width='80%' />
     </Placeholder>
-)
+);
 
 class StudentenListe extends Component {
-    state = {
-        studenten: []
-    }
-    
     componentDidMount() {
-        apiRequest('/studenten').then(studenten =>
-            this.setState({ studenten })
-        );
-    }
-    
+        // this.props.fetchStudenten();
+        this.props.dispatch({
+            type: 'FETCH_STUDENTEN',
+            request: {
+                url: '/students?_embed=studies'
+            }
+        });
+    }    
 
     goToDetails = (id) => {
         this.props.history.push(`studenten/${id}`)
     }
 
-    render() {
-        const { classes } = this.props;
-        return (
-            <FilterContextConsumer>
-                {({ filter }) => (
-                    this.state.studenten.length ? (
-                        <div>
-                            <div style={{marginBottom: '1rem'}}>
-                                <StudentenFilter />
+    renderStudenten() {
+        const { filteredStudenten, classes } = this.props;
+        return filteredStudenten.length
+            ? filteredStudenten.map(student => (
+                <TableRow
+                    key={student.id}
+                    onClick={() => this.goToDetails(student.id)}
+                    className={classes.row}
+                    hover
+                >
+                    <TableCell>{student.matrikelnummer}</TableCell>
+                    <TableCell>{student.firstName}</TableCell>
+                    <TableCell>{student.lastName}</TableCell>
+                    <TableCell>
+                        {student.studies.map(study => (
+                            <div key={`${study.studentId}_${study.studyCourseId}}`}>
+                                {translateStudienkurse(study.studyCourseId)}{' '}
+                                {study.year}{' '}
+                                ({translateStudyStatus(study.status)})
                             </div>
-                            <Paper>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell className={classes.head} style={{widTableCell: '10%'}}>ID</TableCell>
-                                            <TableCell className={classes.head}>Name</TableCell>
-                                            <TableCell className={classes.head} style={{width: '25%'}}>Studienkurs</TableCell>
-                                            <TableCell className={classes.head} style={{width: '15%'}}>Jahrgang</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {this.state.studenten
-                                            .filter(student => (
-                                                (!filter.jahrgang || parseInt(filter.jahrgang, 10) === student.jahrgang) &&
-                                                (!filter.studienkurs || filter.studienkurs === student.studienkurs) &&
-                                                (!filter.student || student.name.toLocaleLowerCase().indexOf(filter.student.toLocaleLowerCase()) !== -1)
-                                            ))
-                                            .map(student => (
-                                                <TableRow
-                                                    key={student.id}
-                                                    onClick={() => this.goToDetails(student.id)}
-                                                    className={classes.row}
-                                                    hover
-                                                >
-                                                    <TableCell>{student.id}</TableCell>
-                                                    <TableCell>{student.name}</TableCell>
-                                                    <TableCell>{translateStudienkurse(student.studienkurs)}</TableCell>
-                                                    <TableCell>{student.jahrgang}</TableCell>
-                                                </TableRow>
-                                            ))
-                                        }
-                                    </TableBody>
-                                </Table>
-                            </Paper>
-                        </div>
-                    ) : <StudentenlisteLoading />
-                )}
-            </FilterContextConsumer>
-        );
+                        ))}
+                    </TableCell>
+                </TableRow>
+            ))
+            :  (
+                <TableRow>
+                    <TableCell colSpan={4}>Keine Studenten gefunden</TableCell>
+                </TableRow>
+            );
     }
+
+    studentenOptions() {
+        return this.props.filteredStudenten.map(s => (
+            { value: s.id, label: s.firstName }
+        ));
+    }
+
+    render() {
+        const { fetching, classes } = this.props;
+        return fetching ? <StudentenlisteLoading /> :  (
+            <div>
+                <Typography variant="display1" gutterBottom>
+                    Studentenliste
+                </Typography>
+
+                <StudentenFilter />
+                <HiddenDivider height={2} />
+                <HiddenDivider height={2} />
+                <Paper>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classes.head} style={{width: '10%'}}>Matr.-Nr.</TableCell>
+                                <TableCell className={classes.head} style={{width: '20%'}}>Vorname</TableCell>
+                                <TableCell className={classes.head} style={{width: '25%'}}>Nachname</TableCell>
+                                <TableCell className={classes.head} style={{width: '45%'}}>Studienkurs</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.renderStudenten()}
+                        </TableBody>
+                    </Table>
+                </Paper>
+            </div>
+        )
+    };
 }
 
 const styles = theme => ({
     head: {
         color: theme.palette.primary.main,
-        borderBottom: `2px solid ${theme.palette.primary.main}`
+        borderBottom: `2px solid ${theme.palette.primary.main}`,
+        whiteSpace: 'nowrap'
     },
     row: {
         cursor: 'pointer'
+    },
+    inputField: {
+        margin: theme.spacing.unit
     }
 });
 
-export default withStyles(styles)(StudentenListe);
+const mapStateToProps = state => ({
+    filteredStudenten: getFilteredStudenten(state),
+    fetching: getStudentenFetching(state)
+});
+
+export default connect(mapStateToProps, { fetchStudenten, dispatch: action => action })(
+    withStyles(styles)(StudentenListe)
+);

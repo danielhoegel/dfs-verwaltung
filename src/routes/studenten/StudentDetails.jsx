@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { fetchStudentForId } from './redux/studentenActions';
 import { getStudentForId } from './redux/studentenSelectors';
 
-import { translateStudienkurse } from '../../helper/helper';
+import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/modal/Modal';
@@ -53,17 +53,23 @@ class StudentDetails extends Component {
     }
 
     state = {
-        studentId: parseInt(this.props.match.params.id, 10),
+        studentId: Number(this.props.match.params.id),
         noteModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
         noteModalData: null,
-        tab: 'faecher'
+        tab: 'contact'
     }
 
     componentDidMount() {
         if (!this.props.student) {
-            this.props.fetchStudentForId(this.state.studentId);
+            // this.props.fetchStudentForId(this.state.studentId);
+            this.props.dispatch({
+                type: 'FETCH_STUDENT',
+                request: {
+                    url: `/students/${this.state.studentId}?_embed=studies`
+                }
+            });
         }
     }
 
@@ -106,11 +112,10 @@ class StudentDetails extends Component {
             <Fragment>
                 <div>
                     <Typography variant="display1" gutterBottom>
-                        {student.firstName} {student.lastName} ({student.matrikelnummer})
+                        {student.prefix} {student.firstName} {student.lastName}
                     </Typography>
-                    <Typography>
-                        {translateStudienkurse(student.studienkurs)},{' '}
-                        Jahrgang {student.jahrgang}
+                    <Typography gutterBottom>
+                        Matrikelnummer: {student.matrikelnummer}
                     </Typography>
                 </div>
                 <Divider hidden height='1rem' />
@@ -139,19 +144,30 @@ class StudentDetails extends Component {
                         textColor="primary"
                         className={classes.tabsHeader}
                     >
-                        <Tab value="faecher" label="Fächer" />
                         <Tab value="contact" label="Kontaktdaten" />
+                        {student.studies.map(study => (
+                            <Tab
+                                key={`${study.studentId}_${study.studyCourseId}}`}
+                                value={`${study.studentId}_${study.studyCourseId}}`}
+                                label={`${translateStudienkurse(study.studyCourseId)} ${study.year} (${translateStudyStatus(study.status)})`}
+                            />
+                        ))}
                     </Tabs>
                     <Typography component="div" className={classes.tabContainer}>
-                        {tab === 'faecher' && (
-                            <FaecherGrouped
-                                studentId={student.id}
-                                openNoteModal={this.openNoteModal}
-                            />
-                        )}
                         {tab === 'contact' && (
                             <Typography>Kontaktdaten</Typography>
                         )}
+                        {student.studies.map(study => (
+                            <Fragment key={`${study.studentId}_${study.studyCourseId}}`}>
+                                {tab === `${study.studentId}_${study.studyCourseId}}` && (
+                                    <FaecherGrouped
+                                        studentId={student.id}
+                                        studyCourseId={study.studyCourseId}
+                                        openNoteModal={this.openNoteModal}
+                                    />
+                                )}
+                            </Fragment>
+                        ))}
                     </Typography>
                 </Paper>
 
@@ -190,6 +206,6 @@ const mapStateToProps = (state, ownProps) => ({
     student: getStudentForId(state, ownProps.match.params.id)
 });
 
-export default connect(mapStateToProps, { fetchStudentForId })(
+export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(
     withStyles(styles)(StudentDetails)
 );

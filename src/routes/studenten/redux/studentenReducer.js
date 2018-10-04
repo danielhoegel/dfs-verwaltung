@@ -1,11 +1,14 @@
+const defaultFilter = {
+    studyCourse: 1,
+    status: 1,
+    year: ''
+};
+
 const defaultState = {
     list: [],
     fetching: true,
     error: null,
-    filter: {
-        studienkurs: '',
-        jahrgang: '',
-    },
+    filter: defaultFilter,
     searchString: ''
 };
 
@@ -53,10 +56,7 @@ const studentenReducer = (state = defaultState, action) => {
 
         case 'RESET_STUDENTEN_FILTER': return {
             ...state,
-            filter: {
-                studienkurs: '',
-                jahrgang: '',
-            },
+            filter: defaultFilter,
         }
 
         case 'SEARCH_STUDENTEN': return {

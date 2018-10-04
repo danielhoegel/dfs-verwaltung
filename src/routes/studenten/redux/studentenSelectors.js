@@ -1,3 +1,5 @@
+import { isNotEmpty } from "../../../helper/helper";
+
 /* Base Selector */
 export function getStudentenData(state) {
     return state.studenten;
@@ -32,13 +34,28 @@ export function getStudentForId(state, id) {
 export function getFilteredStudenten(state) {
     const studenten = getStudenten(state);
     const { filter, searchString } = getStudentenData(state);
-    return studenten.filter(student => (
-        (!filter.jahrgang || filter.jahrgang === student.jahrgang) &&
-        (!filter.studienkurs || filter.studienkurs === student.studienkurs) &&
-        (!filter.student || (
+
+    return studenten.filter(student => {
+        const studyMatch = student.studies.some(study => {
+            if (filter.year && filter.year !== study.year ) {
+                return false;
+            }
+            if (isNotEmpty(filter.studyCourse) && filter.studyCourse !== study.studyCourseId) {
+                return false;
+            }
+            if (isNotEmpty(filter.status) && filter.status !== study.status) {
+                return false;
+            }
+            return true;
+        });
+        if (!studyMatch) return false;
+
+        const studentMatch = (
+            !filter.student ||
             student.firstName.toLocaleLowerCase().indexOf(searchString) !== -1 ||
             student.lastName.toLocaleLowerCase().indexOf(searchString) !== -1 ||
-            student.matrikelnummer.indexOf(parseInt(searchString, 10)) !== -1
-        ))
-    ))
+            student.matrikelnummer.indexOf(Number(searchString)) !== -1
+        );
+        return studentMatch;
+    });
 };

@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+
+import SearchSelect from '../../../components/SearchSelect';
 import Divider from '../../../components/Divider';
-import Input from '../../../components/Input';
-import Select from '../../../components/Select';
-import InputGroup from '../../../components/InputGroup';
-import Button from '../../../components/Button';
 
+import { shortVorlesungTyp } from '../../../helper/helper';
 import {
     getStudentenData,
     getFaecherData,
-    // getStudentForId,
-    // getVeranstaltungForId,
     getVeranstaltungenForFach,
     getFachForVeranstaltung,
     getNoteForId,
     getNotenForStudentAndVeranstaltung
 } from '../../../helper/selectors';
 
-import { shortVorlesungTyp } from '../../../helper/helper';
-
-const EMPTY_VALUE = 'EMPTY_VALUE';
 
 class NoteCreateUpdate extends Component {
     static propTypes = {
@@ -35,14 +35,15 @@ class NoteCreateUpdate extends Component {
         studenten: getStudentenData(),
         faecher: getFaecherData(),
         form: {
-                punkte: '',
-                versuch: 1,
-                datum: '',
-                pruefer: '',
-                student: this.props.data.studentId || EMPTY_VALUE,
-                veranstaltung: '',
-                fach: EMPTY_VALUE,
-            }
+            punkte: '',
+            versuch: 1,
+            datum: '',
+            pruefer: '',
+            studentId: this.props.data.studentId,
+            veranstaltung: '',
+            fach: '',
+            punktesystem: 'de'
+        }
     }
 
     componentDidMount() {
@@ -55,8 +56,8 @@ class NoteCreateUpdate extends Component {
                     ...state.form,
                     punkte: note.punkte,
                     versuch: note.versuch,
-                    veranstaltung: note.veranstaltungID,
-                    student: note.studentID
+                    veranstaltung: note.subjectCourseId,
+                    student: note.studentId
                 }
             }));
         } else if (
@@ -74,7 +75,7 @@ class NoteCreateUpdate extends Component {
                     veranstaltung: veranstaltungId,
                     fach: fach.id,
                     versuch: noten.length
-                        ? noten[noten.length - 1].versuch + 1
+                        ? noten[noten.length - 1].try + 1
                         : 1
                 }
             }));
@@ -90,146 +91,167 @@ class NoteCreateUpdate extends Component {
     
     submitHandler = (e) => {
         console.log('SUBMIT', {
-            ...this.state.form,
-            ...this.props.data
+            ...this.props.data,
+            ...this.state.form
         });
         e.preventDefault();
     }
 
     changeHandler = (e) => {
         const { name, value } = e.target;
+        console.log('change', { name, value });
         this.setState(state => ({
             form: {
                 ...state.form,
                 [name]: (isNaN(value) || value === '')
                     ? value
-                    : parseInt(value, 10)
+                    : Number(value)
             }
         }));
     }
 
     fachChangeHandler = (e) => {
-        const fachId = parseInt(e.target.value, 10);
+        const fachId = Number(e.target.value);
+        const veranstaltung = this.getVeranstaltungen(fachId)[0];
         this.setState(state => ({
             form: {
                 ...state.form,
                 fach: fachId,
-                veranstaltung: this.getVeranstaltungen(fachId)[0].id
+                veranstaltung: veranstaltung ? veranstaltung.id : '' 
             }
         }))
     }
 
-    getVeranstaltungen(fach) {
-        return getVeranstaltungenForFach(fach || this.state.form.fach)
-            .filter(v => v.teilnahmeart === 'Note');
+    getVeranstaltungen(fachId) {
+        return getVeranstaltungenForFach(fachId !== undefined ? fachId : this.state.form.fach)
+            .filter(v => v.participationType === 'Note');
     }
 
-    studentenOptions = () => ([
-        { value: EMPTY_VALUE, label: 'Student auswählen', disabled: true },
-        ...this.state.studenten
-            .map(s => ({ value: s.id, label: s.name }))
-    ]);
+    studentenOptions = () => this.state.studenten.map(s => (
+        { value: s.id, label: `${s.firstName} ${s.lastName}` }
+    ));
     
-    veranstaltungenOptions = () => this.getVeranstaltungen()
-        .map(v => ({
-            value: v.id,
-            label: shortVorlesungTyp(v.typ) + (v.name && ` (${v.name})`)
-        }));
+    veranstaltungenOptions = () => this.getVeranstaltungen().map(v => ({
+        value: v.id,
+        label: shortVorlesungTyp(v.type) + (v.title && ` (${v.title})`)
+    }));
 
-    faecherOptions = () => ([
-        { value: EMPTY_VALUE, label: 'Fach auswählen', disabled: true },
-        ...this.state.faecher
-            .map(f => ({ value: f.id, label: f.name }))]);
+    faecherOptions = () => this.state.faecher.map(f => (
+        { value: f.id, label: f.title }
+    ));
 
     render() {
+        const { classes } = this.props;
         return (
             <div>
-                {/* <h2>{student.name}</h2>
-                <strong>{fach.name}</strong> (
-                    {veranstaltung.typ}
-                    {veranstaltung.name && `: ${veranstaltung.name}`}
-                ) */}
-                {/* <Divider hidden /> */}
-                
                 <form onSubmit={this.submitHandler} >
-                    <InputGroup>
-                        <Select
-                            width={4}
-                            name='student'
+                    <div className={classes.fieldGroup}>
+                        <SearchSelect
+                            name='studentId'
                             label='Student'
-                            placeholder='Student'
-                            value={this.state.form.student}
+                            value={this.state.form.studentId}
                             onChange={this.changeHandler}
                             options={this.studentenOptions()}
+                            className={classes.textField}
+                            style={{ width: '35%'}}
                         />
-                        <Select
-                            width={4}
+                        <SearchSelect
                             name='fach'
                             label='Fach'
-                            placeholder='Fach'
                             value={this.state.form.fach}
                             onChange={this.fachChangeHandler}
                             options={this.faecherOptions()}
+                            className={classes.textField}
                         />
-                        <Select
-                            width={4}
+                        <TextField
+                            select
                             name='veranstaltung'
                             label='Veranstaltung'
-                            placeholder='Veranstaltung'
                             value={this.state.form.veranstaltung}
                             onChange={this.changeHandler}
-                            options={this.veranstaltungenOptions()}
-                            disabled={!this.state.form.fach || this.state.form.fach === EMPTY_VALUE}
-                        />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputGroup width={4}>
-                            <Input
+                            className={classes.textField}
+                            disabled={
+                                (!this.state.form.fach && this.state.form.fach !== 0) ||
+                                this.veranstaltungenOptions().length === 1
+                            }
+                        >
+                            {this.veranstaltungenOptions().map(({ value, label }) => (
+                                <MenuItem key={value} value={value}>
+                                    {label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </div>
+                    <div className={classes.fieldGroup}>
+                        <div className={classes.fieldGroup} style={{ width: '35%'}}>
+                            <TextField
                                 name='punkte'
-                                label='Punkte (0 - 18)'
-                                placeholder='Punkte'
+                                label={`Punkte (0 - ${this.state.form.punktesystem === 'de' ? 18 : 20})`}
                                 type='number'
                                 value={this.state.form.punkte}
                                 onChange={this.changeHandler}
                                 autoFocus
                                 required
-                                style={{fontSize: '2rem', textAlign: 'center'}}
+                                className={classNames(classes.textField, classes.punkteField)}
+                                variant='outlined'
+                                InputLabelProps={{ shrink: true }}
+                                InputProps={{ className: classes.punkteFieldInput }}
+                                margin="normal"
                             />    
-                        </InputGroup>
-                        <InputGroup width={8} stacked>
-                            <InputGroup>
-                                <Input
+                        </div>
+                        <div className={classNames(classes.fieldGroup, classes.stackedFieldGroup)} style={{ width: '65%'}}>
+                            <div className={classes.fieldGroup}>
+                                <TextField
+                                    select
+                                    name='punktesystem'
+                                    label='Note'
+                                    value={this.state.form.punktesystem}
+                                    onChange={this.changeHandler}
+                                    className={classes.textField}
+                                >
+                                    <MenuItem value='de'>DE</MenuItem>
+                                    <MenuItem value='fr'>FR</MenuItem>
+                                </TextField>
+                                <TextField
                                     name='versuch'
                                     label='Versuch'
-                                    placeholder='Versuch'
                                     type='number'
                                     value={this.state.form.versuch}
                                     onChange={this.changeHandler}
+                                    className={classes.textField}
                                 />
-                                <Input
+                                <TextField
                                     name='datum'
                                     label='Prüfungsdatum'
                                     type='date'
                                     value={this.state.form.datum}
                                     onChange={this.changeHandler}
+                                    className={classes.textField}
+                                    InputLabelProps={{ shrink: true }}
+                                    style={{ flex: 3 }}
                                 />
-                            </InputGroup>
-                            <InputGroup>
-                                <Input
+                            </div>
+                            <div className={classes.fieldGroup}>
+                                <TextField
                                     name='pruefer'
                                     label='Prüfer'
-                                    placeholder='Prüfer'
                                     value={this.state.form.pruefer}
                                     onChange={this.changeHandler}
+                                    className={classes.textField}
                                 />
-                            </InputGroup>
-                        </InputGroup>
-                    </InputGroup>
+                            </div>
+                        </div>
+                    </div>
 
                     <Divider hidden />
 
-                    <Button primary type='submit' content='Note hinzufügen' icon='plus' />
-                    <Button onClick={this.props.closeModal} content='Abbrechen' />
+                    <Button className={classes.button} type='submit' variant='contained' color='primary'>
+                        <AddIcon className={classes.leftIcon} />
+                        Note hinzufügen
+                    </Button>
+                    <Button className={classes.button} onClick={this.props.closeModal} variant='contained'>
+                        Abbrechen
+                    </Button>
                 </form>
                 
             </div>
@@ -237,4 +259,33 @@ class NoteCreateUpdate extends Component {
     }
 }
 
-export default NoteCreateUpdate;
+const styles = theme => ({
+    fieldGroup: {
+        display: 'flex'
+    },
+    stackedFieldGroup: {
+        flexDirection: 'column'
+    },
+    textField: {
+        margin: theme.spacing.unit,
+        flex: 1
+    },
+    punkteField: {
+        
+    },
+    punkteFieldInput: {
+        height: '100%',
+        fontSize: '2rem',
+        '& input': {
+            textAlign: 'center',
+        }
+    },
+    button: {
+        marginRight: theme.spacing.unit
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit
+    },
+});
+
+export default withStyles(styles)(NoteCreateUpdate);

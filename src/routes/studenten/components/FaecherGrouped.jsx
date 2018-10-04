@@ -11,9 +11,8 @@ import TableCell from '@material-ui/core/TableCell';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
-import { FilterContextConsumer } from '../../../components/filter/FilterContext';
 import {
-    getFaecherGroupedBySemesterAndTyp,
+    getFaecherForStudyCourseGroupedBySemesterAndTyp,
     getVeranstaltungenForFach,
     getNotenForStudentAndVeranstaltung,
 } from '../../../helper/selectors';
@@ -36,7 +35,7 @@ const notenStyles = theme => ({
 });
 
 const Noten = withStyles(notenStyles)(({ veranstaltung, noten, studentId, openNoteModal, classes }) => {
-    return veranstaltung.teilnahmeart === 'Note' ? (
+    return veranstaltung.participationType === 'Note' ? (
         <div>
             {noten.map(note => (
                 <div
@@ -45,8 +44,8 @@ const Noten = withStyles(notenStyles)(({ veranstaltung, noten, studentId, openNo
                     onClick={() => openNoteModal({ noteId: note.id })}
                 >
                     <i className='fa fa-wrench' />
-                    {note.punkte} Pkt.
-                    {noten.length > 1 && ` (${note.versuch}. Versuch)`}
+                    {note.grade} Pkt.
+                    {noten.length > 1 && ` (${note.try}. Versuch)`}
                 </div>
             ))}
             <Button
@@ -81,8 +80,8 @@ const Fach = withStyles(fachStyles)(({ fach, studentId, openNoteModal, classes }
         <TableBody>
             {veranstaltungen
                 .sort((a, b) => (
-                    a.typ.localeCompare(b.typ) ||
-                    a.name.localeCompare(b.name) ||
+                    a.type.localeCompare(b.type) ||
+                    a.title.localeCompare(b.title) ||
                     a.id - b.id
                 ))
                 .map((veranstaltung, index) => {
@@ -90,11 +89,11 @@ const Fach = withStyles(fachStyles)(({ fach, studentId, openNoteModal, classes }
                     return (
                         <TableRow key={veranstaltung.id} className={classes.bodyRow}>
                             {index === 0 && (
-                                <TableCell rowSpan={veranstaltungen.length}>{fach.name}</TableCell>
+                                <TableCell rowSpan={veranstaltungen.length}>{fach.title}</TableCell>
                             )}
                             <TableCell>
-                                {veranstaltung.typ}
-                                {veranstaltung.name && ` (${veranstaltung.name})`}
+                                {veranstaltung.type}
+                                {veranstaltung.title && ` (${veranstaltung.title})`}
                             </TableCell>
                             <TableCell style={{textAlign: 'right'}}>
                                 <Noten
@@ -139,7 +138,8 @@ const TypenGroup = withStyles(typenGroupStyles)(({ typ, faecher, studentId, open
         </TableHead>
         {faecher    
             .sort((a, b) => (
-                a.name.localeCompare(b.name) ||
+                a.type.localeCompare(b.type) ||
+                a.title.localeCompare(b.title) ||
                 a.id - b.id
             ))
             .map(fach =>
@@ -182,36 +182,26 @@ const SemesterGroup = withStyles(semesterGroupStyles)(({ semester, typen, studen
 class FaecherGrouped extends Component {
     static propTypes = {
         studentId: PropTypes.number.isRequired,
+        studyCourseId: PropTypes.number.isRequired,
         openNoteModal: PropTypes.func.isRequired,
     }
 
     state = {
-        faecher: getFaecherGroupedBySemesterAndTyp(),
+        faecher: getFaecherForStudyCourseGroupedBySemesterAndTyp(this.props.studyCourseId),
     }
 
     render() {
         const { faecher } = this.state;
         return faecher ? (
-            <FilterContextConsumer>
-                {({ filter }) => filter.semester ? (
-                    <SemesterGroup
-                        semester={filter.semester}
-                        typen={faecher[filter.semester]}
-                        studentId={this.props.studentId}
-                        openNoteModal={this.props.openNoteModal}
-                    />
-                ) : (
-                    Object.entries(faecher).map(([semester, typen]) => (
-                        <SemesterGroup
-                            key={semester}
-                            semester={semester}
-                            typen={typen}
-                            studentId={this.props.studentId}
-                            openNoteModal={this.props.openNoteModal}
-                        />
-                    ))
-                )}
-            </FilterContextConsumer>
+            Object.entries(faecher).map(([semester, typen]) => (
+                <SemesterGroup
+                    key={semester}
+                    semester={semester}
+                    typen={typen}
+                    studentId={this.props.studentId}
+                    openNoteModal={this.props.openNoteModal}
+                />
+            ))
         ) : 'Keine Fächer gefunden.';
     }
 };
