@@ -1,3 +1,23 @@
+export function isEmpty(value) {
+    switch (typeof value) {
+        case 'string': return !value;
+        case 'number': return !value && value !== 0;
+        case 'object':
+            switch (value.__proto__) {
+                case String.prototype: return !value;
+                case Number.prototype: return !value && value !== 0;
+                case Array.prototype: return !value && value !== [];
+                case Object.prototype: return !value && value !== {};
+                default: return !value;
+        }
+        default: return !value;
+    }
+}
+
+export function isNotEmpty(value) {
+    return !isEmpty(value);
+}
+
 /**
  * Return wheather the needle is found inside the heystack (case insensitiv)
  * @param {string} haystack String to search in
