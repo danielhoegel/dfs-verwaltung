@@ -5,7 +5,9 @@
     "subjectCourseId": 0,
     "grade": 3,
     "gradingSystemId": 0,
-    "try": 1
+    "try": 1,
+    "date": "2018-02-01",
+    "lecturer": ""
   },
   {
     "id": 1,
@@ -13,7 +15,9 @@
     "subjectCourseId": 0,
     "grade": 7,
     "gradingSystemId": 0,
-    "try": 2
+    "try": 2,
+    "date": "2018-02-01",
+    "lecturer": ""
   },
   {
     "id": 2,
@@ -21,7 +25,9 @@
     "subjectCourseId": 2,
     "grade": 8,
     "gradingSystemId": 0,
-    "try": 1
+    "try": 1,
+    "date": "2018-02-01",
+    "lecturer": ""
   },
   {
     "id": 3,
@@ -29,7 +35,9 @@
     "subjectCourseId": 4,
     "grade": 11,
     "gradingSystemId": 0,
-    "try": 1
+    "try": 1,
+    "date": "2018-02-01",
+    "lecturer": ""
   },
   {
     "id": 4,
@@ -37,7 +45,9 @@
     "subjectCourseId": 6,
     "grade": 9,
     "gradingSystemId": 0,
-    "try": 1
+    "try": 1,
+    "date": "2018-02-01",
+    "lecturer": ""
   },
   {
     "id": 5,
@@ -45,7 +55,9 @@
     "subjectCourseId": 8,
     "grade": 6,
     "gradingSystemId": 0,
-    "try": 1
+    "try": 1,
+    "date": "2018-02-01",
+    "lecturer": ""
   },
   {
     "id": 6,
@@ -53,6 +65,8 @@
     "subjectCourseId": 9,
     "grade": 7,
     "gradingSystemId": 0,
-    "try": 1
+    "try": 1,
+    "date": "2018-02-01",
+    "lecturer": ""
   }
 ]
