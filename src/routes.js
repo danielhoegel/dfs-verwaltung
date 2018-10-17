@@ -7,8 +7,13 @@ import StudentenListe from './routes/studenten/StudentenListe';
 import StudentDetails from './routes/studenten/StudentDetails';
 import StudentUpdate from './routes/studenten/StudentUpdate';
 import StudentCreate from './routes/studenten/StudentCreate';
-import LESBListe from './routes/lesb/LESBListe';
-import Ergebnisse from './routes/ergebnisse/Ergebnisse';
+
+import StudyCourseList from './routes/studienkurse/StudyCourseList';
+import StudyRegulation from './routes/studienkurse/StudyRegulation';
+
+import Playground from './routes/playground/Playground';
+
+import Reports from './reports/Reports';
 
 
 /* Custom Breadcrumbs */
@@ -20,7 +25,6 @@ const StudentBreadcrumb = connect((state, props) => ({
 );
 
 
-
 /* ROUTES */
 export default [
     { path: '/', breadcrumb: 'DFS-Verwaltung', exact: true },
@@ -28,8 +32,11 @@ export default [
     { path: '/studenten/create', component: StudentCreate, exact: true, breadcrumb: 'Neuer Student' },
     { path: '/studenten/:id', component: StudentDetails, exact: true, breadcrumb: StudentBreadcrumb },
     { path: '/studenten/:id/update', component: StudentUpdate, breadcrumb: 'Student Bearbeiten' },
-    // { path: '/studenten/:studentID/note/:veranstaltungID?', component: StudentUpdate, breadcrumb: 'Bearbeiten' },
-    { path: '/lesb-liste', component: LESBListe,  breadcrumb: 'LESB-Liste' },
-    { path: '/ergebnisse', component: Ergebnisse, breadcrumb: 'Prüfungsergebnisse' },
+    { path: '/berichte/:report?', component: Reports, breadcrumb: 'Berichte' },
+    { path: '/studienkurse', component: StudyCourseList, exact: true, breadcrumb: 'Studienkurse' },
+    { path: '/studienkurse/studienordnung/', component: null, exact: true, breadcrumb: null },
+    { path: '/studienkurse/studienordnung/:studyRegulationId/', component: StudyRegulation, exact: true, breadcrumb: 'Studienordnung' },
+    { path: '/studienkurse/studienordnung/:studyRegulationId/:subjectId', component: StudyRegulation, breadcrumb: null },
+    { path: '/playground/:id?', component: Playground, breadcrumb: 'Playground' },
 ];
   

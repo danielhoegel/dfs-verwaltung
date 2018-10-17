@@ -14,26 +14,29 @@ function Sidebar({ location }) {
     return (
         <List component="nav">
             <ListSubheader component='h2' >Datensätze</ListSubheader>
-            <ListItem component={NavLink} to='/studenten' button selected={location.pathname.indexOf('/studenten') !== -1}>
+            <ListItem component={NavLink} to='/studenten' button selected={location.pathname.startsWith('/studenten')}>
                 <ListItemIcon>
                     <PeopleOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary='Studenten' />
             </ListItem>
-            <ListItem component={NavLink} to='/faecher' button selected={location.pathname === '/faecher'}>
+            <ListItem component={NavLink} to='/studienkurse' button selected={location.pathname.startsWith('/studienkurse')}>
                 <ListItemIcon>
                     <FeaturedPlayListOutlineIcon />
                 </ListItemIcon>
-                <ListItemText primary='Fächer' />
+                <ListItemText primary='Studienkurse' />
             </ListItem>
             
             <Divider />
 
             <ListSubheader component='h2'>Berichte</ListSubheader>
-            <ListItem component={NavLink} to='/lesb-liste' button selected={location.pathname === '/lesb-liste'}>
+            <ListItem component={NavLink} to='/berichte/studenten' button selected={location.pathname === '/berichte/studenten'}>
+                <ListItemText primary='Studentenliste' />
+            </ListItem>
+            <ListItem component={NavLink} to='/berichte/lesb' button selected={location.pathname === '/berichte/lesb'}>
                 <ListItemText primary='LESB-Liste' />
             </ListItem>
-            <ListItem component={NavLink} to='/ergebnisse' button selected={location.pathname === '/ergebnisse'}>
+            <ListItem component={NavLink} to='/berichte/ergebnisse' button selected={location.pathname === '/berichte/ergebnisse'}>
                 <ListItemText primary='Prüfungsergebnisse' />
             </ListItem>
         </List>
