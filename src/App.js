@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import './styles/main.scss';
+import 'typeface-roboto';
+
 import routes from './routes';
 import { FilterContextProvider } from './components/filter/FilterContext';
 import Layout from './components/layout/Layout';
 
+
 class App extends Component {
     render() {
         return (
-            <Router>
+            <BrowserRouter>
                 <FilterContextProvider>
+                    <CssBaseline />
                     <Layout>
                         <Switch>
                             <Redirect from='/' to='/studenten' exact />
@@ -21,7 +24,7 @@ class App extends Component {
                         </Switch>
                     </Layout>
                 </FilterContextProvider>
-            </Router>
+            </BrowserRouter>
         );
     }
 }

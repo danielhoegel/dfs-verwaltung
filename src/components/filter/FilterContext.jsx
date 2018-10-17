@@ -13,6 +13,7 @@ export class FilterContextProvider extends Component {
     }
 
     changeFilter = (name, value) => {
+        console.log('changeFilter', { name, value });
         this.setState({ [name]: value });
     }
 

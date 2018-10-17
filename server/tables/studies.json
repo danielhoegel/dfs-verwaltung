@@ -1,0 +1,51 @@
+[
+  {
+    "studentId": 0,
+    "studyCourseId": 1,
+    "studyRegulationId": 2,
+    "year": 2015,
+    "status": 1
+  },
+  {
+    "studentId": 1,
+    "studyCourseId": 1,
+    "studyRegulationId": 2,
+    "year": 2015,
+    "status": 1
+  },
+  {
+    "studentId": 2,
+    "studyCourseId": 1,
+    "studyRegulationId": 2,
+    "year": 2015,
+    "status": 1
+  },
+  {
+    "studentId": 3,
+    "studyCourseId": 1,
+    "studyRegulationId": 2,
+    "year": 2016,
+    "status": 1
+  },
+  {
+    "studentId": 4,
+    "studyCourseId": 1,
+    "studyRegulationId": 2,
+    "year": 2016,
+    "status": 1
+  },
+  {
+    "studentId": 5,
+    "studyCourseId": 1,
+    "studyRegulationId": 2,
+    "year": 2014,
+    "status": 2
+  },
+  {
+    "studentId": 5,
+    "studyCourseId": 2,
+    "studyRegulationId": 2,
+    "year": 2017,
+    "status": 1
+  }
+]

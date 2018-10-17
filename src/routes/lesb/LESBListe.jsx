@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './LESBListe.scss';
 import LESBListeFaecher from './components/LESBListeFaecher';
 import { FilterContextConsumer } from '../../components/filter/FilterContext';
-import Header from '../../components/Header';
+import Typography from '@material-ui/core/Typography';
 import { getTodayDate } from '../../helper/helper';
 import {
     getStudentenData,
@@ -22,7 +22,7 @@ class StudentenListe extends Component {
             <FilterContextConsumer>
                 {({ filter }) => (
                     <div className='lesb-liste'>
-                        <Header as='h2' content='LESB-Listen' align='center' />
+                        <Typography component='h2' variant='display2' primary='LESB-Listen' align='center' />
                         {this.state.studenten
                             .filter(student => (
                                 (!filter.jahrgang || parseInt(filter.jahrgang, 10) === student.jahrgang) &&
@@ -31,9 +31,10 @@ class StudentenListe extends Component {
                             ))
                             .map(student => (
                                 <div className='student' key={student.id}>
-                                    <Header
-                                        as='h3'
-                                        content={`LESB - Anmeldung - Mtknr. ${student.matrikelnummer} - ${student.lastName}, ${student.firstName} - Datum ${this.state.datum}`}
+                                    <Typography
+                                        component='h3'
+                                        variant='display1'
+                                        primary={`LESB - Anmeldung - Mtknr. ${student.matrikelnummer} - ${student.lastName}, ${student.firstName} - Datum ${this.state.datum}`}
                                     />
                                     <LESBListeFaecher student={student} faecher={this.state.faecher.de} />
                                     <p className='anmerkung'>(aus den oben angegebenen Klausuren müssen 5 von den 6 fett gedruckten Klausuren bestanden werden, davon mindestens 1 in jedem Rechtsgebiet - sollte der/die Studierende den Studienkurs verlassen, müssen 9 von den 12 Klausuren bestanden sein)</p>

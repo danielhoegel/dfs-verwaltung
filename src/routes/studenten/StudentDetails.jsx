@@ -1,20 +1,30 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
-import './StudentDetails.scss';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import apiRequest from '../../helper/apiRequest';
-import { translateStudienkurse } from '../../helper/helper';
-// import Faecher from './components/Faecher';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+
+import { fetchStudentForId } from './redux/studentenActions';
+import { getStudentForId } from './redux/studentenSelectors';
+
+import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
-import Modal from '../../components/modal/Modal';
-import Button from '../../components/Button';
+import Modal from '../../components/Modal';
 import Divider from '../../components/Divider';
-import Placeholder from '../../components/placeholder/Placeholder';
-import Tabs from '../../components/tabs/Tabs';
+// import Placeholder from '../../components/placeholder/Placeholder';
 
 
-const StudentDetailsLoading = () => (
+/* const StudentDetailsLoading = () => (
     <Placeholder>
         <Placeholder.Item width='20%' height='1.25rem' />
         <Placeholder.Item width='35%' />
@@ -31,23 +41,37 @@ const StudentDetailsLoading = () => (
         <Placeholder.Item height='3rem' width='85%' />
         <Placeholder.Item height='4rem' width='75%' />
     </Placeholder>
-)
+) */
 
 
 class StudentDetails extends Component {
+    static getDerivedStateFromProps(nextProps, prevState){
+        const studentId = parseInt(nextProps.match.params.id, 10);
+        if (studentId !== prevState.studentId) {
+            return { ...prevState, studentId }
+        }
+        return null;
+    }
+
     state = {
-        student: null,
+        studentId: Number(this.props.match.params.id),
         noteModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
-        noteModalData: null
+        noteModalData: null,
+        tab: 0
     }
 
     componentDidMount() {
-        const studentId = this.props.match.params.id;
-        apiRequest(`/studenten/${studentId}`).then(student =>
-            this.setState({ student })
-        );
+        if (!this.props.student) {
+            // this.props.fetchStudentForId(this.state.studentId);
+            this.props.dispatch({
+                type: 'FETCH_STUDENT',
+                request: {
+                    url: `/students/${this.state.studentId}?_embed=studies`
+                }
+            });
+        }
     }
 
     goBack = () => {
@@ -55,7 +79,7 @@ class StudentDetails extends Component {
     }
 
     updateStudent = () => {
-        this.props.history.push(`/studenten/${this.props.match.params.id}/update`);
+        this.props.history.push(`/studenten/${this.state.studentId}/update`);
     }
 
     openNoteModal = (data) => {
@@ -74,43 +98,90 @@ class StudentDetails extends Component {
 
     createNote = () => {
         this.openNoteModal({
-            studentId: parseInt(this.props.match.params.id, 10)
+            studentId: this.state.studentId
         });
     }
 
+    tabChange = (e, tab) => {
+        this.setState({ tab });
+    };
+
+    sortStudies() {
+        return this.props.student
+            ? this.props.student.studies.sort(
+                (a, b) => b.year - a.year
+            ) : [];
+    }
+
     render() {
-        const { student } = this.state;
+        const { tab } = this.state;
+        const { student, classes } = this.props;
+        const sortedStudies = this.sortStudies();
         return student ? (
             <Fragment>
                 <div>
-                    <h2>{student.name}</h2>
-                    {translateStudienkurse(student.studienkurs)},{' '}
-                    Jahrgang {student.jahrgang}
+                    <Typography variant="display1" gutterBottom>
+                        {student.prefix} {student.firstName} {student.lastName}
+                    </Typography>
+                    <Typography gutterBottom>
+                        Matrikelnummer: {student.matrikelnummer}
+                    </Typography>
                 </div>
                 <Divider hidden height='1rem' />
                 <div>
-                    <Button onClick={this.goBack} content='Zurück' icon='chevron-left' />
-                    <Button onClick={this.updateStudent} content='Bearbeiten' icon='edit' />
-                    <Button onClick={this.createNote} content='Note hinzufügen' icon='plus' />
+                    <Button onClick={this.goBack} className={classes.button} >
+                        <ChevronLeftIcon className={classes.leftIcon} />
+                        Zurück
+                    </Button>
+                    <Button onClick={this.updateStudent} className={classes.button} >
+                        <EditIcon className={classes.leftIcon} />
+                        Bearbeiten
+                    </Button>
+                    <Button onClick={this.createNote} className={classes.button} >
+                        <AddIcon className={classes.leftIcon} />
+                        Note hinzufügen
+                    </Button>
                 </div>
 
                 <Divider hidden height='1rem' />
-                
-                <Tabs tabs={[
-                    { key: 0, title: 'Fächer', body: (
-                        <FaecherGrouped
-                            studentId={student.id}
-                            openNoteModal={this.openNoteModal}
-                        />
-                    )},
-                    { key: 1, title: 'Kontaktdaten', body: (
-                        <div>
-                            <h3>Kontaktdaten</h3>
-                        </div>
-                    )}
-                ]} />
 
-                
+                <Paper component="div" className={classes.tabsContainer}>
+                {console.log(this.props.theme)}
+                    <Tabs
+                        value={tab}
+                        onChange={this.tabChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
+                        scrollButtons='auto'
+                        className={classes.tabsHeader}
+                    >
+                        <Tab value='contact' label='Kontaktdaten' />
+                        {sortedStudies.map((study, index) => (
+                            <Tab
+                                key={index}
+                                value={index}
+                                label={`${translateStudienkurse(study.studyCourseId)} ${study.year} (${translateStudyStatus(study.status)})`}
+                            />
+                        ))}
+                    </Tabs>
+                    <Typography component="div" className={classes.tabContainer}>
+                        {tab === 'contact' && (
+                            <Typography>Kontaktdaten</Typography>
+                        )}
+                        {sortedStudies.map((study, index) => (
+                            <Fragment key={index}>
+                                {tab === index && (
+                                    <FaecherGrouped
+                                        studentId={student.id}
+                                        studyCourseId={study.studyCourseId}
+                                        openNoteModal={this.openNoteModal}
+                                    />
+                                )}
+                            </Fragment>
+                        ))}
+                    </Typography>
+                </Paper>
 
                 <Modal
                     component={CreateNote}
@@ -120,8 +191,37 @@ class StudentDetails extends Component {
                     data={this.state.noteModalData}
                 />
             </Fragment>
-        ) : <StudentDetailsLoading />;
+        ) : <CircularProgress className={classes.loader} />;
     }
 }
 
-export default StudentDetails;
+const styles = theme => ({
+    button: {
+        marginRight: theme.spacing.unit
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit
+    },
+    tabsContainer: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+    tabsHeader: {
+        borderBottom: `1px solid ${theme.palette.secondary.main}`
+    },
+    tabContainer: {
+        padding: theme.spacing.unit * 3
+    },
+    loader: {
+        margin: 2 * theme.spacing.unit + ' auto',
+
+    }
+})
+
+const mapStateToProps = (state, ownProps) => ({
+    student: getStudentForId(state, ownProps.match.params.id)
+});
+
+export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(
+    withStyles(styles, { withTheme: true })(StudentDetails)
+);

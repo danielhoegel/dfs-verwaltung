@@ -1,10 +1,30 @@
+export function isEmpty(value) {
+    switch (typeof value) {
+        case 'string': return !value;
+        case 'number': return !value && value !== 0;
+        case 'object':
+            switch (value.__proto__) {
+                case String.prototype: return !value;
+                case Number.prototype: return !value && value !== 0;
+                case Array.prototype: return !value && value !== [];
+                case Object.prototype: return !value && value !== {};
+                default: return !value;
+        }
+        default: return !value;
+    }
+}
+
+export function isNotEmpty(value) {
+    return !isEmpty(value);
+}
+
 /**
  * Return wheather the needle is found inside the heystack (case insensitiv)
  * @param {string} haystack String to search in
  * @param {string} needle String to search for
  */
 export function stringsMatch(haystack, needle) {
-    return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+    return String(haystack).toLowerCase().indexOf(String(needle).toLowerCase()) !== -1;
 };
 
 /**
@@ -12,10 +32,24 @@ export function stringsMatch(haystack, needle) {
  * @param {string} studienkurs 
  */
 export function translateStudienkurse(studienkurs) {
-    switch (parseInt(studienkurs, 10)) {
+    switch (Number(studienkurs)) {
         case 1: return 'Grundstudienkurs';
         case 2: return 'Aufbaustudienkurs';
         default: return studienkurs;
+    }
+}
+
+/**
+ * Translate study status into title
+ * @param {string} studyStatus 
+ */
+export function translateStudyStatus(studyStatus) {
+    switch (studyStatus) {
+        case 0: return 'Beworben';
+        case 1: return 'Aktiv';
+        case 2: return 'Abgeschlossen';
+        case 3: return 'Abgebrochen';
+        default: return studyStatus;
     }
 }
 

@@ -57,14 +57,32 @@
       "id": 6
     }
   ],
-  "studienordnungen" : [
-    { "id": 0, "name": "Studienordnung 2002", "datum": "2002-01-01" },
-    { "id": 1, "name": "Studienordnung 2012", "datum": "2012-10-01" },
-    { "id": 2, "name": "Studienordnung 2016", "datum": "2016-04-01" }
+  "studienordnungen": [
+    {
+      "id": 0,
+      "name": "Studienordnung 2002",
+      "datum": "2002-01-01"
+    },
+    {
+      "id": 1,
+      "name": "Studienordnung 2012",
+      "datum": "2012-10-01"
+    },
+    {
+      "id": 2,
+      "name": "Studienordnung 2016",
+      "datum": "2016-04-01"
+    }
   ],
-  "studienkurse" : [
-      { "id": 1, "name": "Grundstudienkurs" },
-      { "id": 2, "name": "Aufbaustudienkurs" }
+  "studienkurse": [
+    {
+      "id": 1,
+      "name": "Grundstudienkurs"
+    },
+    {
+      "id": 2,
+      "name": "Aufbaustudienkurs"
+    }
   ],
   "faecher": [
     {
