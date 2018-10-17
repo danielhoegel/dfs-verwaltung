@@ -19,7 +19,7 @@ import { getStudentForId } from './redux/studentenSelectors';
 import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
 import CreateNote from './components/CreateNote';
-import Modal from '../../components/modal/Modal';
+import Modal from '../../components/Modal';
 import Divider from '../../components/Divider';
 // import Placeholder from '../../components/placeholder/Placeholder';
 

@@ -11,7 +11,6 @@ import Drawer from '@material-ui/core/Drawer';
 import Topbar from './components/Topbar';
 import Sidebar from './components/Sidebar';
 
-// import './Layout.scss';
 
 const Layout = ({ children, classes }) => {
     return (
