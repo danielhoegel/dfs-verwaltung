@@ -46,11 +46,10 @@ const StudyRegulation = withRouter(({
     };
 
     return (
-        <ListItem button>
+        <ListItem button onClick={openStudyRegulation}>
             <ListItemText
                 secondary={description ? description : null}
                 className={classes.regulationContent}
-                onClick={openStudyRegulation}
             >
                 <div className={classes.regulationTitle}>
                     <Chip

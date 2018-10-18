@@ -45,12 +45,10 @@ const SubjectCourse = ({
     };
 
     return (
-        <ListItem button>
+        <ListItem button title='Veranstaltung bearbeiten' onClick={updateSubjectCourse}>
             <ListItemText
-                title='Veranstaltung bearbeiten'
                 secondary={`${participationType}, ${credits} Credits${zpk ? ', ZPK' : ''}`}
-                className={classes.subjectCourseContent}
-                onClick={updateSubjectCourse}
+                className={classes.subjectCourseContent} 
             >
                 <div className={classes.subjectCourseTitle}>
                     {type}{title && ` (${title})`}
@@ -87,7 +85,7 @@ const Subject = ({
         <RootRef rootRef={rootRef}>
             <Expandable
                 header={
-                    <Typography variant='subheading' className={classes.expandableHeader}>
+                    <Typography variant='subheading' className={classes.expandableHeader} >
                         {title}
                     </Typography>
                 }
@@ -188,10 +186,10 @@ class StudyRegulation extends Component {
 
     scrollToExpandedSubject() {
         const { expandedSubject } = this.state;
-        if (isNotEmpty(expandedSubject)) {
+        if (isNotEmpty(expandedSubject) && this.subjectRefs[expandedSubject]) {
             this.subjectRefs[expandedSubject].scrollIntoView();
         }
-    }    
+    }
 
     handleExpansionChange = (panelId) => {
         this.setState(state => ({
@@ -275,14 +273,14 @@ class StudyRegulation extends Component {
                             <Typography variant='body2'>{semester}. Semester</Typography>
                             {subjects.map(subject => (
                                 <Subject
-                                        key={subject.id}
-                                        subject={subject}
-                                        classes={classes}
-                                        handleChange={this.handleExpansionChange}
-                                        expanded={this.state.expandedSubject}
-                                        allowDelete={this.state.allowDelete}
-                                        rootRef={ref => this.refHandler(ref, subject.id)}
-                                    />
+                                    key={subject.id}
+                                    subject={subject}
+                                    classes={classes}
+                                    handleChange={this.handleExpansionChange}
+                                    expanded={this.state.expandedSubject}
+                                    allowDelete={this.state.allowDelete}
+                                    rootRef={ref => this.refHandler(ref, subject.id)}
+                                />
                             ))}
                             <HiddenDivider />
                             </Fragment>
