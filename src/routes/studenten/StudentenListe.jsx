@@ -351,7 +351,7 @@ class StudentenListe extends Component {
 const styles = theme => ({
     flexbox: {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     actionContainer: {
         display: 'flex',
