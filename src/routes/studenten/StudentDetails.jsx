@@ -18,6 +18,7 @@ import { getStudentForId } from './redux/studentenSelectors';
 
 import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
+import StudentInformation from './components/StudentInformation';
 import CreateNote from './components/CreateNote';
 import Modal from '../../components/Modal';
 import Divider from '../../components/Divider';
@@ -46,7 +47,7 @@ import Divider from '../../components/Divider';
 
 class StudentDetails extends Component {
     static getDerivedStateFromProps(nextProps, prevState){
-        const studentId = parseInt(nextProps.match.params.id, 10);
+        const studentId = Number(nextProps.match.params.id);
         if (studentId !== prevState.studentId) {
             return { ...prevState, studentId }
         }
@@ -65,13 +66,23 @@ class StudentDetails extends Component {
     componentDidMount() {
         if (!this.props.student) {
             // this.props.fetchStudentForId(this.state.studentId);
-            this.props.dispatch({
-                type: 'FETCH_STUDENT',
-                request: {
-                    url: `/students/${this.state.studentId}?_embed=studies`
-                }
-            });
+            this.fetchStudent();
         }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.match.params.id !== this.props.match.params.id) {
+            this.fetchStudent();
+        }
+    }
+
+    fetchStudent() {
+        this.props.dispatch({
+            type: 'FETCH_STUDENT',
+            request: {
+                url: `/students/${this.state.studentId}?_embed=studies&_embed=studentInformations`
+            }
+        });
     }
 
     goBack = () => {
@@ -146,7 +157,6 @@ class StudentDetails extends Component {
                 <Divider hidden height='1rem' />
 
                 <Paper component="div" className={classes.tabsContainer}>
-                {console.log(this.props.theme)}
                     <Tabs
                         value={tab}
                         onChange={this.tabChange}
@@ -167,7 +177,7 @@ class StudentDetails extends Component {
                     </Tabs>
                     <Typography component="div" className={classes.tabContainer}>
                         {tab === 'contact' && (
-                            <Typography>Kontaktdaten</Typography>
+                            <StudentInformation student={this.props.student} />
                         )}
                         {sortedStudies.map((study, index) => (
                             <Fragment key={index}>
@@ -176,6 +186,7 @@ class StudentDetails extends Component {
                                         studentId={student.id}
                                         studyCourseId={study.studyCourseId}
                                         openNoteModal={this.openNoteModal}
+                                        study={study}
                                     />
                                 )}
                             </Fragment>
@@ -197,7 +208,9 @@ class StudentDetails extends Component {
 
 const styles = theme => ({
     button: {
-        marginRight: theme.spacing.unit
+        '&:not(:last-child)': {
+            marginRight: theme.spacing.unit
+        },
     },
     leftIcon: {
         marginRight: theme.spacing.unit
