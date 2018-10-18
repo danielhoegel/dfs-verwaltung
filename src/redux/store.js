@@ -1,9 +1,16 @@
 import { createStore, applyMiddleware } from 'redux';
+import { createLogger } from 'redux-logger'
+
 import reducer from './rootReducer';
 import apiRequests from './middleware/apiRequestsMiddleware';
-import logger from './middleware/loggerMiddleware';
 
-const middleware = applyMiddleware(logger, apiRequests);
+const logger = createLogger({
+    collapsed: true,
+    timestamp: false,
+    duration: false
+});
+
+const middleware = applyMiddleware(apiRequests, logger);
 
 const store = createStore(reducer, middleware);
 
