@@ -64,9 +64,9 @@ const styles = theme => ({
         paddingRight: theme.spacing.unit * 3,
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
+        backgroundColor: theme.palette.secondary.light,
     },
     body: {
-        backgroundColor: theme.palette.secondary.light,
         padding: theme.spacing.unit * 3,
     }
 });
