@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography'
@@ -71,10 +72,19 @@ const Noten = withStyles(notenStyles)(({ veranstaltung, noten, studentId, openNo
 const fachStyles = theme => ({
     bodyRow: {
         height: 4 * theme.spacing.unit
+    },
+    subjectLink: {
+        color: 'inherit',
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'underline',
+        },
     }
 });
 
-const Fach = withStyles(fachStyles)(({ fach, studentId, openNoteModal, classes }) => {
+const Fach = withStyles(fachStyles)(({
+    fach, studentId, openNoteModal, study, classes
+}) => {
     const veranstaltungen = getVeranstaltungenForFach(fach.id);
     return (
         <TableBody>
@@ -89,7 +99,14 @@ const Fach = withStyles(fachStyles)(({ fach, studentId, openNoteModal, classes }
                     return (
                         <TableRow key={veranstaltung.id} className={classes.bodyRow}>
                             {index === 0 && (
-                                <TableCell rowSpan={veranstaltungen.length}>{fach.title}</TableCell>
+                                <TableCell rowSpan={veranstaltungen.length}>
+                                    <Link
+                                        to={`/studienkurse/studienordnung/${study.studyRegulationId}/${fach.id}`}
+                                        className={classes.subjectLink}
+                                    >
+                                        {fach.title}
+                                    </Link>
+                                </TableCell>
                             )}
                             <TableCell>
                                 {veranstaltung.type}
@@ -127,7 +144,9 @@ const typenGroupStyles = theme => ({
     headCell: {}
 });
 
-const TypenGroup = withStyles(typenGroupStyles)(({ typ, faecher, studentId, openNoteModal, classes }) => (
+const TypenGroup = withStyles(typenGroupStyles)(({
+    typ, faecher, studentId, openNoteModal, study, classes
+}) => (
     <Table padding='dense' className={classes.table}>
         <TableHead className={classes.tableHead}>
             <TableRow className={classes.headRow}>
@@ -148,6 +167,7 @@ const TypenGroup = withStyles(typenGroupStyles)(({ typ, faecher, studentId, open
                     fach={fach}
                     studentId={studentId}
                     openNoteModal={openNoteModal}
+                    study={study}
                 />
             )
         }
@@ -161,7 +181,9 @@ const semesterGroupStyles = theme => ({
     }
 })
 
-const SemesterGroup = withStyles(semesterGroupStyles)(({ semester, typen, studentId, openNoteModal, classes }) => (
+const SemesterGroup = withStyles(semesterGroupStyles)(({
+    semester, typen, studentId, openNoteModal, study, classes
+}) => (
     <Fragment>
         <Typography variant='display1' component='h3' gutterBottom className={classes.header}>
             {semester}. Semester
@@ -173,6 +195,7 @@ const SemesterGroup = withStyles(semesterGroupStyles)(({ semester, typen, studen
                 faecher={faecher}
                 studentId={studentId}
                 openNoteModal={openNoteModal}
+                study={study}
             />
         ))}
     </Fragment>
@@ -184,6 +207,7 @@ class FaecherGrouped extends Component {
         studentId: PropTypes.number.isRequired,
         studyCourseId: PropTypes.number.isRequired,
         openNoteModal: PropTypes.func.isRequired,
+        study: PropTypes.object.isRequired,
     }
 
     state = {
@@ -200,6 +224,7 @@ class FaecherGrouped extends Component {
                     typen={typen}
                     studentId={this.props.studentId}
                     openNoteModal={this.props.openNoteModal}
+                    study={this.props.study}
                 />
             ))
         ) : 'Keine Fächer gefunden.';
