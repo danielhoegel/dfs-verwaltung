@@ -86,7 +86,11 @@ const Subject = ({
     return (
         <RootRef rootRef={rootRef}>
             <Expandable
-                header={<Typography variant='subheading'>{title}</Typography>}
+                header={
+                    <Typography variant='subheading' className={classes.expandableHeader}>
+                        {title}
+                    </Typography>
+                }
                 expanded={expanded === id}
                 toggleExpanded={toggleExpanded}
                 rootRef={rootRef}
@@ -308,6 +312,9 @@ const styles = theme => ({
     },
     leftIcon: {
         marginRight: theme.spacing.unit
+    },
+    expandableHeader: {
+        fontWeight: 'inherit',
     },
     subjectDetails: {
         display: 'block'

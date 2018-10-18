@@ -110,8 +110,11 @@ const styles = theme => ({
     },
     expanded: {
         margin: '1rem 0',
-        '& $header:before': {
-            display: 'none',
+        '& $header': {
+            fontWeight: theme.typography.fontWeightMedium,
+            '&:before': {
+                display: 'none',
+            },
         },
         '& $expandIcon': {
             transform: 'rotate(180deg)'

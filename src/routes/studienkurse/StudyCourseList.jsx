@@ -85,7 +85,11 @@ const StudyCourse = ({
     return (
         <Expandable
             defaultExpanded
-            header={<Typography variant='subheading'>{title}</Typography>}
+            header={
+                <Typography variant='subheading' className={classes.expandableHeader}>
+                    {title}
+                </Typography>
+            }
         >
             {description && (
                 <Typography>{description}</Typography>
@@ -208,6 +212,9 @@ const styles = (theme) => ({
     },
     leftIcon: {
         marginRight: theme.spacing.unit,
+    },
+    expandableHeader: {
+        fontWeight: 'inherit',
     },
     studyCourseDetails: {
         display: 'block'
