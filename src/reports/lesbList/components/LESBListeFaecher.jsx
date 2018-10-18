@@ -28,7 +28,7 @@ class LESBListeFaecher extends Component {
                 {faecher.map(fach =>
                     getVeranstaltungenForFach(fach.id)
                         .filter(veranstaltung =>
-                            ['Vorlesung', 'TD'].includes(veranstaltung.typ)
+                            ['Vorlesung', 'TD'].includes(veranstaltung.type)
                         )
                         .map(veranstaltung => 
                             <LESBListeFach

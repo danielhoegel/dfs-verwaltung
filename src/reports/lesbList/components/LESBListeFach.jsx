@@ -23,15 +23,15 @@ class LESBListeFach extends Component {
                                 <Fragment>
                                     <td
                                         rowSpan={noten.length > 1 ? noten.length : null}
-                                        style={{fontWeight: veranstaltung.zpk ? '800' : 'inherit'}}
+                                        className={veranstaltung.zpk ? 'zpk' : ''}
                                     >
-                                        {fach.name} {veranstaltung.name && `(${veranstaltung.name})`}
+                                        {fach.title} {veranstaltung.title && `(${veranstaltung.title})`}
                                     </td>
                                 </Fragment>
                             )}
-                            <td style={{ textAlign: 'center' }}>{note.punkte >= 4 ? 'B' : 'NB'}</td>
-                            <td style={{ textAlign: 'right' }}>{note.punkte}</td>
-                            <td style={{ textAlign: 'right' }}>{note.versuch}</td>
+                            <td style={{ textAlign: 'center' }}>{note.grade >= 4 ? 'B' : 'NB'}</td>
+                            <td style={{ textAlign: 'right' }}>{note.grade}</td>
+                            <td style={{ textAlign: 'right' }}>{note.try}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -41,7 +41,7 @@ class LESBListeFach extends Component {
                 <tbody>
                     <tr>
                         <td style={{fontWeight: veranstaltung.zpk ? '800' : 'inherit'}}>
-                            {fach.name} {veranstaltung.name && `(${veranstaltung.name})`}
+                            {fach.title} {veranstaltung.title && `(${veranstaltung.title})`}
                         </td>
                         <td style={{ textAlign: 'center' }}>–</td>
                         <td></td>
