@@ -1,3 +1,4 @@
+import './polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
@@ -7,6 +8,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 import store from './redux/store';
 import App from './App';
+
 
 const render = (AppComponent) => {
     ReactDOM.render(
