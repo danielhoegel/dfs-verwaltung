@@ -200,6 +200,7 @@ class StudentDetails extends Component {
                     close={this.closeNoteModal}
                     open={this.state.noteModalOpen}
                     data={this.state.noteModalData}
+                    preventClosing
                 />
             </Fragment>
         ) : <CircularProgress className={classes.loader} />;

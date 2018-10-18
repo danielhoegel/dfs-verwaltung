@@ -17,12 +17,12 @@ class Modal extends Component {
             PropTypes.number,
         ]),
         open: PropTypes.bool.isRequired,
-        closeOnDimmerClick: PropTypes.bool,
+        preventClosing: PropTypes.bool,
     }
 
     static defaultProps = {
         title: 'Modal',
-        closeOnDimmerClick: true
+        preventClosing: false
     }
 
     render() {
@@ -32,6 +32,8 @@ class Modal extends Component {
                 aria-labelledby={this.props.title}
                 open={this.props.open}
                 onClose={this.props.close}
+                disableBackdropClick={this.props.preventClosing}
+                disableEscapeKeyDown={this.props.preventClosing}
             >
                 <Paper className={classes.wrapper} elevation={8}>
                     <Typography variant='title' className={classes.header}>
