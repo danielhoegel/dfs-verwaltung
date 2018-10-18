@@ -24,23 +24,34 @@ const theme = createMuiTheme({
     overrides: {
         MuiInput: {
             underline: {
+                // disable input hover effect
                 '&:hover:not($disabled):not($focused):not($error):before': {
                     borderBottom: `1px solid ${customColors.borderBottom}`,
                 },
             },
         },
+        MuiNotchedOutline: {
+            // set outlined input border color
+            root: {
+                borderColor: customColors.borderBottom
+            },
+        },
+        MuiOutlinedInput: {
+            root: {
+                // disable outlined input hover effect
+                '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
+                    borderColor: customColors.borderBottom
+                },
+            },
+        },
         MuiNativeSelect: {
             select: {
+                // reset native select option background
                 '& option': {
                     backgroundColor: defaultTheme.palette.common.white,
                 },
             },
         },
-    //     MuiButton: {
-    //         root: {
-    //             border: `1px solid ${indigo[500]}`
-    //         },
-    //     },
     },
 });
 
