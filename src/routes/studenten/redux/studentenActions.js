@@ -1,17 +1,26 @@
+/* STUDENT */
 export const fetchStudenten = () => ({
     type: 'FETCH_STUDENTEN',
-    request: {
-        url: '/studenten'
-    }
+    request: { url: '/students' }
 });
 
 export const fetchStudentForId = (id) => ({
     type: 'FETCH_STUDENT',
-    request: {
-        url: `/studenten/${id}`
-    },
+    request: { url: `/students/${id}` },
     id
 });
+
+export const createStudent = (data) => ({
+    type: 'CREATE_STUDENT',
+    request: {
+        url: '/students',
+        method: 'post',
+        data
+    }
+});
+
+
+/* FILTER + SEARCH */
 
 export const filterStudenten = (key, value) => ({
     type: 'FILTER_STUDENTEN',
