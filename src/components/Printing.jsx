@@ -1,9 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import PropTypes from 'prop-types';
-// import html2pdf from 'html2pdf.js';
-// import jsPDF from 'jspdf';
-// import juice from 'juice';
 
 
 export function printPage({
@@ -49,46 +46,16 @@ function Printing({
     fileName,
     noDateSuffix,
     orientation,
-    // options,
     children
 }) {
     function __htmlString() {
-        console.log('component type', typeof Componet);
         const html = renderToString(typeof Component === 'object' ? Component : <Component />);
         return html;
-        // return styles
-        //     ? juice(`<style>${styles}</style>\n${html}`)
-        //     : html;
     }
 
     function __fileName() {
         return fileName + (noDateSuffix ? '' : `_${Date.now()}`) + '.pdf';
     }
-
-    /* const printPDF = () => {
-        const html = __htmlString();
-        console.log({ html });
-        
-        const pdf = new jsPDF(options);
-        
-        pdf.addHTML(html, () => {
-                pdf.save(fileName());
-            });
-            
-        pdf.fromHTML(html, 15, 15, {
-                'width': 841, 
-                'elementHandlers': { '.not-printing': (element, renderer) => true }
-            });
-            pdf.save(__fileName());
-                
-        const options = {
-            filename:     __fileName(),
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 3 },
-        };
-
-        html2pdf().from(html).set(options).save();
-    }; */
 
     function __printPage() {
         printPage({
@@ -111,17 +78,12 @@ Printing.propTypes = {
         PropTypes.func,
     ]),
     styles: PropTypes.string,
-    options: PropTypes.object,
     fileName: PropTypes.string,
     noDateSuffix: PropTypes.bool,
     orientation: PropTypes.oneOf(['landscape', 'portrait']).isRequired,
 };
 
 Printing.defaultProps = {
-    options: {
-        orientation: 'landscape',
-        unit: 'pt'
-    },
     noDateSuffix: false,
     orientation: 'portrait',
 };
