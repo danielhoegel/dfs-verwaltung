@@ -230,7 +230,8 @@ class StudentenListe extends Component {
     exportPDF = () => {
         const data = this.props.filteredStudenten.map(student => {
             const { studies, studentInformations, ...studentData } = student;
-            return Object.assign({}, studentData, studies[0], studentInformations[0]);
+            const { studentId, ...studentInformation } = studentInformations[0]
+            return Object.assign({}, studentData, studentInformation);
         });
         exportToCSV(data);
     }
