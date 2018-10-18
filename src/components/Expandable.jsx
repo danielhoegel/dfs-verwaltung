@@ -85,6 +85,7 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
+        userSelect: 'none',
         '&:before': {
             content: '""',
             position: 'absolute',
