@@ -16,43 +16,71 @@ class DropdownMenu extends Component {
         this.setState({ anchorEl: event.currentTarget });
     };
     
-    handleClose = () => {
-        this.setState({ anchorEl: null });
+    handleClose = (callback) => {
+        this.setState({ anchorEl: null }, () => {
+            if (typeof callback === 'function') {
+                callback();
+            }
+        });
     };
+
+    renderChildren() {
+        return React.Children.map(this.props.children, (child =>
+            React.cloneElement(child, {
+                onClick: child.props.onClick
+                    ? () => this.handleClose(child.props.onClick)
+                    : this.handleClose
+            })
+        ));
+    }
+
+    renderItems() {
+        return this.props.items.map(({ onClick, label, ...itemProps}, index) => (
+            <MenuItem
+                key={index}
+                onClick={onClick
+                    ? () => this.handleClose(onClick)
+                    : this.handleClose
+                }
+                {...itemProps}
+            >
+                {label}
+            </MenuItem>
+        ));
+    }
     
     render() {
         const { anchorEl } = this.state;
-        const { classes, children, items, id, icon: Icon } = this.props;
+        const { classes } = this.props;
+
+        const buttonProps = {
+            'aria-owns': anchorEl ? this.props.id : null,
+            'aria-haspopup': 'true',
+            onClick: this.handleClick
+        };
     
         return (
             <div>
-                <Button
-                    aria-owns={anchorEl ? id : null}
-                    aria-haspopup="true"
-                    onClick={this.handleClick}
-                    color='inherit'
-                    className={classes.addButton}
-                >
-                    <Icon className={classes.addIcon} />
-                    Hinzufügen
-                </Button>
+                {this.props.button
+                    ? React.cloneElement(this.props.button, buttonProps)
+                    : (
+                        <Button
+                            {...buttonProps}
+                            color='inherit'
+                            className={classes.addButton}
+                        >
+                            <this.props.icon className={classes.addIcon} />
+                            Hinzufügen
+                        </Button>
+                    )
+                }
                 <Menu
-                    id={id}
+                    id={this.props.id}
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                {children || items.map(({ onClick, label, ...itemProps}, index) => (
-                    <MenuItem
-                        onClick={() => {
-                            this.handleClose();
-                            onClick();
-                        }}
-                        {...itemProps}
-                    >
-                        {label}
-                    </MenuItem>
-                ))}
+                    {this.props.children ? this.renderChildren() : this.renderItems()}
                 </Menu>
             </div>
         );

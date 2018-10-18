@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import 'popper.js/dist/popper';
 
-import { stringsMatch } from '../helper/helper';
+import { stringsMatch, isNotEmpty } from '../helper/helper';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,13 +14,22 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
-import { RootRef } from '@material-ui/core';
+import { RootRef, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
 class SearchSelect extends Component {
+    /**
+     * This components controlls the Search component by filtering
+     * the initially given options based on the searchInput
+     */
     static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.noFiltering && nextProps.options !== prevState.matchingOptions) {
+            return {
+                matchingOptions: nextProps.options
+            }
+        }
         if (
             nextProps.value !== prevState._value ||
             (nextProps.options && prevState._options &&
@@ -55,8 +64,13 @@ class SearchSelect extends Component {
         // Adjust scroll so the active MenuItem is always in view.
         if (prevState.activeIndex !== this.state.activeIndex) {
             const menu = this.menuEl;
+            
             if (menu) {
                 const { activeIndex } = this.state;
+                const menuItems = this.props.grouped
+                    ? menu.querySelectorAll('.groupedItem > *')
+                    : menu.children;
+                
     
                 // scroll to the top for first element
                 if (activeIndex === 0) {
@@ -64,14 +78,14 @@ class SearchSelect extends Component {
                 }
                 
                 // scroll to the bottom for the last element
-                else if (activeIndex === menu.children.length - 1) {
+                else if (activeIndex === menuItems.length - 1) {
                     menu.scrollTop = menu.scrollHeight;
                     // scrollHeight = (overflowing) height with all children
                 }
                 
                 // scroll to activeElement top/bottom
                 else {
-                    const item = menu.children[activeIndex];
+                    const item = menuItems[activeIndex];
                     const offsetUp = item.offsetTop;
                     const offsetDown = item.offsetTop + item.offsetHeight;
                     // clientHeight = outer height with borders
@@ -99,6 +113,9 @@ class SearchSelect extends Component {
 
     resetInput() {
         const option = this.optionForValue();
+        if (this.props.onChange) {
+            this.props.onChange({ target: { value: '' } });
+        }
         this.setState({
             inputValue: option ? option.label : '',
             matchingOptions: this.props.options,
@@ -107,6 +124,9 @@ class SearchSelect extends Component {
     }
 
     clearValue = () => {
+        if (this.props.onChange) {
+            this.props.onChange({ target: { value: '' } });
+        }
         this.changeValue('');
         this.setState({
             inputValue: '',
@@ -114,17 +134,17 @@ class SearchSelect extends Component {
         });
     }
 
-    changeValue = (value) => {
+    changeValue = (value, group) => {
         const { name } = this.props;
         this.anchorEl.blur();
-        this.props.onChange({ target: { name, value } });
+        this.props.onSelect({ target: { name, value } }, group);
     }
 
     clickHandler = (e) => {
-        const _e = e;
-        const value = _e.target.getAttribute('data-value');
-        console.log(value);
-        this.changeValue(value)
+        const _target = e.currentTarget;
+        const value = _target.getAttribute('data-value');
+        const group = _target.getAttribute('data-group');
+        this.changeValue(value, group)
     }
 
     focusHandler = () => {
@@ -141,6 +161,9 @@ class SearchSelect extends Component {
     }
 
     inputChangeHandler = (e) => {
+        if (this.props.onChange) {
+            this.props.onChange(e);
+        }
         this.setState({
             inputValue: e.target.value,
             activeIndex: 0
@@ -179,7 +202,7 @@ class SearchSelect extends Component {
             case 'Enter':
                 const option = matchingOptions[activeIndex];
                 if (option) {
-                    this.changeValue(option.value);
+                    this.changeValue(option.value, option.group);
                 }
                 break;
 
@@ -194,19 +217,21 @@ class SearchSelect extends Component {
     }
 
     filterMatchingOptions() {
-        const matchingOptions = this.props.options.filter(option => {
-            return this.state.inputValue.split(' ').every(inputWord => {
-                if (option.searchValues) {
-                    return option.searchValues.some(value =>
-                        stringsMatch(value, inputWord)
-                    );
-                } else {
-                    const searchValue = option.label || option.value;
-                    return stringsMatch(searchValue, inputWord);
-                }
-            })
-        });
-        this.setState({ matchingOptions });
+        if (!this.props.noFiltering) {
+            const matchingOptions = this.props.options.filter(option => {
+                return this.state.inputValue.split(' ').every(inputWord => {
+                    if (option.searchValues) {
+                        return option.searchValues.some(value =>
+                            stringsMatch(value, inputWord)
+                        );
+                    } else {
+                        const searchValue = option.label || option.value;
+                        return stringsMatch(searchValue, inputWord);
+                    }
+                })
+            });
+            this.setState({ matchingOptions });
+        }
     }
 
     formatLabel(label) {
@@ -238,20 +263,77 @@ class SearchSelect extends Component {
         return <span>{label}</span>;
     }
 
-    render() {
-        const { classes } = this.props;
-        const { matchingOptions } = this.state;
-        const selectWidth = this.anchorEl.current !== null && this.anchorEl.parentNode.clientWidth;
-
-        const menuIsVisible = (
-            this.state.hasFocus &&
-            this.props.options && (
+    menuIsVisible() {
+        const { matchingOptions, hasFocus } = this.state;
+        // console.log('menuIsVisible', { hasFocus, options: this.props.options, matchingOptions });
+        return (
+            hasFocus &&
+            isNotEmpty(this.props.options) && (
                 matchingOptions.length > 1 || (
                     matchingOptions.length === 1 &&
                     matchingOptions[0].value !== this.props.value
                 )
             )
-        );
+        )
+    }
+
+    renderOptions() {
+        const { grouped, classes } = this.props;
+        const { matchingOptions, activeIndex } = this.state;
+
+        const groupedOptions = {};
+        const options = [];
+
+        matchingOptions.forEach((option, index) => {
+            const menuItem = (
+                <MenuItem
+                    key={option.value}
+                    data-value={option.value}
+                    data-group={option.group}
+                    onMouseDown={this.clickHandler}
+                    className={classes.menuItem}
+                    style={{ backgroundColor: index === activeIndex && 'rgba(0,0,0,0.1)' }}
+                >
+                    {this.formatLabel(option.label)}
+                    {option.secondary && (
+                        <div className={classes.secondaryLabel}>
+                            {option.secondary}
+                        </div>
+                    )}
+                </MenuItem>
+            );
+            if (grouped) {
+                if (groupedOptions[option.group]) {
+                    groupedOptions[option.group].push(menuItem);
+                } else {
+                    groupedOptions[option.group] = [ menuItem ];
+                }
+            } else {
+                options.push(menuItem);
+            }
+        });
+
+        if (grouped) {
+            return Object.entries(groupedOptions).map(([ group, listItems ]) => (
+                <div className={classes.optionGroup} key={group}>
+                    <Typography className={classes.groupHeader}>
+                        {group}
+                    </Typography>
+                    <div className={cn('groupedItem', classes.groupItems)}>
+                        {listItems}
+                    </div>
+                </div>
+            ));
+        } else {
+            return options;
+        }
+    }
+
+    render() {
+        const { classes, theme, popperPlacement } = this.props;
+        const selectWidth = this.anchorEl.current !== null && this.anchorEl.parentNode.clientWidth;
+
+        const menuIsVisible = this.menuIsVisible();
 
         return (
             <FormControl
@@ -261,7 +343,11 @@ class SearchSelect extends Component {
                 className={cn(classes.formControl, this.props.className)}
                 style={this.props.style}
             >
-                <InputLabel htmlFor={`searchSelect__${this.props.name}__input`}>{this.props.label}</InputLabel>
+                {this.props.label && (
+                    <InputLabel htmlFor={`searchSelect__${this.props.name}__input`}>
+                        {this.props.label}
+                    </InputLabel>
+                )}
                 <Input
                     id={`searchSelect__${this.props.name}__input`}
                     value={this.state.inputValue}
@@ -269,20 +355,31 @@ class SearchSelect extends Component {
                     onKeyDown={this.keyEventHandler}
                     aria-describedby={`searchSelect__${this.props.name}__popper`}
                     inputRef={el => { this.anchorEl = el; }}
-                    className={classes.input}
                     autoComplete='off'
+                    placeholder={this.props.placeholder}
+                    className={cn(classes.input, this.props.inputClassName)}
+                    style={{
+                        paddingRight: (
+                            0 + 
+                            3 * !this.props.noDropdownIcon +
+                            2 * !this.props.noClearIcon
+                        ) * theme.spacing.unit
+                    }}
+                    {...this.props.inputProps}
                     endAdornment={
                         <Fragment>
-                            {(this.props.value || this.state.inputValue) && (
+                            {!this.props.noClearIcon && (this.props.value || this.state.inputValue) && (
                                 <CloseIcon
-                                    className={classes.closeIcon}
+                                    className={classes.clearIcon}
                                     onClick={this.clearValue}
                                 />
                             )}
-                            <ArrowDropDownIcon
-                                className={classes.dropdownIcon}
-                                onClick={this.dropdownIconClickHandler}
-                            />
+                            {!this.props.noDropdownIcon && (
+                                <ArrowDropDownIcon
+                                    className={classes.dropdownIcon}
+                                    onClick={this.dropdownIconClickHandler}
+                                />
+                            )}
                         </Fragment>
                     }
                 />
@@ -291,28 +388,26 @@ class SearchSelect extends Component {
                     anchorEl={this.anchorEl}
                     id={`searchSelect__${this.props.name}__popper`}
                     transition
-                    placement='bottom-start'
-                    className={classes.popper}
+                    placement={popperPlacement || 'bottom-start'}
+                    className={cn(classes.popper, this.props.popperClassName)}
                     style={{ minWidth: selectWidth }}
                 >
                         {({ TransitionProps }) => (
                         <Grow {...TransitionProps} timeout={150}>
-                            <Paper elevation={8}>
+                            <Paper
+                                elevation={8}
+                                className={cn(
+                                    classes.menuWrapper,
+                                    { [classes.attachedMenu]: !this.props.floatingMenu },
+                                    { [classes.floatingMenu]: this.props.floatingMenu }
+                                )}
+                            >
                                 <RootRef rootRef={el => { this.menuEl = el; }}>
-                                    <MenuList className={classes.menu}>
-                                        {matchingOptions.map((option, index) => (
-                                            <MenuItem
-                                                key={option.value}
-                                                data-value={option.value}
-                                                onMouseDown={this.clickHandler}
-                                                style={{
-                                                    backgroundColor: index === this.state.activeIndex &&
-                                                        'rgba(0,0,0,0.1)'
-                                                }}
-                                            >
-                                                {this.formatLabel(option.label)}
-                                            </MenuItem>
-                                        ))}
+                                    <MenuList
+                                        className={classes.menu}
+                                        style={{ maxHeight: this.props.maxHeight }}
+                                    >
+                                        {this.renderOptions()}
                                     </MenuList>
                                 </RootRef>
                             </Paper>
@@ -331,7 +426,8 @@ SearchSelect.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
-    onChange: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     options: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.oneOfType([
             PropTypes.string,
@@ -354,13 +450,23 @@ const styles = theme => ({
     popper: {
         zIndex: theme.zIndex.modal,
     },
+    menuWrapper: {
+        overflow: 'hidden',
+    },
+    attachedMenu: {
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+    },
+    floatingMenu: {
+        marginTop: theme.spacing.unit,
+    },
     menu: {
         maxHeight: 30 * theme.spacing.unit, // 240px
         overflowY: 'auto',
         minWidth: '100%'
     },
     input: {
-        paddingRight: 5 * theme.spacing.unit // closeIcon + dropdownIcon
+        paddingRight: 5 * theme.spacing.unit // clearIcon + dropdownIcon
     },
     dropdownIcon: {
         color: 'rgba(0, 0, 0, 0.54)',
@@ -369,13 +475,39 @@ const styles = theme => ({
         position: 'absolute',
         right: 0
     },
-    closeIcon: {
+    clearIcon: {
         color: 'rgba(0, 0, 0, 0.54)',
         cursor: 'pointer',
         fontSize: 2 * theme.spacing.unit,
         position: 'absolute',
         right: 3 * theme.spacing.unit // dropdownIcon
+    },
+    optionGroup: {
+        marginTop: 2 * theme.spacing.unit,
+        marginBottom: 2 * theme.spacing.unit,
+        outline: 0
+    },
+    groupHeader: {
+        borderBottom: [[1, 'solid', theme.palette.secondary.main]],
+        fontWeight: 300,
+        marginLeft: 2 * theme.spacing.unit,
+        marginRight: 2 * theme.spacing.unit,
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    groupItems: {
+        // paddingLeft: 2 * theme.spacing.unit,
+    },
+    menuItem: {
+        display: 'block',
+        lineHeight: 1,
+        height: 'auto'
+    },
+    secondaryLabel: {
+        opacity: 0.5,
+        fontSize: '0.75em',
+        marginTop: 0.5 * theme.spacing.unit
     }
 });
 
-export default withStyles(styles)(SearchSelect);
+export default (withStyles(styles, { withTheme: true })(SearchSelect));

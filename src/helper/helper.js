@@ -1,4 +1,8 @@
 export function isEmpty(value) {
+    if (value === null || value === undefined) {
+        return true;
+    }
+
     switch (typeof value) {
         case 'string': return !value;
         case 'number': return !value && value !== 0;
@@ -6,8 +10,8 @@ export function isEmpty(value) {
             switch (value.__proto__) {
                 case String.prototype: return !value;
                 case Number.prototype: return !value && value !== 0;
-                case Array.prototype: return !value && value !== [];
-                case Object.prototype: return !value && value !== {};
+                case Array.prototype: return !value || value.length === 0;
+                case Object.prototype: return !value || Object.keys(value).length === 0;
                 default: return !value;
         }
         default: return !value;
@@ -18,6 +22,20 @@ export function isNotEmpty(value) {
     return !isEmpty(value);
 }
 
+export function formatDate(date, type = 'de') {
+    const dateObject = new Date(date);
+    switch (type) {
+        case 'de':
+            return dateObject.toLocaleDateString('de', { day: '2-digit', month: '2-digit', year: 'numeric'})
+        
+        case 'us':
+            return dateObject.toISOString.slice(0, 10);
+        
+        default:
+            return date;
+    }
+}
+
 /**
  * Return wheather the needle is found inside the heystack (case insensitiv)
  * @param {string} haystack String to search in
@@ -26,6 +44,43 @@ export function isNotEmpty(value) {
 export function stringsMatch(haystack, needle) {
     return String(haystack).toLowerCase().indexOf(String(needle).toLowerCase()) !== -1;
 };
+
+
+/**
+ * Highlight searchValue inside string
+ * @param {string} string String to search in. e.g. 'Hello'
+ * @param {string} searchValue String to search for, e.g. 'el'
+ * @param {string} [highlightTag = 'strong'] HTML-Tagname for the highlighting
+ * @returns {string} string with highlighted part, e.g. 'H<strong>el</strong>lo'
+ */
+export function highlightMatch(string, searchValue, highlightTag = 'strong') {
+    if (searchValue.length > 0) {
+        const searchWords = searchValue.split(' ');
+        const stringWords = string.split(' ');
+        
+        const outputWords = stringWords.map(stringWord => {
+            let outputWord = stringWord;
+            for (let i = 0; i < searchWords.length; i++) {
+                const searchWord = searchWords[i];
+                const startIndex = stringWord.toLowerCase().indexOf(searchWord.toLowerCase());
+               
+                if (startIndex !== -1) {
+                    const matchingPart = stringWord.slice(startIndex, startIndex + searchWord.length);
+                    const beforePart = stringWord.slice(0, startIndex);
+                    const afterPart = stringWord.slice(startIndex + searchWord.length);
+                    
+                    outputWord = `${beforePart}<${highlightTag}>${matchingPart}</${highlightTag}>${afterPart}`;
+                    break;
+                }
+            }
+            return outputWord;
+        });
+
+        return outputWords.join(' ');
+    }
+    return{string};
+}
+
 
 /**
  * Translate studienkurs id into name
