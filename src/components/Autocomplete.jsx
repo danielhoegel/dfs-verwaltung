@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Select from 'react-select';
 
 import { withStyles } from '@material-ui/core/styles';
+import { emphasize } from '@material-ui/core/styles/colorManipulator';
 import Typography from '@material-ui/core/Typography';
 import NoSsr from '@material-ui/core/NoSsr';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +14,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { emphasize } from '@material-ui/core/styles/colorManipulator';
 
 
 function NoOptionsMessage({ innerProps, children, selectProps: { classes } }) {

@@ -12,6 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import RootRef from '@material-ui/core/RootRef';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
@@ -24,7 +25,6 @@ import Expandable from '../../components/Expandable';
 
 import { fetchStudyRegulationForId, fetchSubjectsWithSubjectCoursesForStudyRegulation } from './redux/studyActions';
 import { getStudyRegulationForId, getSubjectsForRegulation, getStudyFetching } from './redux/studySelectors';
-import { LinearProgress } from '@material-ui/core';
 
 
 const SubjectCourse = ({

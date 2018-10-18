@@ -20,7 +20,6 @@ import {
     getNoteForId,
     getNotenForStudentAndVeranstaltung
 } from '../../../helper/selectors';
-import { Paper } from '@material-ui/core';
 
 
 class NoteCreateUpdate extends Component {

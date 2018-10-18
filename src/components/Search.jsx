@@ -14,7 +14,8 @@ import MenuList from '@material-ui/core/MenuList';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
-import { RootRef, Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import RootRef from '@material-ui/core/RootRef';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
