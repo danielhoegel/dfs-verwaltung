@@ -1,7 +1,9 @@
 import studentenData from '../data/studenten';
-import notenData from '../data/noten';
-import faecherData from '../data/faecher';
-import veranstaltungenData from '../data/veranstaltungen';
+import notenData from '../data/grades.json';
+import faecherData from '../data/subjects.json';
+import veranstaltungenData from '../data/subjectCourses.json';
+// import studyRegulationsData from '../data/studyRegulations.json';
+// import studyCoursesData from '../data/studyCourses.json';
 
 export const getStudentenData = () => studentenData;
 export const getNotenData = () => notenData;
@@ -41,7 +43,7 @@ export function getFaecherDataForUEAndSemester(ue, semester) {
 export function getFaecherGroupedByTyp() {
     const result = {de: [], fr: []};
     getFaecherData().forEach(fach => {
-        result[fach.typ].push(fach);
+        result[fach.type].push(fach);
     });
     return result;
 }
@@ -52,14 +54,14 @@ export function getFaecherForStudyCourseGroupedBySemesterAndTyp(studyCourseId) {
     getFaecherData().forEach(fach => {
         if (fach.studyCourseId === studyCourseId) {
             if (groupedFaecher[fach.semester]) {
-                if (groupedFaecher[fach.semester][fach.typ]) {
-                    groupedFaecher[fach.semester][fach.typ].push(fach);
+                if (groupedFaecher[fach.semester][fach.type]) {
+                    groupedFaecher[fach.semester][fach.type].push(fach);
                 } else {
-                    groupedFaecher[fach.semester][fach.typ] = [fach];
+                    groupedFaecher[fach.semester][fach.type] = [fach];
                 }
             } else {
                 groupedFaecher[fach.semester] = {
-                    [fach.typ]: [fach]
+                    [fach.type]: [fach]
                 };
             }
         }
@@ -108,13 +110,13 @@ export function getPunkteForVeranstaltungAndStudent(veranstaltungID, studentID) 
     if (noten.length > 1) {
         let lastVersuch = noten[0];
         noten.forEach(note => {
-            if (note.versuch > lastVersuch.versuch) {
+            if (note.try > lastVersuch.try) {
                 lastVersuch = note;
             }
         });
-        return lastVersuch.punkte;
+        return lastVersuch.grade;
     } else if (noten.length > 0){
-        return noten[0].punkte;
+        return noten[0].grade;
     } else {
         return null;
     }

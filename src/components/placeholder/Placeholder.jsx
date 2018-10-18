@@ -40,6 +40,3 @@ Placeholder.propTypes = {
 }
 
 export default Placeholder;
-// export {
-//     PlaceholderItem
-// };

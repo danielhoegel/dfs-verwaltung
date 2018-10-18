@@ -1,0 +1,380 @@
+[
+  {
+    "id": 0,
+    "subjectId": 0,
+    "title": "BGB AT",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 1,
+    "subjectId": 0,
+    "title": "BGB AT",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 2,
+    "subjectId": 1,
+    "title": "SchuldR AT",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 4,
+    "subjectId": 1,
+    "title": "SchuldR BT",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 5,
+    "subjectId": 1,
+    "title": "SchuldR AT + BT",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 6,
+    "subjectId": 2,
+    "title": "Sachenrecht",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 7,
+    "subjectId": 2,
+    "title": "Sachenrecht",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 8,
+    "subjectId": 2,
+    "title": "Familienrecht",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 9,
+    "subjectId": 2,
+    "title": "Erbrecht",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 10,
+    "subjectId": 2,
+    "title": "FamR + ErbR",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 11,
+    "subjectId": 3,
+    "title": "StaatsOrga + GrundR",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 12,
+    "subjectId": 3,
+    "title": "StaatsOrga + GrundR",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 13,
+    "subjectId": 4,
+    "title": "VerwaltungsR AT + VerwaltungsProzR",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 14,
+    "subjectId": 4,
+    "title": "VerwaltungsR AT + VerwaltungsProzR",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 15,
+    "subjectId": 5,
+    "title": "Baurecht",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 16,
+    "subjectId": 5,
+    "title": "Kommunalrecht",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 17,
+    "subjectId": 5,
+    "title": "Europarecht",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 18,
+    "subjectId": 5,
+    "title": "Baurecht + Kommunalrecht",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 19,
+    "subjectId": 6,
+    "title": "StGB AT",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": true,
+    "participationType": "Note"
+  },
+  {
+    "id": 20,
+    "subjectId": 6,
+    "title": "StGB AT",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 21,
+    "subjectId": 7,
+    "title": "StGB BT",
+    "type": "Vorlesung",
+    "credits": 4,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 22,
+    "subjectId": 7,
+    "title": "StGB BT",
+    "type": "Arbeitsgemeinschaft",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Teilnahme"
+  },
+  {
+    "id": 23,
+    "subjectId": 8,
+    "title": "",
+    "type": "Vorlesung",
+    "credits": 3,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 30,
+    "subjectId": 54,
+    "title": "",
+    "type": "TD",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 37,
+    "subjectId": 47,
+    "title": "",
+    "type": "TD",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 36,
+    "subjectId": 47,
+    "title": "",
+    "type": "CM",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 45,
+    "subjectId": 48,
+    "title": "",
+    "type": "TD",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 44,
+    "subjectId": 48,
+    "title": "",
+    "type": "CM",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 27,
+    "subjectId": 41,
+    "title": "",
+    "type": "TD",
+    "credits": 2.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 26,
+    "subjectId": 41,
+    "title": "",
+    "type": "CM",
+    "credits": 2.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 35,
+    "subjectId": 42,
+    "title": "",
+    "type": "TD",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 34,
+    "subjectId": 42,
+    "title": "",
+    "type": "CM",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 42,
+    "subjectId": 43,
+    "title": "",
+    "type": "CM",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 43,
+    "subjectId": 43,
+    "title": "",
+    "type": "TD",
+    "credits": 3.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 29,
+    "subjectId": 46,
+    "title": "",
+    "type": "TD",
+    "credits": 2.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 28,
+    "subjectId": 46,
+    "title": "",
+    "type": "CM",
+    "credits": 2.5,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 51,
+    "subjectId": 53,
+    "title": "",
+    "type": "TD",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 52,
+    "subjectId": 52,
+    "title": "",
+    "type": "TD",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 53,
+    "subjectId": 45,
+    "title": "",
+    "type": "TD",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 54,
+    "subjectId": 45,
+    "title": "",
+    "type": "CM",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 55,
+    "subjectId": 40,
+    "title": "",
+    "type": "CM",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  },
+  {
+    "id": 56,
+    "subjectId": 40,
+    "title": "",
+    "type": "TD",
+    "credits": 2,
+    "zpk": false,
+    "participationType": "Note"
+  }
+]
