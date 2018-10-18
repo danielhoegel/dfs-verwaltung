@@ -40,11 +40,11 @@ class Faecher extends Component {
                             {veranstaltungen.map((veranstaltung, index) => (
                                 <tr key={`${fach.id}_${veranstaltung.id}`}>
                                     {index === 0 && (
-                                        <td rowSpan={veranstaltungen.length}>{fach.name}</td>
+                                        <td rowSpan={veranstaltungen.length}>{fach.title}</td>
                                     )}
                                     <td>
-                                        {veranstaltung.typ}
-                                        {veranstaltung.name && `, (${veranstaltung.name})`}
+                                        {veranstaltung.type}
+                                        {veranstaltung.title && `, (${veranstaltung.title})`}
                                     </td>
                                     <td>{veranstaltung.credits}</td>
                                     <td>
