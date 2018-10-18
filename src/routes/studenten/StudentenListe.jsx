@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -318,7 +319,7 @@ class StudentenListe extends Component {
                         <IconButton onClick={this.exportPDF} title='CSV-/Excel-Datei herunterladen'>
                             <CloudDownloadIcon />
                         </IconButton>
-                        <IconButton title='Student hinzufügen'>
+                        <IconButton component={NavLink} to='/studenten/create' title='Student hinzufügen'>
                             <AddIcon />
                         </IconButton>
                     </div>
