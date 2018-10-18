@@ -95,7 +95,7 @@ const StudyCourse = ({
                 <Typography>{description}</Typography>
             )}
             <List>
-                {studyRegulations.map(regulation => (
+                {studyRegulations && studyRegulations.map(regulation => (
                     <StudyRegulation
                         regulation={regulation}
                         classes={classes}
@@ -196,7 +196,7 @@ class StudyCourseList extends Component {
                             ))
                           )
                         : 'Keine Studienkurse gefunden.'
-                    : <LinearProgress variant='query' />
+                    : <LinearProgress />
                 }
             </div>
         );

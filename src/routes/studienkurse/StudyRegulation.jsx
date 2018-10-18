@@ -288,7 +288,7 @@ class StudyRegulation extends Component {
                             </Fragment>
                           ))
                         : 'Keine Fächer gefunden'
-                    : <LinearProgress variant='query' />
+                    : <LinearProgress />
                 }
             </div>
         );

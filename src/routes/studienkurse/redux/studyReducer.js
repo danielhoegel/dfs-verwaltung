@@ -12,6 +12,8 @@ function studyReducer(state = defaultState, action) {
         /* FETCHING */
         case 'FETCH_STUDY_COURSE_WITH_REGULATIONS':
         case 'FETCH_STUDY_REGULATIONS':
+        case 'FETCH_STUDY_REGULATION':
+        case 'FETCH_SUBJECT_WITH_SUBJECT_COURSES_FOR_STUDY_REGULATION':
         case 'FETCH_STUDY_COURES': return {
             ...state,
             fetching: true
@@ -20,6 +22,8 @@ function studyReducer(state = defaultState, action) {
         /* FAILURE */
         case 'FETCH_STUDY_COURSE_WITH_REGULATIONS_FAILURE':
         case 'FETCH_STUDY_REGULATIONS_FAILURE':
+        case 'FETCH_STUDY_REGULATION_FAILURE':
+        case 'FETCH_SUBJECT_WITH_SUBJECT_COURSES_FOR_STUDY_REGULATION_FAILURE':
         case 'FETCH_STUDY_COURES_FAILURE': return {
             ...state,
             fetching: false,
@@ -50,6 +54,7 @@ function studyReducer(state = defaultState, action) {
             }
             return {
                 ...state,
+                fetching: false,
                 studyRegulations: regulations
             };
 
@@ -71,6 +76,7 @@ function studyReducer(state = defaultState, action) {
         case 'FETCH_SUBJECT_WITH_SUBJECT_COURSES_FOR_STUDY_REGULATION_SUCCESS':
             return {
                 ...state,
+                fetchi: false,
                 subjectsForRegulation: action.data
             }
 
