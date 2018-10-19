@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MailIcon from '@material-ui/icons/MailOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
+import { isNotEmpty } from '../../../../helper/helper';
 
 class StudentenTableToolbar extends Component {
     shouldComponentUpdate(nextProps) {
@@ -18,9 +19,12 @@ class StudentenTableToolbar extends Component {
     mailDistributor() {
         return this.props.selectedStudents
             .map(student => {
-                const { mailUni, mailPrivate } = student.studentInformations[0];
-                return mailUni ? mailUni :
-                    mailPrivate ? mailPrivate : null;
+                if (isNotEmpty(student.studentInformations)) {
+                    const { mailUni, mailPrivate } = student.studentInformations[0];
+                    return mailUni ? mailUni :
+                        mailPrivate ? mailPrivate : null;
+                }
+                return null;
             })
             .join(';');
     }
