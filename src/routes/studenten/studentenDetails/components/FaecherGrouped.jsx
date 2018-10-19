@@ -16,7 +16,7 @@ import {
     getFaecherForStudyCourseGroupedBySemesterAndTyp,
     getVeranstaltungenForFach,
     getNotenForStudentAndVeranstaltung,
-} from '../../../helper/selectors';
+} from '../../../../helper/selectors';
 
 
 const notenStyles = theme => ({
@@ -212,6 +212,10 @@ class FaecherGrouped extends Component {
 
     state = {
         faecher: getFaecherForStudyCourseGroupedBySemesterAndTyp(this.props.studyCourseId),
+    }
+
+    shouldComponentUpdate() {
+        return false;
     }
 
     render() {

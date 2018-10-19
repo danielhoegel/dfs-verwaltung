@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import 'popper.js/dist/popper';
@@ -54,8 +54,9 @@ const MenuOption = ({
     );
 };
 
+let searchId = 0;
 
-class Search extends Component {
+class Search extends PureComponent {
     /**
      * This component displays a selectable menu with items (options)
      * and a text input (searchValue). The options and the searchValue
@@ -69,6 +70,13 @@ class Search extends Component {
 
     anchorEl = React.createRef()
     menuEl = React.createRef()
+    id = this.props.name || searchId;
+
+    componentDidMount() {
+        if (!this.props.name) {
+            searchId += 1;
+        }
+    } 
     
     componentDidUpdate(prevProps, prevState) {
         // Adjust scroll so the active MenuItem is always in view.
@@ -292,18 +300,18 @@ class Search extends Component {
             >
                 {this.props.label && (
                     <InputLabel
-                        htmlFor={`search__${this.props.name}__input`}
+                        htmlFor={`search__${this.id}__input`}
                         className={this.props.labelClassName}
                     >
                         {this.props.label}
                     </InputLabel>
                 )}
                 <Input
-                    id={`search__${this.props.name}__input`}
+                    id={`search__${this.id}__input`}
                     value={this.props.searchValue}
                     onChange={this.inputChangeHandler}
                     onKeyDown={this.keyEventHandler}
-                    aria-describedby={`search__${this.props.name}__popper`}
+                    aria-describedby={`search__${this.id}__popper`}
                     inputRef={el => { this.anchorEl = el; }}
                     placeholder={this.props.placeholder}
                     autoComplete='off'
@@ -336,7 +344,7 @@ class Search extends Component {
                 <Popper
                     open={menuIsVisible}
                     anchorEl={this.anchorEl}
-                    id={`search__${this.props.name}__popper`}
+                    id={`search__${this.id}__popper`}
                     placement={(this.props.fixedWidth && this.props.popperAlign === 'right') ? 'bottom-end' : 'bottom-start'}
                     className={cn(classes.popper, this.props.popperClassName)}
                     style={{

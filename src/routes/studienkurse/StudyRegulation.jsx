@@ -69,76 +69,80 @@ const SubjectCourse = ({
 }
 
 
-const Subject = ({
-    subject,
-    handleChange,
-    expanded,
-    rootRef,
-    classes,
-    allowDelete,
-}) => {
-    const  { id, title, type, subjectCourses, ue, semester } = subject;
-    const toggleExpanded = () => {
-        handleChange(id);
-    };
-    return (
-        <RootRef rootRef={rootRef}>
-            <Expandable
-                header={
-                    <Typography variant='subheading' className={classes.expandableHeader} >
-                        {title}
-                    </Typography>
-                }
-                expanded={expanded === id}
-                toggleExpanded={toggleExpanded}
-                rootRef={rootRef}
-            >
-                {type.toUpperCase()}, {semester}. Semester, UE {ue}
-                <List>
-                    {isNotEmpty(subjectCourses) && subjectCourses.map(subjectCourse => (
-                        <SubjectCourse
-                            key={subjectCourse.id}
-                            subjectCourse={subjectCourse}
-                            classes={classes}
-                            allowDelete={allowDelete}
-                            subject={subject}
-                        />
-                    ))}
-                </List>
-                <div className={classes.subjectActions}>
-                    <Button
-                        variant='flat'
-                        size='small'
-                        title='Fach bearbeiten'
-                        className={classes.actionButton}
-                    >
-                        <EditIcon className={classes.leftIcon} />
-                        Bearbeiten
-                    </Button>
-                    <Button
-                        variant='flat'
-                        size='small'
-                        title='Veranstaltung hinzufügen'
-                        className={classes.actionButton}
-                    >
-                        <AddIcon className={classes.leftIcon} />
-                        Veranstaltung
-                    </Button>
-                    <Button
-                        variant='flat'
-                        size='small'
-                        title='Fach löschen'
-                        className={classes.actionButton}
-                        disabled={!allowDelete}
-                    >
-                        <DeleteIcon className={classes.leftIcon} />
-                        Löschen
-                    </Button>
-                </div>
-            </Expandable>
-        </RootRef>
-    )
-};
+class Subject extends Component {
+    shouldComponentUpdate(nextProps) {
+        return (
+            (nextProps.expanded !== this.props.expanded) ||
+            (nextProps.expanded && (
+                nextProps.allowDelete !== this.props.allowDelete
+            ))
+        );
+    }
+
+    toggleExpanded = () => {
+        this.props.handleChange(this.props.subject.id);
+    }
+
+    render() {
+        const { subject, classes } = this.props;
+        return (
+            <RootRef rootRef={this.props.rootRef}>
+                <Expandable
+                    header={
+                        <Typography variant='subheading' className={classes.expandableHeader} >
+                            {subject.title}
+                        </Typography>
+                    }
+                    expanded={this.props.expanded}
+                    toggleExpanded={this.toggleExpanded}
+                >
+                    {subject.type.toUpperCase()}, {subject.semester}. Semester, UE {subject.ue}
+                    <List>
+                        {isNotEmpty(subject.subjectCourses) && subject.subjectCourses.map(subjectCourse => (
+                            <SubjectCourse
+                                key={subjectCourse.id}
+                                subjectCourse={subjectCourse}
+                                classes={classes}
+                                allowDelete={this.props.allowDelete}
+                                subject={subject}
+                            />
+                        ))}
+                    </List>
+                    <div className={classes.subjectActions}>
+                        <Button
+                            variant='flat'
+                            size='small'
+                            title='Fach bearbeiten'
+                            className={classes.actionButton}
+                        >
+                            <EditIcon className={classes.leftIcon} />
+                            Bearbeiten
+                        </Button>
+                        <Button
+                            variant='flat'
+                            size='small'
+                            title='Veranstaltung hinzufügen'
+                            className={classes.actionButton}
+                        >
+                            <AddIcon className={classes.leftIcon} />
+                            Veranstaltung
+                        </Button>
+                        <Button
+                            variant='flat'
+                            size='small'
+                            title='Fach löschen'
+                            className={classes.actionButton}
+                            disabled={!this.props.allowDelete}
+                        >
+                            <DeleteIcon className={classes.leftIcon} />
+                            Löschen
+                        </Button>
+                    </div>
+                </Expandable>
+            </RootRef>
+        )
+    }
+}
 
 
 class StudyRegulation extends Component {
@@ -277,7 +281,7 @@ class StudyRegulation extends Component {
                                     subject={subject}
                                     classes={classes}
                                     handleChange={this.handleExpansionChange}
-                                    expanded={this.state.expandedSubject}
+                                    expanded={this.state.expandedSubject === subject.id}
                                     allowDelete={this.state.allowDelete}
                                     rootRef={ref => this.refHandler(ref, subject.id)}
                                 />

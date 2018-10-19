@@ -61,6 +61,21 @@ class SearchSelect extends Component {
     anchorEl = React.createRef()
     menuEl = React.createRef()
     
+    shouldComponentUpdate(nextProps, nextState) {
+        return (
+            (nextProps.name !== this.props.name) ||
+            (nextProps.label !== this.props.label) ||
+            (nextProps.value !== this.props.value) ||
+            (nextProps.options !== this.props.options) ||
+
+            (nextState.inputValue !== this.state.inputValue) ||
+            (nextState.hasFocus !== this.state.hasFocus) ||
+            (nextState.activeIndex !== this.state.activeIndex) ||
+            (nextState.matchingOptions !== this.state.matchingOptions)
+        );
+    }
+    
+    
     componentDidUpdate(prevProps, prevState) {
         // Adjust scroll so the active MenuItem is always in view.
         if (prevState.activeIndex !== this.state.activeIndex) {

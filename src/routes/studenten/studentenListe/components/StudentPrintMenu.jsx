@@ -7,17 +7,17 @@ import Button from '@material-ui/core/Button';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { getFilteredStudenten, getStudentenFilter } from '../redux/studentenSelectors';
+import { getFilteredStudenten, getStudentenFilter } from '../../redux/studentenSelectors';
 
-import Printing from '../../../components/Printing';
-import DropdownMenu from '../../../components/DropdownMenu';
+import Printing from '../../../../components/Printing';
+import DropdownMenu from '../../../../components/DropdownMenu';
 
-import StudentListReport from '../../../reports/studentList/StudentListReport';
-import studentListReportStyles from '../../../reports/studentList/studentListReportStyles';
-import LESBListReport from '../../../reports/lesbList/LESBListReport';
-import lesbListReportStyles from '../../../reports/lesbList/lesbListReportStyles';
-import ErgebnisseReport from '../../../reports/ergebnisse/ErgebnisseReport';
-import ergebnisseReportStyles from '../../../reports/ergebnisse/ergebnisseReportStyles';
+import StudentListReport from '../../../../reports/studentList/StudentListReport';
+import studentListReportStyles from '../../../../reports/studentList/studentListReportStyles';
+import LESBListReport from '../../../../reports/lesbList/LESBListReport';
+import lesbListReportStyles from '../../../../reports/lesbList/lesbListReportStyles';
+import ErgebnisseReport from '../../../../reports/ergebnisse/ErgebnisseReport';
+import ergebnisseReportStyles from '../../../../reports/ergebnisse/ergebnisseReportStyles';
 
 
 const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props }) => {

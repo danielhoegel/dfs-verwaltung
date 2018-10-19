@@ -4,13 +4,11 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 
+import Field from '../../components/Field';
+import NativeSelectField from '../../components/NativeSelectField';
 import HiddenDivider from '../../components/HiddenDivider';
 import { generateLaenderOptions, isEmpty } from '../../helper/helper'
 
@@ -145,7 +143,6 @@ class StudentCreate extends Component {
 
     render() {
         const { classes } = this.props;
-        const laenderOptions = this.state.__options.laenderOptions;
 
         return (
             <form onSubmit={this.submitHandler} className={classes.form}>
@@ -155,7 +152,7 @@ class StudentCreate extends Component {
                 <HiddenDivider />
                 <Paper className={classes.paper} >
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='firstName'
                             label='Vorname'
                             value={this.state.firstName}
@@ -163,7 +160,7 @@ class StudentCreate extends Component {
                             className={classes.textField}
                             required
                         />
-                        <TextField
+                        <Field
                             name='lastName'
                             label='Nachname'
                             value={this.state.lastName}
@@ -171,7 +168,7 @@ class StudentCreate extends Component {
                             className={classes.textField}
                             required
                         />
-                        <TextField
+                        <Field
                             select
                             name='prefix'
                             label='Anrede'
@@ -185,10 +182,10 @@ class StudentCreate extends Component {
                                     {prefix}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </Field>
                     </div>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='birthDate'
                             label='Geburtsdatum'
                             type='date'
@@ -198,7 +195,7 @@ class StudentCreate extends Component {
                             required
                             InputLabelProps={{ shrink: true }}
                         />
-                        <TextField
+                        <Field
                             name='birthPlace'
                             label='Geburtsort'
                             value={this.state.birthPlace}
@@ -206,19 +203,15 @@ class StudentCreate extends Component {
                             className={classes.textField}
                             required
                         />
-                        <FormControl className={classes.textField}>
-                            <InputLabel shrink htmlFor="birthCountry">
-                                Geburtsland
-                            </InputLabel>
-                            <NativeSelect
-                                value={this.state.birthCountry}
-                                onChange={this.changeHandler}
-                                inputProps={{ name: 'birthCountry', id: 'birthCountry' }}
-                                required
-                            >
-                                {laenderOptions}
-                            </NativeSelect>
-                        </FormControl>
+                        <NativeSelectField
+                            name='birthCountry'
+                            label='Geburtsland'
+                            value={this.state.birthCountry}
+                            options={this.state.__options.laenderOptions}
+                            onChange={this.changeHandler}
+                            required
+                            rootProps={{ className: classes.textField }}
+                        />
                     </div>
 
                     <HiddenDivider height={2} />
@@ -226,7 +219,7 @@ class StudentCreate extends Component {
                         Studium
                     </Typography>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='matrikelnummer'
                             value={this.state.matrikelnummer}
                             onChange={this.changeHandler}
@@ -235,7 +228,7 @@ class StudentCreate extends Component {
                             type='number'
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             select
                             name='studyCourse'
                             label='Studienkurs'
@@ -245,8 +238,8 @@ class StudentCreate extends Component {
                             className={classes.textField}
                         >
                             {this.state.__options.studyCourseOptions}
-                        </TextField>
-                        <TextField
+                        </Field>
+                        <Field
                             name='year'
                             value={this.state.year}
                             onChange={this.changeHandler}
@@ -259,7 +252,7 @@ class StudentCreate extends Component {
                         /> 
                     </div>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             select
                             name='studyRegulation'
                             label='Studienordnung'
@@ -274,7 +267,7 @@ class StudentCreate extends Component {
                             InputProps={{ style: { width: '40%' }} }
                         >
                             {this.state.__options.studyRegulationOptions}
-                        </TextField>
+                        </Field>
                     </div>
     
                     <HiddenDivider height={2} />
@@ -282,7 +275,7 @@ class StudentCreate extends Component {
                         Kontaktdaten
                     </Typography>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='mailUni'
                             value={this.state.mailUni}
                             onChange={this.changeHandler}
@@ -292,7 +285,7 @@ class StudentCreate extends Component {
                             type='email'
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             name='mailPrivate'
                             value={this.state.mailPrivate}
                             onChange={this.changeHandler}
@@ -303,7 +296,7 @@ class StudentCreate extends Component {
                         />
                     </div>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='phoneNumber'
                             value={this.state.phoneNumber}
                             onChange={this.changeHandler}
@@ -312,7 +305,7 @@ class StudentCreate extends Component {
                             type='phone'
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             name='mobileNumber'
                             value={this.state.mobileNumber}
                             onChange={this.changeHandler}
@@ -327,7 +320,7 @@ class StudentCreate extends Component {
                         Adresse
                     </Typography>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='street'
                             value={this.state.street}
                             onChange={this.changeHandler}
@@ -335,7 +328,7 @@ class StudentCreate extends Component {
                             required
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             name='streetNumber'
                             value={this.state.streetNumber}
                             onChange={this.changeHandler}
@@ -343,7 +336,7 @@ class StudentCreate extends Component {
                             required
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             name='addressExtra'
                             value={this.state.addressExtra}
                             onChange={this.changeHandler}
@@ -352,7 +345,7 @@ class StudentCreate extends Component {
                         />
                     </div>
                     <div className={classes.fieldGroup}>
-                        <TextField
+                        <Field
                             name='postal'
                             value={this.state.postal}
                             onChange={this.changeHandler}
@@ -360,7 +353,7 @@ class StudentCreate extends Component {
                             required
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             name='city'
                             value={this.state.city}
                             onChange={this.changeHandler}
@@ -368,19 +361,15 @@ class StudentCreate extends Component {
                             required
                             className={classes.textField}
                         />
-                        <FormControl className={classes.textField}>
-                            <InputLabel shrink htmlFor='country'>
-                                Land
-                            </InputLabel>
-                            <NativeSelect
-                                value={this.state.country}
-                                onChange={this.changeHandler}
-                                inputProps={{ name: 'country', id: 'country' }}
-                                required
-                            >
-                                {laenderOptions}
-                            </NativeSelect>
-                        </FormControl>
+                        <NativeSelectField
+                            name='country'
+                            label='Land'
+                            value={this.state.country}
+                            options={this.state.__options.laenderOptions}
+                            onChange={this.changeHandler}
+                            required
+                            rootProps={{ className: classes.textField }}
+                        />
                     </div>
                 </Paper>
                 <HiddenDivider height={2} />

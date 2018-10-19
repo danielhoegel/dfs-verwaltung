@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
-import SearchSelect from '../../../components/SearchSelect';
-import Divider from '../../../components/Divider';
+import Field from '../../../../components/Field';
+import SearchSelect from '../../../../components/SearchSelect';
+import Divider from '../../../../components/Divider';
 
-import { shortVorlesungTyp } from '../../../helper/helper';
+import { shortVorlesungTyp } from '../../../../helper/helper';
 import {
     getStudentenData,
     getFaecherData,
@@ -19,7 +19,7 @@ import {
     getFachForVeranstaltung,
     getNoteForId,
     getNotenForStudentAndVeranstaltung
-} from '../../../helper/selectors';
+} from '../../../../helper/selectors';
 
 
 class NoteCreateUpdate extends Component {
@@ -128,18 +128,18 @@ class NoteCreateUpdate extends Component {
             .filter(v => v.participationType === 'Note');
     }
 
-    studentenOptions = () => this.state.studenten.map(s => (
+    studentenOptions = this.state.studenten.map(s => (
         { value: s.id, label: `${s.firstName} ${s.lastName}` }
     ));
-    
+
+    faecherOptions = this.state.faecher.map(f => (
+        { value: f.id, label: f.title }
+    ));
+
     veranstaltungenOptions = () => this.getVeranstaltungen().map(v => ({
         value: v.id,
         label: shortVorlesungTyp(v.type) + (v.title && ` (${v.title})`)
     }));
-
-    faecherOptions = () => this.state.faecher.map(f => (
-        { value: f.id, label: f.title }
-    ));
 
     render() {
         const { classes } = this.props;
@@ -152,7 +152,7 @@ class NoteCreateUpdate extends Component {
                             label='Student'
                             value={this.state.form.studentId}
                             onSelect={this.changeHandler}
-                            options={this.studentenOptions()}
+                            options={this.studentenOptions}
                             className={classes.textField}
                             style={{ width: '35%'}}
                         />
@@ -161,10 +161,10 @@ class NoteCreateUpdate extends Component {
                             label='Fach'
                             value={this.state.form.subject}
                             onSelect={this.fachChangeHandler}
-                            options={this.faecherOptions()}
+                            options={this.faecherOptions}
                             className={classes.textField}
                         />
-                        <TextField
+                        <Field
                             select
                             name='subjectCourseId'
                             label='Veranstaltung'
@@ -181,11 +181,11 @@ class NoteCreateUpdate extends Component {
                                     {label}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </Field>
                     </div>
                     <div className={classes.fieldGroup}>
                         <div className={classes.fieldGroup} style={{ width: '35%'}}>
-                            <TextField
+                            <Field
                                 name='grade'
                                 label={`Punkte (0 - ${this.state.form.gradingSystemId === 0 ? 18 : 20})`}
                                 type='number'
@@ -205,7 +205,7 @@ class NoteCreateUpdate extends Component {
                         </div>
                         <div className={classNames(classes.fieldGroup, classes.stackedFieldGroup)} style={{ width: '65%'}}>
                             <div className={classes.fieldGroup}>
-                                <TextField
+                                <Field
                                     select
                                     name='gradingSystemId'
                                     label='Note'
@@ -215,8 +215,8 @@ class NoteCreateUpdate extends Component {
                                 >
                                     <MenuItem value={0}>DE</MenuItem>
                                     <MenuItem value={1}>FR</MenuItem>
-                                </TextField>
-                                <TextField
+                                </Field>
+                                <Field
                                     name='try'
                                     label='Versuch'
                                     type='number'
@@ -224,7 +224,7 @@ class NoteCreateUpdate extends Component {
                                     onChange={this.changeHandler}
                                     className={classes.textField}
                                 />
-                                <TextField
+                                <Field
                                     name='date'
                                     label='Prüfungsdate'
                                     type='date'
@@ -236,7 +236,7 @@ class NoteCreateUpdate extends Component {
                                 />
                             </div>
                             <div className={classes.fieldGroup}>
-                                <TextField
+                                <Field
                                     name='lecturer'
                                     label='Prüfer'
                                     value={this.state.form.lecturer}
