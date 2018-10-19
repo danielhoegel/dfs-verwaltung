@@ -11,7 +11,7 @@ import PrintIcon from '@material-ui/icons/PrintOutlined';
 import HiddenDivider from '../components/HiddenDivider';
 import Placeholder from '../components/placeholder/Placeholder';
 
-import StudentenFilter from '../routes/studenten/components/StudentenFilter';
+import StudentenFilter from '../routes/studenten/studentenListe/components/StudentenFilter';
 import { getFilteredStudenten, getStudentenFetching, getStudentenFilter } from '../routes/studenten//redux/studentenSelectors';
 import { fetchStudenten } from '../routes/studenten//redux/studentenActions';
 

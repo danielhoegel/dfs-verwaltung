@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 // import { getStudentForId } from './helper/selectors';
 import { getStudentForId } from './routes/studenten/redux/studentenSelectors';
 
-import StudentenListe from './routes/studenten/StudentenListe';
-import StudentDetails from './routes/studenten/StudentDetails';
+import StudentenListe from './routes/studenten/studentenListe/StudentenListe';
+import StudentDetails from './routes/studenten/studentenDetails/StudentDetails';
 import StudentUpdate from './routes/studenten/StudentUpdate';
 import StudentCreate from './routes/studenten/StudentCreate';
 

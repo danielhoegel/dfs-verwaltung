@@ -13,15 +13,15 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { fetchStudentForId } from './redux/studentenActions';
-import { getStudentForId } from './redux/studentenSelectors';
+import { fetchStudentForId } from '../redux/studentenActions';
+import { getStudentForId } from '../redux/studentenSelectors';
 
-import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
+import { translateStudienkurse, translateStudyStatus, isNotEmpty } from '../../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
 import StudentInformation from './components/StudentInformation';
 import CreateNote from './components/CreateNote';
-import Modal from '../../components/Modal';
-import Divider from '../../components/Divider';
+import Modal from '../../../components/Modal';
+import Divider from '../../../components/Divider';
 // import Placeholder from '../../components/placeholder/Placeholder';
 
 
@@ -118,7 +118,7 @@ class StudentDetails extends Component {
     };
 
     sortStudies() {
-        return this.props.student
+        return this.props.student && isNotEmpty(this.props.student)
             ? this.props.student.studies.sort(
                 (a, b) => b.year - a.year
             ) : [];
@@ -155,45 +155,48 @@ class StudentDetails extends Component {
                 </div>
 
                 <Divider hidden height='1rem' />
-
-                <Paper component="div" className={classes.tabsContainer}>
-                    <Tabs
-                        value={tab}
-                        onChange={this.tabChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
-                        scrollButtons='auto'
-                        className={classes.tabsHeader}
-                    >
-                        <Tab value='contact' label='Kontaktdaten' />
-                        {sortedStudies.map((study, index) => (
-                            <Tab
-                                key={index}
-                                value={index}
-                                label={`${translateStudienkurse(study.studyCourseId)} ${study.year} (${translateStudyStatus(study.status)})`}
-                            />
-                        ))}
-                    </Tabs>
-                    <Typography component="div" className={classes.tabContainer}>
-                        {tab === 'contact' && (
-                            <StudentInformation student={this.props.student} />
-                        )}
-                        {sortedStudies.map((study, index) => (
-                            <Fragment key={index}>
-                                {tab === index && (
-                                    <FaecherGrouped
-                                        studentId={student.id}
-                                        studyCourseId={study.studyCourseId}
-                                        openNoteModal={this.openNoteModal}
-                                        study={study}
-                                    />
-                                )}
-                            </Fragment>
-                        ))}
-                    </Typography>
-                </Paper>
-
+                {(isNotEmpty(this.props.student.studentInformations) || isNotEmpty(this.props.student.studies)) && (
+                    <Paper component="div" className={classes.tabsContainer}>
+                        <Tabs
+                            value={tab}
+                            onChange={this.tabChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
+                            scrollButtons='auto'
+                            className={classes.tabsHeader}
+                        >
+                            {isNotEmpty(this.props.student.studentInformations) && (
+                                <Tab value='contact' label='Kontaktdaten' />
+                            )}
+                            {sortedStudies.map((study, index) => (
+                                <Tab
+                                    key={index}
+                                    value={index}
+                                    label={`${translateStudienkurse(study.studyCourseId)} ${study.year} (${translateStudyStatus(study.status)})`}
+                                />
+                            ))}
+                        </Tabs>
+                        <Typography component="div" className={classes.tabContainer}>
+                            {tab === 'contact' && isNotEmpty(this.props.student.studentInformations) && (
+                                <StudentInformation student={this.props.student} />
+                            )}
+                            {sortedStudies.map((study, index) => (
+                                <Fragment key={index}>
+                                    {tab === index && (
+                                        <FaecherGrouped
+                                            studentId={student.id}
+                                            studyCourseId={study.studyCourseId}
+                                            openNoteModal={this.openNoteModal}
+                                            study={study}
+                                        />
+                                    )}
+                                </Fragment>
+                            ))}
+                        </Typography>
+                    </Paper>
+                )}
+                
                 <Modal
                     component={CreateNote}
                     title='Note hinzufügen'

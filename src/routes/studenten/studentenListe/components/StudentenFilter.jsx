@@ -11,9 +11,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { getStudenten, getStudentenFilter } from '../redux/studentenSelectors';
-import { filterStudenten, resetStudentenFilter } from '../redux/studentenActions';
-import { translateStudienkurse, translateStudyStatus } from '../../../helper/helper';
+import { getStudenten, getStudentenFilter } from '../../redux/studentenSelectors';
+import { filterStudenten, resetStudentenFilter } from '../../redux/studentenActions';
+import { translateStudienkurse, translateStudyStatus } from '../../../../helper/helper';
 
 
 const selectFilterStyles = theme => ({
@@ -68,9 +68,11 @@ const StudentenFilter = ({
     const studienkursOptions = () => {
         const stuyCourses = [];
         studenten.forEach(student => {
-            student.studies.forEach(study => {
-                stuyCourses.push(study.studyCourseId);
-            });
+            if (student.studies) {
+                student.studies.forEach(study => {
+                    stuyCourses.push(study.studyCourseId);
+                });
+            }
         });
 
         return [...new Set(stuyCourses)]
@@ -82,9 +84,11 @@ const StudentenFilter = ({
     const jahrgangOptions = () => {
         const years = [];
         studenten.forEach(student => {
-            student.studies.forEach(study => {
-                years.push(study.year);
-            });
+            if (student.studies) {
+                student.studies.forEach(study => {
+                    years.push(study.year);
+                });
+            }
         });
 
         return [...new Set(years)]
@@ -95,12 +99,14 @@ const StudentenFilter = ({
             ));
     };
 
-    const studyStatusgOptions = () => {
+    const studyStatusOptions = () => {
         const statuses = [];
         studenten.forEach(student => {
-            student.studies.forEach(study => {
-                statuses.push(study.status);
-            });
+            if (student.studies) {
+                student.studies.forEach(study => {
+                    statuses.push(study.status);
+                });
+            }
         });
 
         return [...new Set(statuses)]
@@ -124,7 +130,7 @@ const StudentenFilter = ({
                 label='Status'
                 defaultLabel='Alle Status'
                 value={filter.status}
-                options={studyStatusgOptions()}
+                options={studyStatusOptions()}
                 onChange={changeHandler}
             />
             <SelectFilter

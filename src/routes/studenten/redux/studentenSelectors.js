@@ -14,7 +14,7 @@ export function getStudenten(state) {
 }
 
 export function getStudentenFetching(state) {
-    return getStudentenData(state).fetchint;
+    return getStudentenData(state).fetching;
 }
 
 export function getStudentenFilter(state) {
@@ -36,19 +36,23 @@ export function getFilteredStudenten(state) {
     const { filter, searchString } = getStudentenData(state);
 
     return studenten.filter(student => {
-        const studyMatch = student.studies.some(study => {
-            if (filter.year && filter.year !== study.year ) {
-                return false;
-            }
-            if (isNotEmpty(filter.studyCourse) && filter.studyCourse !== study.studyCourseId) {
-                return false;
-            }
-            if (isNotEmpty(filter.status) && filter.status !== study.status) {
-                return false;
-            }
-            return true;
-        });
-        if (!studyMatch) return false;
+        if (isNotEmpty(student.studies)) {
+            const studyMatch = student.studies.some(study => {
+                if (filter.year && filter.year !== study.year ) {
+                    return false;
+                }
+                if (isNotEmpty(filter.studyCourse) && filter.studyCourse !== study.studyCourseId) {
+                    return false;
+                }
+                if (isNotEmpty(filter.status) && filter.status !== study.status) {
+                    return false;
+                }
+                return true;
+            });
+            if (!studyMatch) return false;            
+        } else if (filter.studies || isNotEmpty(filter.studyCourse) || isNotEmpty(filter.status)) {
+            return false;
+        }
 
         const studentMatch = (
             !filter.student ||
