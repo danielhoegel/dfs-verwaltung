@@ -177,23 +177,25 @@ class StudentDetails extends Component {
                                 />
                             ))}
                         </Tabs>
-                        <Typography component="div" className={classes.tabContainer}>
-                            {tab === 'contact' && isNotEmpty(this.props.student.studentInformations) && (
-                                <StudentInformation student={this.props.student} />
-                            )}
-                            {sortedStudies.map((study, index) => (
-                                <Fragment key={index}>
-                                    {tab === index && (
-                                        <FaecherGrouped
-                                            studentId={student.id}
-                                            studyCourseId={study.studyCourseId}
-                                            openNoteModal={this.openNoteModal}
-                                            study={study}
-                                        />
-                                    )}
-                                </Fragment>
-                            ))}
-                        </Typography>
+                        <div className={classes.tabContainer}>
+                            <div className={classes.tabContainerInside}>
+                                {tab === 'contact' && isNotEmpty(this.props.student.studentInformations) && (
+                                    <StudentInformation student={this.props.student} />
+                                )}
+                                {sortedStudies.map((study, index) => (
+                                    <Fragment key={index}>
+                                        {tab === index && (
+                                            <FaecherGrouped
+                                                studentId={student.id}
+                                                studyCourseId={study.studyCourseId}
+                                                openNoteModal={this.openNoteModal}
+                                                study={study}
+                                            />
+                                        )}
+                                    </Fragment>
+                                ))}
+                            </div>
+                        </div>
                     </Paper>
                 )}
                 
@@ -227,7 +229,10 @@ const styles = theme => ({
         borderBottom: `1px solid ${theme.palette.secondary.main}`
     },
     tabContainer: {
-        padding: theme.spacing.unit * 3
+        padding: theme.spacing.unit * 3,
+    },
+    tabContainerInside: {
+        overflowX: 'auto',
     },
     loader: {
         margin: 2 * theme.spacing.unit + ' auto',

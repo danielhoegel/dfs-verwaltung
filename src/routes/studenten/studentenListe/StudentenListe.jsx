@@ -132,7 +132,6 @@ class StudentenListe extends Component {
         const { fetching, classes } = this.props;
         return fetching ? <StudentenlisteLoading /> :  (
             <div>
-                <HiddenDivider height={2} />
                 <div className={classes.flexbox}>
                     <Typography variant="display1">
                         Studentenliste
@@ -197,7 +196,8 @@ const styles = theme => ({
         padding: 2 * theme.spacing.unit
     },
     tablePaper: {
-        position: 'relative'
+        position: 'relative',
+        overflowX: 'auto',
     },
     printMenuButton: {
         position: 'absolute',
