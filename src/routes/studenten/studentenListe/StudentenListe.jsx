@@ -125,11 +125,11 @@ class StudentenListe extends Component {
     }
 
     columns = [
-        {id: 'matrikelnummer', width: '1', label: 'Matr.-Nr.' },
-        {id: 'firstName', width: '1', label: 'Vorname' },
-        {id: 'lastName', width: '1', label: 'Nachname' },
-        {id: 'studyCourse', width: '1', label: 'Studienkurs' },
-        {id: 'mail', width: '1', label: '', padding: 'checkbox' }
+        {id: 'matrikelnummer', width: '10%', label: 'Matr.-Nr.' },
+        {id: 'firstName', width: '15%', label: 'Vorname' },
+        {id: 'lastName', width: '15%', label: 'Nachname' },
+        {id: 'studyCourse', width: '50%', label: 'Studienkurs' },
+        {id: 'mail', width: '5%', label: '', padding: 'checkbox' }
     ]
 
     studentenOptions() {
@@ -178,7 +178,7 @@ class StudentenListe extends Component {
                                 )
                                 : (
                                     <TableRow>
-                                        <TableCell colSpan={4}>Keine Studenten gefunden</TableCell>
+                                        <TableCell colSpan={6}>Keine Studenten gefunden</TableCell>
                                     </TableRow>
                                 )
                             }

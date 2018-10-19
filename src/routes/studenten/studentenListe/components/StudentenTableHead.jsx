@@ -36,11 +36,13 @@ class StudentenTableHead extends Component {
                         padding='checkbox'
                         aria-checked={this.checked()}
                         onClick={this.props.onSelectAllClick}
+                        style={{ width: '5%'}}
                     >
                         <Checkbox
                             indeterminate={this.indeterminate()}
                             checked={this.checked()}
                             color='primary'
+                            disabled={this.props.rowCount === 0}
                         />
                     </TableCell>
                     {this.props.columns.map(column => (
