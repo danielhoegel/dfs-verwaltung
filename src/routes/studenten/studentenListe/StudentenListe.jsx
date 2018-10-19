@@ -36,6 +36,16 @@ const StudentenlisteLoading = () => (
 
 
 class StudentenListe extends Component {
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.filteredStudenten !== prevState.__filteredStudenten) {
+            return { 
+                selected: [],
+                __filteredStudenten: nextProps.filteredStudenten
+            };
+        }
+        return null;
+    }
+
     state = {
         selected: []
     }
