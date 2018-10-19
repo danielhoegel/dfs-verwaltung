@@ -1,26 +1,69 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { getStudentForId } from '../../helper/selectors';
-import Button from '../../components/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
+
+import { isNotEmpty, isEmpty } from '../../helper/helper';
+import HiddenDivider from '../../components/HiddenDivider';
+
+import { getStudentForId, getStudentenFetching } from './redux/studentenSelectors';
+import { LinearProgress } from '@material-ui/core';
+
 
 class StudentUpdate extends Component {
-    state = {
-        student: getStudentForId(this.props.match.params.id)
+    
+    componentDidMount() {
+        if (isEmpty(this.props.student)) {
+            this.props.dispatch({
+                type: 'FETCH_STUDENT',
+                request: {
+                    url: `/students/${this.props.match.params.id}?_embed=studies&_embed=studentInformations`
+                }
+            });
+        }
     }
-
+    
     goBack = () => {
         this.props.history.goBack();
     }
 
     render() {
-        const student = this.state.student;
-        return (
+        const { student, fetching, classes } = this.props;
+        return !fetching && isNotEmpty(student) ? (
             <div>
-                <Button onClick={this.goBack} content='Zurück' />
-                <h2>Update {student.name}</h2>
+                <Typography variant="display1" gutterBottom>
+                    Bearbeite {student.firstName} {student.lastName}
+                </Typography>
+
+                <HiddenDivider />
+                <Button onClick={this.goBack} className={classes.button} >
+                    <ChevronLeftIcon className={classes.leftIcon} />
+                    Zurück
+                </Button>
             </div>
-        );
+        ) : <LinearProgress />;
     }
 }
 
-export default StudentUpdate;
+const styles = theme => ({
+    button: {
+        '&:not(:last-child)': {
+            marginRight: theme.spacing.unit,
+        },
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+});
+
+const mapStateToProps = (state, ownProps) => ({
+    student: getStudentForId(state, ownProps.match.params.id),
+    fetching: getStudentenFetching(state)
+});
+
+export default connect(mapStateToProps, { dispatch: action => action })(
+    withStyles(styles)(StudentUpdate)
+)
