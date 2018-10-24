@@ -7,32 +7,35 @@ export function getStudentenData(state) {
 
 
 /* Pure State */
-
+let studentsWithInformationAndStudies = null;
 export function getStudenten(state) {
-    const studentenData = getStudentenData(state);
-    return studentenData ? studentenData.list : null;
+    studentsWithInformationAndStudies = Object.values(state.entities.students).map(student => ({
+        ...student,
+        studentInformations: [ state.entities.studentInformations[student.id] ],
+        studies: state.entities.studies[student.id]
+    }));
+    return studentsWithInformationAndStudies;
 }
 
+
 export function getStudentenFetching(state) {
-    return getStudentenData(state).fetching;
+    return state.studenten.fetching;
 }
 
 export function getStudentenFilter(state) {
-    return getStudentenData(state).filter;
+    return state.studenten.filter;
 }
 
 
 /* Derived State */
 
 export function getStudentForId(state, id) {
-    const studenten = getStudenten(state);
-    return studenten
-        ? studenten.filter(s => s.id === Number(id))[0]
-        : null;
+    const studenten = studentsWithInformationAndStudies || getStudenten(state);
+    return studenten ? studenten[id] : null;
 }
 
 export function getFilteredStudenten(state) {
-    const studenten = getStudenten(state);
+    const studenten = studentsWithInformationAndStudies || getStudenten(state);
     const { filter, searchString } = getStudentenData(state);
 
     return studenten.filter(student => {

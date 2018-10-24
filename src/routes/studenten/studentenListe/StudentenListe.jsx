@@ -21,7 +21,7 @@ import StudentenTableHead from './components/StudentenTableHead';
 import StudentenRow from './components/StudentenRow';
 
 import { getFilteredStudenten, getStudentenFetching } from '../redux/studentenSelectors';
-import { fetchStudenten } from '../redux/studentenActions';
+// import { isEmpty } from '../../../helper/helper';
 
 
 const StudentenlisteLoading = () => (
@@ -57,16 +57,6 @@ class StudentenListe extends Component {
             (nextState.selected !== this.state.selected)
 
         );
-    }
-
-    componentDidMount() {
-        // this.props.fetchStudenten();
-        this.props.dispatch({
-            type: 'FETCH_STUDENTEN',
-            request: {
-                url: '/students?_embed=studies&_embed=studentInformations&_sort=lastName,firstName,matrikelnummer,id'
-            }
-        });
     }
     
     handleSelection = (e, studentId) => {
@@ -127,8 +117,8 @@ class StudentenListe extends Component {
     columns = [
         {id: 'matrikelnummer', width: '10%', label: 'Matr.-Nr.' },
         {id: 'firstName', width: '15%', label: 'Vorname' },
-        {id: 'lastName', width: '15%', label: 'Nachname' },
-        {id: 'studyCourse', width: '50%', label: 'Studienkurs' },
+        {id: 'lastName', width: '20%', label: 'Nachname' },
+        {id: 'studyCourse', width: '45%', label: 'Studienkurs' },
         {id: 'mail', width: '5%', label: '', padding: 'checkbox' }
     ]
 
@@ -232,11 +222,6 @@ const mapStateToProps = state => ({
     fetching: getStudentenFetching(state),
 });
 
-const mapDispatchToProps = {
-    fetchStudenten,
-    dispatch: action => action
-}
-
 StudentenListe.propTypes = {
     filteredStudenten: PropTypes.array.isRequired,
     fetching: PropTypes.bool.isRequired,
@@ -244,6 +229,6 @@ StudentenListe.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps)(
     withStyles(styles)(StudentenListe)
 );

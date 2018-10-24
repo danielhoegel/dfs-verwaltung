@@ -46,8 +46,8 @@ class GlobalSearch extends Component {
             this.props.history.push(`/studenten/${value}`);
         } else if (group === GROUPS.SUBJECTS) {
             console.log('SELECT SUBJECT - subjects:', this.state.subjects);
-            const { studyRegulationId } = this.state.subjects.filter(subject => subject.id === value)[0];
-            this.props.history.push(`/studienkurse/studienordnung/${studyRegulationId}/${value}`);
+            const { studyCourseId, studyRegulationId } = this.state.subjects.filter(subject => subject.id === value)[0];
+            this.props.history.push(`/studienkurse/${studyCourseId}/studienordnung/${studyRegulationId}/${value}`);
         }
     }
 

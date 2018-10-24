@@ -106,7 +106,7 @@ export function getNotenForStudentAndVeranstaltung(studentId, veranstaltungId) {
 }
 
 export function getPunkteForVeranstaltungAndStudent(veranstaltungID, studentID) {
-    const noten = getNotenForStudentAndVeranstaltung(veranstaltungID, studentID);
+    const noten = getNotenForStudentAndVeranstaltung(studentID, veranstaltungID);
     if (noten.length > 1) {
         let lastVersuch = noten[0];
         noten.forEach(note => {

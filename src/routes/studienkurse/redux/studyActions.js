@@ -20,6 +20,6 @@ export const fetchStudyCoursesWithRegulations = () => ({
 
 export const fetchSubjectsWithSubjectCoursesForStudyRegulation = (regulationId) => ({
     type: 'FETCH_SUBJECT_WITH_SUBJECT_COURSES_FOR_STUDY_REGULATION',
-    request: { url: '/studyRegulations/2/subjects?_embed=subjectCourses&_expand=studyRegulation&_expand=studyCourse&_sort=semester,type,title,' }
+    request: { url: `/studyRegulations/${regulationId}/subjects?_embed=subjectCourses&_expand=studyRegulation&_expand=studyCourse&_sort=semester,type,title` }
 })
 

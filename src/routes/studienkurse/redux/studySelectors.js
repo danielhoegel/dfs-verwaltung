@@ -1,3 +1,12 @@
+import {
+    getStudyCourses,
+    getStudyRegulationsByStudyCourseId,
+    getSubjectsByStudyRegulationId,
+    getSubjectCoursesBySubjectId,
+    getStudyRegulationByIds,
+    getStudyCoursById
+} from '../../../redux/entitiesSelector';
+
 function getStudyData(state) {
     return state.study;
 }
@@ -6,20 +15,23 @@ export function getStudyFetching(state) {
     return getStudyData(state).fetching;
 }
 
-export function getStudyRegulations(state) {
-    return getStudyData(state).studyRegulations;
+export function getStudyCoursesWithRegulations(state) {
+    return getStudyCourses(state).map(studyCourse => ({
+        ...studyCourse,
+        studyRegulations: getStudyRegulationsByStudyCourseId(state, studyCourse.id)
+    }));
 }
 
-export function getStudyCourses(state) {
-    return getStudyData(state).studyCourses;
+export function getStudyRegulationWithStudyCourse(state, studyCourseId, studyRegulationId) {
+    const studyRegulation = getStudyRegulationByIds(state, studyCourseId, studyRegulationId);
+    studyRegulation.studyCourse = getStudyCoursById(state, studyRegulation.studyCourseId);
+    return studyRegulation;
 }
 
-export function getSubjectsForRegulation(state) {
-    return getStudyData(state).subjectsForRegulation;
+export function getSubjectsWithSubjectCourses(state, studyRegulationId) {
+    return getSubjectsByStudyRegulationId(state, studyRegulationId).map(subject => ({
+        ...subject,
+        subjectCourses: getSubjectCoursesBySubjectId(state, subject.id)
+    }));
 }
 
-export function getStudyRegulationForId(state, regulationId) {
-    return getStudyRegulations(state).filter(
-        regulation => regulation.id === regulationId
-    )[0];
-}

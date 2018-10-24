@@ -1,52 +1,6 @@
-import { combineReducers } from 'redux';
-
-const byId = (state = {}, action) => {
-    switch (action.type) {
-        case 'FETCH_STUDENTS_SUCCESS':
-            const nextState = { ...state};
-            action.data.forEach(student => {
-                nextState[student.id] = student;
-            });
-            return nextState;
-
-        default:
-            return state;
-    }
-}
-
-const idsByFilter = (state = {}, action) => {
-    switch (action.type) {
-        case 'FETCH_STUDENTS_SUCCESS': return {
-            ...state,
-            [action.filter]: action.data.map(student => student.id)
-        };
-       
-        default:
-            return state;
-    }
-};
-
-export const students = combineReducers({
-    byId,
-    idsByFilter
-});
-
-// export default students;
-
-
-/* SELECTORS */
-
-export function getStudentsByFilter(state, filter) {
-    const ids = state.idsByFilter[filter];
-    return ids.map(id => state.byId(id));
-}
-
-
-/* OLD REDUCER */
-
 const defaultState = {
     list: [],
-    fetching: true,
+    fetching: false,
     error: null,
     filter: {
         studyCourse: 1,

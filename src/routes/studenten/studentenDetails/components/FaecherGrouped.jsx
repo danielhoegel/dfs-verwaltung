@@ -101,7 +101,7 @@ const Fach = withStyles(fachStyles)(({
                             {index === 0 && (
                                 <TableCell rowSpan={veranstaltungen.length}>
                                     <Link
-                                        to={`/studienkurse/studienordnung/${study.studyRegulationId}/${fach.id}`}
+                                        to={`/studienkurse/${study.studyCourseId}/studienordnung/${study.studyRegulationId}/${fach.id}`}
                                         className={classes.subjectLink}
                                     >
                                         {fach.title}

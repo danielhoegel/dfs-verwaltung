@@ -1,18 +1,32 @@
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger'
+import { createStore } from 'redux';
+import throttle from 'lodash/throttle';
+// import { persistStore, persistReducer } from 'redux-persist'
+// import storage from 'redux-persist/lib/storage';
+// import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
-import reducer from './rootReducer';
-import apiRequests from './middleware/apiRequestsMiddleware';
+import rootReducer from './rootReducer';
+import middleware from './middleware/middleware';
+import { loadState, saveState } from '../helper/localStorage';
 
-const logger = createLogger({
-    collapsed: true,
-    timestamp: false,
-    duration: false
-});
+const persistedState = {
+    entities: loadState()
+};
 
-const middleware = applyMiddleware(apiRequests, logger);
+// const persistConfig = {
+//     key: 'data',
+//     whitelist: ['data'],
+//     storage,
+//     // stateReconciler: autoMergeLevel2, // default: autoMergeLevel1
+//     // debug: true
+// };
 
-const store = createStore(reducer, middleware);
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
+const store = createStore(rootReducer, persistedState, middleware);
+// export const persistor = persistStore(store);
+
+store.subscribe(throttle(() => {
+    saveState(store.getState().entities);
+}, 1000));
 
 if (module.hot) {
     // Enable Webpack hot module replacement for reducers

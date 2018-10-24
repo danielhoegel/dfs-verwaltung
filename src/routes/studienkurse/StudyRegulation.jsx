@@ -19,12 +19,11 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
-import { isEmpty, isNotEmpty } from '../../helper/helper';
+import { isNotEmpty } from '../../helper/helper';
 import HiddenDivider from '../../components/HiddenDivider';
 import Expandable from '../../components/Expandable';
 
-import { fetchStudyRegulationForId, fetchSubjectsWithSubjectCoursesForStudyRegulation } from './redux/studyActions';
-import { getStudyRegulationForId, getSubjectsForRegulation, getStudyFetching } from './redux/studySelectors';
+import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse } from './redux/studySelectors';
 
 
 const SubjectCourse = ({
@@ -168,18 +167,12 @@ class StudyRegulation extends Component {
     subjectRefs = {}
     
     componentDidMount() {
-        const regulationId = Number(this.props.match.params.studyRegulationId);
-        
-        this.props.fetchStudyRegulationForId(regulationId);
-        
-        if (isEmpty(this.props.subjects)) {
-            this.props.fetchSubjects(regulationId);
-        } else if (isNotEmpty(this.props.match.params.subjectId)) {
+        if (isNotEmpty(this.props.match.params.subjectId)) {
             this.scrollToExpandedSubject();
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (
             this.props.subjects !== prevProps.subjects ||
             this.props.match.params.subjectId !== prevProps.match.params.subjectId
@@ -190,6 +183,7 @@ class StudyRegulation extends Component {
 
     scrollToExpandedSubject() {
         const { expandedSubject } = this.state;
+        console.log('scroll', { expandedSubject, refs: this.subjectRefs});
         if (isNotEmpty(expandedSubject) && this.subjectRefs[expandedSubject]) {
             this.subjectRefs[expandedSubject].scrollIntoView();
         }
@@ -340,23 +334,20 @@ const styles = theme => ({
 
 StudyRegulation.propTypes = {
     studyRegulation: PropTypes.object,
-    fetchStudyRegulationForId: PropTypes.func.isRequired,
-    subjects: PropTypes.array.isRequired,
-    fetchSubjects: PropTypes.func.isRequired,
+    subjects: PropTypes.array,
     fetching: PropTypes.bool,
 }
 
-const mapStateToProps = (state, props) => ({
-    studyRegulation: getStudyRegulationForId(state, Number(props.match.params.studyRegulationId)),
-    subjects: getSubjectsForRegulation(state),
-    fetching: getStudyFetching(state),
-});
+const mapStateToProps = (state, props) => {
+    const studyCourseId = Number(props.match.params.studyCourseId);
+    const studyRegulationId = Number(props.match.params.studyRegulationId);
+    return {
+        studyRegulation: getStudyRegulationWithStudyCourse(state, studyCourseId, studyRegulationId),
+        subjects: getSubjectsWithSubjectCourses(state, studyRegulationId),
+        fetching: getStudyFetching(state),
+    }
+};
 
-const mapDispatchToProps = {
-    fetchStudyRegulationForId,
-    fetchSubjects: fetchSubjectsWithSubjectCoursesForStudyRegulation
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps)(
     withStyles(styles)(StudyRegulation)
 );

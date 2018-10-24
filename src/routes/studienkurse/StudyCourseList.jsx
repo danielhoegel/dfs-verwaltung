@@ -24,19 +24,18 @@ import { formatDate } from '../../helper/helper';
 import HiddenDivider from '../../components/HiddenDivider';
 import Expandable from '../../components/Expandable';
 
-import { fetchStudyCoursesWithRegulations } from './redux/studyActions';
-import { getStudyCourses, getStudyFetching } from './redux/studySelectors';
+import { getStudyCoursesWithRegulations, getStudyFetching } from './redux/studySelectors';
 
 
 const StudyRegulation = withRouter(({
-    regulation: { id, title, description, date },
+    regulation: { id, title, description, date, studyCourseId },
     allowDelete,
     history,
     classes,
 }) => {
 
     const openStudyRegulation = () => {
-        history.push(`/studienkurse/studienordnung/${id}`)
+        history.push(`/studienkurse/${studyCourseId}/studienordnung/${id}`)
     };
 
     const deleteStudyRegulation = () => {
@@ -117,13 +116,10 @@ const StudyCourse = ({
     );
 };
 
+
 class StudyCourseList extends Component {
     state = {
         allowDelete: false,
-    }
-
-    componentDidMount() {
-        this.props.fetchStudyCoursesWithRegulations()
     }
 
     createStudyCourse = () => {
@@ -241,19 +237,14 @@ const styles = (theme) => ({
 
 StudyCourseList.propTypes = {
     studyCourses: PropTypes.array.isRequired,
-    fetchStudyCoursesWithRegulations: PropTypes.func.isRequired,
     fetching: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({
-    studyCourses: getStudyCourses(state),
+    studyCourses: getStudyCoursesWithRegulations(state),
     fetching: getStudyFetching(state),
 });
 
-const mapDispatchToProps = {
-    fetchStudyCoursesWithRegulations,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps)(
     withStyles(styles)(StudyCourseList)
 );

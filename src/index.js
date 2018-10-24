@@ -3,19 +3,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
+// import { PersistGate } from 'redux-persist/integration/react'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import theme from './theme';
-import store from './redux/store';
+import store/* , { persistor } */ from './redux/store';
 import App from './App';
-
 
 const render = (AppComponent) => {
     ReactDOM.render(
         <MuiThemeProvider theme={theme}>
             <AppContainer>
                 <Provider store={store}>
-                    <AppComponent />
+                    {/* <PersistGate loading={'Loading....'} persistor={persistor}> */}
+                        <AppComponent />
+                    {/* </PersistGate> */}
                 </Provider>
             </AppContainer>
         </MuiThemeProvider>,
