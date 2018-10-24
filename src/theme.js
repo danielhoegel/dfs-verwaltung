@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-// import indigo from '@material-ui/core/colors/indigo';
+import red from '@material-ui/core/colors/red';
 
 const defaultTheme = createMuiTheme();
 
@@ -10,6 +10,7 @@ const customColors = {
     light: 'rgba(0, 0, 0, 0.23)',
     disabled: 'rgba(0, 0, 0, 0.26)',
     borderBottom: 'rgba(0, 0, 0, 0.42)',
+    red: red[500],
 };
 
 const theme = createMuiTheme({
@@ -20,6 +21,7 @@ const theme = createMuiTheme({
         light: customColors.light,
         disabled: customColors.disabled,
         borderBottom: customColors.borderBottom,
+        red: customColors.red,
     },
     overrides: {
         MuiInput: {
@@ -50,6 +52,11 @@ const theme = createMuiTheme({
                 '& option': {
                     backgroundColor: defaultTheme.palette.common.white,
                 },
+            },
+        },
+        MuiFormLabel: {
+            asterisk: {
+                color: customColors.red,
             },
         },
     },
