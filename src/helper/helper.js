@@ -127,6 +127,44 @@ export function isDescendant(parent, child) {
     return false;
 }
 
+/**
+ * Return a new object with the changed value behind the path of keys
+ * @param {array} keys path of keys to the value
+ * @param {object} obj object at the current index
+ * @param {number|string} value updated value
+ * @param {number} index current position inside the keys path
+ */
+export function changeNestedObject(keys, value, obj, index = 0) {
+    console.log('changeNestedObject', { key: keys[index], obj, isNaN: isNaN(keys[index])});
+    const key = keys[index];
+    if (isNaN(key)) {
+        // return new object
+        return {
+            ...obj,
+            [key]: (index === keys.length -1)
+                ? value
+                : changeNestedObject(keys, value, obj[key], index + 1)
+        };
+    } else {
+        // return new array
+        const nextArray = obj;
+        nextArray[key] = (index === keys.length -1)
+            ? value
+            : changeNestedObject(keys, value, obj[key], index + 1);
+        return nextArray;
+    }
+}
+
+export function removeByIndex(array, index) {
+    if (index === 0) {
+        return array.slice(1);
+    } else if (index === array.length - 1) {
+        return array.slice(0, -1);
+    } else {
+        return array.slice(0, index).concat(array.slice(index + 1));
+    }
+}
+
 
 export function getTodayDate() {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
