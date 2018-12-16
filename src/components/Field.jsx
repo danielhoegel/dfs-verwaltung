@@ -35,6 +35,7 @@ class Field extends Component {
 const styles = theme => ({
     textField: {
         margin: theme.spacing.unit,
+        userSelect: 'none'
     },
 });
 

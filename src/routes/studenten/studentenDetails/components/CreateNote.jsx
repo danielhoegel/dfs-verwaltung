@@ -20,6 +20,8 @@ import {
     getNoteForId,
     getNotenForStudentAndVeranstaltung
 } from '../../../../helper/selectors';
+import FieldRadioGroup from '../../../../components/FieldRadioGroup';
+import FieldGroup from '../../../../components/FieldGroup';
 
 
 class NoteCreateUpdate extends Component {
@@ -144,119 +146,122 @@ class NoteCreateUpdate extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div>
-                <form onSubmit={this.submitHandler} >
-                    <div className={classes.fieldGroup}>
-                        <SearchSelect
-                            name='studentId'
-                            label='Student'
-                            value={this.state.form.studentId}
-                            onSelect={this.changeHandler}
-                            options={this.studentenOptions}
-                            className={classes.textField}
-                            style={{ width: '35%'}}
-                        />
-                        <SearchSelect
-                            name='subject'
-                            label='Fach'
-                            value={this.state.form.subject}
-                            onSelect={this.fachChangeHandler}
-                            options={this.faecherOptions}
-                            className={classes.textField}
-                        />
+            <form onSubmit={this.submitHandler} >
+                <FieldGroup>
+                    <SearchSelect
+                        name='studentId'
+                        label='Student'
+                        value={this.state.form.studentId}
+                        onSelect={this.changeHandler}
+                        options={this.studentenOptions}
+                        className={classes.textField}
+                        style={{ width: '35%'}}
+                    />
+                    <SearchSelect
+                        name='subject'
+                        label='Fach'
+                        value={this.state.form.subject}
+                        onSelect={this.fachChangeHandler}
+                        options={this.faecherOptions}
+                        className={classes.textField}
+                    />
+                    <Field
+                        select
+                        name='subjectCourseId'
+                        label='Veranstaltung'
+                        value={this.state.form.subjectCourseId}
+                        onChange={this.changeHandler}
+                        className={classes.textField}
+                        disabled={
+                            (!this.state.form.subject && this.state.form.subject !== 0) ||
+                            this.veranstaltungenOptions().length === 1
+                        }
+                    >
+                        {this.veranstaltungenOptions().map(({ value, label }) => (
+                            <MenuItem key={value} value={value}>
+                                {label}
+                            </MenuItem>
+                        ))}
+                    </Field>
+                </FieldGroup>
+                <FieldGroup>
+                    <FieldGroup
+                        className={classes.stackedFieldGroup}
+                        style={{ width: '35%'}}
+                    >
                         <Field
-                            select
-                            name='subjectCourseId'
-                            label='Veranstaltung'
-                            value={this.state.form.subjectCourseId}
+                            name='grade'
+                            label={`Punkte (0 - ${this.state.form.gradingSystemId === 0 ? 18 : 20})`}
+                            type='number'
+                            min={0}
+                            max={this.state.form.gradingSystemId === 'de' ? 18 : 20}
+                            step={1}
+                            value={this.state.form.grade}
                             onChange={this.changeHandler}
-                            className={classes.textField}
-                            disabled={
-                                (!this.state.form.subject && this.state.form.subject !== 0) ||
-                                this.veranstaltungenOptions().length === 1
-                            }
-                        >
-                            {this.veranstaltungenOptions().map(({ value, label }) => (
-                                <MenuItem key={value} value={value}>
-                                    {label}
-                                </MenuItem>
-                            ))}
-                        </Field>
-                    </div>
-                    <div className={classes.fieldGroup}>
-                        <div className={classes.fieldGroup} style={{ width: '35%'}}>
-                            <Field
-                                name='grade'
-                                label={`Punkte (0 - ${this.state.form.gradingSystemId === 0 ? 18 : 20})`}
-                                type='number'
-                                min={0}
-                                max={this.state.form.gradingSystemId === 'de' ? 18 : 20}
-                                step={1}
-                                value={this.state.form.grade}
+                            autoFocus
+                            required
+                            className={classNames(classes.textField, classes.punkteField)}
+                            variant='outlined'
+                            InputLabelProps={{ shrink: true }}
+                            InputProps={{ className: classes.punkteFieldInput }}
+                            margin="normal"
+                        />
+                    </FieldGroup>
+                    <FieldGroup
+                        className={classes.stackedFieldGroup}
+                        style={{ width: '65%'}}
+                    >
+                        <FieldGroup>
+                            <FieldRadioGroup
+                                name='gradingSystemId'
+                                label='Note'
+                                value={this.state.form.gradingSystemId}
                                 onChange={this.changeHandler}
-                                autoFocus
-                                required
-                                className={classNames(classes.textField, classes.punkteField)}
-                                variant='outlined'
+                                options={[
+                                    { value: 0, label: 'DE' },
+                                    { value: 1, label: 'FR' },
+                                ]}
+                            />
+                            <Field
+                                name='try'
+                                label='Versuch'
+                                type='number'
+                                value={this.state.form.try}
+                                onChange={this.changeHandler}
+                                className={classes.textField}
+                                width={2}
+                            />
+                        </FieldGroup>
+                        <FieldGroup>
+                            <Field
+                                name='date'
+                                label='Prüfungsdatum'
+                                type='date'
+                                value={this.state.form.datum}
+                                onChange={this.changeHandler}
+                                className={classes.textField}
                                 InputLabelProps={{ shrink: true }}
-                                InputProps={{ className: classes.punkteFieldInput }}
-                                margin="normal"
-                            />    
-                        </div>
-                        <div className={classNames(classes.fieldGroup, classes.stackedFieldGroup)} style={{ width: '65%'}}>
-                            <div className={classes.fieldGroup}>
-                                <Field
-                                    select
-                                    name='gradingSystemId'
-                                    label='Note'
-                                    value={this.state.form.gradingSystemId}
-                                    onChange={this.changeHandler}
-                                    className={classes.textField}
-                                >
-                                    <MenuItem value={0}>DE</MenuItem>
-                                    <MenuItem value={1}>FR</MenuItem>
-                                </Field>
-                                <Field
-                                    name='try'
-                                    label='Versuch'
-                                    type='number'
-                                    value={this.state.form.try}
-                                    onChange={this.changeHandler}
-                                    className={classes.textField}
-                                />
-                                <Field
-                                    name='date'
-                                    label='Prüfungsdate'
-                                    type='date'
-                                    value={this.state.form.datum}
-                                    onChange={this.changeHandler}
-                                    className={classes.textField}
-                                    InputLabelProps={{ shrink: true }}
-                                    style={{ flex: 3 }}
-                                />
-                            </div>
-                            <div className={classes.fieldGroup}>
-                                <Field
-                                    name='lecturer'
-                                    label='Prüfer'
-                                    value={this.state.form.lecturer}
-                                    onChange={this.changeHandler}
-                                    className={classes.textField}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <Divider hidden />
-                    <Button className={classes.button} type='submit' variant='contained' color='primary'>
-                        <AddIcon className={classes.leftIcon} />
-                        Note hinzufügen
-                    </Button>
-                    <Button className={classes.button} onClick={this.props.closeModal} variant='contained'>
-                        Abbrechen
-                    </Button>
-                </form>
-                
-            </div>
+                            />
+                            <Field
+                                name='lecturer'
+                                label='Prüfer'
+                                value={this.state.form.lecturer}
+                                onChange={this.changeHandler}
+                                className={classes.textField}
+                                width={2}
+                            />
+                        </FieldGroup>
+                    </FieldGroup>
+                    </FieldGroup>
+                <Divider hidden />
+                <Button className={classes.button} type='submit' variant='contained' color='primary'>
+                    <AddIcon className={classes.leftIcon} />
+                    Note hinzufügen
+                </Button>
+                <Button className={classes.button} onClick={this.props.closeModal} variant='contained'>
+                    Abbrechen
+                </Button>
+            </form>
         );
     }
 }

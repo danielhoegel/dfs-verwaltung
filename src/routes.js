@@ -14,6 +14,7 @@ import StudyRegulation from './routes/studienkurse/StudyRegulation';
 import Playground from './routes/playground/Playground';
 
 import Reports from './reports/Reports';
+import Forms from './routes/forms/Forms';
 
 
 /* Custom Breadcrumbs */
@@ -39,5 +40,6 @@ export default [
     { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId', component: StudyRegulation, exact: true, breadcrumb: 'Studienordnung' },
     { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/:subjectId', component: StudyRegulation, breadcrumb: null },
     { path: '/playground/:id?', component: Playground, breadcrumb: 'Playground' },
+    { path: '/forms', component: Forms, breadcrumb: 'Formulare'}
 ];
   

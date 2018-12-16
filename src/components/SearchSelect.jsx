@@ -177,11 +177,12 @@ class SearchSelect extends Component {
     }
 
     inputChangeHandler = (e) => {
+        const { value } = e.target;
         if (this.props.onChange) {
             this.props.onChange(e);
         }
         this.setState({
-            inputValue: e.target.value,
+            inputValue: isNaN(value) ? value : Number(value),
             activeIndex: 0
         }, this.filterMatchingOptions);
     }

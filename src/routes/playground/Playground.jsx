@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import myForm from '../../components/myForm';
+import myForm from '../../components/myFormHOCTest';
 
 class Playground extends Component {
     

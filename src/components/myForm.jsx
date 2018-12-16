@@ -1,111 +1,42 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
 
-import { withStyles } from '@material-ui/core/styles';
-
-
-const FieldGroup = withStyles(theme => ({
-    formGroup: {
-        backgroundColor: 'formField',
+class MyForm extends Component {
+    static propTypes = {
+        onSubmit: PropTypes.func.isRequired,
+        fields: PropTypes.func.isRequired,
+        defaultValues: PropTypes.object,
     }
-}))(({ children, classes }) => {
-    return (
-        <div className={classes.formGroup}>
-            {children}
-        </div>
-    );
-});
 
+    state = this.props.defaultValues || {}
 
-const FormField = withStyles(theme => ({
-    formField: {
-        backgroundColor: 'blue',
+    changeHandler = (e) => {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: (typeof value === 'boolean' || isNaN(value)) ? value : Number(value)
+        });
     }
-}))(({ children, classes, data }) => {
-    console.log('FORM_FIELD', data);
-    return (
-        <div className={classes.formField}>
-            {children}
-        </div>
-    );
-});
 
+    submitHandler = (e) => {
+        e.preventDefault();
+        this.props.onSubmit(this.state);
+    }
 
-const Form = ({ submitHandler, children }) => {
-    return (
-        <form onSubmit={submitHandler}>
-            {/* {React.Children.map(children, child => {
-                if (child.props.name) {
-                    return React.cloneElement(child, {
-                        value: this.state[child.props.name],
-                        onChange: this.changeHandler
-                    })
-                }
-                return child;
-            })} */}
-            {children}
-        </form>
-    )
-}
-
-
-function myForm(FormComponent) {
-    const styles = theme => ({
-        form: {
-            border: '1px solid #000',
-        }
-    });
-
-    return withStyles(styles)(class extends Component {
-        state = this.defaultState();
-        
-        Form = props => <Form {...props} submitHandler={this.submitHandler} form={this} />;
-        FieldGroup = props => <FieldGroup {...props} form={this} />;
-        Field = props => <FormField {...props} form={this} />;
-        
-    
-        defaultState() {
-            return this.props.data
-                ? this.props.data
-                : this.emptyState();
-        }
-    
-        emptyState() {
-            const nextState = {};
-            React.Children.map(this.props.children, child => {
-                if (child.props.name) {
-                    nextState[child.props.name] = '';
-                }
-            });
-            return nextState;
-        }
-    
-        changeHandler = e => {
-            this.setState({
-                [e.target.name]: e.target.value
-            });
-        }
-    
-        submitHandler = (e) => {
-            e.preventDefault();
-            this.props.onSubmit(e, this.state);
-            if (!this.props.data) {
-                this.setState(this.emptyState());
-            }
-    
-        }
-    
-        render() {
-            // const { children, classes } = this.props;
-            return (
-                <FormComponent
-                    Form={this.Form}
-                    Field={this.Field}
-                    FieldGroup={this.Group}
-                    {...this.props}
+    render() {
+        const formProps = omit(this.props, ['fields', 'onSubmit', 'defaultValues']);
+        return (
+            <form onSubmit={this.submitHandler}>
+                <this.props.fields
+                    onChange={this.changeHandler}
+                    values={this.state}
+                    {...formProps}
                 />
-            );
-        }
-    });
+            </form>
+        );
+    }
 }
 
-export default myForm;
+
+
+export default MyForm;
