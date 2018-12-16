@@ -31,7 +31,7 @@ const theme = createMuiTheme({
                     borderBottom: `1px solid ${customColors.borderBottom}`,
                 },
             },
-        },
+        },        
         MuiNotchedOutline: {
             // set outlined input border color
             root: {
@@ -46,6 +46,18 @@ const theme = createMuiTheme({
                 },
             },
         },
+        MuiFormLabel: {
+            asterisk: {
+                color: customColors.red,
+            },
+        },
+        MuiSelect: {
+            disabled: {
+                '&$select': {
+                    cursor: 'not-allowed',
+                },
+            },
+        },
         MuiNativeSelect: {
             select: {
                 // reset native select option background
@@ -54,9 +66,12 @@ const theme = createMuiTheme({
                 },
             },
         },
-        MuiFormLabel: {
-            asterisk: {
-                color: customColors.red,
+        MuiButton: {
+            contained: {
+                boxShadow: 'none',
+                '&:active': {
+                    boxShadow: 'none',
+                },
             },
         },
     },
