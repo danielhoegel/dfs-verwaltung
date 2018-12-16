@@ -19,7 +19,8 @@ export function getStudenten(state) {
 
 
 export function getStudentenFetching(state) {
-    return state.studenten.fetching;
+    // return state.studenten.fetching;
+    return state.entities.meta.fetching;
 }
 
 export function getStudentenFilter(state) {

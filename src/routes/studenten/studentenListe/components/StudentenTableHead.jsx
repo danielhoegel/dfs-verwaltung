@@ -42,7 +42,7 @@ class StudentenTableHead extends Component {
                             indeterminate={this.indeterminate()}
                             checked={this.checked()}
                             color='primary'
-                            disabled={this.props.rowCount === 0}
+                            disabled={this.props.rowCount === 0 || this.props.fetching}
                         />
                     </TableCell>
                     {this.props.columns.map(column => (
@@ -73,6 +73,7 @@ StudentenTableHead.propTypes = {
     columns: PropTypes.array.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
+    fetching: PropTypes.bool.isRequired,
 }
 
 export default withStyles(styles)(StudentenTableHead);

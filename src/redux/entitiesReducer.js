@@ -54,7 +54,38 @@ function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
     };
 }
 
+const defaultMetaState = {
+    fetching: false,
+    error: ''
+};
+
+function entitiesMetaReducer(state = defaultMetaState, action) {
+    switch (action.type) {
+        case 'FETCH_ALL_DATA':
+            return {
+                ...state,
+                fetching: true,
+                error: ''
+            }
+        case 'FETCH_ALL_DATA_SUCCESS':
+            return {
+                ...state,
+                fetching: false,
+                error: ''
+            }
+        case 'FETCH_ALL_DATA_FAILURE':
+            return {
+                ...state,
+                fetching: false,
+                error: action.error
+            }
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
+    meta: entitiesMetaReducer,
     students: entityReducer('STUDENT', 'STUDENTS', 'students', 'id'),
     studentInformations: entityReducer('STUDENT_INFORMATION', 'STUDENT_INFORMATIONS', 'studentInformations', 'studentId'),
     studies: entityReducer('STUDY', 'STUDIES', 'studies', 'studentId', true),

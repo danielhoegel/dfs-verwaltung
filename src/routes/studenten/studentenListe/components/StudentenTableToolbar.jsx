@@ -9,11 +9,15 @@ import IconButton from '@material-ui/core/IconButton'
 import MailIcon from '@material-ui/icons/MailOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import { isNotEmpty } from '../../../../helper/helper';
 
 class StudentenTableToolbar extends Component {
     shouldComponentUpdate(nextProps) {
-        return nextProps.numSelected !== this.props.numSelected;
+        return (
+            (nextProps.numSelected !== this.props.numSelected) ||
+            (nextProps.fetching !== this.props.fetching)
+        );
     }
 
     mailDistributor() {
@@ -31,6 +35,7 @@ class StudentenTableToolbar extends Component {
 
     render() {
         const { numSelected, classes } = this.props;
+        console.log({ fetching: this.props.fetching });
         return (
             <Toolbar
                 className={classNames(classes.root, {
@@ -43,13 +48,13 @@ class StudentenTableToolbar extends Component {
                             {numSelected} Studenten ausgewählt
                         </Typography>
                     ) : (
-                        <Typography variant="title" id="tableTitle">
+                        <Typography variant="title">
                             Studenten
                         </Typography>
                     )}
                 </div>
                 <div className={classes.actions}>
-                    {numSelected > 0 && (
+                    {numSelected > 0 ? (
                         <Fragment>
                             <IconButton
                                 component='a'
@@ -75,6 +80,15 @@ class StudentenTableToolbar extends Component {
                                 <DeleteIcon />
                             </IconButton>
                         </Fragment>
+                    ) : (
+                        <IconButton
+                            aria-label='Reload'
+                            title='Daten aktualisieren'
+                            onClick={this.props.fetchStudents}
+                            className={classNames({[classes.loadingButton]: this.props.fetching})}
+                        >
+                            <RefreshIcon />
+                        </IconButton>
                     )}
                 </div>
             </Toolbar>
@@ -96,12 +110,24 @@ const styles = theme => ({
     title: {
         flex: '0 0 auto',
     },
+    '@keyframes loading-anim': {
+        from: { transform: 'rotate(0)' },
+        to:   { transform: 'rotate(360deg)' }
+    },
+    loadingButton: {
+        animationName: 'loading-anim',
+        animationDuration: '300ms',
+        animationTimingFunction: 'linear',
+        animationIterationCount: 'infinite',
+    }
 });
   
 StudentenTableToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
     selectedStudents: PropTypes.array.isRequired,
+    fetchStudents: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
 };
   
 export default withStyles(styles)(StudentenTableToolbar);

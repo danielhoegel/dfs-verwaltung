@@ -26,7 +26,7 @@ import { getFilteredStudenten, getStudentenFetching } from '../redux/studentenSe
 
 const StudentenlisteLoading = () => (
     <Placeholder>
-        <Placeholder.Item height='2.5rem' />
+        <Placeholder.Item height='2rem' marginTop='0.5rem' />
         <Placeholder.Item height='2rem' width='70%' />
         <Placeholder.Item height='2rem' width='60%' />
         <Placeholder.Item height='2rem' width='90%' />
@@ -57,6 +57,13 @@ class StudentenListe extends Component {
             (nextState.selected !== this.state.selected)
 
         );
+    }
+
+    fetchStudents = () => {
+        this.props.dispatch({
+            type: 'FETCH_ALL_DATA',
+            request: { url: '/db' }
+        });
     }
     
     handleSelection = (e, studentId) => {
@@ -129,8 +136,8 @@ class StudentenListe extends Component {
     }
 
     render() {
-        const { fetching, classes } = this.props;
-        return fetching ? <StudentenlisteLoading /> :  (
+        const { classes } = this.props;
+        return (
             <div>
                 <div className={classes.flexbox}>
                     <Typography variant="display1">
@@ -140,6 +147,7 @@ class StudentenListe extends Component {
                         <StudentenActions exportPDF={this.exportPDF} />
                     </div>
                 </div>
+                <HiddenDivider height={2} />
                 <StudentenFilter />
                
                 <HiddenDivider height={2} />
@@ -147,6 +155,8 @@ class StudentenListe extends Component {
                     <StudentenTableToolbar
                         numSelected={this.state.selected.length}
                         selectedStudents={this.selectedStudents()}
+                        fetchStudents={this.fetchStudents}
+                        fetching={this.props.fetching}
                     />
                     <Table>
                         <StudentenTableHead
@@ -154,24 +164,32 @@ class StudentenListe extends Component {
                             onSelectAllClick={this.handleSelectAll}
                             numSelected={this.state.selected.length}
                             rowCount={this.props.filteredStudenten.length}
+                            fetching={this.props.fetching}
                         />
                         <TableBody>
-                           {this.props.filteredStudenten.length
-                                ? this.props.filteredStudenten.map(student =>
-                                    <StudentenRow
-                                        key={student.id}
-                                        selected={this.isSelected(student.id)}
-                                        student={student}
-                                        handleSelection={this.handleSelection}
-                                        goToDetails={this.goToDetails}
-                                    />
-                                )
-                                : (
-                                    <TableRow>
-                                        <TableCell colSpan={6}>Keine Studenten gefunden</TableCell>
-                                    </TableRow>
-                                )
-                            }
+                            {this.props.fetching ? (
+                                <TableRow>
+                                    <TableCell colSpan={6}>
+                                        <StudentenlisteLoading />
+                                    </TableCell>
+                                </TableRow>
+                            ) : (
+                                this.props.filteredStudenten.length
+                                    ? this.props.filteredStudenten.map(student =>
+                                        <StudentenRow
+                                            key={student.id}
+                                            selected={this.isSelected(student.id)}
+                                            student={student}
+                                            handleSelection={this.handleSelection}
+                                            goToDetails={this.goToDetails}
+                                        />
+                                    )
+                                    : (
+                                        <TableRow>
+                                            <TableCell colSpan={6}>Keine Studenten gefunden</TableCell>
+                                        </TableRow>
+                                    )
+                            )}
                         </TableBody>
                     </Table>
                 </Paper>
@@ -229,6 +247,7 @@ StudentenListe.propTypes = {
     classes: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps)(
+
+export default connect(mapStateToProps, { dispatch: action => action })(
     withStyles(styles)(StudentenListe)
 );

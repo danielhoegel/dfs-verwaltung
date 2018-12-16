@@ -35,11 +35,10 @@ export function getStudyCoursById(state, studyCourseId) {
 }
 
 export function getStudyRegulations(state) {
-    const studyRegulations = [];
-    Object.values(__entities(state).studyRegulations).forEach(studyRegulationArray => {
-        studyRegulations.concat(studyRegulationArray);
-    });
-    return studyRegulations;
+    return Object.values(__entities(state).studyRegulations)
+        .reduce((studyRegulationArray, studyRegulations) => {
+            return studyRegulations.concat(studyRegulationArray);
+        });
 }
 
 export function getStudyRegulationsByStudyCourseId(state, studyCourseId) {
@@ -50,6 +49,13 @@ export function getStudyRegulationByIds(state, studyCourseId, studyRegulationId)
     return getStudyRegulationsByStudyCourseId(state, studyCourseId).filter(
         studyRegulation => studyRegulation.id === studyRegulationId
     )[0];
+}
+
+export function getSubjects(state) {
+    return Object.values(__entities(state).subjects)
+        .reduce((studyRegulationsArray, studyReggulations) => {
+            return studyReggulations.concat(studyRegulationsArray);
+        });
 }
 
 export function getSubjectsByStudyRegulationId(state, studyRegulationId) {

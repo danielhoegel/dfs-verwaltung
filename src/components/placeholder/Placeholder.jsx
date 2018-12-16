@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import './Placeholder.scss';
 
 
-const PlaceholderItem = ({ width, height, inline }) => (
+const PlaceholderItem = ({ width, height, inline, marginTop, marginBottom }) => (
     <div className='placeholder__item' style={{
         width,
         height,
-        display: inline && 'inline-block'
+        display: inline && 'inline-block',
+        marginTop,
+        marginBottom
     }} />
 );
 
@@ -16,6 +18,8 @@ PlaceholderItem.propTypes = {
     width: PropTypes.string,
     height: PropTypes.string,
     inline: PropTypes.bool,
+    marginTop: PropTypes.string,
+    marginBottom: PropTypes.string,
 };
 
 
