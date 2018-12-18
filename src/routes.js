@@ -16,6 +16,8 @@ import Playground from './routes/playground/Playground';
 import Reports from './reports/Reports';
 import Forms from './routes/forms/Forms';
 
+import EditIcon from '@material-ui/icons/EditOutlined';
+
 
 /* Custom Breadcrumbs */
 const StudentBreadcrumb = connect((state, props) => ({
@@ -32,7 +34,7 @@ export default [
     { path: '/studenten', component: StudentenListe, exact: true, breadcrumb: 'Studenten' },
     { path: '/studenten/create', component: StudentCreate, exact: true, breadcrumb: 'Neuer Student' },
     { path: '/studenten/:id', component: StudentDetails, exact: true, breadcrumb: StudentBreadcrumb },
-    { path: '/studenten/:id/update', component: StudentUpdate, breadcrumb: 'Student Bearbeiten' },
+    { path: '/studenten/:id/update', component: StudentUpdate, breadcrumb: EditIcon },
     { path: '/berichte/:report?', component: Reports, breadcrumb: 'Berichte' },
     { path: '/studienkurse', component: StudyCourseList, exact: true, breadcrumb: 'Studienkurse' },
     { path: '/studienkurse/:studyCourseId', component: null, exact: true, breadcrumb: null },
