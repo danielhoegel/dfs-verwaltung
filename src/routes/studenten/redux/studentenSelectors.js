@@ -7,14 +7,14 @@ export function getStudentenData(state) {
 
 
 /* Pure State */
-let studentsWithInformationAndStudies = null;
 export function getStudenten(state) {
-    studentsWithInformationAndStudies = Object.values(state.entities.students).map(student => ({
-        ...student,
-        studentInformations: [ state.entities.studentInformations[student.id] ],
-        studies: state.entities.studies[student.id]
-    }));
-    return studentsWithInformationAndStudies;
+    return state.entities.students
+        ? Object.values(state.entities.students).map(student => ({
+            ...student,
+            studentInformation: state.entities.studentInformations[student.id] || {}, 
+            studies: state.entities.studies[student.id] || []
+          }))
+        : [];
 }
 
 
@@ -31,13 +31,15 @@ export function getStudentenFilter(state) {
 /* Derived State */
 
 export function getStudentForId(state, id) {
-    const studenten = studentsWithInformationAndStudies || getStudenten(state);
+    const studenten = getStudenten(state);
     return studenten ? studenten[id] : null;
 }
 
 export function getFilteredStudenten(state) {
-    const studenten = studentsWithInformationAndStudies || getStudenten(state);
+    const studenten = getStudenten(state);
     const { filter, searchString } = getStudentenData(state);
+
+    console.log(studenten);
 
     return studenten.filter(student => {
         if (isNotEmpty(student.studies)) {

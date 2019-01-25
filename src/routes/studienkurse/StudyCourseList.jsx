@@ -1,137 +1,109 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Switch from '@material-ui/core/Switch';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/EditOutlined';
-import EventAvailableIcon from '@material-ui/icons/EventAvailableOutlined';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
-import { formatDate } from '../../helper/helper';
 import HiddenDivider from '../../components/HiddenDivider';
-import Expandable from '../../components/Expandable';
-
+import Modal from '../../components/Modal';
+import StudyCourseListItem from './components/StudyCourseListItem';
+import StudyCourseCreate from './components/StudyCourseCreate';
+import StudyCourseUpdate from './components/StudyCourseUpdate';
+import StudyCourseDelete from './components/StudyCourseDelete';
+import StudyRegulationCreate from './components/StudyRegulationCreate';
+import StudyRegulationDelete from './components/StudyRegulationDelete';
 import { getStudyCoursesWithRegulations, getStudyFetching } from './redux/studySelectors';
 
-
-const StudyRegulation = withRouter(({
-    regulation: { id, title, description, date, studyCourseId },
-    allowDelete,
-    history,
-    classes,
-}) => {
-
-    const openStudyRegulation = () => {
-        history.push(`/studienkurse/${studyCourseId}/studienordnung/${id}`)
-    };
-
-    const deleteStudyRegulation = () => {
-        if (allowDelete) {
-            window.confirm(`Sind Sie sicher, dass Sie die Studienordung ${title} und alle dazugehörigen Fächer löschen möchten?`);
-        }
-    };
-
-    return (
-        <ListItem button onClick={openStudyRegulation}>
-            <ListItemText
-                secondary={description ? description : null}
-                className={classes.regulationContent}
-            >
-                <div className={classes.regulationTitle}>
-                    <Chip
-                        label={formatDate(date)}
-                        icon={<EventAvailableIcon />}
-                        variant='outlined'
-                        className={classes.regulationDate}
-                    />
-                    {title}
-                    <EditIcon className={classes.regulationEditIcon} />
-                </div>
-            </ListItemText>
-            <ListItemSecondaryAction>
-                <IconButton onClick={deleteStudyRegulation} disabled={!allowDelete}>
-                    <DeleteIcon title='Studienkurs löschen' />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
-    );
-});
-
-
-const StudyCourse = ({
-    studyCourse: { id, title, description, studyRegulations },
-    allowDelete,
-    classes,
-}) => {
-    const createStudyRegulation = () => {
-        window.alert('Studienordnung erstellen');
-    };
-
-    return (
-        <Expandable
-            defaultExpanded
-            header={
-                <Typography variant='subheading' className={classes.expandableHeader}>
-                    {title}
-                </Typography>
-            }
-        >
-            {description && (
-                <Typography>{description}</Typography>
-            )}
-            <List>
-                {studyRegulations && studyRegulations.map(regulation => (
-                    <StudyRegulation
-                        regulation={regulation}
-                        classes={classes}
-                        key={regulation.id}
-                        allowDelete={allowDelete}
-                    />
-                ))}
-            </List>
-            <Button
-                variant='flat'
-                size='small'
-                title='Studienordnung hinzufügen'
-                onClick={createStudyRegulation}
-                className={classes.actionButton}
-            >
-                <AddIcon className={classes.leftIcon} />
-                Hinzufügen
-            </Button>
-        </Expandable>
-    );
-};
 
 
 class StudyCourseList extends Component {
     state = {
         allowDelete: false,
+        createModalOpen: false,
+        updateModalOpen: false,
+        updateModalData: null,
+        deleteModalOpen: false,
+        deleteModalData: null,
+        createStudyRegulationModalOpen: false,
+        createStudyRegulationModalData: null,
+        deleteStudyRegulationModalOpen: false,
+        deleteStudyRegulationModalData: null,
     }
 
-    createStudyCourse = () => {
-        window.alert('Studienkurs erstellen');
+    openCreateModal = () => {
+        this.setState({ createModalOpen: true });
     }
 
-    updateStudyCourse = () => {
-
+    closeCreateModal = () => {
+        this.setState({ createModalOpen: false });
     }
 
-    deleteStudyCourse = () => {
+    openUpdateModal = (studyCourse) => {
+        this.setState({
+            updateModalOpen: true,
+            updateModalData: studyCourse
+        });
+    }
 
+    closeUpdateModal = () => {
+        this.setState({
+            updateModalOpen: false,
+            updateModalData: null
+        });
+    }
+
+    openDeleteModal = (studyCourse) => {
+        if (this.state.allowDelete) {
+            this.setState({
+                deleteModalOpen: true,
+                deleteModalData: studyCourse
+            });
+        }
+    }
+
+    closeDeleteModal = () => {
+        this.setState({
+            deleteModalOpen: false,
+            deleteModalData: null
+        });
+    }
+    
+    openCreateStudyRegulationModal = (studyCourse) => {
+        this.setState({
+            createStudyRegulationModalOpen: true,
+            createStudyRegulationModalData: {
+                studyCourses: this.props.studyCourses,
+                studyCourse
+            }
+        });
+    }
+    
+    closeCreateStudyRegulationModal = () => {
+        this.setState({
+            createStudyRegulationModalOpen: false,
+            createStudyRegulationModalData: null
+        });
+    }
+    
+    openDeleteStudyRegulationModal = (studyRegulation) => {
+        if (this.state.allowDelete) {
+            this.setState({
+                deleteStudyRegulationModalOpen: true,
+                deleteStudyRegulationModalData: studyRegulation
+            });
+        }
+    }
+
+    closeDeleteStudyRegulationModal = () => {
+        this.setState({
+            deleteStudyRegulationModalOpen: false,
+            deleteStudyRegulationModalData: null
+        });
     }
 
     toggleAllowDelete = () => {
@@ -149,19 +121,52 @@ class StudyCourseList extends Component {
         const fetching = this.props.fetching;
         return (
             <div>
-                {/* <Form onSubmit={this.submitHandler} data={{firstName: 'Daniel', lastName: 'Högel'}}>
-                    <input name='firstName' />
-                    <input name='lastName' />
-                    <Form.Field>Hello World</Form.Field>
-                    <button type='submit'>Submit</button>
-                </Form> */}
+                <Modal
+                    component={StudyCourseCreate}
+                    title='Studienkurs hinzufügen'
+                    close={this.closeCreateModal}
+                    open={this.state.createModalOpen}
+                    preventClosing
+                />
+                <Modal
+                    component={StudyCourseUpdate}
+                    title='Studienkurs bearbeiten'
+                    close={this.closeUpdateModal}
+                    open={this.state.updateModalOpen}
+                    data={this.state.updateModalData}
+                    preventClosing
+                />
+                <Modal
+                    component={StudyCourseDelete}
+                    title='Studienkurs entfernen'
+                    close={this.closeDeleteModal}
+                    open={this.state.deleteModalOpen}
+                    data={this.state.deleteModalData}
+                    danger
+                />
+                <Modal
+                    component={StudyRegulationCreate}
+                    title='Studienordnung hinzufügen'
+                    close={this.closeCreateStudyRegulationModal}
+                    open={this.state.createStudyRegulationModalOpen}
+                    data={this.state.createStudyRegulationModalData}
+                    preventClosing
+                />
+                <Modal
+                    component={StudyRegulationDelete}
+                    title='Studienordnung entfernen'
+                    close={this.closeDeleteStudyRegulationModal}
+                    open={this.state.deleteStudyRegulationModalOpen}
+                    data={this.state.deleteStudyRegulationModalData}
+                    danger
+                />
                 <Typography variant='display1'>Studienkursverwaltung</Typography>
                 <HiddenDivider />
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Button
                         variant='flat'
                         title='Studienkurs hinzufügen'
-                        onClick={this.createStudyCourse}
+                        onClick={this.openCreateModal}
                     >
                         <AddIcon className={classes.leftIcon} />
                         Hinzufügen
@@ -182,11 +187,15 @@ class StudyCourseList extends Component {
                     ? studyCourses.length
                         ? (
                             studyCourses.map(studyCourse => (
-                                <StudyCourse
+                                <StudyCourseListItem
                                     studyCourse={studyCourse}
                                     classes={classes}
                                     key={studyCourse.id}
                                     allowDelete={this.state.allowDelete}
+                                    openUpdateModal={this.openUpdateModal}
+                                    openDeleteModal={this.openDeleteModal}
+                                    openCreateStudyRegulationModal={this.openCreateStudyRegulationModal}
+                                    openDeleteStudyRegulationModal={this.openDeleteStudyRegulationModal}
                                 />
                             ))
                           )
@@ -231,7 +240,10 @@ const styles = (theme) => ({
         '&:hover $regulationEditIcon': {
             opacity: 1,
         }
-    }
+    },
+    preWrap: {
+        whiteSpace: 'pre-wrap',
+    },
 });
 
 

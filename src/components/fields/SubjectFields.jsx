@@ -1,15 +1,17 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import FieldGroup from '../../../components/FieldGroup';
-import Field from '../../../components/Field';
-import FieldSelect from '../../../components/FieldSelect';
-import Typography from '@material-ui/core/Typography';
-import { isNotEmpty } from '../../../helper/helper';
-import HiddenDivider from '../../../components/HiddenDivider';
-import { Button } from '@material-ui/core';
-import FieldRadioGroup from '../../../components/FieldRadioGroup';
 
-const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyRegulations }) => {
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+import Field from '../Field';
+import FieldGroup from '../FieldGroup';
+import FieldSelect from '../FieldSelect';
+import FieldRadioGroup from '../FieldRadioGroup';
+import HiddenDivider from '../HiddenDivider';
+import { isNotEmpty } from '../../helper/helper';
+
+const SubjectFields = ({ change, values , onCancel, studyCourseOptions, studyRegulations }) => {
     function studyRegulationOptions() {
         const options = [];
         if (isNotEmpty(studyRegulations)) {
@@ -28,7 +30,7 @@ const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyR
 
     const onStudyCourseChange = (e) => {
         // change studyCourseId
-        onChange(e);
+        change(e);
 
         // set latest studyRegulation for studyCourse 
         const studyCourseId = studyRegulations
@@ -39,7 +41,7 @@ const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyR
             name: 'studyRegulationId',
             value: studyCourseId || ''
         }}
-        onChange(fakeEvent);
+        change(fakeEvent);
     }
 
     const __studyRegulationOptions = studyRegulationOptions();
@@ -53,7 +55,7 @@ const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyR
                     value={values.title}
                     label='Titel'
                     type='text'
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <FieldSelect
                     name='studyCourseId'
@@ -67,7 +69,7 @@ const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyR
                     value={values.studyRegulationId}
                     label='Studienordung'
                     options={__studyRegulationOptions}
-                    onChange={onChange}
+                    onChange={change}
                     disabled={__studyRegulationOptions.length <= 1}
                 />
             </FieldGroup>
@@ -78,20 +80,20 @@ const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyR
                     label='Semester'
                     type='number'
                     min={1}
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <Field
                     name='ue'
                     value={values.ue}
                     label='UE-Gruppe'
                     type='number'
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <FieldRadioGroup
                     name='type'
                     value={values.type}
                     label='Typ'
-                    onChange={onChange}
+                    onChange={change}
                     options={[
                         { label: 'deutsch', value: 'de' },
                         { label: 'französich', value: 'fr' }
@@ -106,8 +108,11 @@ const SubjectFields = ({ onChange, values , onCancel, studyCourseOptions, studyR
 };
 
 SubjectFields.propTypes = {
-    onChange: PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    studyCourseOptions: PropTypes.array.isRequired,
+    studyRegulations: PropTypes.array.isRequired,
 }
 
 export default SubjectFields;

@@ -11,6 +11,7 @@ const customColors = {
     disabled: 'rgba(0, 0, 0, 0.26)',
     borderBottom: 'rgba(0, 0, 0, 0.42)',
     red: red[500],
+    darkred: red[700]
 };
 
 const theme = createMuiTheme({
@@ -22,6 +23,7 @@ const theme = createMuiTheme({
         disabled: customColors.disabled,
         borderBottom: customColors.borderBottom,
         red: customColors.red,
+        darkred: customColors.darkred
     },
     overrides: {
         MuiInput: {
@@ -73,6 +75,16 @@ const theme = createMuiTheme({
                     boxShadow: 'none',
                 },
             },
+            sizeSmall: {
+                minHeight: 0,
+                fontWeight: 'normal',
+                padding: [['0.25rem', '0.5rem']],
+                fontSize: '0.75rem',
+                textTransform: 'none',
+                '& svg': {
+                    fontSize: '1.5em'
+                }
+            }
         },
     },
 });

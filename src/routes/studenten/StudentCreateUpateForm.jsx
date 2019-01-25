@@ -7,55 +7,18 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import HiddenDivider from '../../components/HiddenDivider';
-import { isEmpty, changeNestedObject, removeByIndex, isNotEmpty } from '../../helper/helper'
+import { isEmpty, changeNestedObject, removeByIndex } from '../../helper/helper'
+import FieldArray from '../../components/FieldArray';
 
 import { fetchStudyRegulations, fetchStudyCourses } from '../studienkurse/redux/studyActions';
 import { createStudent } from './redux/studentenActions';
 import { getStudyCourses, getStudyRegulations } from '../../redux/entitiesSelector';
-import UpdateStuent from '../../components/update/student';
+import UpdateStudent from '../../components/update/student';
 import UpdateStudentInformation from '../../components/update/studentInformation';
-import FieldArray from '../../components/FieldArray';
 import UpdateStudy from '../../components/update/studentStudy';
-import apiRequest from '../../helper/apiRequest';
 
 
-class StudentCreate extends Component {
-    year = new Date().getFullYear()
-    state = {
-        student: {
-            firstName : '',
-            lastName: '',
-            prefix: 'Frau',
-            matrikelnummer: '',
-        },
-        studentInformation: {
-            birthDate: '',
-            birthPlace: '',
-            birthCountry: 'Deutschland',
-            
-            street: '',
-            streetNumber: '',
-            addressExtra: '',
-            postal: '',
-            city: '',
-            country: 'Deutschland',
-    
-            mailPrivate: '',
-            mailUni: '',
-            phoneNumber: '',
-            mobileNumber: '',
-        },
-        studies: [
-            {
-                year: this.year,
-                studyCourseId: 1,
-                studyRegulationId: '',
-                status: 1,
-            }
-        ]
-
-    }
-
+class StudentCreateUpdateForm extends Component {
     componentDidMount() {
         if (isEmpty(this.props.studyRegulations)) {
             this.props.fetchStudyRegulations();
@@ -64,49 +27,10 @@ class StudentCreate extends Component {
         if (isEmpty(this.props.studyCourses)) {
             this.props.fetchStudyCourses();
         }
-
-        if (isNotEmpty(this.props.values) ) {
-            this.setState(this.props.values);
-        }
     }
     
     goBack = () => {
         this.props.history.goBack();
-    }
-
-    submitHandler = (e) => {
-        e.preventDefault();
-
-        const { __options, __prevProps, ...data } = this.state;
-
-        // validate input
-        if (true || (// TODO: fix implementation with new data structure
-            data.firstName && data.firstName.length > 1 &&
-            data.lastName && data.lastName.length > 1 &&
-            data.matrikelnummer && data.matrikelnummer.toString().length === 6 &&
-            (data.year <=  this.year + 2 && data.year >= 1990) &&
-            (data.studyCourse === 1 || data.studyCourse === 2)
-        )) {
-            console.log('SUBMIT', data);
-            apiRequest('/students', { method: 'post', data: data.student })
-                .then(({ id: studentId }) => {
-                    apiRequest('/studentInformations', {
-                        method: 'post',
-                        data: { ...data.studentInformation, studentId }
-                    });
-                    data.studies.forEach(study => {
-                        apiRequest('/studies', {
-                            method: 'post',
-                            data: { ...study, studentId }
-                        });
-                    })
-                })
-                .catch(err => {
-                    console.log('Error while creating new Student', { err, data });
-                });
-        } else {
-            console.warn('VALIDATION FAILED', data);
-        }
     }
 
     parseValue(value) {
@@ -159,7 +83,7 @@ class StudentCreate extends Component {
                 <HiddenDivider />
                 <Paper className={classes.paper} >
                     
-                    <UpdateStuent
+                    <UpdateStudent
                         onChange={this.deepChangeHandler}
                         values={this.state.student}
                     />
@@ -189,7 +113,7 @@ class StudentCreate extends Component {
 
                 <HiddenDivider height={2} />
                 <Button variant='raised' onClick={this.submitHandler} color='primary' className={classes.button}>
-                    Student hinzufügen
+                    {this.props.submitLabel}
                 </Button>
                 <Button variant='raised' onClick={this.goBack} className={classes.button}>
                     Abbrechen
@@ -224,7 +148,6 @@ const styles = theme => ({
     },
 });
 
-
 const mapStateToProps = (state) => ({
     studyRegulations: getStudyRegulations(state),
     studyCourses: getStudyCourses(state),
@@ -237,5 +160,5 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    withStyles(styles)(StudentCreate)
+    withStyles(styles)(StudentCreateUpdateForm)
 );

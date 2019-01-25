@@ -9,12 +9,14 @@ const apiRequestMiddleware = (store) => (next) => (action) => {
 
         apiRequest(url, options)
             .then(res => {
-                // console.log(`%c[REQUEST SUCCESS] ${action.type}`, 'color: darkgreen', res);
+                console.log(`%c[REQUEST SUCCESS] ${action.type}`, 'color: darkgreen', res);
                 store.dispatch({
                     type: action.type + successSuffix,
                     data: res,
                     request: action
                 });
+                typeof action.resolve === 'function' &&
+                    action.resolve(res);
             })
             .catch(err => {
                 console.log(`%c[REQUEST FAILURE] ${action.type}`,'color: darkred', err);
@@ -23,9 +25,10 @@ const apiRequestMiddleware = (store) => (next) => (action) => {
                     error: err,
                     request: action
                 });
+                typeof action.reject === 'function' &&
+                    action.reject(err);
             });
     }
-    
     return next(action);
 }
 

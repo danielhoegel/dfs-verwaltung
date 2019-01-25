@@ -155,7 +155,7 @@ class StudentDetails extends Component {
                 </div>
 
                 <Divider hidden height='1rem' />
-                {(isNotEmpty(this.props.student.studentInformations) || isNotEmpty(this.props.student.studies)) && (
+                {(isNotEmpty(this.props.student.studentInformation) || isNotEmpty(this.props.student.studies)) && (
                     <Paper component="div" className={classes.tabsContainer}>
                         <Tabs
                             value={tab}
@@ -166,7 +166,7 @@ class StudentDetails extends Component {
                             scrollButtons='auto'
                             className={classes.tabsHeader}
                         >
-                            {isNotEmpty(this.props.student.studentInformations) && (
+                            {isNotEmpty(this.props.student.studentInformation) && (
                                 <Tab value='contact' label='Kontaktdaten' />
                             )}
                             {sortedStudies.map((study, index) => (
@@ -179,7 +179,7 @@ class StudentDetails extends Component {
                         </Tabs>
                         <div className={classes.tabContainer}>
                             <div className={classes.tabContainerInside}>
-                                {tab === 'contact' && isNotEmpty(this.props.student.studentInformations) && (
+                                {tab === 'contact' && isNotEmpty(this.props.student.studentInformation) && (
                                     <StudentInformation student={this.props.student} />
                                 )}
                                 {sortedStudies.map((study, index) => (

@@ -41,25 +41,10 @@
       "firstName": "Manuel",
       "lastName": "Kirchner",
       "prefix": "Herr"
-    },
-    {
-      "firstName": "Konrad",
-      "lastName": "Karlson",
-      "prefix": "Herr",
-      "matrikelnummer": "123456",
-      "id": 6
-    },
-    {
-      "firstName": "Leopold",
-      "lastName": "Högel",
-      "prefix": "Herr",
-      "matrikelnummer": "123456",
-      "id": 7
     }
   ],
   "studentInformations": [
     {
-      "id": 0,
       "studentId": 0,
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
@@ -76,7 +61,6 @@
       "mobileNumber": "+49 123 456 789 10"
     },
     {
-      "id": 1,
       "studentId": 1,
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
@@ -93,7 +77,6 @@
       "mobileNumber": "+49 123 456 789 10"
     },
     {
-      "id": 2,
       "studentId": 2,
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
@@ -110,7 +93,6 @@
       "mobileNumber": "+49 123 456 789 10"
     },
     {
-      "id": 3,
       "studentId": 3,
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
@@ -127,7 +109,6 @@
       "mobileNumber": "+49 123 456 789 10"
     },
     {
-      "id": 4,
       "studentId": 4,
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
@@ -144,7 +125,6 @@
       "mobileNumber": "+49 123 456 789 10"
     },
     {
-      "id": 5,
       "studentId": 5,
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
@@ -159,45 +139,10 @@
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
       "mobileNumber": "+49 123 456 789 10"
-    },
-    {
-      "birthDate": "1996-01-11",
-      "birthPlace": "Neuss",
-      "birthCountry": "Deutschland",
-      "street": "Uerdinger Str.",
-      "streetNumber": "17c",
-      "addressExtra": "",
-      "postal": "40668",
-      "city": "Meerbusch",
-      "country": "Deutschland",
-      "mailPrivate": "",
-      "mailUni": "daniel.hoegel@hhu.de",
-      "phoneNumber": 1234562150,
-      "mobileNumber": "",
-      "studentId": 6,
-      "id": 6
-    },
-    {
-      "birthDate": "1996-01-11",
-      "birthPlace": "Neuss",
-      "birthCountry": "Deutschland",
-      "street": "Uerdinger Str.",
-      "streetNumber": "17c",
-      "addressExtra": "",
-      "postal": 40668,
-      "city": "Meerbusch",
-      "country": "Deutschland",
-      "mailPrivate": "",
-      "mailUni": "daniel.hoegel@hhu.de",
-      "phoneNumber": "",
-      "mobileNumber": "",
-      "studentId": 7,
-      "id": 7
     }
   ],
   "studies": [
     {
-      "id": 0,
       "studentId": 0,
       "studyCourseId": 1,
       "studyRegulationId": 2,
@@ -205,7 +150,6 @@
       "status": 1
     },
     {
-      "id": 1,
       "studentId": 1,
       "studyCourseId": 1,
       "studyRegulationId": 2,
@@ -213,7 +157,6 @@
       "status": 1
     },
     {
-      "id": 2,
       "studentId": 2,
       "studyCourseId": 1,
       "studyRegulationId": 2,
@@ -221,7 +164,6 @@
       "status": 1
     },
     {
-      "id": 3,
       "studentId": 3,
       "studyCourseId": 1,
       "studyRegulationId": 2,
@@ -229,7 +171,6 @@
       "status": 1
     },
     {
-      "id": 4,
       "studentId": 4,
       "studyCourseId": 1,
       "studyRegulationId": 2,
@@ -237,7 +178,6 @@
       "status": 1
     },
     {
-      "id": 5,
       "studentId": 5,
       "studyCourseId": 1,
       "studyRegulationId": 2,
@@ -245,28 +185,11 @@
       "status": 2
     },
     {
-      "id": 6,
       "studentId": 5,
       "studyCourseId": 2,
       "studyRegulationId": 2,
       "year": 2017,
       "status": 1
-    },
-    {
-      "year": 2019,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "status": 1,
-      "studentId": 7,
-      "id": 8
-    },
-    {
-      "year": 2018,
-      "studyCourseId": 2,
-      "studyRegulationId": 0,
-      "status": 1,
-      "studentId": 6,
-      "id": 9
     }
   ],
   "subjects": [
@@ -907,23 +830,7 @@
     {
       "id": 1,
       "title": "Grundstudienkurs",
-      "description": "Grundlagen des deutsche und französischen Rechts mit Abschluss des ersten deutschen Staatsexamens.\nDauer: 6 Semester, davon 4 in Deutschland und 2 in Paris.",
-      "studyRegulations": [
-        {
-          "id": 0,
-          "title": "Studienordnung 2002",
-          "date": "2002-01-01",
-          "studyCourseId": 1,
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic eum quas labore."
-        },
-        {
-          "id": 2,
-          "title": "Studienordnung 2016",
-          "date": "2016-04-01",
-          "studyCourseId": 1,
-          "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-        }
-      ]
+      "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet quam autem commodi praesentium expedita ab temporibus quisquam error magnam eum."
     },
     {
       "id": 2,

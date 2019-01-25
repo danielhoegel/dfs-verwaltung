@@ -38,7 +38,7 @@ export function getStudyRegulations(state) {
     return Object.values(__entities(state).studyRegulations)
         .reduce((studyRegulationArray, studyRegulations) => {
             return studyRegulations.concat(studyRegulationArray);
-        });
+        }, []);
 }
 
 export function getStudyRegulationsByStudyCourseId(state, studyCourseId) {

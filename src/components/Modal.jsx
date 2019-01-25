@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MUIModal from '@material-ui/core/Modal';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 class Modal extends Component {
     static propTypes = {
@@ -18,11 +22,14 @@ class Modal extends Component {
         ]),
         open: PropTypes.bool.isRequired,
         preventClosing: PropTypes.bool,
+        showCloseButton: PropTypes.bool,
+        danger: PropTypes.bool,
     }
 
     static defaultProps = {
         title: 'Modal',
-        preventClosing: false
+        preventClosing: false,
+        showCloseButton: true,
     }
 
     render() {
@@ -35,17 +42,32 @@ class Modal extends Component {
                 disableBackdropClick={this.props.preventClosing}
                 disableEscapeKeyDown={this.props.preventClosing}
             >
-                <Paper className={classes.wrapper} elevation={8}>
-                    <Typography variant='title' className={classes.header}>
-                        {this.props.title}
-                    </Typography>
-                    <div className={classes.body}>
-                        <this.props.component
-                            closeModal={this.props.close}
-                            data={this.props.data}
-                        />
-                    </div>
-                </Paper>
+                <div className={classes.wrapper}>
+                    <Paper className={classes.inside} elevation={8}>
+                        <Typography variant='title' className={classNames(
+                            classes.header,
+                            { [classes.headerWithCloseButton]: this.props.showCloseButton },
+                            { [classes.dangerHeader]: this.props.danger }
+                        )}>
+                            {this.props.title}
+                            {this.props.showCloseButton &&
+                                <IconButton
+                                    onClick={this.props.close}
+                                    className={classes.closeButton}
+                                    color='inherit'
+                                >
+                                    <CloseIcon fontSize='small' />
+                                </IconButton>
+                            }
+                        </Typography>
+                        <Typography component='div' className={classes.body}>
+                            <this.props.component
+                                closeModal={this.props.close}
+                                data={this.props.data}
+                            />
+                        </Typography>
+                    </Paper>
+                </div>
             </MUIModal>
         );
     }
@@ -54,12 +76,15 @@ class Modal extends Component {
 const styles = theme => ({
     wrapper: {
         position: 'absolute',
+        minWidth: theme.spacing.unit * 60,
         maxWidth: theme.spacing.unit * 100,
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
+        outline: 0,
+    },
+    inside: {
         overflow: 'hidden',
-        outline: 0
     },
     header: {
         paddingLeft: theme.spacing.unit * 3,
@@ -67,9 +92,24 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
         backgroundColor: theme.palette.secondary.light,
+        position: 'relative',
+    },
+    headerWithCloseButton: {
+        paddingRight: theme.spacing.unit * 8,
+    },
+    dangerHeader: {
+        backgroundColor: theme.palette.red,
+        color: '#fff'
+    },
+    closeButton: {
+        position: 'absolute',
+        top: '50%',
+        right: theme.spacing.unit,
+        transform:'translateY(-50%)',
     },
     body: {
         padding: theme.spacing.unit * 3,
+        position: 'relative',
     }
 });
 

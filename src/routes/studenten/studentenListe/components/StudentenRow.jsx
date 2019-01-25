@@ -53,9 +53,9 @@ class StudentenRow extends Component {
                     ))}
                 </TableCell>
                 <TableCell padding='checkbox'>
-                    {isNotEmpty(student.studentInformations[0]) && student.studentInformations[0].mailUni && (
-                        <a href={`mailto:${student.studentInformations[0].mailUni}`}>
-                            <IconButton aria-label='E-Mail' title={`E-Mail an ${student.studentInformations[0].mailUni}`}>
+                    {isNotEmpty(student.studentInformation) && student.studentInformation.mailUni && (
+                        <a href={`mailto:${student.studentInformation.mailUni}`}>
+                            <IconButton aria-label='E-Mail' title={`E-Mail an ${student.studentInformation.mailUni}`}>
                                 <MailIcon />
                             </IconButton>
                         </a>

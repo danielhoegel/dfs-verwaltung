@@ -5,7 +5,7 @@ import StudyCourseFields from '../../../components/fields/StudyCourseFields';
 import MyForm from '../../../components/MyForm';
 import entitiesActions from '../../../redux/entitiesActions';
 
-class StudyCourseUpdate extends Component {
+class StudyCourseCreate extends Component {
     state = {
         loading: false,
         error: null
@@ -17,7 +17,7 @@ class StudyCourseUpdate extends Component {
             error: null
         });
 
-        this.props.updateStudyCourse(data)
+        this.props.createStudyCourse(data)
             .then(() => {
                 this.props.closeModal();
             })
@@ -36,7 +36,10 @@ class StudyCourseUpdate extends Component {
                     fields={StudyCourseFields}
                     onSubmit={this.submitHandler}
                     onCancel={this.props.closeModal}
-                    defaultValues={this.props.data}
+                    defaultValues={{
+                        title: '',
+                        description: ''
+                    }}
                     loading={this.state.loading}
                 />
             </div>
@@ -45,7 +48,7 @@ class StudyCourseUpdate extends Component {
 };
 
 const mapDispatchToProps = {
-    updateStudyCourse: entitiesActions.studyCourse.update
+    createStudyCourse: entitiesActions.studyCourse.create
 };
 
-export default connect(null, mapDispatchToProps)(StudyCourseUpdate);
+export default connect(null, mapDispatchToProps)(StudyCourseCreate);

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 
 import Field from '../../../../components/Field';
 import SearchSelect from '../../../../components/SearchSelect';
@@ -254,11 +253,10 @@ class NoteCreateUpdate extends Component {
                     </FieldGroup>
                     </FieldGroup>
                 <Divider hidden />
-                <Button className={classes.button} type='submit' variant='contained' color='primary'>
-                    <AddIcon className={classes.leftIcon} />
+                <Button className={classes.button} type='submit' variant='raised' color='primary'>
                     Note hinzufügen
                 </Button>
-                <Button className={classes.button} onClick={this.props.closeModal} variant='contained'>
+                <Button className={classes.button} onClick={this.props.closeModal}>
                     Abbrechen
                 </Button>
             </form>
@@ -288,10 +286,7 @@ const styles = theme => ({
         }
     },
     button: {
-        marginRight: theme.spacing.unit
-    },
-    leftIcon: {
-        marginRight: theme.spacing.unit
+        marginRight: theme.spacing.unit * 2
     },
 });
 

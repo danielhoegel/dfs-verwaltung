@@ -22,22 +22,32 @@ const StudentInformation = ({ classes, student }) => {
         mailPrivate,
         phoneNumber,
         mobileNumber
-    } = student.studentInformations[0];
+    } = student.studentInformation;
     return (
         <div>
             <Typography as='h3' variant='body2' className={classes.subheading}>Geburtsdatum</Typography>
-            geboren am {formatDate(birthDate)}<br />
-            in {birthPlace}, {birthCountry}
+                geboren am {formatDate(birthDate)}<br />
+                in {birthPlace}, {birthCountry}
             
             <Typography as='h3' variant='body2' className={classes.subheading}>Adresse</Typography>
-            {street} {streetNumber} {addressExtra && `, ${addressExtra}`}<br />
-            {postal} {city}, {country}
-            <Typography as='h3' variant='body2' className={classes.subheading}>E-Mail</Typography>
-            Mail (Uni): <a href={`mailto:${mailUni}`} className={classes.link}>{mailUni}</a><br />
-            Mail (Privat): <a href={`mailto:${mailPrivate}`} className={classes.link}>{mailPrivate}</a>
-            <Typography as='h3' variant='body2' className={classes.subheading}>Telefonnummer</Typography>
-            Festnetz: <a href={`tel:${phoneNumber}`} className={classes.link}>{phoneNumber}</a><br />
-            Mobieltelefon: <a href={`tel:${mobileNumber}`} className={classes.link}>{mobileNumber}</a>
+                {street} {streetNumber} {addressExtra && `, ${addressExtra}`}<br />
+                {postal} {city}, {country}
+
+            {(mailUni || mailPrivate) && (
+                <>
+                    <Typography as='h3' variant='body2' className={classes.subheading}>E-Mail</Typography>
+                    {mailUni && <>Mail (Uni): <a href={`mailto:${mailUni}`} className={classes.link}>{mailUni}</a><br /></>}
+                    {mailPrivate && <>Mail (Privat): <a href={`mailto:${mailPrivate}`} className={classes.link}>{mailPrivate}</a></>}
+                </>
+            )}
+                
+            {(phoneNumber || mobileNumber) && (
+                <>
+                    <Typography as='h3' variant='body2' className={classes.subheading}>Telefonnummer</Typography>
+                    {phoneNumber && <>Festnetz: <a href={`tel:${phoneNumber}`} className={classes.link}>{phoneNumber}</a><br /></>}
+                    {mobileNumber && <>Mobieltelefon: <a href={`tel:${mobileNumber}`} className={classes.link}>{mobileNumber}</a></>}
+                </>
+            )}
         </div>
     );
 };

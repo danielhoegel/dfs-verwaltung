@@ -23,19 +23,19 @@ const notenStyles = theme => ({
     noteCreateButton: {
         whiteSpace: 'nowrap',
         padding: '0 0.5rem 0 0.25rem',
-        textTransform: 'none',
-        textAlign: 'left',
-        fontWeight: 400,
-        fontSize: '0.75rem',
-        minHeight: 0
     },
-    addIcon: {
-        opacity: 0.5,
-        fontSize: '1rem'
-    }
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
 });
 
-const Noten = withStyles(notenStyles)(({ veranstaltung, noten, studentId, openNoteModal, classes }) => {
+const Noten = withStyles(notenStyles)(({
+    veranstaltung,
+    noten,
+    studentId,
+    openNoteModal,
+    classes
+}) => {
     return veranstaltung.participationType === 'Note' ? (
         <div>
             {noten.map(note => (
@@ -56,7 +56,7 @@ const Noten = withStyles(notenStyles)(({ veranstaltung, noten, studentId, openNo
                 size='small'
                 variant='outlined'
             >
-                <AddIcon className={classes.addIcon} />
+                <AddIcon className={classes.leftIcon} />
                 Note hinzufügen
             </Button>
         </div>

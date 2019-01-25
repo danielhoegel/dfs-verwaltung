@@ -28,7 +28,6 @@ const FieldRadioGroup = ({
     ...radioGroupProps
 }) => {
     function generateRadios() {
-        console.log(options);
         if (isNotEmpty(options)) {
             return options.map(option => {
                 const { value, label, disabled } = (typeof option === 'string')

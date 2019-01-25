@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import FieldGroup from '../../../components/FieldGroup';
-import Field from '../../../components/Field';
-import FieldSelect from '../../../components/FieldSelect';
-import FieldCheckbox from '../../../components/FieldCheckbox';
-import SearchSelect from '../../../components/SearchSelect';
-import HiddenDivider from '../../../components/HiddenDivider';
+import FieldGroup from '../FieldGroup';
+import Field from '../Field';
+import FieldSelect from '../FieldSelect';
+import FieldCheckbox from '../FieldCheckbox';
+import HiddenDivider from '../HiddenDivider';
+import SearchSelect from '../SearchSelect';
+import Autocomplete from '../Autocomplete';
 
 
-const SubjectCourseFields = ({ onChange, values, onCancel, subjectOptions }) => {
+const SubjectCourseFields = ({ change, values, onCancel, subjectOptions }) => {
     return (
         <Fragment>
             <Typography variant='title' style={{marginTop: '2rem'}}>Veranstaltung</Typography>
@@ -22,21 +23,31 @@ const SubjectCourseFields = ({ onChange, values, onCancel, subjectOptions }) => 
                     value={values.title}
                     label='Titel'
                     type='text'
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <FieldSelect
                     name='type'
                     value={values.type}
                     label='Typ'
                     options={[ 'Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM' ]}
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <SearchSelect
                     name='subjectId'
-                    value={values.subjectid}
+                    value={values.subjectId}
                     label='Fach'
-                    onSelect={onChange}
+                    onSelect={change}
                     options={subjectOptions}
+                /> 
+            </FieldGroup>
+            <FieldGroup>
+                <Autocomplete
+                    value={values.subjectId}
+                    placeholder='Fach'
+                    onChange={change}
+                    options={subjectOptions}
+                    isClearable
+                    style={{width: '50%'}}
                 />
             </FieldGroup>
             <FieldGroup>
@@ -45,20 +56,20 @@ const SubjectCourseFields = ({ onChange, values, onCancel, subjectOptions }) => 
                     value={values.credits}
                     label='Credits'
                     type='number'
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <FieldSelect
                     name='participationType'
                     value={values.participationType}
                     label='Teilnahmeart'
                     options={[ 'Note', 'Teilnahme', 'Notenbgeleitend' ]}
-                    onChange={onChange}
+                    onChange={change}
                 />
                 <FieldCheckbox
                     name='zpk'
                     value={values.zpk}
                     label='ZPK-Fach'
-                    onChange={onChange}
+                    onChange={change}
                 />
             </FieldGroup>
             <HiddenDivider />
@@ -69,8 +80,10 @@ const SubjectCourseFields = ({ onChange, values, onCancel, subjectOptions }) => 
 };
 
 SubjectCourseFields.propTypes = {
-    onChange: PropTypes.func.isRequired,
+    change: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
+    onCancel: PropTypes.func.isRequired,
+    subjectOptions: PropTypes.array.isRequired,
 };
 
 export default SubjectCourseFields;

@@ -4,7 +4,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
-import { isEmpty } from '../../helper/helper';
 
 
 function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange }) {
@@ -15,9 +14,9 @@ function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange 
             <FieldGroup>
                 <Field
                     select
-                    name={`${__prefix}.studyCourse`}
+                    name={`${__prefix}.studyCourseId`}
                     label='Studienkurs'
-                    value={values.studyCourse}
+                    value={values.studyCourseId}
                     onChange={onChange}
                     required
                 >
@@ -28,25 +27,10 @@ function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange 
                     ))}
                 </Field>
                 <Field
-                    name={`${__prefix}.year`}
-                    value={values.year}
-                    onChange={onChange}
-                    label='Jahrgang'
-                    required
-                    type='number'
-                    min='1990'
-                    max={year + 2}
-                    width={0.3}
-                /> 
-                <Field
                     select
-                    name={`${__prefix}.studyRegulation`}
+                    name={`${__prefix}.studyRegulationId`}
                     label='Studienordnung'
-                    value={
-                        values.studyRegulation !== ''
-                        ? values.studyRegulation
-                        : !isEmpty(studyRegulations) && studyRegulations[0].id
-                    }
+                    value={values.studyRegulationId}
                     onChange={onChange}
                     required
                 >
@@ -56,6 +40,29 @@ function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange 
                         </MenuItem>
                     ))}
                 </Field>
+            </FieldGroup>
+            <FieldGroup>
+                <Field
+                    select
+                    name={`${__prefix}.status`}
+                    label='Status'
+                    value={values.status}
+                    onChange={onChange}
+                    required
+                >
+                    <MenuItem value={1}>Aktiv</MenuItem>
+                    <MenuItem value={2}>Abgeschlossen</MenuItem>
+                </Field>
+                <Field
+                    name={`${__prefix}.year`}
+                    value={values.year}
+                    onChange={onChange}
+                    label='Jahrgang'
+                    required
+                    type='number'
+                    min='1990'
+                    max={year + 2}
+                />
             </FieldGroup>
         </Fragment>
     );

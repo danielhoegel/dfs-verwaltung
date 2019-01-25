@@ -1,13 +1,24 @@
 import { combineReducers } from 'redux';
-import { isNotEmpty } from '../helper/helper';
 
 /* util function */
-function replaceItem(state, item, id = null) {
-    const key = isNotEmpty(id) ? id : item.id;
+function replaceItem(state, item, key) {
+    const id = item[key];
     return {
         ...state,
-        [key]: item
+        [id]: item
     };
+}
+
+/* util function */
+function replaceItemAsArray(state, item, idKey = 'id') {
+    const key = item[idKey];
+    const nextState = {...state};
+    if (nextState[key]) {
+        nextState[key] = [...state[key], item];
+    } else {
+        nextState[key] = [item];
+    }
+    return nextState;
 }
 
 /* util function */
@@ -33,6 +44,24 @@ function replaceAllItemsAsArray(items, idKey = 'id' ) {
     return nextState;
 }
 
+/* util function */
+function deleteItem(state, item, idKey = 'id') {
+    const key = item[idKey];
+    const nextState = {...state};
+    delete nextState[key]
+    return nextState;
+}
+
+/* util function */
+function deleteItemAsArray(state, item, idKey = 'id') {
+    const key = item[idKey];
+    const nextState = {...state};
+    nextState[key] = nextState[key].filter(
+        stateItem => stateItem.id !== item.id
+    );
+    return nextState;
+}
+
 
 function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
     return function(state = {}, action) {
@@ -47,7 +76,13 @@ function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
                     : replaceAllItems(action.data, key);
             case `CREATE_${typeSingular}_SUCCESS`:
             case `UPDATE_${typeSingular}_SUCCESS`:
-                return replaceItem(state, action.data, key);
+                return asArray
+                    ? replaceItemAsArray(state, action.data, key)
+                    : replaceItem(state, action.data, key);
+            case `DELETE_${typeSingular}_SUCCESS`:
+                return asArray
+                    ? deleteItemAsArray(state, action.request.data, key)
+                    : deleteItem(state, action.request.data, key)
             default:
                 return state;
         }
