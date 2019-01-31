@@ -140,7 +140,7 @@ class Forms extends Component {
                             semester: 2
                         }}
                         onCancel={this.cancelHandler}
-                        studyCourseOptions={this.studyCourseOptions()}
+                        studyCourseOptions={this.props.studyCourses}
                         studyRegulations={this.props.studyRegulations}
                     />
                 </Paper>

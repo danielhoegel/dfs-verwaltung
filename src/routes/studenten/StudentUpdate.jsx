@@ -14,6 +14,7 @@ import StudentFields from '../../components/fields/StudentFields';
 
 import { getStudentForId, getStudentenFetching } from './redux/studentenSelectors';
 import { getStudyCourses, getStudyRegulations } from '../../redux/entitiesSelector';
+import entitiesActions from '../../redux/entitiesActions';
 
 class StudentUpdate extends Component {
     
@@ -36,69 +37,38 @@ class StudentUpdate extends Component {
     updateStudent = (data) => {
         console.log('SUBMIT', data);
 
+        const requests = [];
+
         // update student
-        this.props.dispatch({
-            type: 'UPDATE_STUDENT',
-            request: {
-                url: '/students/' + data.student.id,
-                method: 'put',
-                data: data.student
-            }
-        });
-        // update student information
-        this.props.dispatch({
-            type: 'UPDATE_STUDENT_INFORMATION',
-            request: {
-                url: '/studentInformations/' + data.studentInformation.id,
-                method: 'put',
-                data: data.studentInformation
-            }
-        });
+        requests.push(this.props.updateStudent(data.student));
+        requests.push(this.props.updateStudentInformation(data.studentInformation));
 
         // delete studies
         const studiesToDelete = [];
-        const nextStudies = data.studies
-            .map(study => study.id)
-            .filter(id => id !== undefined);
-        console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies });
+        const nextStudies = data.studies.filter(({ id }) => id !== undefined );
+        // console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies });
         this.props.student.studies.forEach(study => {
             if(!nextStudies.includes(study.id)) {
-                studiesToDelete.push(study.id);
+                studiesToDelete.push(study);
             }
         });
-        studiesToDelete.forEach(studyId => {
-            this.props.dispatch({
-                type: 'DELETE_STUDY',
-                request: {
-                    url: '/studies/' + studyId,
-                    method: 'delete',
-                    id: studyId
-                }
-            })
+        studiesToDelete.forEach(study => {
+            requests.push(this.props.deleteStudy(study));
         })
+
+        // update & create studies
         data.studies.forEach(study => {
             if (study.id) {
-                // update studies
-                this.props.dispatch({
-                    type: 'UPDATE_STUDY',
-                    request: {
-                        url: '/studies/' + study.id,
-                        method: 'put',
-                        data: study
-                    }
-                });
+                requests.push(this.props.updateStudy(study));
             } else {
-                // create studies
-                this.props.dispatch({
-                    type: 'CREATE_STUDY',
-                    request: {
-                        url: '/studies/',
-                        method: 'post',
-                        data: { ...study, studentId: data.student.id }
-                    }
-                });
+                requests.push(this.props.createStudy({ ...study, studentId: data.student.id }));
             }
         });
+
+        // requests finished
+        Promise.all(requests).then(res => {
+            console.log('UPDATE STUDENT with STUDIES SUCCESS', res);
+        })
     }
 
     render() {
@@ -152,6 +122,14 @@ const mapStateToProps = (state, ownProps) => ({
     studyRegulations: getStudyRegulations(state),
 });
 
-export default connect(mapStateToProps, { dispatch: action => action })(
+const mapDispatchToProps = {
+    updateStudent: entitiesActions.student.update,
+    updateStudentInformation: entitiesActions.studentInformation.update,
+    deleteStudy: entitiesActions.study.delete,
+    updateStudy: entitiesActions.study.update,
+    createStudy: entitiesActions.study.delete,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
     withStyles(styles)(StudentUpdate)
 );

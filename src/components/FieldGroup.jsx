@@ -17,10 +17,13 @@ class FieldGroup extends PureComponent {
     }
 }
 
-const styles = {
+const styles = theme => ({
     fieldGroup: {
-        display: 'flex'
+        display: 'flex',
+        [theme.breakpoints.down('xs')]: {
+            flexDirection: 'column'
+        }
     },
-};
+});
 
 export default withStyles(styles)(FieldGroup);

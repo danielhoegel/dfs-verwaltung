@@ -5,143 +5,20 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Switch from '@material-ui/core/Switch';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import RootRef from '@material-ui/core/RootRef';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/EditOutlined';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
-import { isNotEmpty } from '../../helper/helper';
-import HiddenDivider from '../../components/HiddenDivider';
-import Expandable from '../../components/Expandable';
+import { isNotEmpty } from '../../../helper/helper';
+import HiddenDivider from '../../../components/HiddenDivider';
+import Modal from '../../../components/Modal';
 
-import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse } from './redux/studySelectors';
-
-
-const SubjectCourse = ({
-    subjectCourse: { id, title, type, credits, zpk, participationType },
-    subject,
-    allowDelete,
-    classes,
-}) => {
-
-    const updateSubjectCourse = () => {
-        window.alert(`Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} bearbeiten`)
-    };
-
-    const deleteSubjectCourse = () => {
-        if (allowDelete) {
-            window.confirm(`Sind Sie sicher, dass Sie die Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} und alle dazugehörigen Noten löschen möchten?`);
-        }
-    };
-
-    return (
-        <ListItem button title='Veranstaltung bearbeiten' onClick={updateSubjectCourse}>
-            <ListItemText
-                secondary={`${participationType}, ${credits} Credits${zpk ? ', ZPK' : ''}`}
-                className={classes.subjectCourseContent} 
-            >
-                <div className={classes.subjectCourseTitle}>
-                    {type}{title && ` (${title})`}
-                    <EditIcon className={classes.subjectCourseEditIcon} />
-                </div>
-            </ListItemText>
-            <ListItemSecondaryAction>
-                <IconButton
-                    disabled={!allowDelete}
-                    onClick={deleteSubjectCourse}
-                    title='Veranstaltung löschen'
-                >
-                    <DeleteIcon />
-                </IconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
-    )
-}
-
-
-class Subject extends Component {
-    shouldComponentUpdate(nextProps) {
-        return (
-            (nextProps.expanded !== this.props.expanded) ||
-            (nextProps.expanded && (
-                nextProps.allowDelete !== this.props.allowDelete
-            ))
-        );
-    }
-
-    toggleExpanded = () => {
-        this.props.handleChange(this.props.subject.id);
-    }
-
-    render() {
-        const { subject, classes } = this.props;
-        return (
-            <RootRef rootRef={this.props.rootRef}>
-                <Expandable
-                    header={
-                        <Typography variant='subheading' className={classes.expandableHeader} >
-                            {subject.title}
-                        </Typography>
-                    }
-                    expanded={this.props.expanded}
-                    toggleExpanded={this.toggleExpanded}
-                >
-                    {subject.type.toUpperCase()}, {subject.semester}. Semester, UE {subject.ue}
-                    <List>
-                        {isNotEmpty(subject.subjectCourses) && subject.subjectCourses.map(subjectCourse => (
-                            <SubjectCourse
-                                key={subjectCourse.id}
-                                subjectCourse={subjectCourse}
-                                classes={classes}
-                                allowDelete={this.props.allowDelete}
-                                subject={subject}
-                            />
-                        ))}
-                    </List>
-                    <div className={classes.subjectActions}>
-                        <Button
-                            variant='flat'
-                            size='small'
-                            title='Fach bearbeiten'
-                            className={classes.actionButton}
-                        >
-                            <EditIcon className={classes.leftIcon} />
-                            Bearbeiten
-                        </Button>
-                        <Button
-                            variant='flat'
-                            size='small'
-                            title='Veranstaltung hinzufügen'
-                            className={classes.actionButton}
-                        >
-                            <AddIcon className={classes.leftIcon} />
-                            Veranstaltung
-                        </Button>
-                        <Button
-                            variant='flat'
-                            size='small'
-                            title='Fach löschen'
-                            className={classes.actionButton}
-                            disabled={!this.props.allowDelete}
-                        >
-                            <DeleteIcon className={classes.leftIcon} />
-                            Löschen
-                        </Button>
-                    </div>
-                </Expandable>
-            </RootRef>
-        )
-    }
-}
+import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse } from '../redux/studySelectors';
+import Subject from './components/Subject';
+import SubjectCreate from './components/SubjectCreate';
 
 
 class StudyRegulation extends Component {
@@ -151,6 +28,7 @@ class StudyRegulation extends Component {
             const __subjectId = Number(subjectId);
             if (__subjectId !== prevState.__subjectId ) {
                 return {
+                    ...prevState,
                     expandedSubject: isNotEmpty(__subjectId) ? __subjectId : null,
                     __subjectId
                 };
@@ -161,7 +39,8 @@ class StudyRegulation extends Component {
     
     state = {
         expandedSubject: null,
-        allowDelete: false
+        allowDelete: false,
+        createStudyModalOpen: false,
     }
 
     subjectRefs = {}
@@ -220,11 +99,26 @@ class StudyRegulation extends Component {
     goBack = () => {
         this.props.history.goBack();
     }
+
+    openCreateStudyModal = () => {
+        this.setState({ createStudyModalOpen: true });
+    }
+
+    closeCreateStudyModal = () => {
+        this.setState({ createStudyModalOpen: false });
+    }
     
     render() {
         const { studyRegulation, subjects, classes, fetching } = this.props;
         return (
             <div>
+                <Modal
+                    component={SubjectCreate}
+                    title='Fach hinzufügen'
+                    close={this.closeCreateStudyModal}
+                    open={this.state.createStudyModalOpen}
+                    preventClosing
+                />
                 <Typography variant='display1'>
                     {studyRegulation && studyRegulation.studyCourse
                         ? `${studyRegulation.title} (${studyRegulation.studyCourse.title})`
@@ -249,7 +143,7 @@ class StudyRegulation extends Component {
                         variant='flat'
                         title='Fach hinzufügen'
                         className={classes.button}
-                        onClick={this.createStudyCourse}
+                        onClick={this.openCreateStudyModal}
                     >
                         <AddIcon className={classes.leftIcon} />
                         Hinzufügen

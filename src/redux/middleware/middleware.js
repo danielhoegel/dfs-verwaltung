@@ -11,4 +11,6 @@ const logger = createLogger({
     duration: false
 });
 
-export default composeWithDevTools(applyMiddleware(apiRequests, thunk, logger));
+const middleware = applyMiddleware(apiRequests, thunk, logger);
+
+export default composeWithDevTools(middleware);

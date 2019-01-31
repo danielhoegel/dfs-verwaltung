@@ -9,7 +9,7 @@ import StudentUpdate from './routes/studenten/StudentUpdate';
 import StudentCreate from './routes/studenten/StudentCreate';
 
 import StudyCourseList from './routes/studienkurse/StudyCourseList';
-import StudyRegulation from './routes/studienkurse/StudyRegulation';
+import StudyRegulation from './routes/studienkurse/studyRegulation/StudyRegulation';
 
 import Playground from './routes/playground/Playground';
 

@@ -76,12 +76,16 @@ class Modal extends Component {
 const styles = theme => ({
     wrapper: {
         position: 'absolute',
-        minWidth: theme.spacing.unit * 60,
+        width: '75%',
         maxWidth: theme.spacing.unit * 100,
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         outline: 0,
+        test: console.log(theme.breakpoints),
+        [theme.breakpoints.down('md')]: {
+            width: 'calc(100% - 2rem)',
+        },
     },
     inside: {
         overflow: 'hidden',

@@ -10,13 +10,12 @@ import HiddenDivider from '../../components/HiddenDivider';
 import { isEmpty, changeNestedObject, removeByIndex, isNotEmpty } from '../../helper/helper'
 
 import { fetchStudyRegulations, fetchStudyCourses } from '../studienkurse/redux/studyActions';
-import { createStudent } from './redux/studentenActions';
 import { getStudyCourses, getStudyRegulations } from '../../redux/entitiesSelector';
 import UpdateStuent from '../../components/update/student';
 import UpdateStudentInformation from '../../components/update/studentInformation';
 import FieldArray from '../../components/FieldArray';
 import UpdateStudy from '../../components/update/studentStudy';
-import apiRequest from '../../helper/apiRequest';
+import entitiesActions from '../../redux/entitiesActions';
 
 
 class StudentCreate extends Component {
@@ -88,21 +87,33 @@ class StudentCreate extends Component {
             (data.studyCourse === 1 || data.studyCourse === 2)
         )) {
             console.log('SUBMIT', data);
-            apiRequest('/students', { method: 'post', data: data.student })
+            // apiRequest('/students', { method: 'post', data: data.student })
+            //     .then(({ id: studentId }) => {
+            //         apiRequest('/studentInformations', {
+            //             method: 'post',
+            //             data: { ...data.studentInformation, studentId }
+            //         });
+            //         data.studies.forEach(study => {
+            //             apiRequest('/studies', {
+            //                 method: 'post',
+            //                 data: { ...study, studentId }
+            //             });
+            //         })
+            //     })
+            //     .catch(err => {
+            //         console.log('Error while creating new Student', { err, data });
+            //     });
+            this.props.createStudent(data.student)
                 .then(({ id: studentId }) => {
-                    apiRequest('/studentInformations', {
-                        method: 'post',
-                        data: { ...data.studentInformation, studentId }
-                    });
+                    const studentInformationRequest= this.props.createStudentInformation({ ...data.studentInformation, studentId });
+                    const studyRequests = [];
                     data.studies.forEach(study => {
-                        apiRequest('/studies', {
-                            method: 'post',
-                            data: { ...study, studentId }
-                        });
-                    })
-                })
-                .catch(err => {
-                    console.log('Error while creating new Student', { err, data });
+                        studyRequests.push(this.props.createStudy({ ...study, studentId }));
+                    });
+                    Promise.all([studentInformationRequest, ...studyRequests])
+                        .then(res => {
+                            console.log('CREATE STUDENT + EXTRAS SUCCESS', res);
+                        })
                 });
         } else {
             console.warn('VALIDATION FAILED', data);
@@ -233,7 +244,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchStudyRegulations,
     fetchStudyCourses,
-    createStudent
+    createStudent: entitiesActions.student.create,
+    createStudentInformation: entitiesActions.studentInformation.create,
+    createStudy: entitiesActions.study.create,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import Field from '../Field';
@@ -11,19 +10,38 @@ import FieldRadioGroup from '../FieldRadioGroup';
 import HiddenDivider from '../HiddenDivider';
 import { isNotEmpty } from '../../helper/helper';
 
-const SubjectFields = ({ change, values , onCancel, studyCourseOptions, studyRegulations }) => {
+const SubjectFields = ({
+    change,
+    values ,
+    onCancel,
+    studyCourses,
+    studyRegulations
+}) => {
+    function studyCourseOptions() {
+        const options = [];
+        if (isNotEmpty(studyCourses)) {
+            studyCourses.forEach(studyCourse => {
+                options.push({
+                    value: studyCourse.id,
+                    label: studyCourse.title
+                });
+            });
+        }
+        return options;
+    }
+
+    
     function studyRegulationOptions() {
         const options = [];
         if (isNotEmpty(studyRegulations)) {
-            for (let i = 0; i < studyRegulations.length; i++) {
-                const studyRegulation = studyRegulations[i];
+            studyRegulations.forEach(studyRegulation => {
                 if (studyRegulation.studyCourseId === values.studyCourseId) {
                     options.push({
                         value: studyRegulation.id,
                         label: studyRegulation.title
                     });
                 }
-            } 
+            });
         }
         return options;
     }
@@ -45,10 +63,10 @@ const SubjectFields = ({ change, values , onCancel, studyCourseOptions, studyReg
     }
 
     const __studyRegulationOptions = studyRegulationOptions();
+    const __studyCourseOptions = studyCourseOptions();
 
     return (
         <Fragment>
-            <Typography variant='title' style={{marginTop: '2rem'}}>Fach</Typography>
             <FieldGroup>
                 <Field
                     name='title'
@@ -57,11 +75,13 @@ const SubjectFields = ({ change, values , onCancel, studyCourseOptions, studyReg
                     type='text'
                     onChange={change}
                 />
+            </FieldGroup>
+            <FieldGroup>
                 <FieldSelect
                     name='studyCourseId'
                     value={values.studyCourseId}
                     label='Studienkurs'
-                    options={studyCourseOptions}
+                    options={__studyCourseOptions}
                     onChange={onStudyCourseChange}
                 />
                 <FieldSelect
@@ -89,6 +109,8 @@ const SubjectFields = ({ change, values , onCancel, studyCourseOptions, studyReg
                     type='number'
                     onChange={change}
                 />
+            </FieldGroup>
+            <FieldGroup>
                 <FieldRadioGroup
                     name='type'
                     value={values.type}
@@ -102,7 +124,7 @@ const SubjectFields = ({ change, values , onCancel, studyCourseOptions, studyReg
             </FieldGroup>
             <HiddenDivider />
             <Button variant='raised' color='primary' type='submit'>Speichern</Button>
-            <Button variant='raised' onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
+            <Button onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
         </Fragment>
     );
 };

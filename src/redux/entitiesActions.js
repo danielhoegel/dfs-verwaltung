@@ -1,7 +1,7 @@
 /**
  * Returns a new promise, adds the resolve
  * and reject methods to the action
- * and dispatches the action
+ * and dispatches the action (requires redux-thunk)
  * 
  * Can be used to make api requests through
  * the apiRequestMiddleware and get access to the
@@ -14,10 +14,19 @@ const asyncAction = action => dispatch => new Promise(
 );
 
 const entities = [
+    { entity: 'student', route: 'students', type: 'STUDENT' },
+    { entity: 'studentInformation', route: 'studentInformations', type: 'STUDENT_INFORMATION' },
+    { entity: 'study', route: 'studies', type: 'STUDY' },
+    { entity: 'grade', route: 'grades', type: 'GRADE' },
     { entity: 'studyCourse', route: 'studyCourses', type: 'STUDY_COURSE' },
     { entity: 'studyRegulation', route: 'studyRegulations', type: 'STUDY_REGULATION' },
+    { entity: 'subject', route: 'subjects', type: 'SUBJECT' },
+    { entity: 'subjectCourse', route: 'subjectCourses', type: 'SUBJECT_COURSE' },
 ];
 
+/**
+ * Generate async CREATE, UPDATE and DELETE actions for all entities
+ */
 const entitiesActions = {};
 entities.forEach(({ entity, route, type }) => {
     entitiesActions[entity] = {
@@ -49,30 +58,3 @@ entities.forEach(({ entity, route, type }) => {
 });
 
 export default entitiesActions;
-
-
-// export const createStudyCourse = data => asyncAction({
-//     type: 'CREATE_STUDY_COURSE',
-//     request: {
-//         url: '/studyCourses',
-//         method: 'post',
-//         data
-//     },
-// });
-
-// export const updateStudyCourse = data => asyncAction({
-//     type: 'CREATE_STUDY_COURSE',
-//     request: {
-//         url: `/studyCourses/${id}`,
-//         method: 'put',
-//         data
-//     },
-// });
-
-// export const deleteStudyCourse = id => asyncAction({
-//     type: 'DELETE_STUDY_COURSE',
-//     request: {
-//         url: `/studyCourses/${id}`,
-//         method: 'delete'
-//     }
-// });
