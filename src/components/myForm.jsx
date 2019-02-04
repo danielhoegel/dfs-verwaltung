@@ -5,6 +5,7 @@ import omit from 'lodash/omit';
 import set from 'lodash/set';
 import get from 'lodash/get';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import Loader from './Loader';
 
@@ -14,10 +15,12 @@ class MyForm extends Component {
         fields: PropTypes.func.isRequired, // React Component
         defaultValues: PropTypes.object,
         loading: PropTypes.bool,
+        error: PropTypes.string,
     }
 
     static defaultProps = {
         loading: false,
+        error: ''
     }
 
     state = this.props.defaultValues || {}
@@ -69,8 +72,8 @@ class MyForm extends Component {
     }
 
     render() {
-        const { loading, classes, ...props } = this.props; 
-        const formProps = omit(props, ['fields', 'onSubmit', 'defaultValues']);
+        const { loading, error, classes, ...props } = this.props; 
+        const formProps = omit(props, ['fields', 'onSubmit', 'defaultValues', 'error']);
         return (
             <form onSubmit={this.submitHandler} className={classes.form}>
                 <Loader loading={loading} />
@@ -83,15 +86,20 @@ class MyForm extends Component {
                     disabled={loading}
                     {...formProps}
                 />
+                {error && <Typography className={classes.error}>{error}</Typography>}
             </form>
         );
     }
 }
 
-const styles = {
+const styles = theme => ({
     form: {
         position: 'relative',
-    }
-};
+    },
+    error: {
+        color: theme.palette.red,
+        marginTop: theme.spacing.unit * 2
+    },
+});
 
 export default withStyles(styles)(MyForm);

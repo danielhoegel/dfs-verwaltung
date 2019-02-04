@@ -1,21 +1,16 @@
 import { connect } from 'react-redux';
 
-// import { getStudentForId } from './helper/selectors';
-import { getStudentForId } from './routes/studenten/redux/studentenSelectors';
-
 import StudentenListe from './routes/studenten/studentenListe/StudentenListe';
 import StudentDetails from './routes/studenten/studentenDetails/StudentDetails';
 import StudentUpdate from './routes/studenten/StudentUpdate';
 import StudentCreate from './routes/studenten/StudentCreate';
-
 import StudyCourseList from './routes/studienkurse/StudyCourseList';
 import StudyRegulation from './routes/studienkurse/studyRegulation/StudyRegulation';
-
 import Playground from './routes/playground/Playground';
-
 import Reports from './reports/Reports';
 import Forms from './routes/forms/Forms';
 
+import { getStudentForId } from './routes/studenten/redux/studentenSelectors';
 import EditIcon from '@material-ui/icons/EditOutlined';
 
 

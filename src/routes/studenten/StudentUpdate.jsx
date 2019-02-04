@@ -17,6 +17,11 @@ import { getStudyCourses, getStudyRegulations } from '../../redux/entitiesSelect
 import entitiesActions from '../../redux/entitiesActions';
 
 class StudentUpdate extends Component {
+
+    state = {
+        updating: false,
+        error: null
+    }
     
     componentDidMount() {
         // fetch student data if not already available
@@ -35,7 +40,10 @@ class StudentUpdate extends Component {
     }
 
     updateStudent = (data) => {
-        console.log('SUBMIT', data);
+        this.setState({
+            updating: true,
+            error: null
+        });
 
         const requests = [];
 
@@ -46,7 +54,7 @@ class StudentUpdate extends Component {
         // delete studies
         const studiesToDelete = [];
         const nextStudies = data.studies.filter(({ id }) => id !== undefined );
-        // console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies });
+        console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies });
         this.props.student.studies.forEach(study => {
             if(!nextStudies.includes(study.id)) {
                 studiesToDelete.push(study);
@@ -66,8 +74,15 @@ class StudentUpdate extends Component {
         });
 
         // requests finished
-        Promise.all(requests).then(res => {
-            console.log('UPDATE STUDENT with STUDIES SUCCESS', res);
+        Promise.all(requests)
+        .then(() => {
+            this.goBack();
+        }).catch(err => {
+            console.log('Error while updating!', err);
+            this.setState({
+                updating: false,
+                error: err.message
+            });
         })
     }
 
@@ -94,8 +109,9 @@ class StudentUpdate extends Component {
                         onCancel={this.goBack}
                         studyRegulations={this.props.studyRegulations}
                         studyCourses={this.props.studyCourses}
+                        loading={this.state.updating}
+                        error={this.state.error}
                     />
-
                 </div>
             );
         } else {
@@ -112,7 +128,7 @@ const styles = theme => ({
     },
     leftIcon: {
         marginRight: theme.spacing.unit,
-    },
+    }
 });
 
 const mapStateToProps = (state, ownProps) => ({
@@ -127,7 +143,7 @@ const mapDispatchToProps = {
     updateStudentInformation: entitiesActions.studentInformation.update,
     deleteStudy: entitiesActions.study.delete,
     updateStudy: entitiesActions.study.update,
-    createStudy: entitiesActions.study.delete,
+    createStudy: entitiesActions.study.create,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(

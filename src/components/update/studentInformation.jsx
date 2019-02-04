@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 
-import Typography from '@material-ui/core/Typography';
-
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
 import NativeSelectField from '../NativeSelectField';
@@ -49,9 +47,6 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
             </FieldGroup>
 
             <HiddenDivider height={2} />
-            <Typography component='h3' variant='title'>
-                Kontaktdaten
-            </Typography>
             <FieldGroup>
                 <Field
                     name={`${__prefix}.mailUni`}
@@ -91,9 +86,6 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
             </FieldGroup>
 
             <HiddenDivider height={2} />
-            <Typography component='h3' variant='title'>
-                Adresse
-            </Typography>
             <FieldGroup>
                 <Field
                     name={`${__prefix}.street`}

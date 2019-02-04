@@ -51,7 +51,7 @@
     },
     {
       "firstName": "Leopold",
-      "lastName": "Högel",
+      "lastName": "Adams",
       "prefix": "Herr",
       "matrikelnummer": "123456",
       "id": 7
@@ -190,7 +190,7 @@
       "mailPrivate": "",
       "mailUni": "daniel.hoegel@hhu.de",
       "phoneNumber": "",
-      "mobileNumber": "",
+      "mobileNumber": 123456789,
       "studentId": 7,
       "id": 7
     }
@@ -253,20 +253,20 @@
       "status": 1
     },
     {
-      "year": 2019,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "status": 1,
-      "studentId": 7,
-      "id": 8
-    },
-    {
       "year": 2018,
       "studyCourseId": 2,
       "studyRegulationId": 0,
       "status": 1,
       "studentId": 6,
       "id": 9
+    },
+    {
+      "year": 2017,
+      "studyCourseId": 1,
+      "studyRegulationId": 2,
+      "status": 1,
+      "studentId": 7,
+      "id": 10
     }
   ],
   "subjects": [
@@ -449,6 +449,13 @@
       "studyCourseId": 1,
       "studyRegulationId": 2,
       "semester": 2
+    },
+    {
+      "title": "Test",
+      "description": "",
+      "semester": 1,
+      "ue": 1,
+      "id": 55
     }
   ],
   "subjectCourses": [

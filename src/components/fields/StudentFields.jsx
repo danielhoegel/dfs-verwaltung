@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 // import Field from '../Field';
 // import FieldGroup from '../FieldGroup';
@@ -20,7 +22,8 @@ const StudentFields = ({
     add,
     remove,
     studyRegulations,
-    studyCourses
+    studyCourses,
+    classes,
 }) => {
     const addStudyHandler = (index) => {
         const item = {
@@ -38,16 +41,17 @@ const StudentFields = ({
 
     return (
         <Fragment>
-            <Typography variant='title' style={{marginTop: '2rem'}}>Student</Typography>
-            <UpdateStudent
-                onChange={change}
-                values={values.student}
-            />
+            <Paper className={classes.paper}>
+                <UpdateStudent
+                    onChange={change}
+                    values={values.student}
+                />
 
             <UpdateStudentInformation
                 onChange={change}
                 values={values.studentInformation}
-            />
+                />
+            </Paper>
 
             <HiddenDivider height={2} />
             <Typography component='h3' variant='title'>
@@ -86,6 +90,14 @@ StudentFields.propTypes = {
     remove: PropTypes.func.isRequired,
     studyRegulations: PropTypes.array.isRequired,
     studyCourses: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
-export default StudentFields;
+const styles = theme => ({
+    paper: {
+        padding: 2 * theme.spacing.unit,
+        marginTop: 2 * theme.spacing.unit,
+    },
+});
+
+export default withStyles(styles)(StudentFields);

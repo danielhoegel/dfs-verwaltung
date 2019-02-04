@@ -74,6 +74,19 @@ const SubjectFields = ({
                     label='Titel'
                     type='text'
                     onChange={change}
+                    required
+                    width={1}
+                />
+                <FieldRadioGroup
+                    name='type'
+                    value={values.type}
+                    label='Typ'
+                    onChange={change}
+                    options={[
+                        { label: 'deutsch', value: 'de' },
+                        { label: 'französich', value: 'fr' }
+                    ]}
+                    required
                 />
             </FieldGroup>
             <FieldGroup>
@@ -83,6 +96,7 @@ const SubjectFields = ({
                     label='Studienkurs'
                     options={__studyCourseOptions}
                     onChange={onStudyCourseChange}
+                    required
                 />
                 <FieldSelect
                     name='studyRegulationId'
@@ -91,6 +105,7 @@ const SubjectFields = ({
                     options={__studyRegulationOptions}
                     onChange={change}
                     disabled={__studyRegulationOptions.length <= 1}
+                    required
                 />
             </FieldGroup>
             <FieldGroup>
@@ -101,6 +116,7 @@ const SubjectFields = ({
                     type='number'
                     min={1}
                     onChange={change}
+                    required
                 />
                 <Field
                     name='ue'
@@ -108,18 +124,7 @@ const SubjectFields = ({
                     label='UE-Gruppe'
                     type='number'
                     onChange={change}
-                />
-            </FieldGroup>
-            <FieldGroup>
-                <FieldRadioGroup
-                    name='type'
-                    value={values.type}
-                    label='Typ'
-                    onChange={change}
-                    options={[
-                        { label: 'deutsch', value: 'de' },
-                        { label: 'französich', value: 'fr' }
-                    ]}
+                    required
                 />
             </FieldGroup>
             <HiddenDivider />
