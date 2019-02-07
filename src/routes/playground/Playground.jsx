@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import myForm from '../../components/myFormHOCTest';
 
 class Playground extends Component {
     
     render() {
-        // const { Form, Field, FieldGroup } = this.props;
         return (
             <div>
-                {/* <Form>
-                    <Field>Some Field</Field>
-                    <FieldGroup>Some Group</FieldGroup>
-                </Form> */}
+                <h1>Playground</h1>
             </div>
         )
     }
 }
 
-export default myForm(Playground);
+export default Playground;

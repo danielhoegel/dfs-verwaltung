@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import entities from './entities';
+
 /* util function */
 function replaceItem(state, item, key) {
     const id = item[key];
@@ -14,7 +16,17 @@ function replaceItemAsArray(state, item, idKey = 'id') {
     const key = item[idKey];
     const nextState = {...state};
     if (nextState[key]) {
-        nextState[key] = [...state[key], item];
+        let updated = false;
+        nextState[key] = nextState[key].map(prevItem => {
+            if (prevItem.id === item.id) {
+                updated = true;
+               return item; 
+            }
+            return prevItem;
+        });
+        if (!updated) {
+            nextState[key] = [...nextState[key], item]
+        }
     } else {
         nextState[key] = [item];
     }
@@ -119,14 +131,15 @@ function entitiesMetaReducer(state = defaultMetaState, action) {
     }
 }
 
-export default combineReducers({
-    meta: entitiesMetaReducer,
-    students: entityReducer('STUDENT', 'STUDENTS', 'students', 'id'),
-    studentInformations: entityReducer('STUDENT_INFORMATION', 'STUDENT_INFORMATIONS', 'studentInformations', 'studentId'),
-    studies: entityReducer('STUDY', 'STUDIES', 'studies', 'studentId', true),
-    grades: entityReducer('GRADE', 'GRADES', 'grades', 'studentId', true),
-    studyCourses: entityReducer('STUDY_COURSE', 'STUDY_COURSES', 'studyCourses', 'id'),
-    studyRegulations: entityReducer('STUDY_REGULATION', 'STUDY_REGULATIONS', 'studyRegulations', 'studyCourseId', true),
-    subjects: entityReducer('SUBJECT', 'SUBJECTS', 'subjects', 'studyRegulationId', true),
-    subjectCourses: entityReducer('SUBJECT_COURSE', 'SUBJECT_COURSES', 'subjectCourses', 'subjectId', true),
-});
+
+
+const reducers = {
+    meta: entitiesMetaReducer
+};
+
+for (let i = 0; i < entities.length; i++) {
+    const { plural, typeSingular, typePlural, key, isArray } = entities[i];
+    reducers[plural] = entityReducer(typeSingular, typePlural, plural, key, isArray);
+}
+
+export default combineReducers(reducers);

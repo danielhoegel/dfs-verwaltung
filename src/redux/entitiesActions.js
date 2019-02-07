@@ -1,3 +1,5 @@
+import entities from './entities';
+
 /**
  * Returns a new promise, adds the resolve
  * and reject methods to the action
@@ -13,48 +15,41 @@ const asyncAction = action => dispatch => new Promise(
     (resolve, reject) => dispatch({ ...action, resolve, reject })
 );
 
-const entities = [
-    { entity: 'student', route: 'students', type: 'STUDENT' },
-    { entity: 'studentInformation', route: 'studentInformations', type: 'STUDENT_INFORMATION' },
-    { entity: 'study', route: 'studies', type: 'STUDY' },
-    { entity: 'grade', route: 'grades', type: 'GRADE' },
-    { entity: 'studyCourse', route: 'studyCourses', type: 'STUDY_COURSE' },
-    { entity: 'studyRegulation', route: 'studyRegulations', type: 'STUDY_REGULATION' },
-    { entity: 'subject', route: 'subjects', type: 'SUBJECT' },
-    { entity: 'subjectCourse', route: 'subjectCourses', type: 'SUBJECT_COURSE' },
-];
 
 /**
  * Generate async CREATE, UPDATE and DELETE actions for all entities
  */
 const entitiesActions = {};
-entities.forEach(({ entity, route, type }) => {
-    entitiesActions[entity] = {
+
+for (let i = 0; i < entities.length; i++) {
+    const { singular, plural, typeSingular } = entities[i];
+    
+    entitiesActions[singular] = {
         create: data => asyncAction({
-            type: `CREATE_${type}`,
+            type: `CREATE_${typeSingular}`,
             request: {
-                url: `/${route}`,
+                url: `/${plural}`,
                 method: 'post',
                 data
             }
         }),
         update: data => asyncAction({
-            type: `UPDATE_${type}`,
+            type: `UPDATE_${typeSingular}`,
             request: {
-                url: `/${route}/${data.id}`,
+                url: `/${plural}/${data.id}`,
                 method: 'put',
                 data
             },
         }),
         delete: data => asyncAction({
-            type: `DELETE_${type}`,
+            type: `DELETE_${typeSingular}`,
             request: {
-                url: `/${route}/${data.id}`,
+                url: `/${plural}/${data.id}`,
                 method: 'delete'
             },
             data
         })
     }
-});
+}
 
 export default entitiesActions;

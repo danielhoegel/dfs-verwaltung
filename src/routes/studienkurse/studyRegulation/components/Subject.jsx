@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -26,6 +27,10 @@ class Subject extends Component {
 
     toggleExpanded = () => {
         this.props.handleChange(this.props.subject.id);
+    }
+
+    openUpdateSubjectModal = () => {
+        this.props.openUpdateSubjectModal(this.props.subject);
     }
 
     render() {
@@ -59,6 +64,7 @@ class Subject extends Component {
                             size='small'
                             title='Fach bearbeiten'
                             className={classes.actionButton}
+                            onClick={this.openUpdateSubjectModal}
                         >
                             <EditIcon className={classes.leftIcon} />
                             Bearbeiten
@@ -87,6 +93,16 @@ class Subject extends Component {
             </RootRef>
         )
     }
+}
+
+Subject.propTypes = {
+    openUpdateSubjectModal: PropTypes.func.isRequired,
+    subject: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    expanded: PropTypes.bool.isRequired,
+    allowDelete: PropTypes.bool.isRequired,
+    rootRef: PropTypes.func.isRequired,
 }
 
 export default Subject;

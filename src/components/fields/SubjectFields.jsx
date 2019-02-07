@@ -34,15 +34,18 @@ const SubjectFields = ({
     function studyRegulationOptions() {
         const options = [];
         if (isNotEmpty(studyRegulations)) {
-            studyRegulations.forEach(studyRegulation => {
-                if (studyRegulation.studyCourseId === values.studyCourseId) {
-                    options.push({
-                        value: studyRegulation.id,
-                        label: studyRegulation.title
-                    });
-                }
-            });
+            studyRegulations
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .forEach(studyRegulation => {
+                    if (studyRegulation.studyCourseId === values.studyCourseId) {
+                        options.push({
+                            value: studyRegulation.id,
+                            label: studyRegulation.title
+                        });
+                    }
+                });
         }
+        console.log({options});
         return options;
     }
 
@@ -65,6 +68,7 @@ const SubjectFields = ({
     const __studyRegulationOptions = studyRegulationOptions();
     const __studyCourseOptions = studyCourseOptions();
 
+    console.log({ values, __studyRegulationOptions, __studyCourseOptions });
     return (
         <Fragment>
             <FieldGroup>
@@ -104,7 +108,6 @@ const SubjectFields = ({
                     label='Studienordung'
                     options={__studyRegulationOptions}
                     onChange={change}
-                    disabled={__studyRegulationOptions.length <= 1}
                     required
                 />
             </FieldGroup>
@@ -138,7 +141,7 @@ SubjectFields.propTypes = {
     change: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
     onCancel: PropTypes.func.isRequired,
-    studyCourseOptions: PropTypes.array.isRequired,
+    studyCourses: PropTypes.array.isRequired,
     studyRegulations: PropTypes.array.isRequired,
 }
 

@@ -82,7 +82,6 @@ const styles = theme => ({
         left: '50%',
         transform: 'translate(-50%, -50%)',
         outline: 0,
-        test: console.log(theme.breakpoints),
         [theme.breakpoints.down('md')]: {
             width: 'calc(100% - 2rem)',
         },

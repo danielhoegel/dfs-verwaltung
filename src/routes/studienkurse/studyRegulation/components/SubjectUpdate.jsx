@@ -8,26 +8,14 @@ import MyForm from '../../../../components/MyForm';
 import entitiesActions from '../../../../redux/entitiesActions';
 
 
-
-
-class SubjectCreate extends Component {
+class SubjectUpdate extends Component {
     state = { loading: false, error: null }
 
     submitHandler = (data) => {
         this.setState({ loading: true, error: null });
-        this.props.createSubject(data)
+        this.props.updateSubject(data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));
-    }
-
-    defaultValues = {
-        title: '',
-        description: '',
-        type: 'de',
-        studyCourseId: this.props.data.studyCourseId,
-        studyRegulationId: this.props.data.studyRegulationId,
-        semester: '',
-        ue: ''
     }
 
     render() {
@@ -37,7 +25,7 @@ class SubjectCreate extends Component {
                     fields={SubjectFields}
                     onSubmit={this.submitHandler}
                     onCancel={this.props.closeModal}
-                    defaultValues={this.defaultValues}
+                    defaultValues={this.props.data}
                     loading={this.state.loading}
                     studyCourses={this.props.studyCourses}
                     studyRegulations={this.props.studyRegulations}
@@ -53,15 +41,15 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    createSubject: entitiesActions.subject.create
+    updateSubject: entitiesActions.subject.update
 };
 
-SubjectCreate.propTypes = {
+SubjectUpdate.propTypes = {
     studyCourses: PropTypes.array.isRequired,
     studyRegulations: PropTypes.array.isRequired,
-    createSubject: PropTypes.func.isRequired,
+    updateSubject: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubjectCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(SubjectUpdate);

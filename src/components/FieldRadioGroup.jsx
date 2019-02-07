@@ -22,6 +22,7 @@ const FieldRadioGroup = ({
     style,
     className,
     color,
+    required,
     disabled,
     labelProps,
     radioProps,
@@ -57,6 +58,7 @@ const FieldRadioGroup = ({
             <FormLabel 
                 component='legend'
                 className={classes.label}
+                required={required}
                 {...labelProps}
             >
                 {label}
@@ -67,6 +69,7 @@ const FieldRadioGroup = ({
                 value={value}
                 onChange={onChange}
                 row={inline}
+                required={required}
                 {...radioGroupProps}
             >
                 {generateRadios()}

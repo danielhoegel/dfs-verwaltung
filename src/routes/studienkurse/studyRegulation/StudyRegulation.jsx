@@ -19,6 +19,7 @@ import Modal from '../../../components/Modal';
 import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse } from '../redux/studySelectors';
 import Subject from './components/Subject';
 import SubjectCreate from './components/SubjectCreate';
+import SubjectUpdate from './components/SubjectUpdate';
 
 
 class StudyRegulation extends Component {
@@ -40,7 +41,11 @@ class StudyRegulation extends Component {
     state = {
         expandedSubject: null,
         allowDelete: false,
-        createStudyModalOpen: false,
+        createSubjectModalOpen: false,
+        updateSubjectModalOpen: false,
+        updateSubjectModalData: null,
+        deleteSubjectModalOpen: false,
+        deleteSubjectModalData: null,
     }
 
     subjectRefs = {}
@@ -100,12 +105,40 @@ class StudyRegulation extends Component {
         this.props.history.goBack();
     }
 
-    openCreateStudyModal = () => {
-        this.setState({ createStudyModalOpen: true });
+    openCreateSubjectModal = () => {
+        this.setState({ createSubjectModalOpen: true });
     }
 
-    closeCreateStudyModal = () => {
-        this.setState({ createStudyModalOpen: false });
+    closeCreateSubjectModal = () => {
+        this.setState({ createSubjectModalOpen: false });
+    }
+
+    openUpdateSubjectModal = (subject) => {
+        this.setState({
+            updateSubjectModalOpen: true,
+            updateSubjectModalData: subject
+        });
+    }
+
+    closeUpdateSubjectModal = () => {
+        this.setState({
+            updateSubjectModalOpen: false,
+            updateSubjectModalData: null
+        });
+    }
+
+    openDeleteSubjectModal = (subject) => {
+        this.setState({
+            deleteSubjectModalOpen: true,
+            deleteSubjectModalData: subject
+        });
+    }
+
+    closeDeleteSubjectModal = () => {
+        this.setState({
+            deleteSubjectModalOpen: false,
+            deleteSubjectModalData: null
+        });
     }
     
     render() {
@@ -115,8 +148,20 @@ class StudyRegulation extends Component {
                 <Modal
                     component={SubjectCreate}
                     title='Fach hinzufügen'
-                    close={this.closeCreateStudyModal}
-                    open={this.state.createStudyModalOpen}
+                    close={this.closeCreateSubjectModal}
+                    open={this.state.createSubjectModalOpen}
+                    data={{
+                        studyRegulationId: studyRegulation.id, 
+                        studyCourseId: studyRegulation.studyCourse.id
+                    }}
+                    preventClosing
+                />
+                <Modal
+                    component={SubjectUpdate}
+                    title='Fach bearbeiten'
+                    close={this.closeUpdateSubjectModal}
+                    open={this.state.updateSubjectModalOpen}
+                    data={this.state.updateSubjectModalData}
                     preventClosing
                 />
                 <Typography variant='display1'>
@@ -143,7 +188,7 @@ class StudyRegulation extends Component {
                         variant='flat'
                         title='Fach hinzufügen'
                         className={classes.button}
-                        onClick={this.openCreateStudyModal}
+                        onClick={this.openCreateSubjectModal}
                     >
                         <AddIcon className={classes.leftIcon} />
                         Hinzufügen
@@ -172,6 +217,7 @@ class StudyRegulation extends Component {
                                     expanded={this.state.expandedSubject === subject.id}
                                     allowDelete={this.state.allowDelete}
                                     rootRef={ref => this.refHandler(ref, subject.id)}
+                                    openUpdateSubjectModal={this.openUpdateSubjectModal}
                                 />
                             ))}
                             <HiddenDivider />

@@ -451,11 +451,25 @@
       "semester": 2
     },
     {
-      "title": "Test",
+      "title": "Hello",
       "description": "",
-      "semester": 1,
+      "type": "fr",
+      "studyCourseId": 2,
+      "studyRegulationId": 1,
+      "semester": 2,
       "ue": 1,
-      "id": 55
+      "id": 56,
+      "subjectCourses": []
+    },
+    {
+      "title": "Hi",
+      "description": "",
+      "type": "de",
+      "studyCourseId": 2,
+      "studyRegulationId": 1,
+      "semester": 3,
+      "ue": 2,
+      "id": 57
     }
   ],
   "subjectCourses": [

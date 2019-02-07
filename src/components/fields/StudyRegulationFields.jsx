@@ -19,6 +19,7 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
                     type='text'
                     onChange={change}
                     value={values.title}
+                    required
                 /> 
                 <FieldSelect
                     name='studyCourseId'
@@ -26,6 +27,7 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
                     onChange={change}
                     value={values.studyCourseId}
                     options={studyCourseOptions}
+                    required
                 /> 
                 <Field
                     name='date'
