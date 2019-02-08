@@ -179,3 +179,75 @@ export function generateLaenderOptions() {
         value: land, label: land
     }));
 }
+
+/**
+ * forEach
+ * @param {array} array 
+ * @param {function} callback 
+ */
+export function forEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        callback(array[index], index, array)
+    }
+};
+
+/**
+ * map
+ * @param {array} array 
+ * @param {function} callback 
+ */
+export function map(array, callback) {
+    const nextArray = [];
+    forEach(array, function(item, index, array) {
+        nextArray.push(callback(item, index, array))
+    })
+    return nextArray;
+};
+
+/**
+ * filter
+ * @param {array} array 
+ * @param {function} callback 
+ */
+export function filter(array, callback) {
+    const nextArray = [];
+    forEach(array, function(item, index, array) {
+        if (callback(item, index, array)) {
+            nextArray.push(item)
+        }
+    })
+    return nextArray;
+};
+
+/**
+ * filter and map
+ * @param {array} array 
+ * @param {function} filterCallback 
+ * @param {function} mapCallback 
+ */
+export function filterAndMap(array, filterCallback, mapCallback) {
+    const nextArray = [];
+    forEach(array, function(item, index, array) {
+        if (filterCallback(item, index, array)) {
+            nextArray.push(mapCallback((item, index, array)))
+        }
+    });
+    return nextArray;
+};
+
+/**
+ * map and filter
+ * @param {array} array 
+ * @param {function} mapCallback 
+ * @param {function} filterCallback 
+ */
+export function mapAndFilter(array, mapCallback, filterCallback) {
+    const nextArray = [];
+    forEach(array, function(item, index, array) {
+        const nextItem = mapCallback(item, index, array);
+        if (filterCallback(nextItem, index, array)) {
+            nextArray.push(nextItem);
+        }
+    });
+    return nextArray;
+};
