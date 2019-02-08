@@ -234,7 +234,7 @@ class SearchSelect extends Component {
     }
 
     filterMatchingOptions() {
-        if (!this.props.noFiltering) {
+        if (!this.props.noFiltering && this.state.inputValue) {
             const matchingOptions = this.props.options.filter(option => {
                 return this.state.inputValue.split(' ').every(inputWord => {
                     if (option.searchValues) {

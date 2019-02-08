@@ -231,6 +231,7 @@ const Autocomplete = ({
                 value: option ? option.value : '',
             }
         };
+        console.log(fakeEvent);
         onChange(fakeEvent);
     }
 
@@ -273,7 +274,7 @@ Autocomplete.propTypes = {
     })).isRequired,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     isMulti: PropTypes.bool,
     closeMenuOnSelect: PropTypes.bool,
     isClearable: PropTypes.bool,

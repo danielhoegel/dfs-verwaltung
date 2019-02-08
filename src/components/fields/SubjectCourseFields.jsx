@@ -38,16 +38,18 @@ const SubjectCourseFields = ({ change, values, onCancel, subjectOptions }) => {
                     label='Fach'
                     onSelect={change}
                     options={subjectOptions}
+                    style={{margin: '8px'}}
                 /> 
             </FieldGroup>
             <FieldGroup>
                 <Autocomplete
+                    name='subjectId'
                     value={values.subjectId}
                     placeholder='Fach'
                     onChange={change}
                     options={subjectOptions}
                     isClearable
-                    style={{width: '50%'}}
+                    style={{margin: '8px', width: '100%'}}
                 />
             </FieldGroup>
             <FieldGroup>
