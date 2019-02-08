@@ -1,22 +1,35 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { isNotEmpty } from '../../helper/helper';
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
 import FieldSelect from '../FieldSelect';
 import FieldCheckbox from '../FieldCheckbox';
 import HiddenDivider from '../HiddenDivider';
 import SearchSelect from '../SearchSelect';
-import Autocomplete from '../Autocomplete';
 
 
-const SubjectCourseFields = ({ change, values, onCancel, subjectOptions }) => {
+const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
+    function subjectOptions() {
+        const options = [];
+        if (isNotEmpty(subjects)) {
+            subjects.forEach(subject => {
+                options.push({
+                    value: subject.id,
+                    label: subject.title
+                });
+            });
+        }
+        return options;
+    }
+
+    const __subjectOptions = subjectOptions();
+
     return (
         <Fragment>
-            <Typography variant='title' style={{marginTop: '2rem'}}>Veranstaltung</Typography>
             <FieldGroup>
                 <Field
                     name='title'
@@ -37,20 +50,10 @@ const SubjectCourseFields = ({ change, values, onCancel, subjectOptions }) => {
                     value={values.subjectId}
                     label='Fach'
                     onSelect={change}
-                    options={subjectOptions}
+                    options={__subjectOptions}
                     style={{margin: '8px'}}
+                    noClearIcon
                 /> 
-            </FieldGroup>
-            <FieldGroup>
-                <Autocomplete
-                    name='subjectId'
-                    value={values.subjectId}
-                    placeholder='Fach'
-                    onChange={change}
-                    options={subjectOptions}
-                    isClearable
-                    style={{margin: '8px', width: '100%'}}
-                />
             </FieldGroup>
             <FieldGroup>
                 <Field
@@ -76,7 +79,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjectOptions }) => {
             </FieldGroup>
             <HiddenDivider />
             <Button variant='raised' color='primary' type='submit'>Speichern</Button>
-            <Button variant='raised' onClick={onCancel} style={{marginLeft: '1rem'}}>Speichern</Button>
+            <Button variant='flat' onClick={onCancel} style={{marginLeft: '1rem'}}>Speichern</Button>
         </Fragment>
     );
 };
@@ -85,7 +88,7 @@ SubjectCourseFields.propTypes = {
     change: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
     onCancel: PropTypes.func.isRequired,
-    subjectOptions: PropTypes.array.isRequired,
+    subjects: PropTypes.array.isRequired,
 };
 
 export default SubjectCourseFields;

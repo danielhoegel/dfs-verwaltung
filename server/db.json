@@ -467,7 +467,7 @@
       "semester": 2
     },
     {
-      "title": "Hello",
+      "title": "Testfach 2",
       "description": "",
       "type": "fr",
       "studyCourseId": 2,
@@ -478,14 +478,15 @@
       "subjectCourses": []
     },
     {
-      "title": "Hi",
+      "title": "Testfach 1",
       "description": "",
       "type": "de",
       "studyCourseId": 2,
       "studyRegulationId": 1,
-      "semester": 3,
-      "ue": 2,
-      "id": 57
+      "semester": 1,
+      "ue": 1,
+      "id": 60,
+      "subjectCourses": []
     }
   ],
   "subjectCourses": [
@@ -866,6 +867,51 @@
       "credits": 2,
       "zpk": false,
       "participationType": "Note"
+    },
+    {
+      "title": "Hallo",
+      "type": "Vorlesung",
+      "subjectId": 56,
+      "credits": 2,
+      "participationType": "Note",
+      "zpk": false,
+      "id": 57
+    },
+    {
+      "title": "World",
+      "type": "Vorlesung",
+      "subjectId": 56,
+      "credits": 3,
+      "participationType": "Notenbgeleitend",
+      "zpk": false,
+      "id": 58
+    },
+    {
+      "title": "Kann",
+      "type": "Vorlesung",
+      "subjectId": 56,
+      "credits": 5,
+      "participationType": "Notenbgeleitend",
+      "zpk": false,
+      "id": 59
+    },
+    {
+      "title": "Hello",
+      "type": "CM",
+      "subjectId": 56,
+      "credits": "",
+      "participationType": "",
+      "zpk": false,
+      "id": 60
+    },
+    {
+      "title": "Test",
+      "type": "Arbeitsgemeinschaft",
+      "subjectId": 56,
+      "credits": "",
+      "participationType": "",
+      "zpk": false,
+      "id": 61
     }
   ],
   "grades": [

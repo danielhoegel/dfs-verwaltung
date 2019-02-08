@@ -12,12 +12,14 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import { isNotEmpty } from '../../../../helper/helper';
 import Expandable from '../../../../components/Expandable';
 
-import SubjectCourse from './SubjectCourse';
+import SubjectCourseListItem from './SubjectCourseListItem';
 
 
 class Subject extends Component {
     shouldComponentUpdate(nextProps) {
         return (
+            (nextProps.subject !== this.props.subject) ||
+            (nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length) ||
             (nextProps.expanded !== this.props.expanded) ||
             (nextProps.expanded && (
                 nextProps.allowDelete !== this.props.allowDelete
@@ -31,6 +33,14 @@ class Subject extends Component {
 
     openUpdateSubjectModal = () => {
         this.props.openUpdateSubjectModal(this.props.subject);
+    }
+
+    openDeleteSubjectModal = () => {
+        this.props.openDeleteSubjectModal(this.props.subject);
+    }
+
+    openCreateSubjectCourseModal = () => {
+        this.props.openCreateSubjectCourseModal(this.props.subject);
     }
 
     render() {
@@ -49,12 +59,14 @@ class Subject extends Component {
                     {subject.type.toUpperCase()}, {subject.semester}. Semester, UE {subject.ue}
                     <List>
                         {isNotEmpty(subject.subjectCourses) && subject.subjectCourses.map(subjectCourse => (
-                            <SubjectCourse
+                            <SubjectCourseListItem
                                 key={subjectCourse.id}
                                 subjectCourse={subjectCourse}
                                 classes={classes}
                                 allowDelete={this.props.allowDelete}
                                 subject={subject}
+                                openUpdateSubjectCourseModal={this.props.openUpdateSubjectCourseModal}
+                                openDeleteSubjectCourseModal={this.props.openDeleteSubjectCourseModal}
                             />
                         ))}
                     </List>
@@ -74,6 +86,7 @@ class Subject extends Component {
                             size='small'
                             title='Veranstaltung hinzufügen'
                             className={classes.actionButton}
+                            onClick={this.openCreateSubjectCourseModal}
                         >
                             <AddIcon className={classes.leftIcon} />
                             Veranstaltung
@@ -84,6 +97,7 @@ class Subject extends Component {
                             title='Fach löschen'
                             className={classes.actionButton}
                             disabled={!this.props.allowDelete}
+                            onClick={this.openDeleteSubjectModal}
                         >
                             <DeleteIcon className={classes.leftIcon} />
                             Löschen
@@ -97,6 +111,10 @@ class Subject extends Component {
 
 Subject.propTypes = {
     openUpdateSubjectModal: PropTypes.func.isRequired,
+    openDeleteSubjectModal: PropTypes.func.isRequired,
+    openCreateSubjectCourseModal: PropTypes.func.isRequired,
+    openUpdateSubjectCourseModal: PropTypes.func.isRequired,
+    openDeleteSubjectCourseModal: PropTypes.func.isRequired,
     subject: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,

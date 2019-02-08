@@ -45,7 +45,6 @@ const SubjectFields = ({
                     }
                 });
         }
-        console.log({options});
         return options;
     }
 
@@ -68,7 +67,6 @@ const SubjectFields = ({
     const __studyRegulationOptions = studyRegulationOptions();
     const __studyCourseOptions = studyCourseOptions();
 
-    console.log({ values, __studyRegulationOptions, __studyCourseOptions });
     return (
         <Fragment>
             <FieldGroup>

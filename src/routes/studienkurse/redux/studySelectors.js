@@ -23,7 +23,6 @@ export function getStudyCoursesWithRegulations(state) {
 }
 
 export function getStudyRegulationWithStudyCourse(state, studyCourseId, studyRegulationId) {
-    console.log('getStudyRegulationWithStudyCourse', {state, studyCourseId, studyRegulationId})
     const studyRegulation = getStudyRegulationByIds(state, studyCourseId, studyRegulationId);
     studyRegulation.studyCourse = getStudyCoursById(state, studyRegulation.studyCourseId);
     return studyRegulation;

@@ -17,9 +17,13 @@ import HiddenDivider from '../../../components/HiddenDivider';
 import Modal from '../../../components/Modal';
 
 import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse } from '../redux/studySelectors';
-import Subject from './components/Subject';
+import SubjectListItem from './components/SubjectListItem';
 import SubjectCreate from './components/SubjectCreate';
 import SubjectUpdate from './components/SubjectUpdate';
+import SubjectDelete from './components/SubjectDelete';
+import SubjectCourseCreate from './components/SubjectCourseCreate';
+import SubjectCourseUpdate from './components/SubjectCourseUpdate';
+import SubjectCourseDelete from './components/SubjectCourseDelete';
 
 
 class StudyRegulation extends Component {
@@ -41,11 +45,21 @@ class StudyRegulation extends Component {
     state = {
         expandedSubject: null,
         allowDelete: false,
+        
+        // Subject modals
         createSubjectModalOpen: false,
         updateSubjectModalOpen: false,
         updateSubjectModalData: null,
         deleteSubjectModalOpen: false,
         deleteSubjectModalData: null,
+        
+        // SubjectCourse Modals
+        createSubjectCourseModalOpen: false,
+        createSubjectCourseModalData: null,
+        updateSubjectCourseModalOpen: false,
+        updateSubjectCourseModalData: null,
+        deleteSubjectCourseModalOpen: false,
+        deleteSubjectCourseModalData: null,
     }
 
     subjectRefs = {}
@@ -105,6 +119,9 @@ class StudyRegulation extends Component {
         this.props.history.goBack();
     }
 
+
+    /* Subject Modals */
+
     openCreateSubjectModal = () => {
         this.setState({ createSubjectModalOpen: true });
     }
@@ -140,30 +157,56 @@ class StudyRegulation extends Component {
             deleteSubjectModalData: null
         });
     }
+
+
+    /* SubjectCourse Modals */
+
+    openCreateSubjectCourseModal = (subject) => {
+        this.setState({
+            createSubjectCourseModalOpen: true,
+            createSubjectCourseModalData: subject
+        });
+    }
+
+    closeCreateSubjectCourseModal = () => {
+        this.setState({
+            createSubjectCourseModalOpen: false,
+            createSubjectCourseModalData: null
+        });
+    }
+
+    openUpdateSubjectCourseModal = (subject) => {
+        this.setState({
+            updateSubjectCourseModalOpen: true,
+            updateSubjectCourseModalData: subject
+        });
+    }
+
+    closeUpdateSubjectCourseModal = () => {
+        this.setState({
+            updateSubjectCourseModalOpen: false,
+            updateSubjectCourseModalData: null
+        });
+    }
+
+    openDeleteSubjectCourseModal = (subject) => {
+        this.setState({
+            deleteSubjectCourseModalOpen: true,
+            deleteSubjectCourseModalData: subject
+        });
+    }
+
+    closeDeleteSubjectCourseModal = () => {
+        this.setState({
+            deleteSubjectCourseModalOpen: false,
+            deleteSubjectCourseModalData: null
+        });
+    }
     
     render() {
         const { studyRegulation, subjects, classes, fetching } = this.props;
         return (
             <div>
-                <Modal
-                    component={SubjectCreate}
-                    title='Fach hinzufügen'
-                    close={this.closeCreateSubjectModal}
-                    open={this.state.createSubjectModalOpen}
-                    data={{
-                        studyRegulationId: studyRegulation.id, 
-                        studyCourseId: studyRegulation.studyCourse.id
-                    }}
-                    preventClosing
-                />
-                <Modal
-                    component={SubjectUpdate}
-                    title='Fach bearbeiten'
-                    close={this.closeUpdateSubjectModal}
-                    open={this.state.updateSubjectModalOpen}
-                    data={this.state.updateSubjectModalData}
-                    preventClosing
-                />
                 <Typography variant='display1'>
                     {studyRegulation && studyRegulation.studyCourse
                         ? `${studyRegulation.title} (${studyRegulation.studyCourse.title})`
@@ -203,13 +246,15 @@ class StudyRegulation extends Component {
                     </div>
                 </div>
                 <HiddenDivider />
+
+                {/* Subject List */}
                 {!fetching 
                     ? isNotEmpty(subjects)
                         ? Object.entries(this.groupSubjectsBySemester()).map(([ semester, subjects ]) => (
                             <Fragment key={semester} >
                             <Typography variant='body2'>{semester}. Semester</Typography>
                             {subjects.map(subject => (
-                                <Subject
+                                <SubjectListItem
                                     key={subject.id}
                                     subject={subject}
                                     classes={classes}
@@ -218,6 +263,10 @@ class StudyRegulation extends Component {
                                     allowDelete={this.state.allowDelete}
                                     rootRef={ref => this.refHandler(ref, subject.id)}
                                     openUpdateSubjectModal={this.openUpdateSubjectModal}
+                                    openDeleteSubjectModal={this.openDeleteSubjectModal}
+                                    openCreateSubjectCourseModal={this.openCreateSubjectCourseModal}
+                                    openUpdateSubjectCourseModal={this.openUpdateSubjectCourseModal}
+                                    openDeleteSubjectCourseModal={this.openDeleteSubjectCourseModal}
                                 />
                             ))}
                             <HiddenDivider />
@@ -226,6 +275,61 @@ class StudyRegulation extends Component {
                         : 'Keine Fächer gefunden'
                     : <LinearProgress />
                 }
+
+                {/* Subject Modals */}
+                <Modal
+                    component={SubjectCreate}
+                    title='Fach hinzufügen'
+                    close={this.closeCreateSubjectModal}
+                    open={this.state.createSubjectModalOpen}
+                    data={{
+                        studyRegulationId: studyRegulation.id, 
+                        studyCourseId: studyRegulation.studyCourse.id
+                    }}
+                    preventClosing
+                />
+                <Modal
+                    component={SubjectUpdate}
+                    title='Fach bearbeiten'
+                    close={this.closeUpdateSubjectModal}
+                    open={this.state.updateSubjectModalOpen}
+                    data={this.state.updateSubjectModalData}
+                    preventClosing
+                />
+                <Modal
+                    component={SubjectDelete}
+                    title='Fach löschen'
+                    close={this.closeDeleteSubjectModal}
+                    open={this.state.deleteSubjectModalOpen}
+                    data={this.state.deleteSubjectModalData}
+                    danger
+                />
+
+                {/* SubjectCourse Modals */}
+                <Modal
+                    component={SubjectCourseCreate}
+                    title='Veranstaltung hinzufügen'
+                    close={this.closeCreateSubjectCourseModal}
+                    open={this.state.createSubjectCourseModalOpen}
+                    data={this.state.createSubjectCourseModalData}
+                    preventClosing
+                />
+                <Modal
+                    component={SubjectCourseUpdate}
+                    title='Veranstaltung bearbeiten'
+                    close={this.closeUpdateSubjectCourseModal}
+                    open={this.state.updateSubjectCourseModalOpen}
+                    data={this.state.updateSubjectCourseModalData}
+                    preventClosing
+                />
+                <Modal
+                    component={SubjectCourseDelete}
+                    title='Veranstaltung löschen'
+                    close={this.closeDeleteSubjectCourseModal}
+                    open={this.state.deleteSubjectCourseModalOpen}
+                    data={this.state.deleteSubjectCourseModalData}
+                    danger
+                />
             </div>
         );
     }

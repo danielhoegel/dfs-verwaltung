@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
 
-const SubjectCourse = ({
+const SubjectCourseListItem = ({
     subjectCourse: { id, title, type, credits, zpk, participationType },
     subject,
     allowDelete,
@@ -49,4 +49,4 @@ const SubjectCourse = ({
     )
 }
 
-export default SubjectCourse;
+export default SubjectCourseListItem;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -61,6 +62,13 @@ const styles = theme => ({
 
 const mapDispatchToProps = {
     deleteStudyRegulation: entitiesActions.studyRegulation.delete
+};
+
+StudyRegulationDelete.propTypes = {
+    deleteStudyRegulation: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(

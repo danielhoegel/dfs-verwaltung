@@ -458,6 +458,7 @@ SearchSelect.propTypes = {
     })),
     className: PropTypes.string,
     style: PropTypes.object,
+    noClearIcon: PropTypes.bool,
 };
 
 const styles = theme => ({

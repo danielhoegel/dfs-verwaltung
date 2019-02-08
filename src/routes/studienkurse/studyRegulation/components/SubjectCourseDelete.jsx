@@ -6,11 +6,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import HiddenDivider from '../../../components/HiddenDivider';
-import Loader from '../../../components/Loader';
-import entitiesActions from '../../../redux/entitiesActions';
+import HiddenDivider from '../../../../components/HiddenDivider';
+import Loader from '../../../../components/Loader';
+import entitiesActions from '../../../../redux/entitiesActions';
 
-class StudyCourseDelete extends Component {
+class SubjectCourseDelete extends Component {
     state = {
         loading: false,
         error: null
@@ -18,7 +18,7 @@ class StudyCourseDelete extends Component {
 
     deleteHandler = () => {
         this.setState({ loading: true, error: null });
-        this.props.deleteStudyCourse(this.props.data)
+        this.props.deleteSubject(this.props.data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err.message }));
     } 
@@ -30,7 +30,7 @@ class StudyCourseDelete extends Component {
             <div>
                 <Loader loading={loading} />
                 <Typography>
-                    Sind Sie sicher, dass sie den Studienkurs <strong>{data.title}</strong> löschen möchten?
+                    Sind Sie sicher, dass sie das Fach <strong>{data.title}</strong> löschen möchten?
                 </Typography>
                 <HiddenDivider height={2} />
                 <Button variant='raised' onClick={this.deleteHandler} className={classes.deleteButton}>
@@ -61,16 +61,16 @@ const styles = theme => ({
 })
 
 const mapDispatchToProps = {
-    deleteStudyCourse: entitiesActions.studyCourse.delete
+    deleteSubject: entitiesActions.subject.delete
 };
 
-StudyCourseDelete.propTypes = {
-    deleteStudyCourse: PropTypes.func.isRequired,
+SubjectCourseDelete.propTypes = {
+    deleteSubject: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
     closeModal: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(
-    withStyles(styles)(StudyCourseDelete)
+    withStyles(styles)(SubjectCourseDelete)
 );
