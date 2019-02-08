@@ -267,6 +267,22 @@
       "status": 1,
       "studentId": 7,
       "id": 10
+    },
+    {
+      "studentId": 0,
+      "studyCourseId": 1,
+      "studyRegulationId": 2,
+      "year": 2015,
+      "status": 2,
+      "id": 11
+    },
+    {
+      "year": 2019,
+      "studyCourseId": 2,
+      "studyRegulationId": 2,
+      "status": 1,
+      "studentId": 0,
+      "id": 12
     }
   ],
   "subjects": [

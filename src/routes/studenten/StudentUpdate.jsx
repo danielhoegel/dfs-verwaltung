@@ -52,17 +52,13 @@ class StudentUpdate extends Component {
         requests.push(this.props.updateStudentInformation(data.studentInformation));
 
         // delete studies
-        const studiesToDelete = [];
-        const nextStudies = data.studies.filter(({ id }) => id !== undefined );
+        const nextStudiesWithId = data.studies.filter(({ id }) => id !== undefined );
         console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies });
         this.props.student.studies.forEach(study => {
-            if(!nextStudies.includes(study.id)) {
-                studiesToDelete.push(study);
+            if(!nextStudiesWithId.includes(study.id)) {
+                requests.push(this.props.deleteStudy(study));
             }
         });
-        studiesToDelete.forEach(study => {
-            requests.push(this.props.deleteStudy(study));
-        })
 
         // update & create studies
         data.studies.forEach(study => {
@@ -75,9 +71,8 @@ class StudentUpdate extends Component {
 
         // requests finished
         Promise.all(requests)
-        .then(() => {
-            this.goBack();
-        }).catch(err => {
+        .then(this.goBack)
+        .catch(err => {
             console.log('Error while updating!', err);
             this.setState({
                 updating: false,
