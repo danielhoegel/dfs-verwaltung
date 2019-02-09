@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -12,7 +13,7 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import { isNotEmpty } from '../../../../helper/helper';
 import Expandable from '../../../../components/Expandable';
 
-import SubjectCourseListItem from './SubjectCourseListItem';
+import SubjectCourseListItem from '../subjectCourse/SubjectCourseListItem';
 
 
 class Subject extends Component {
@@ -95,7 +96,7 @@ class Subject extends Component {
                             variant='flat'
                             size='small'
                             title='Fach löschen'
-                            className={classes.actionButton}
+                            className={cn(classes.actionButton, classes.deleteButton)}
                             disabled={!this.props.allowDelete}
                             onClick={this.openDeleteSubjectModal}
                         >

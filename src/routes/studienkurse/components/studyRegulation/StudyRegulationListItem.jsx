@@ -10,7 +10,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailableOutlined';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
-import { formatDate } from '../../../helper/helper';
+import { formatDate } from '../../../../helper/helper';
 
 
 const StudyRegulationListItem = ({
@@ -48,6 +48,7 @@ const StudyRegulationListItem = ({
                     onClick={() => openDeleteStudyRegulationModal(regulation)}
                     disabled={!allowDelete}
                     title='Studienordnung löschen'
+                    className={classes.deleteButton}
                 >
                     <DeleteIcon />
                 </IconButton>

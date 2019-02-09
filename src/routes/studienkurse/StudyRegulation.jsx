@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import cn from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -11,19 +12,22 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/EditOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-import { isNotEmpty } from '../../../helper/helper';
-import HiddenDivider from '../../../components/HiddenDivider';
-import Modal from '../../../components/Modal';
+import { isNotEmpty } from '../../helper/helper';
+import HiddenDivider from '../../components/HiddenDivider';
+import Modal from '../../components/Modal';
 
-import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse } from '../redux/studySelectors';
-import SubjectListItem from './components/SubjectListItem';
-import SubjectCreate from './components/SubjectCreate';
-import SubjectUpdate from './components/SubjectUpdate';
-import SubjectDelete from './components/SubjectDelete';
-import SubjectCourseCreate from './components/SubjectCourseCreate';
-import SubjectCourseUpdate from './components/SubjectCourseUpdate';
-import SubjectCourseDelete from './components/SubjectCourseDelete';
+import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse, getStudyCoursesWithRegulations } from './redux/studySelectors';
+import SubjectListItem from './components/subject/SubjectListItem';
+import StudyRegulationUpdate from './components/studyRegulation/StudyRegulationUpdate';
+import StudyRegulationDelete from './components/studyRegulation/StudyRegulationDelete';
+import SubjectCreate from './components/subject/SubjectCreate';
+import SubjectUpdate from './components/subject/SubjectUpdate';
+import SubjectDelete from './components/subject/SubjectDelete';
+import SubjectCourseCreate from './components/subjectCourse/SubjectCourseCreate';
+import SubjectCourseUpdate from './components/subjectCourse/SubjectCourseUpdate';
+import SubjectCourseDelete from './components/subjectCourse/SubjectCourseDelete';
 
 
 class StudyRegulation extends Component {
@@ -46,6 +50,12 @@ class StudyRegulation extends Component {
         expandedSubject: null,
         allowDelete: false,
         
+        // StudyRegulation modals
+        updateStudyRegulationModalOpen: false,
+        updateStudyRegulationModalData: null,
+        deleteStudyRegulationModalOpen: false,
+        deleteStudyRegulationModalData: null,
+
         // Subject modals
         createSubjectModalOpen: false,
         updateSubjectModalOpen: false,
@@ -120,6 +130,42 @@ class StudyRegulation extends Component {
     }
 
 
+    /* StudyRegulation Modals */
+
+    openUpdateStudyRegulationModal = () => {
+        this.setState({
+            updateStudyRegulationModalOpen: true,
+            updateStudyRegulationModalData: {
+                studyRegulation: this.props.studyRegulation,
+                studyCourses: this.props.studyCourses
+            }
+        });
+    }
+
+    closeUpdateStudyRegulationModal = () => {
+        this.setState({
+            updateStudyRegulationModalOpen: false,
+            updateStudyRegulationModalData: null
+        });
+    }
+
+    openDeleteStudyRegulationModal = () => {
+        if (this.state.allowDelete) {
+            this.setState({
+                deleteStudyRegulationModalOpen: true,
+                deleteStudyRegulationModalData: this.props.studyRegulation
+            });
+        }
+    }
+
+    closeDeleteStudyRegulationModal = () => {
+        this.setState({
+            deleteStudyRegulationModalOpen: false,
+            deleteStudyRegulationModalData: null
+        });
+    }
+
+
     /* Subject Modals */
 
     openCreateSubjectModal = () => {
@@ -145,10 +191,12 @@ class StudyRegulation extends Component {
     }
 
     openDeleteSubjectModal = (subject) => {
-        this.setState({
-            deleteSubjectModalOpen: true,
-            deleteSubjectModalData: subject
-        });
+        if (this.state.allowDelete) {
+            this.setState({
+                deleteSubjectModalOpen: true,
+                deleteSubjectModalData: subject
+            });
+        }
     }
 
     closeDeleteSubjectModal = () => {
@@ -190,10 +238,12 @@ class StudyRegulation extends Component {
     }
 
     openDeleteSubjectCourseModal = (subject) => {
-        this.setState({
-            deleteSubjectCourseModalOpen: true,
-            deleteSubjectCourseModalData: subject
-        });
+        if (this.state.allowDelete) {
+            this.setState({
+                deleteSubjectCourseModalOpen: true,
+                deleteSubjectCourseModalData: subject
+            });
+        }
     }
 
     closeDeleteSubjectCourseModal = () => {
@@ -223,6 +273,7 @@ class StudyRegulation extends Component {
                         variant='flat'
                         title='Studienkurs bearbeiten'
                         className={classes.button}
+                        onClick={this.openUpdateStudyRegulationModal}
                     >
                         <EditIcon className={classes.leftIcon} />
                         Bearbeiten
@@ -236,12 +287,27 @@ class StudyRegulation extends Component {
                         <AddIcon className={classes.leftIcon} />
                         Hinzufügen
                     </Button>
+                    <Button
+                        variant='flat'
+                        title='Fach entfernen'
+                        className={cn(classes.button, classes.deleteButton)}
+                        onClick={this.openCreateSubjectModal}
+                        disabled={!this.state.allowDelete}
+                    >
+                        <DeleteIcon className={classes.leftIcon} />
+                        Entfernen
+                    </Button>
                     <div style={{ marginLeft: 'auto' }}>
-                        Löschen von Datensätzen zulassen
+                        Löschen zulassen
                         <Switch
                             checked={this.state.allowDelete}
                             onChange={this.toggleAllowDelete}
                             color='primary'
+                            classes={{
+                                switchBase: classes.colorSwitchBase,
+                                checked: classes.colorSwitchChecked,
+                                bar: classes.colorSwitchBar,
+                            }}
                         />
                     </div>
                 </div>
@@ -275,6 +341,24 @@ class StudyRegulation extends Component {
                         : 'Keine Fächer gefunden'
                     : <LinearProgress />
                 }
+
+                {/* StudyRegulation Modals */}
+                <Modal
+                    component={StudyRegulationUpdate}
+                    title='Studienordnung bearbeiten'
+                    close={this.closeUpdateStudyRegulationModal}
+                    open={this.state.updateStudyRegulationModalOpen}
+                    data={this.state.updateStudyRegulationModalData}
+                    preventClosing
+                />
+                <Modal
+                    component={StudyRegulationDelete}
+                    title='Studienordnung entfernen'
+                    close={this.closeDeleteStudyRegulationModal}
+                    open={this.state.deleteStudyRegulationModalOpen}
+                    data={this.state.deleteStudyRegulationModalData}
+                    danger
+                />
 
                 {/* Subject Modals */}
                 <Modal
@@ -373,12 +457,28 @@ const styles = theme => ({
         '&:hover $subjectCourseEditIcon': {
             opacity: 1,
         }
-    }
+    },
+    deleteButton: {
+        '&:hover': {
+            color: theme.palette.darkred,
+        }
+    },
+    colorSwitchBase: {
+        '&$colorSwitchChecked': {
+            color: theme.palette.darkred,
+            '& + $colorSwitchBar': {
+              backgroundColor: theme.palette.darkred,
+            },
+        },
+    },
+    colorSwitchChecked: {},
+    colorSwitchBar: {},
 });
 
 StudyRegulation.propTypes = {
     studyRegulation: PropTypes.object,
     subjects: PropTypes.array,
+    studyCourses: PropTypes.array.isRequired,
     fetching: PropTypes.bool,
 }
 
@@ -388,6 +488,7 @@ const mapStateToProps = (state, props) => {
     return {
         studyRegulation: getStudyRegulationWithStudyCourse(state, studyCourseId, studyRegulationId),
         subjects: getSubjectsWithSubjectCourses(state, studyRegulationId),
+        studyCourses: getStudyCoursesWithRegulations(state),
         fetching: getStudyFetching(state),
     }
 };

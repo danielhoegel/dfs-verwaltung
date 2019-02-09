@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-import { Typography } from '@material-ui/core';
-import HiddenDivider from '../../../components/HiddenDivider';
-import entitiesActions from '../../../redux/entitiesActions';
-import Loader from '../../../components/Loader';
+import HiddenDivider from '../../../../components/HiddenDivider';
+import entitiesActions from '../../../../redux/entitiesActions';
+import Loader from '../../../../components/Loader';
 
 class StudyRegulationDelete extends Component {
     state = {

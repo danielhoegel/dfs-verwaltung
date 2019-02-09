@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import StudyCourseFields from '../../../components/fields/StudyCourseFields';
-import MyForm from '../../../components/MyForm';
-import entitiesActions from '../../../redux/entitiesActions';
+import StudyCourseFields from '../../../../components/fields/StudyCourseFields';
+import MyForm from '../../../../components/MyForm';
+import entitiesActions from '../../../../redux/entitiesActions';
 
 class StudyCourseUpdate extends Component {
     state = {

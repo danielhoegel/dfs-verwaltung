@@ -5,7 +5,7 @@ import StudentDetails from './routes/studenten/studentenDetails/StudentDetails';
 import StudentUpdate from './routes/studenten/StudentUpdate';
 import StudentCreate from './routes/studenten/StudentCreate';
 import StudyCourseList from './routes/studienkurse/StudyCourseList';
-import StudyRegulation from './routes/studienkurse/studyRegulation/StudyRegulation';
+import StudyRegulation from './routes/studienkurse/StudyRegulation';
 import Playground from './routes/playground/Playground';
 import Reports from './reports/Reports';
 import Forms from './routes/forms/Forms';

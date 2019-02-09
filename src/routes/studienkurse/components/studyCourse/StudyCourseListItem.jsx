@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
@@ -7,8 +8,8 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 import AddIcon from '@material-ui/icons/AddOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
-import Expandable from '../../../components/Expandable';
-import StudyRegulationListItem from './StudyRegulationListItem';
+import Expandable from '../../../../components/Expandable';
+import StudyRegulationListItem from '../studyRegulation/StudyRegulationListItem';
 
 
 const StudyCourseListItem = ({
@@ -76,7 +77,7 @@ const StudyCourseListItem = ({
                 size='small'
                 title='Studienkurs entfernen'
                 onClick={() => openDeleteModal(studyCourse)}
-                className={classes.actionButton}
+                className={cn(classes.actionButton, classes.deleteButton)}
                 disabled={!allowDelete}
             >
                 <DeleteIcon className={classes.leftIcon} />

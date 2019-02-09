@@ -465,28 +465,6 @@
       "studyCourseId": 1,
       "studyRegulationId": 2,
       "semester": 2
-    },
-    {
-      "title": "Testfach 2",
-      "description": "",
-      "type": "fr",
-      "studyCourseId": 2,
-      "studyRegulationId": 1,
-      "semester": 2,
-      "ue": 1,
-      "id": 56,
-      "subjectCourses": []
-    },
-    {
-      "title": "Testfach 1",
-      "description": "",
-      "type": "de",
-      "studyCourseId": 2,
-      "studyRegulationId": 1,
-      "semester": 1,
-      "ue": 1,
-      "id": 60,
-      "subjectCourses": []
     }
   ],
   "subjectCourses": [
@@ -1021,13 +999,6 @@
       "date": "2002-01-01",
       "studyCourseId": 1,
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic eum quas labore."
-    },
-    {
-      "id": 1,
-      "title": "Studienordnung 2012",
-      "date": "2012-10-01",
-      "studyCourseId": 2,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, nam."
     },
     {
       "id": 2,

@@ -11,12 +11,12 @@ import AddIcon from '@material-ui/icons/Add';
 
 import HiddenDivider from '../../components/HiddenDivider';
 import Modal from '../../components/Modal';
-import StudyCourseListItem from './components/StudyCourseListItem';
-import StudyCourseCreate from './components/StudyCourseCreate';
-import StudyCourseUpdate from './components/StudyCourseUpdate';
-import StudyCourseDelete from './components/StudyCourseDelete';
-import StudyRegulationCreate from './components/StudyRegulationCreate';
-import StudyRegulationDelete from './components/StudyRegulationDelete';
+import StudyCourseListItem from './components/studyCourse/StudyCourseListItem';
+import StudyCourseCreate from './components/studyCourse/StudyCourseCreate';
+import StudyCourseUpdate from './components/studyCourse/StudyCourseUpdate';
+import StudyCourseDelete from './components/studyCourse/StudyCourseDelete';
+import StudyRegulationCreate from './components/studyRegulation/StudyRegulationCreate';
+import StudyRegulationDelete from './components/studyRegulation/StudyRegulationDelete';
 import { getStudyCoursesWithRegulations, getStudyFetching } from './redux/studySelectors';
 
 
@@ -121,6 +121,53 @@ class StudyCourseList extends Component {
         const fetching = this.props.fetching;
         return (
             <div>
+                <Typography variant='display1'>Studienkursverwaltung</Typography>
+                <HiddenDivider />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Button
+                        variant='flat'
+                        title='Studienkurs hinzufügen'
+                        onClick={this.openCreateModal}
+                    >
+                        <AddIcon className={classes.leftIcon} />
+                        Hinzufügen
+                    </Button>
+                    <div style={{ marginLeft: 'auto' }}>
+                        Löschen zulassen
+                        <Switch
+                            checked={this.state.allowDelete}
+                            onChange={this.toggleAllowDelete}
+                            color='primary'
+                            disabled={fetching}
+                            classes={{
+                                switchBase: classes.colorSwitchBase,
+                                checked: classes.colorSwitchChecked,
+                                bar: classes.colorSwitchBar,
+                            }}
+                        />
+
+                    </div>
+                </div>
+                <HiddenDivider />
+                {!fetching
+                    ? studyCourses.length
+                        ? (
+                            studyCourses.map(studyCourse => (
+                                <StudyCourseListItem
+                                    studyCourse={studyCourse}
+                                    classes={classes}
+                                    key={studyCourse.id}
+                                    allowDelete={this.state.allowDelete}
+                                    openUpdateModal={this.openUpdateModal}
+                                    openDeleteModal={this.openDeleteModal}
+                                    openCreateStudyRegulationModal={this.openCreateStudyRegulationModal}
+                                    openDeleteStudyRegulationModal={this.openDeleteStudyRegulationModal}
+                                />
+                            ))
+                          )
+                        : 'Keine Studienkurse gefunden.'
+                    : <LinearProgress />
+                }
                 <Modal
                     component={StudyCourseCreate}
                     title='Studienkurs hinzufügen'
@@ -160,48 +207,6 @@ class StudyCourseList extends Component {
                     data={this.state.deleteStudyRegulationModalData}
                     danger
                 />
-                <Typography variant='display1'>Studienkursverwaltung</Typography>
-                <HiddenDivider />
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Button
-                        variant='flat'
-                        title='Studienkurs hinzufügen'
-                        onClick={this.openCreateModal}
-                    >
-                        <AddIcon className={classes.leftIcon} />
-                        Hinzufügen
-                    </Button>
-                    <div style={{ marginLeft: 'auto' }}>
-                        Löschen von Datensätzen zulassen
-                        <Switch
-                            checked={this.state.allowDelete}
-                            onChange={this.toggleAllowDelete}
-                            color='primary'
-                            disabled={fetching}
-                        />
-
-                    </div>
-                </div>
-                <HiddenDivider />
-                {!fetching
-                    ? studyCourses.length
-                        ? (
-                            studyCourses.map(studyCourse => (
-                                <StudyCourseListItem
-                                    studyCourse={studyCourse}
-                                    classes={classes}
-                                    key={studyCourse.id}
-                                    allowDelete={this.state.allowDelete}
-                                    openUpdateModal={this.openUpdateModal}
-                                    openDeleteModal={this.openDeleteModal}
-                                    openCreateStudyRegulationModal={this.openCreateStudyRegulationModal}
-                                    openDeleteStudyRegulationModal={this.openDeleteStudyRegulationModal}
-                                />
-                            ))
-                          )
-                        : 'Keine Studienkurse gefunden.'
-                    : <LinearProgress />
-                }
             </div>
         );
     }
@@ -244,6 +249,21 @@ const styles = (theme) => ({
     preWrap: {
         whiteSpace: 'pre-wrap',
     },
+    deleteButton: {
+        '&:hover': {
+            color: theme.palette.darkred,
+        }
+    },
+    colorSwitchBase: {
+        '&$colorSwitchChecked': {
+            color: theme.palette.darkred,
+            '& + $colorSwitchBar': {
+              backgroundColor: theme.palette.darkred,
+            },
+        },
+    },
+    colorSwitchChecked: {},
+    colorSwitchBar: {},
 });
 
 

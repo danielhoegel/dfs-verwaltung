@@ -79,7 +79,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
             </FieldGroup>
             <HiddenDivider />
             <Button variant='raised' color='primary' type='submit'>Speichern</Button>
-            <Button variant='flat' onClick={onCancel} style={{marginLeft: '1rem'}}>Speichern</Button>
+            <Button variant='flat' onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
         </Fragment>
     );
 };

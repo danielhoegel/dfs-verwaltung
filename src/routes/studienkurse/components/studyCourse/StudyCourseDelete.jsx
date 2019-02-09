@@ -6,9 +6,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import HiddenDivider from '../../../components/HiddenDivider';
-import Loader from '../../../components/Loader';
-import entitiesActions from '../../../redux/entitiesActions';
+import HiddenDivider from '../../../../components/HiddenDivider';
+import Loader from '../../../../components/Loader';
+import entitiesActions from '../../../../redux/entitiesActions';
 
 class StudyCourseDelete extends Component {
     state = {
