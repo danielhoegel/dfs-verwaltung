@@ -35,7 +35,6 @@ class StudentenTableToolbar extends Component {
 
     render() {
         const { numSelected, classes } = this.props;
-        console.log({ fetching: this.props.fetching });
         return (
             <Toolbar
                 className={classNames(classes.root, {

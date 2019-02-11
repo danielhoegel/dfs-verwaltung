@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -9,19 +10,24 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
 
 const SubjectCourseListItem = ({
-    subjectCourse: { id, title, type, credits, zpk, participationType },
+    subjectCourse,
     subject,
     allowDelete,
+    openUpdateSubjectCourseModal,
+    openDeleteSubjectCourseModal,
     classes,
 }) => {
+    const { title, type, credits, zpk, participationType } = subjectCourse;
 
     const updateSubjectCourse = () => {
-        window.alert(`Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} bearbeiten`)
+        openUpdateSubjectCourseModal(subjectCourse);
+        // window.alert(`Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} bearbeiten`)
     };
 
     const deleteSubjectCourse = () => {
         if (allowDelete) {
-            window.confirm(`Sind Sie sicher, dass Sie die Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} und alle dazugehörigen Noten löschen möchten?`);
+            openDeleteSubjectCourseModal(subjectCourse);
+            // window.confirm(`Sind Sie sicher, dass Sie die Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} und alle dazugehörigen Noten löschen möchten?`);
         }
     };
 
@@ -47,6 +53,15 @@ const SubjectCourseListItem = ({
             </ListItemSecondaryAction>
         </ListItem>
     )
+}
+
+SubjectCourseListItem.propTypes = { 
+    subjectCourse: PropTypes.object.isRequired,
+    subject: PropTypes.object.isRequired,
+    allowDelete: PropTypes.bool,
+    openUpdateSubjectCourseModal: PropTypes.func.isRequired,
+    openDeleteSubjectCourseModal: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
 }
 
 export default SubjectCourseListItem;

@@ -37,6 +37,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
                     label='Titel'
                     type='text'
                     onChange={change}
+                    required
                 />
                 <FieldSelect
                     name='type'
@@ -44,6 +45,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
                     label='Typ'
                     options={[ 'Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM' ]}
                     onChange={change}
+                    required
                 />
                 <SearchSelect
                     name='subjectId'
@@ -53,6 +55,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
                     options={__subjectOptions}
                     style={{margin: '8px'}}
                     noClearIcon
+                    required
                 /> 
             </FieldGroup>
             <FieldGroup>
@@ -62,6 +65,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
                     label='Credits'
                     type='number'
                     onChange={change}
+                    required
                 />
                 <FieldSelect
                     name='participationType'
@@ -69,6 +73,7 @@ const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
                     label='Teilnahmeart'
                     options={[ 'Note', 'Teilnahme', 'Notenbgeleitend' ]}
                     onChange={change}
+                    required
                 />
                 <FieldCheckbox
                     name='zpk'

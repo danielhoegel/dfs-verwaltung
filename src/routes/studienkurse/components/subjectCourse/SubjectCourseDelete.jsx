@@ -18,7 +18,7 @@ class SubjectCourseDelete extends Component {
 
     deleteHandler = () => {
         this.setState({ loading: true, error: null });
-        this.props.deleteSubject(this.props.data)
+        this.props.deleteSubjectCourse(this.props.data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err.message }));
     } 
@@ -30,7 +30,7 @@ class SubjectCourseDelete extends Component {
             <div>
                 <Loader loading={loading} />
                 <Typography>
-                    Sind Sie sicher, dass sie das Fach <strong>{data.title}</strong> löschen möchten?
+                    Sind Sie sicher, dass sie die Veranstaltung <strong>{data.title}</strong> löschen möchten?
                 </Typography>
                 <HiddenDivider height={2} />
                 <Button variant='raised' onClick={this.deleteHandler} className={classes.deleteButton}>
@@ -61,11 +61,11 @@ const styles = theme => ({
 })
 
 const mapDispatchToProps = {
-    deleteSubject: entitiesActions.subject.delete
+    deleteSubjectCourse: entitiesActions.subjectCourse.delete
 };
 
 SubjectCourseDelete.propTypes = {
-    deleteSubject: PropTypes.func.isRequired,
+    deleteSubjectCourse: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
     closeModal: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,

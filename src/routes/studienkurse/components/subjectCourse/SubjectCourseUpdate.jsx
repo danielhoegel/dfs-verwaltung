@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getStudyCourses, getStudyRegulations } from '../../../../redux/entitiesSelector';
-import SubjectFields from '../../../../components/fields/SubjectFields';
+import { getSubjects } from '../../../../redux/entitiesSelector';
+import SubjectCourseFields from '../../../../components/fields/SubjectCourseFields';
 import MyForm from '../../../../components/MyForm';
 import entitiesActions from '../../../../redux/entitiesActions';
 
@@ -13,22 +13,22 @@ class SubjectCourseUpdate extends Component {
 
     submitHandler = (data) => {
         this.setState({ loading: true, error: null });
-        this.props.updateSubject(data)
+        this.props.updateSubjectCourse(data)
             .then(this.props.closeModal)
-            .catch(err => this.setState({ loading: false, error: err }));
+            .catch(err => this.setState({ loading: false, error: err.message }));
     }
 
     render() {
         return (
             <div>
                 <MyForm
-                    fields={SubjectFields}
+                    fields={SubjectCourseFields}
                     onSubmit={this.submitHandler}
                     onCancel={this.props.closeModal}
                     defaultValues={this.props.data}
                     loading={this.state.loading}
-                    studyCourses={this.props.studyCourses}
-                    studyRegulations={this.props.studyRegulations}
+                    subjects={this.props.subjects}
+                    error={this.state.error}
                 />
             </div>
         );
@@ -36,18 +36,16 @@ class SubjectCourseUpdate extends Component {
 };
 
 const mapStateToProps = state => ({
-    studyCourses: getStudyCourses(state),
-    studyRegulations: getStudyRegulations(state),
-})
+    subjects: getSubjects(state),
+});
 
 const mapDispatchToProps = {
-    updateSubject: entitiesActions.subject.update
+    updateSubjectCourse: entitiesActions.subjectCourse.update
 };
 
 SubjectCourseUpdate.propTypes = {
-    studyCourses: PropTypes.array.isRequired,
-    studyRegulations: PropTypes.array.isRequired,
-    updateSubject: PropTypes.func.isRequired,
+    subjects: PropTypes.array.isRequired,
+    updateSubjectCourse: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
 }

@@ -16,16 +16,18 @@ import Expandable from '../../../../components/Expandable';
 import SubjectCourseListItem from '../subjectCourse/SubjectCourseListItem';
 
 
-class Subject extends Component {
+class SubjectListItem extends Component {
     shouldComponentUpdate(nextProps) {
-        return (
+        const update = (
             (nextProps.subject !== this.props.subject) ||
             (nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length) ||
             (nextProps.expanded !== this.props.expanded) ||
             (nextProps.expanded && (
                 nextProps.allowDelete !== this.props.allowDelete
-            ))
+                ))
         );
+        console.log('SHOULD', update, {nextProps, props: this.props, lengths: nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length});
+        return update;
     }
 
     toggleExpanded = () => {
@@ -44,6 +46,24 @@ class Subject extends Component {
         this.props.openCreateSubjectCourseModal(this.props.subject);
     }
 
+    renderSubjectCourses() {
+        const { subjectCourses } = this.props.subject;
+        console.log('renderSubjectCourses', subjectCourses.length);
+        if (isNotEmpty(subjectCourses)) {
+            return subjectCourses.map(subjectCourse => (
+                <SubjectCourseListItem
+                    key={subjectCourse.id}
+                    subjectCourse={subjectCourse}
+                    classes={this.props.classes}
+                    allowDelete={this.props.allowDelete}
+                    subject={this.props.subject}
+                    openUpdateSubjectCourseModal={this.props.openUpdateSubjectCourseModal}
+                    openDeleteSubjectCourseModal={this.props.openDeleteSubjectCourseModal}
+                />
+            ))
+        }
+    }
+
     render() {
         const { subject, classes } = this.props;
         return (
@@ -59,17 +79,7 @@ class Subject extends Component {
                 >
                     {subject.type.toUpperCase()}, {subject.semester}. Semester, UE {subject.ue}
                     <List>
-                        {isNotEmpty(subject.subjectCourses) && subject.subjectCourses.map(subjectCourse => (
-                            <SubjectCourseListItem
-                                key={subjectCourse.id}
-                                subjectCourse={subjectCourse}
-                                classes={classes}
-                                allowDelete={this.props.allowDelete}
-                                subject={subject}
-                                openUpdateSubjectCourseModal={this.props.openUpdateSubjectCourseModal}
-                                openDeleteSubjectCourseModal={this.props.openDeleteSubjectCourseModal}
-                            />
-                        ))}
+                        {this.renderSubjectCourses()}
                     </List>
                     <div className={classes.subjectActions}>
                         <Button
@@ -110,7 +120,7 @@ class Subject extends Component {
     }
 }
 
-Subject.propTypes = {
+SubjectListItem.propTypes = {
     openUpdateSubjectModal: PropTypes.func.isRequired,
     openDeleteSubjectModal: PropTypes.func.isRequired,
     openCreateSubjectCourseModal: PropTypes.func.isRequired,
@@ -124,4 +134,4 @@ Subject.propTypes = {
     rootRef: PropTypes.func.isRequired,
 }
 
-export default Subject;
+export default SubjectListItem;

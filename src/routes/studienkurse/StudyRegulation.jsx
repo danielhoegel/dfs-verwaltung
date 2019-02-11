@@ -223,10 +223,10 @@ class StudyRegulation extends Component {
         });
     }
 
-    openUpdateSubjectCourseModal = (subject) => {
+    openUpdateSubjectCourseModal = (subjectCourse) => {
         this.setState({
             updateSubjectCourseModalOpen: true,
-            updateSubjectCourseModalData: subject
+            updateSubjectCourseModalData: subjectCourse
         });
     }
 
@@ -237,11 +237,11 @@ class StudyRegulation extends Component {
         });
     }
 
-    openDeleteSubjectCourseModal = (subject) => {
+    openDeleteSubjectCourseModal = (subjectCourse) => {
         if (this.state.allowDelete) {
             this.setState({
                 deleteSubjectCourseModalOpen: true,
-                deleteSubjectCourseModalData: subject
+                deleteSubjectCourseModalData: subjectCourse
             });
         }
     }

@@ -39,8 +39,6 @@ export function getFilteredStudenten(state) {
     const studenten = getStudenten(state);
     const { filter, searchString } = getStudentenData(state);
 
-    console.log(studenten);
-
     return studenten.filter(student => {
         if (isNotEmpty(student.studies)) {
             const studyMatch = student.studies.some(study => {
