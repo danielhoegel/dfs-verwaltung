@@ -45,7 +45,7 @@ class StudentenRow extends Component {
                 <TableCell onClick={this.goToDetails}>{student.lastName}</TableCell>
                 <TableCell onClick={this.goToDetails}>
                     {student.studies && student.studies.map(study => (
-                        <div key={`${study.studentId}_${study.studyCourseId}}`}>
+                        <div key={`${study.id}`}>
                             {translateStudienkurse(study.studyCourseId)}{' '}
                             {study.year}{' '}
                             ({translateStudyStatus(study.status)})
