@@ -53,9 +53,11 @@ const SubjectFields = ({
         change(e);
 
         // set latest studyRegulation for studyCourse 
-        const studyCourseId = studyRegulations
+        const results = studyRegulations
             .filter(({ studyCourseId }) => studyCourseId === e.target.value)
-            .sort((a, b) => new Date(b.date) - new Date(a.date))[0].id;
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const studyCourseId = results.length > 0 ? results[0].id : '';
 
         const fakeEvent = { target: {
             name: 'studyRegulationId',

@@ -86,6 +86,7 @@ function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
                 return asArray
                     ? replaceAllItemsAsArray(action.data, key)
                     : replaceAllItems(action.data, key);
+            case `FETCH_${typeSingular}_SUCCESS`:
             case `CREATE_${typeSingular}_SUCCESS`:
             case `UPDATE_${typeSingular}_SUCCESS`:
                 return asArray

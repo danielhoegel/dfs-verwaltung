@@ -42,7 +42,7 @@ export function getFilteredStudenten(state) {
     return studenten.filter(student => {
         if (isNotEmpty(student.studies)) {
             const studyMatch = student.studies.some(study => {
-                if (filter.year && filter.year !== study.year ) {
+                if (filter.year.length && !filter.year.includes(study.year) ) {
                     return false;
                 }
                 if (isNotEmpty(filter.studyCourse) && filter.studyCourse !== study.studyCourseId) {

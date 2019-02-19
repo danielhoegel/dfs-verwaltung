@@ -13,6 +13,10 @@ const Loader = ({ loading, strength, classes }) => {
         ) : null
 }
 
+Loader.defaultProps = {
+    loading: true
+};
+
 const styles = {
     loader: {
         zIndex: 1,

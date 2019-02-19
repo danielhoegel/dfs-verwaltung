@@ -1,3 +1,5 @@
+import { getLastYears } from '../../../helper/helper';
+
 const defaultState = {
     list: [],
     fetching: false,
@@ -5,7 +7,7 @@ const defaultState = {
     filter: {
         studyCourse: 1,
         status: 1,
-        year: ''
+        year: getLastYears(4)
     },
     searchString: '',
 };
@@ -81,7 +83,7 @@ const studentenReducer = (state = defaultState, action) => {
             filter: {
                 studyCourse: '',
                 status: '',
-                year: ''
+                year: []
             },
         }
 

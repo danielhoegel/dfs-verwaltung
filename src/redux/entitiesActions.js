@@ -22,9 +22,23 @@ const asyncAction = action => dispatch => new Promise(
 const entitiesActions = {};
 
 for (let i = 0; i < entities.length; i++) {
-    const { singular, plural, typeSingular } = entities[i];
+    const { singular, plural, typeSingular, typePlural } = entities[i];
     
     entitiesActions[singular] = {
+        fetch: id => asyncAction({
+            type: `FETCH_${typeSingular}`,
+            request: {
+                url: `/${plural}/${id}`,
+                method: 'get',
+            }
+        }),
+        fetchAll: () => asyncAction({
+            type: `FETCH_${typePlural}`,
+            request: {
+                url: `/${plural}`,
+                method: 'get'
+            }
+        }),
         create: data => asyncAction({
             type: `CREATE_${typeSingular}`,
             request: {

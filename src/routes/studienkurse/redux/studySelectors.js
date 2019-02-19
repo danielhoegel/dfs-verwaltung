@@ -4,8 +4,9 @@ import {
     getSubjectsByStudyRegulationId,
     getSubjectCoursesBySubjectId,
     getStudyRegulationByIds,
-    getStudyCoursById
-} from '../../../redux/entitiesSelector';
+    getStudyRegulationById,
+    getStudyCourseById,
+} from  '../../../redux/entitiesSelector';
 
 function getStudyData(state) {
     return state.study;
@@ -24,7 +25,13 @@ export function getStudyCoursesWithRegulations(state) {
 
 export function getStudyRegulationWithStudyCourse(state, studyCourseId, studyRegulationId) {
     const studyRegulation = getStudyRegulationByIds(state, studyCourseId, studyRegulationId);
-    studyRegulation.studyCourse = getStudyCoursById(state, studyRegulation.studyCourseId);
+    studyRegulation.studyCourse = getStudyCourseById(state, studyRegulation.studyCourseId);
+    return studyRegulation;
+}
+
+export function getStudyRegulationByIdWithStudyCourse(state, studyRegulationId) {
+    const studyRegulation = getStudyRegulationById(state, studyRegulationId);
+    studyRegulation.studyCourse = getStudyCourseById(state, studyRegulation.studyCourseId);
     return studyRegulation;
 }
 

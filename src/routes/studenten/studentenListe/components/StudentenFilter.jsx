@@ -6,6 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -28,25 +30,108 @@ const selectFilterStyles = theme => ({
     }
 });
 
-const SelectFilter = withStyles(selectFilterStyles)(props => (
-    <FormControl className={props.classes.formControl}>
-        <InputLabel shrink htmlFor={props.name}>
-            {props.label}
+const SelectFilter = withStyles(selectFilterStyles)(({
+    classes,
+    name,
+    label,
+    onChange,
+    value,
+    defaultLabel,
+    options,
+}) => (
+    <FormControl className={classes.formControl}>
+        <InputLabel shrink htmlFor={name}>
+            {label}
         </InputLabel>
         <Select
-            onChange={props.onChange}
-            value={props.value}
-            name={props.name}
-            inputProps={{ name: props.name, id: props.name }}
+            onChange={onChange}
+            value={value}
+            name={name}
+            inputProps={{ name: name, id: name }}
             displayEmpty
         >
-            <MenuItem value='' className={props.classes.denseItem}>
-                <em>{props.defaultLabel ? props.defaultLabel : `Alle ${props.label}`}</em>
+            <MenuItem value='' className={classes.denseItem}>
+                <em>{defaultLabel ? defaultLabel : `Alle ${label}`}</em>
             </MenuItem>
             <Divider />
-            {props.options.map(option =>
+            {options.map(option =>
                 <MenuItem key={option.value} value={option.value} >
                     {option.label}
+                </MenuItem>
+            )}
+        </Select>
+    </FormControl>
+));
+
+
+function multipleRenderValue(selected) {
+    if (selected.every(item => !isNaN(item))) {
+        const sorted = selected.sort((a, b) => Number(a) - Number(b));
+        let res;
+        for (let i = 0; i < sorted.length; i++) {
+            const item = sorted[i];
+            if (i === 0) res = item;
+            else if (Number(item) - 1 === Number(sorted[i - 1])) {
+                if (i < sorted.length - 1) continue;
+                else res += ` - ${item}`;
+            } else {
+                res += (i > 1)
+                    ? ` - ${sorted[i - 1]}, ${item}`
+                    : `, ${item}`; 
+            };
+        }
+        return res;
+    }
+    return selected.join(', ');
+}
+
+
+const multipleSelectFilterStyles = theme => ({
+    ...selectFilterStyles(theme),
+    checkboxItem: {
+        paddingLeft: 0,
+    },
+    menuList: {
+        maxHeight: 40 * theme.spacing.unit
+    }
+});
+
+const MultipleSelectFilter = withStyles(multipleSelectFilterStyles)(({
+    classes,
+    name,
+    label,
+    defaultLabel,
+    onChange,
+    value,
+    options,
+}) => (
+    <FormControl className={classes.formControl}>
+        <InputLabel shrink htmlFor={name}>
+            {label}
+        </InputLabel>
+        {console.log(console.log('MultipleSelectFilter', value))}
+        <Select
+            onChange={onChange}
+            value={value}
+            name={name}
+            inputProps={{ id: name, name }}
+            displayEmpty
+            multiple
+            renderValue={multipleRenderValue}
+            MenuProps={{
+                MenuListProps: {
+                    className: classes.menuList
+                }
+            }}
+        >
+            <MenuItem disabled className={classes.denseItem}>
+                <em>{defaultLabel ? defaultLabel : `${label}`}</em>
+            </MenuItem>
+            <Divider />
+            {options.map(option =>
+                <MenuItem key={option.value} value={option.value} className={classes.checkboxItem}>
+                    <Checkbox checked={value.includes(option.value)} color='primary' />
+                    <ListItemText primary={option.label} />
                 </MenuItem>
             )}
         </Select>
@@ -62,6 +147,7 @@ const StudentenFilter = ({
     resetStudentenFilter,
 }) => {
     const changeHandler = ({ target }) => {
+        console.log('onChange', target);
         filterStudenten(target.name, target.value);
     };
 
@@ -95,7 +181,7 @@ const StudentenFilter = ({
             .sort()
             .reverse()
             .map(year => (
-                { value: year, label: `Jahrgang ${year}` }
+                { value: year, label: `${year}` }
             ));
     };
 
@@ -133,10 +219,9 @@ const StudentenFilter = ({
                 options={studyStatusOptions()}
                 onChange={changeHandler}
             />
-            <SelectFilter
+            <MultipleSelectFilter
                 name='year'
-                label='Jahrgang'
-                defaultLabel='Alle Jahrgänge'
+                label='Jahrgänge'
                 value={filter.year}
                 options={jahrgangOptions()}
                 onChange={changeHandler}
