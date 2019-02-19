@@ -6,10 +6,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import AddIcon from '@material-ui/icons/Add';
 
 import HiddenDivider from '../../components/HiddenDivider';
+import Loader from '../../components/Loader';
 import Modal from '../../components/Modal';
 import StudyCourseListItem from './components/studyCourse/StudyCourseListItem';
 import StudyCourseCreate from './components/studyCourse/StudyCourseCreate';
@@ -17,12 +17,15 @@ import StudyCourseUpdate from './components/studyCourse/StudyCourseUpdate';
 import StudyCourseDelete from './components/studyCourse/StudyCourseDelete';
 import StudyRegulationCreate from './components/studyRegulation/StudyRegulationCreate';
 import StudyRegulationDelete from './components/studyRegulation/StudyRegulationDelete';
-import { getStudyCoursesWithRegulations, getStudyFetching } from './redux/studySelectors';
+import { getStudyCoursesWithRegulations } from './redux/studySelectors';
+import entitiesActions from '../../redux/entitiesActions';
 
 
 
 class StudyCourseList extends Component {
     state = {
+        loading: true,
+        error: null,
         allowDelete: false,
         createModalOpen: false,
         updateModalOpen: false,
@@ -33,6 +36,20 @@ class StudyCourseList extends Component {
         createStudyRegulationModalData: null,
         deleteStudyRegulationModalOpen: false,
         deleteStudyRegulationModalData: null,
+    }
+
+    
+    componentDidMount() {
+        this.loadData();
+    }
+    
+    loadData = () => {
+        Promise.all([
+            this.props.fetchStudies(),
+            this.props.fetchStudyRegulations()
+        ])
+        .then(this.setState({ loading: false, error: null }))
+        .catch(err => this.setState({ loading: false, error: err.message }));
     }
 
     openCreateModal = () => {
@@ -111,14 +128,9 @@ class StudyCourseList extends Component {
             allowDelete: !state.allowDelete
         }));
     }
-
-    submitHandler = (e, data) => {
-        console.log(data);
-    }
     
     render() {
         const { studyCourses, classes } = this.props;
-        const fetching = this.props.fetching;
         return (
             <div>
                 <Typography variant='display1'>Studienkursverwaltung</Typography>
@@ -138,7 +150,7 @@ class StudyCourseList extends Component {
                             checked={this.state.allowDelete}
                             onChange={this.toggleAllowDelete}
                             color='primary'
-                            disabled={fetching}
+                            disabled={this.state.loading}
                             classes={{
                                 switchBase: classes.colorSwitchBase,
                                 checked: classes.colorSwitchChecked,
@@ -149,25 +161,24 @@ class StudyCourseList extends Component {
                     </div>
                 </div>
                 <HiddenDivider />
-                {!fetching
-                    ? studyCourses.length
-                        ? (
-                            studyCourses.map(studyCourse => (
-                                <StudyCourseListItem
-                                    studyCourse={studyCourse}
-                                    classes={classes}
-                                    key={studyCourse.id}
-                                    allowDelete={this.state.allowDelete}
-                                    openUpdateModal={this.openUpdateModal}
-                                    openDeleteModal={this.openDeleteModal}
-                                    openCreateStudyRegulationModal={this.openCreateStudyRegulationModal}
-                                    openDeleteStudyRegulationModal={this.openDeleteStudyRegulationModal}
-                                />
-                            ))
-                          )
+                <div className={classes.listWrapper}>
+                    <Loader loading={this.state.loading} />
+                    {studyCourses.length
+                        ? studyCourses.map(studyCourse => (
+                            <StudyCourseListItem
+                                studyCourse={studyCourse}
+                                classes={classes}
+                                key={studyCourse.id}
+                                allowDelete={this.state.allowDelete}
+                                openUpdateModal={this.openUpdateModal}
+                                openDeleteModal={this.openDeleteModal}
+                                openCreateStudyRegulationModal={this.openCreateStudyRegulationModal}
+                                openDeleteStudyRegulationModal={this.openDeleteStudyRegulationModal}
+                            />
+                          ))
                         : 'Keine Studienkurse gefunden.'
-                    : <LinearProgress />
-                }
+                    }
+                </div>
                 <Modal
                     component={StudyCourseCreate}
                     title='Studienkurs hinzufügen'
@@ -269,14 +280,19 @@ const styles = (theme) => ({
 
 StudyCourseList.propTypes = {
     studyCourses: PropTypes.array.isRequired,
-    fetching: PropTypes.bool,
-}
+    fetchStudies: PropTypes.func.isRequired,
+    fetchStudyRegulations: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
     studyCourses: getStudyCoursesWithRegulations(state),
-    fetching: getStudyFetching(state),
 });
 
-export default connect(mapStateToProps)(
+const mapDispatchToProps = {
+    fetchStudies: entitiesActions.study.fetchAll,
+    fetchStudyRegulations: entitiesActions.studyRegulation.fetchAll,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
     withStyles(styles)(StudyCourseList)
 );

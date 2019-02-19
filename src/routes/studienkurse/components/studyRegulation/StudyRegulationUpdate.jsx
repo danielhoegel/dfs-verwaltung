@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import omit from 'lodash/omit';
 
 import StudyRegulationFields from '../../../../components/fields/StudyRegulationFields';
 import MyForm from '../../../../components/MyForm';
 import { isNotEmpty } from '../../../../helper/helper';
 import entitiesActions from '../../../../redux/entitiesActions';
 
-class StudyCourseCreate extends Component {
+class StudyRegulationUpdate extends Component {
     state = {
         loading: false,
         error: null
     }
 
     submitHandler = (data) => {
-        console.log('CREATE', data);
+        console.log('UPDATE', data);
         this.setState({ loading: true, error: null });
-
-        this.props.updateStudyRegulation(data)
+        this.props.updateStudyRegulation(omit(data, 'subjectCourses'))
+            .then(this.props.fetchAllStudyRegulations)
+            .then(this.props.history.replace(
+                `/studienkurse/${data.studyCourseId}/studienordnung/${data.id}`
+            ))
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));
     } 
@@ -48,7 +53,10 @@ class StudyCourseCreate extends Component {
 };
 
 const mapDispatchToProps = {
-    updateStudyRegulation: entitiesActions.studyRegulation.update
+    updateStudyRegulation: entitiesActions.studyRegulation.update,
+    fetchAllStudyRegulations: entitiesActions.studyRegulation.fetchAll,
 };
 
-export default connect(null, mapDispatchToProps)(StudyCourseCreate);
+export default connect(null, mapDispatchToProps)(
+    withRouter(StudyRegulationUpdate)
+);

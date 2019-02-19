@@ -890,6 +890,15 @@
       "participationType": "",
       "zpk": false,
       "id": 61
+    },
+    {
+      "title": "Testkurs",
+      "type": "Arbeitsgemeinschaft",
+      "subjectId": 55,
+      "credits": 1,
+      "participationType": "Teilnahme",
+      "zpk": false,
+      "id": 62
     }
   ],
   "grades": [
@@ -1006,6 +1015,13 @@
       "date": "2016-04-01",
       "studyCourseId": 1,
       "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
+    },
+    {
+      "title": "Studienordnung 2012-3",
+      "description": "",
+      "date": "2012-01-01",
+      "studyCourseId": 2,
+      "id": 3
     }
   ],
   "gradingSystems": [

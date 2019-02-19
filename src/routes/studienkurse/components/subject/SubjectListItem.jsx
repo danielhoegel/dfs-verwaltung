@@ -26,7 +26,7 @@ class SubjectListItem extends Component {
                 nextProps.allowDelete !== this.props.allowDelete
                 ))
         );
-        console.log('SHOULD', update, {nextProps, props: this.props, lengths: nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length});
+        // console.log('SHOULD', update, {nextProps, props: this.props, lengths: nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length});
         return update;
     }
 
@@ -48,7 +48,7 @@ class SubjectListItem extends Component {
 
     renderSubjectCourses() {
         const { subjectCourses } = this.props.subject;
-        console.log('renderSubjectCourses', subjectCourses.length);
+        // console.log('renderSubjectCourses', subjectCourses.length);
         if (isNotEmpty(subjectCourses)) {
             return subjectCourses.map(subjectCourse => (
                 <SubjectCourseListItem

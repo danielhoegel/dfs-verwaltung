@@ -2,23 +2,25 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import cn from 'classnames';
+import omit from 'lodash/omit';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import entitiesActions from '../../redux/entitiesActions';
 import { isNotEmpty } from '../../helper/helper';
 import HiddenDivider from '../../components/HiddenDivider';
 import Modal from '../../components/Modal';
+import Loader from '../../components/Loader';
 
-import { getStudyFetching, getSubjectsWithSubjectCourses, getStudyRegulationWithStudyCourse, getStudyCoursesWithRegulations } from './redux/studySelectors';
+import { getSubjectsWithSubjectCourses, getStudyRegulationByIdWithStudyCourse, getStudyCoursesWithRegulations } from './redux/studySelectors';
 import SubjectListItem from './components/subject/SubjectListItem';
 import StudyRegulationUpdate from './components/studyRegulation/StudyRegulationUpdate';
 import StudyRegulationDelete from './components/studyRegulation/StudyRegulationDelete';
@@ -49,6 +51,8 @@ class StudyRegulation extends Component {
     state = {
         expandedSubject: null,
         allowDelete: false,
+        loading: true,
+        error: null,
         
         // StudyRegulation modals
         updateStudyRegulationModalOpen: false,
@@ -75,6 +79,7 @@ class StudyRegulation extends Component {
     subjectRefs = {}
     
     componentDidMount() {
+        this.loadData();
         if (isNotEmpty(this.props.match.params.subjectId)) {
             this.scrollToExpandedSubject();
         }
@@ -87,6 +92,15 @@ class StudyRegulation extends Component {
         ) {
             this.scrollToExpandedSubject();
         }
+    }
+    
+    loadData = () => {
+        Promise.all([
+            this.props.fetchSubjects(),
+            this.props.fetchSubjectCourses()
+        ])
+        .then(this.setState({ loading: false, error: null }))
+        .catch(err => this.setState({ loading: false, error: err.message }));
     }
 
     scrollToExpandedSubject() {
@@ -136,7 +150,7 @@ class StudyRegulation extends Component {
         this.setState({
             updateStudyRegulationModalOpen: true,
             updateStudyRegulationModalData: {
-                studyRegulation: this.props.studyRegulation,
+                studyRegulation: omit(this.props.studyRegulation, ['studyCourse']),
                 studyCourses: this.props.studyCourses
             }
         });
@@ -153,7 +167,7 @@ class StudyRegulation extends Component {
         if (this.state.allowDelete) {
             this.setState({
                 deleteStudyRegulationModalOpen: true,
-                deleteStudyRegulationModalData: this.props.studyRegulation
+                deleteStudyRegulationModalData: omit(this.props.studyRegulation, ['studyCourse'])
             });
         }
     }
@@ -254,7 +268,7 @@ class StudyRegulation extends Component {
     }
     
     render() {
-        const { studyRegulation, subjects, classes, fetching } = this.props;
+        const { studyRegulation, subjects, classes } = this.props;
         return (
             <div>
                 <Typography variant='display1'>
@@ -314,33 +328,34 @@ class StudyRegulation extends Component {
                 <HiddenDivider />
 
                 {/* Subject List */}
-                {!fetching 
-                    ? isNotEmpty(subjects)
+                <div className={classes.listWrapper}>
+                    <Loader />
+                    {subjects.length
                         ? Object.entries(this.groupSubjectsBySemester()).map(([ semester, subjects ]) => (
                             <Fragment key={semester} >
-                            <Typography variant='body2'>{semester}. Semester</Typography>
-                            {subjects.map(subject => (
-                                <SubjectListItem
-                                    key={subject.id}
-                                    subject={subject}
-                                    classes={classes}
-                                    handleChange={this.handleExpansionChange}
-                                    expanded={this.state.expandedSubject === subject.id}
-                                    allowDelete={this.state.allowDelete}
-                                    rootRef={ref => this.refHandler(ref, subject.id)}
-                                    openUpdateSubjectModal={this.openUpdateSubjectModal}
-                                    openDeleteSubjectModal={this.openDeleteSubjectModal}
-                                    openCreateSubjectCourseModal={this.openCreateSubjectCourseModal}
-                                    openUpdateSubjectCourseModal={this.openUpdateSubjectCourseModal}
-                                    openDeleteSubjectCourseModal={this.openDeleteSubjectCourseModal}
-                                />
-                            ))}
-                            <HiddenDivider />
+                                <Typography variant='body2'>{semester}. Semester</Typography>
+                                {subjects.map(subject => (
+                                    <SubjectListItem
+                                        key={subject.id}
+                                        subject={subject}
+                                        classes={classes}
+                                        handleChange={this.handleExpansionChange}
+                                        expanded={this.state.expandedSubject === subject.id}
+                                        allowDelete={this.state.allowDelete}
+                                        rootRef={ref => this.refHandler(ref, subject.id)}
+                                        openUpdateSubjectModal={this.openUpdateSubjectModal}
+                                        openDeleteSubjectModal={this.openDeleteSubjectModal}
+                                        openCreateSubjectCourseModal={this.openCreateSubjectCourseModal}
+                                        openUpdateSubjectCourseModal={this.openUpdateSubjectCourseModal}
+                                        openDeleteSubjectCourseModal={this.openDeleteSubjectCourseModal}
+                                    />
+                                ))}
+                                <HiddenDivider />
                             </Fragment>
-                          ))
+                            ))
                         : 'Keine Fächer gefunden'
-                    : <LinearProgress />
-                }
+                    }
+                </div>
 
                 {/* StudyRegulation Modals */}
                 <Modal
@@ -437,6 +452,9 @@ const styles = theme => ({
     leftIcon: {
         marginRight: theme.spacing.unit
     },
+    listWrapper: {
+        position: 'relative',
+    },
     expandableHeader: {
         fontWeight: 'inherit',
     },
@@ -479,20 +497,24 @@ StudyRegulation.propTypes = {
     studyRegulation: PropTypes.object,
     subjects: PropTypes.array,
     studyCourses: PropTypes.array.isRequired,
-    fetching: PropTypes.bool,
-}
+    fetchSubjects: PropTypes.func.isRequired,
+    fetchSubjectCourses: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state, props) => {
-    const studyCourseId = Number(props.match.params.studyCourseId);
     const studyRegulationId = Number(props.match.params.studyRegulationId);
     return {
-        studyRegulation: getStudyRegulationWithStudyCourse(state, studyCourseId, studyRegulationId),
+        studyRegulation: getStudyRegulationByIdWithStudyCourse(state, studyRegulationId),
         subjects: getSubjectsWithSubjectCourses(state, studyRegulationId),
         studyCourses: getStudyCoursesWithRegulations(state),
-        fetching: getStudyFetching(state),
     }
 };
 
-export default connect(mapStateToProps)(
+const mapDispatchToProps = {
+    fetchSubjects: entitiesActions.subject.fetchAll,
+    fetchSubjectCourses: entitiesActions.subjectCourse.fetchAll,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
     withStyles(styles)(StudyRegulation)
 );
