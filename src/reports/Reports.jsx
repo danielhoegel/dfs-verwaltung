@@ -23,6 +23,8 @@ import ErgebnisseReport from './ergebnisse/ErgebnisseReport';
 import ergebnisseReportStyles from './ergebnisse/ergebnisseReportStyles';
 import juice from 'juice';
 import { printPage } from '../components/Printing';
+import { getFaecherGroupedByTyp, getVeranstaltungenForFach, getNotenForStudentAndVeranstaltung, getPunkteForVeranstaltungAndStudent, getFaecherDataForUEAndSemester } from '../helper/selectors';
+import { getSubjects } from '../redux/entitiesSelector';
 
 
 const StudentenlisteLoading = () => (
@@ -68,7 +70,15 @@ class Reports extends Component {
                     fileName: 'LESB-Liste',
                     orientation: 'portrait',
                     styles: lesbListReportStyles,
-                    html: renderToString(<LESBListReport students={filteredStudenten} filter={filter} />)
+                    html: renderToString(
+                        <LESBListReport
+                            students={filteredStudenten}
+                            filter={filter}
+                            subjects={this.props.subjectsGrouped}
+                            getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
+                            getNotenForStudentAndVeranstaltung={this.props.getNotenForStudentAndVeranstaltung}
+                        />
+                    )
                 });
                 break;
     
@@ -76,7 +86,16 @@ class Reports extends Component {
                     fileName: 'Prüfungsergebnisse',
                     orientation: 'portrait',
                     styles: ergebnisseReportStyles,
-                    html: renderToString(<ErgebnisseReport students={filteredStudenten} filter={filter} />)
+                    html: renderToString(
+                        <ErgebnisseReport
+                            students={filteredStudenten}
+                            filter={filter}
+                            subjects={this.props.subjects}
+                            getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
+                            getPunkteForVeranstaltungAndStudent={this.props.getPunkteForVeranstaltungAndStudent}
+                            getFaecherDataForUEAndSemester={this.props.getFaecherDataForUEAndSemester}
+                        />
+                    )
                 });
                 break;
     
@@ -154,9 +173,15 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => ({
+    getVeranstaltungenForFach: getVeranstaltungenForFach(state),
+    getNotenForStudentAndVeranstaltung: getNotenForStudentAndVeranstaltung(state),
+    getPunkteForVeranstaltungAndStudent: getPunkteForVeranstaltungAndStudent(state),
+    getFaecherDataForUEAndSemester: getFaecherDataForUEAndSemester(state),
     filteredStudenten: getFilteredStudenten(state),
     fetching: getStudentenFetching(state),
-    filter: getStudentenFilter(state)
+    filter: getStudentenFilter(state),
+    subjects: getSubjects(state),
+    subjectsGrouped: getFaecherGroupedByTyp(state),
 });
 
 export default connect(mapStateToProps, { fetchStudenten, dispatch: action => action })(

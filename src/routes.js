@@ -8,15 +8,14 @@ import StudyCourseList from './routes/studienkurse/StudyCourseList';
 import StudyRegulation from './routes/studienkurse/StudyRegulation';
 import Playground from './routes/playground/Playground';
 import Reports from './reports/Reports';
-import Forms from './routes/forms/Forms';
 
-import { getStudentForId } from './routes/studenten/redux/studentenSelectors';
 import EditIcon from '@material-ui/icons/EditOutlined';
+import { getStudentById } from './redux/entitiesSelector';
 
 
 /* Custom Breadcrumbs */
 const StudentBreadcrumb = connect((state, props) => ({
-    student: getStudentForId(state, props.match.params.id)
+    student: getStudentById(state, props.match.params.id)
 }))(props => props.student
     ? `${props.student.firstName} ${props.student.lastName}`
     : props.match.params.id
@@ -37,6 +36,5 @@ export default [
     { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId', component: StudyRegulation, exact: true, breadcrumb: 'Studienordnung' },
     { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/:subjectId', component: StudyRegulation, breadcrumb: null },
     { path: '/playground/:id?', component: Playground, breadcrumb: 'Playground' },
-    { path: '/forms', component: Forms, breadcrumb: 'Formulare'}
 ];
   

@@ -1,57 +1,33 @@
-import studentenData from '../data/studenten';
-import notenData from '../data/grades.json';
-import faecherData from '../data/subjects.json';
-import veranstaltungenData from '../data/subjectCourses.json';
-// import studyRegulationsData from '../data/studyRegulations.json';
-// import studyCoursesData from '../data/studyCourses.json';
+import { getGrades, getSubjectCourses, getSubjects } from '../redux/entitiesSelector';
 
-export const getStudentenData = () => studentenData;
-export const getNotenData = () => notenData;
-export const getFaecherData = () => faecherData;
-export const getVeranstaltungenData = () => veranstaltungenData;
-
-
-/**
- * STUDENTEN
- */
-
-export function getStudentForId(id) {
-    return studentenData.filter(student =>
-        student.id === parseInt(id, 10)
-    )[0];
-}
+export const getNotenData = state => getGrades(state);
+export const getFaecherData = state => getSubjects(state);
+export const getVeranstaltungenData = state => getSubjectCourses(state);
 
 
 /**
  * FÄCHER
  */
 
-export function getFachForVeranstaltung(veranstaltungId) {
-    const veranstaltung = getVeranstaltungForId(veranstaltungId);
-    return getFaecherData().filter(fach =>
-        fach.id === veranstaltung.subjectId
-    )[0];
-}
-
-export function getFaecherDataForUEAndSemester(ue, semester) {
-    return getFaecherData().filter(fach =>
+export const getFaecherDataForUEAndSemester = state => (ue, semester) => {
+    return getFaecherData(state).filter(fach =>
         fach.ue === ue &&
         fach.semester === semester
     );
-}
+};
 
-export function getFaecherGroupedByTyp() {
+export function getFaecherGroupedByTyp(state) {
     const result = {de: [], fr: []};
-    getFaecherData().forEach(fach => {
+    getFaecherData(state).forEach(fach => {
         result[fach.type].push(fach);
     });
     return result;
 }
 
-export function getFaecherForStudyCourseGroupedBySemesterAndTyp(studyCourseId) {
+export function getFaecherForStudyCourseGroupedBySemesterAndTyp(state, studyCourseId) {
     const groupedFaecher = {};
 
-    getFaecherData().forEach(fach => {
+    getFaecherData(state).forEach(fach => {
         if (fach.studyCourseId === studyCourseId) {
             if (groupedFaecher[fach.semester]) {
                 if (groupedFaecher[fach.semester][fach.type]) {
@@ -81,32 +57,32 @@ export function getVeranstaltungForId(veranstaltungId) {
     )[0];
 }
 
-export function getVeranstaltungenForFach(fachId = null) {
-    const veranstaltungen = getVeranstaltungenData();
+export const getVeranstaltungenForFach = state => (fachId = null) => {
+    const veranstaltungen = getVeranstaltungenData(state);
     return veranstaltungen.filter(v => v.subjectId === fachId);
     // return fachId
     //     ? veranstaltungen.filter(v => v.fachID === fachId)
     //     : veranstaltungen;
-}
+};
 
 
 /**
  * NOTEN
  */
 
-export function getNoteForId(noteId) {
-     return getNotenData().filter(note => note.id === noteId)[0];
+export function getNoteForId(state, noteId) {
+     return getNotenData(state).filter(note => note.id === noteId)[0];
  }
 
-export function getNotenForStudentAndVeranstaltung(studentId, veranstaltungId) {
-    return getNotenData().filter(note =>
+export const getNotenForStudentAndVeranstaltung = state => (studentId, veranstaltungId) => {
+    return getNotenData(state).filter(note =>
         note.studentId === studentId &&
         note.subjectCourseId === veranstaltungId
     );
-}
+};
 
-export function getPunkteForVeranstaltungAndStudent(veranstaltungID, studentID) {
-    const noten = getNotenForStudentAndVeranstaltung(studentID, veranstaltungID);
+export const getPunkteForVeranstaltungAndStudent = state => (veranstaltungID, studentID) => {
+    const noten = getNotenForStudentAndVeranstaltung(state)(studentID, veranstaltungID);
     if (noten.length > 1) {
         let lastVersuch = noten[0];
         noten.forEach(note => {
@@ -120,4 +96,4 @@ export function getPunkteForVeranstaltungAndStudent(veranstaltungID, studentID) 
     } else {
         return null;
     }
-}
+};

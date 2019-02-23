@@ -8,6 +8,7 @@ class UEGruppe extends Component {
         ue: PropTypes.number.isRequired,
         student: PropTypes.object.isRequired,
         semester: PropTypes.number.isRequired,
+        getFaecherDataForUEAndSemester: PropTypes.func.isRequired,
     }
 
     render() {

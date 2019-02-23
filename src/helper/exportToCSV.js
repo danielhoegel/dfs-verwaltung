@@ -1,3 +1,5 @@
+import { isNotEmpty } from "./helper";
+
 /**
  * source: https://stackoverflow.com/a/38021207/8936417
  */
@@ -17,22 +19,19 @@ function arrayToCSVRow(dataArray) {
     return dataArray.join(';');
 }
 
-function objectToCSVRow(dataObject) {
-    return arrayToCSVRow(Object.values(dataObject));
-}
-
-
 export default function exportToCSV(arrayOfObjects, fileName = 'Export') {
     if (!arrayOfObjects.length) return;
 
     const csvRows = [];
+    const keys = ['id', 'matrikelnummer', 'firstName', 'lastName', 'prefix', 'birthDate', 'birthPlace', 'birthCountry', 'street', 'streetNumber', 'addressExtra', 'postal', 'city', 'country', 'mailUni', 'mailPrivate', 'phoneNumber', 'mobileNumber'];
 
     // header
-    csvRows.push(arrayToCSVRow(Object.keys(arrayOfObjects[0])));
+    csvRows.push(arrayToCSVRow(keys));
 
     // body
     arrayOfObjects.forEach(item => {
-        csvRows.push(objectToCSVRow(item));
+        const nextRow = keys.map(key => isNotEmpty(item[key]) ? item[key] : '');
+        csvRows.push(arrayToCSVRow(nextRow));
     }); 
 
     downloadCSV(csvRows.join('\n'), fileName);

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import omit from 'lodash/omit';
@@ -15,7 +15,10 @@ class MyForm extends Component {
         fields: PropTypes.func.isRequired, // React Component
         defaultValues: PropTypes.object,
         loading: PropTypes.bool,
-        error: PropTypes.string,
+        error: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array
+        ]),
     }
 
     static defaultProps = {
@@ -86,7 +89,14 @@ class MyForm extends Component {
                     disabled={loading}
                     {...formProps}
                 />
-                {error && <Typography className={classes.error}>{error}</Typography>}
+                {error &&
+                    <Typography className={classes.error}>
+                        {typeof error === 'string'
+                            ? error
+                            : error.map((err, i) => <Fragment key={i}>{err}<br /></Fragment>)
+                        }
+                    </Typography>
+                }
             </form>
         );
     }

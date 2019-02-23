@@ -1,4 +1,5 @@
 import { isNotEmpty } from "../../../helper/helper";
+import { getFullStudents } from "../../../redux/entitiesSelector";
 
 /* Base Selector */
 export function getStudentenData(state) {
@@ -7,36 +8,20 @@ export function getStudentenData(state) {
 
 
 /* Pure State */
-export function getStudenten(state) {
-    return state.entities.students
-        ? Object.values(state.entities.students).map(student => ({
-            ...student,
-            studentInformation: state.entities.studentInformations[student.id] || {}, 
-            studies: state.entities.studies[student.id] || []
-          }))
-        : [];
-}
-
 
 export function getStudentenFetching(state) {
-    // return state.studenten.fetching;
     return state.entities.meta.fetching;
 }
 
 export function getStudentenFilter(state) {
-    return state.studenten.filter;
+    return getStudentenData(state).filter;
 }
 
 
 /* Derived State */
 
-export function getStudentForId(state, id) {
-    const studenten = getStudenten(state);
-    return studenten ? studenten[id] : null;
-}
-
 export function getFilteredStudenten(state) {
-    const studenten = getStudenten(state);
+    const studenten = getFullStudents(state);
     const { filter, searchString } = getStudentenData(state);
 
     return studenten.filter(student => {

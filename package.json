@@ -10,8 +10,8 @@
     "_server": "node server/server.js",
     "server": "json-server --watch server/db.json --port 3333 --snapshots server/snapshots",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server\"",
-    "static-server": "serve -s build -l 3303",
-    "production": "concurrently --kill-others \"npm run static-server\" \"npm run server\""
+    "static-server": "start http://localhost:3303 && serve -s build -l 3303",
+    "production": "concurrently --kill-others \"npm run server\" \"npm run static-server\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.3.1",

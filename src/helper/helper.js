@@ -22,6 +22,11 @@ export function isNotEmpty(value) {
     return !isEmpty(value);
 }
 
+export function isDate(dateString) {
+    const pattern = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/; // YYYY-MM-DD
+    return typeof dateString === 'string' && dateString.match(pattern);
+}
+
 export function formatDate(date, type = 'de') {
     const dateObject = new Date(date);
     switch (type) {

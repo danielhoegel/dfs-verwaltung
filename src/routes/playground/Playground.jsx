@@ -4,6 +4,9 @@ import Typography from '@material-ui/core/Typography';
 import HiddenDivider from '../../components/HiddenDivider';
 import SearchSelectOld from '../../components/SearchSelect';
 import SearchSelect from './SearchSelect';
+import Divider from '../../components/Divider';
+import GradeCreate from '../studenten/studentenDetails/components/GradeCreate';
+import { Paper } from '@material-ui/core';
 // import { generateLaenderOptions } from '../../helper/helper';
 
 
@@ -63,6 +66,17 @@ class Playground extends Component {
             <div>
                 <Typography variant='display1'>Playground</Typography>
                 <HiddenDivider height={2} />
+                <Paper style={{ padding: '1.5rem', maxWidth: '800px' }}>
+                    <GradeCreate
+                        closeModal={() => console.log('close')}
+                        data={{
+                            studentId: 0,
+                            studyId: 13,
+                            subjectCourseId: 0
+                        }}
+                    />
+                </Paper>
+                <Divider height='8rem' />
                 <SearchSelectOld
                     name='countries'
                     value={this.state.countries}

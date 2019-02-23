@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { getNotenForStudentAndVeranstaltung } from '../../../helper/selectors';
-
 class LESBListeFach extends Component {
     static propTypes = {
         fach: PropTypes.object.isRequired,
@@ -12,7 +10,7 @@ class LESBListeFach extends Component {
 
     render() {
         const { student, fach, veranstaltung } = this.props;
-        const noten = getNotenForStudentAndVeranstaltung(student.id, veranstaltung.id);
+        const noten = this.props.getNotenForStudentAndVeranstaltung(student.id, veranstaltung.id);
 
         if (noten.length > 0) {
             return (

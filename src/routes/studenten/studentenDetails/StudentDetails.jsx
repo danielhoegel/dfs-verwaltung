@@ -14,12 +14,12 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { fetchStudentForId } from '../redux/studentenActions';
-import { getStudentForId } from '../redux/studentenSelectors';
+import { getFullStudent } from '../../../redux/entitiesSelector';
 
 import { translateStudienkurse, translateStudyStatus, isNotEmpty } from '../../../helper/helper';
 import FaecherGrouped from './components/FaecherGrouped';
 import StudentInformation from './components/StudentInformation';
-import CreateNote from './components/CreateNote';
+import GradeCreate from './components/GradeCreate';
 import Modal from '../../../components/Modal';
 import Divider from '../../../components/Divider';
 // import Placeholder from '../../components/placeholder/Placeholder';
@@ -56,10 +56,10 @@ class StudentDetails extends Component {
 
     state = {
         studentId: Number(this.props.match.params.id),
-        noteModalOpen: false,
+        gradeCreateModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
-        noteModalData: null,
+        gradeCreateModalData: null,
         tab: 0
     }
 
@@ -94,16 +94,17 @@ class StudentDetails extends Component {
     }
 
     openNoteModal = (data) => {
+        console.log('openNoteModal', data);
         this.setState({
-            noteModalOpen: true,
-            noteModalData: data
+            gradeCreateModalOpen: true,
+            gradeCreateModalData: data
         });
     }
 
-    closeNoteModal = () => {
+    closeGradeCreateModal = () => {
         this.setState({
-            noteModalOpen: false,
-            noteModalData: null
+            gradeCreateModalOpen: false,
+            gradeCreateModalData: null
         });
     }
 
@@ -200,11 +201,11 @@ class StudentDetails extends Component {
                 )}
                 
                 <Modal
-                    component={CreateNote}
+                    component={GradeCreate}
                     title='Note hinzufügen'
-                    close={this.closeNoteModal}
-                    open={this.state.noteModalOpen}
-                    data={this.state.noteModalData}
+                    close={this.closeGradeCreateModal}
+                    open={this.state.gradeCreateModalOpen}
+                    data={this.state.gradeCreateModalData}
                     preventClosing
                 />
             </Fragment>
@@ -241,7 +242,7 @@ const styles = theme => ({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    student: getStudentForId(state, ownProps.match.params.id)
+    student: getFullStudent(state, ownProps.match.params.id)
 });
 
 export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(

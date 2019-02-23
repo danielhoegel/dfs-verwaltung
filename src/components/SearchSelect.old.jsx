@@ -31,17 +31,8 @@ class SearchSelect extends Component {
                 matchingOptions: nextProps.options
             }
         }
-        if (nextProps.value === '') {
-            return {
-                inputValue: '',
-                activeIndex: 0,
-                matchingOptions: nextProps.options,
-                _value: nextProps.value,
-                _options: nextProps.options
-            }
-        }
         if (
-            (nextProps.value !== prevState._value) ||
+            nextProps.value !== prevState._value ||
             (nextProps.options && prevState._options &&
                 nextProps.options.length !== prevState._options.length
             )
@@ -296,7 +287,6 @@ class SearchSelect extends Component {
         // console.log('menuIsVisible', { hasFocus, options: this.props.options, matchingOptions });
         return (
             hasFocus &&
-            !this.props.disabled &&
             isNotEmpty(this.props.options) && (
                 matchingOptions.length > 1 || (
                     matchingOptions.length === 1 &&
@@ -371,8 +361,6 @@ class SearchSelect extends Component {
                 tabIndex={-1}
                 className={cn(classes.formControl, this.props.className)}
                 style={this.props.style}
-                disabled={this.props.disabled}
-                required={this.props.required}
             >
                 {this.props.label && (
                     <InputLabel htmlFor={`searchSelect__${this.props.name}__input`}>
@@ -470,8 +458,6 @@ SearchSelect.propTypes = {
         ]),
         searchValues: PropTypes.array,
     })),
-    disabled: PropTypes.bool,
-    required: PropTypes.bool,
     className: PropTypes.string,
     style: PropTypes.object,
     noClearIcon: PropTypes.bool,

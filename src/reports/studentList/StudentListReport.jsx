@@ -30,11 +30,11 @@ function StudentListReport ({ students, filter: { studyCourse, year, status } })
                             <td>{student.matrikelnummer}</td>
                             <td>{student.firstName}</td>
                             <td>{student.lastName}</td>
-                            <td>{student.studentInformations[0].birthDate}</td>
-                            <td>{student.studentInformations[0].mailUni}</td>
-                            <td>{student.studentInformations[0].mailPrivate}</td>
-                            <td>{student.studentInformations[0].phoneNumber}</td>
-                            <td>{student.studentInformations[0].mobileNumber}</td>
+                            <td>{student.studentInformation.birthDate}</td>
+                            <td>{student.studentInformation.mailUni}</td>
+                            <td>{student.studentInformation.mailPrivate}</td>
+                            <td>{student.studentInformation.phoneNumber}</td>
+                            <td>{student.studentInformation.mobileNumber}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -32,6 +32,14 @@ for (let i = 0; i < entities.length; i++) {
                 method: 'get',
             }
         }),
+        fetchByKey: key => value => asyncAction({
+            type: `FETCH_${typeSingular}_BY_KEY`,
+            request: {
+                url: `/${plural}?${key}=${value}`,
+                method: 'get',
+            },
+            key
+        }),
         fetchAll: () => asyncAction({
             type: `FETCH_${typePlural}`,
             request: {
@@ -67,3 +75,11 @@ for (let i = 0; i < entities.length; i++) {
 }
 
 export default entitiesActions;
+
+export const fetchAllData = () => asyncAction({
+        type: 'FETCH_ALL_DATA',
+        request: {
+            url: '/db',
+            method: 'get'
+        }
+});

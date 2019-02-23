@@ -66,7 +66,7 @@ const FieldRadioGroup = ({
             <RadioGroup
                 aria-label={label}
                 name={name}
-                value={value}
+                value={value.toString()}
                 onChange={onChange}
                 row={inline}
                 required={required}

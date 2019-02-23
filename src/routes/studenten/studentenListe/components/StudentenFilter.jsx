@@ -13,7 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { getStudenten, getStudentenFilter } from '../../redux/studentenSelectors';
+import { getFullStudents } from '../../../../redux/entitiesSelector';
+import { getStudentenFilter } from '../../redux/studentenSelectors';
 import { filterStudenten, resetStudentenFilter } from '../../redux/studentenActions';
 import { translateStudienkurse, translateStudyStatus } from '../../../../helper/helper';
 
@@ -252,7 +253,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => ({
-    studenten: getStudenten(state),
+    studenten: getFullStudents(state),
     filter: getStudentenFilter(state)
 });
 

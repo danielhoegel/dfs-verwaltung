@@ -329,7 +329,7 @@ class StudyRegulation extends Component {
 
                 {/* Subject List */}
                 <div className={classes.listWrapper}>
-                    <Loader />
+                    <Loader loading={this.state.loading} />
                     {subjects.length
                         ? Object.entries(this.groupSubjectsBySemester()).map(([ semester, subjects ]) => (
                             <Fragment key={semester} >

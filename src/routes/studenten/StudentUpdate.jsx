@@ -12,13 +12,14 @@ import HiddenDivider from '../../components/HiddenDivider';
 import MyForm from '../../components/MyForm';
 import StudentFields from '../../components/fields/StudentFields';
 
-import { getStudentForId, getStudentenFetching } from './redux/studentenSelectors';
-import { getStudyCourses, getStudyRegulations } from '../../redux/entitiesSelector';
+import { getStudentenFetching } from './redux/studentenSelectors';
+import { getStudyCourses, getStudyRegulations, getFullStudent } from '../../redux/entitiesSelector';
 import entitiesActions from '../../redux/entitiesActions';
 
 class StudentUpdate extends Component {
 
     state = {
+        fetching: false,
         updating: false,
         error: null
     }
@@ -26,12 +27,20 @@ class StudentUpdate extends Component {
     componentDidMount() {
         // fetch student data if not already available
         if (isEmpty(this.props.student)) {
-            this.props.dispatch({
-                type: 'FETCH_STUDENT',
-                request: {
-                    url: `/students/${this.props.match.params.id}?_embed=studies&_embed=studentInformations`
-                }
-            });
+            this.setState({ error: null, fetching: true });
+            Promise.all([
+                this.props.fetchStudent(this.props.match.params.id),
+                this.props.fetchStudentInformationByStudentId(this.props.match.params.id),
+            ])
+            .then(() => this.setState({ error: null, fetching: false }))
+            .catch(err => this.setState({ error: err.message, fetching: false }));
+
+            // this.props.dispatch({
+            //     type: 'FETCH_STUDENT',
+            //     request: {
+            //         url: `/students/${this.props.match.params.id}?_embed=studies&_embed=studentInformations`
+            //     }
+            // });
         }
     }
     
@@ -127,13 +136,15 @@ const styles = theme => ({
 });
 
 const mapStateToProps = (state, ownProps) => ({
-    student: getStudentForId(state, ownProps.match.params.id),
+    student: getFullStudent(state, ownProps.match.params.id),
     fetching: getStudentenFetching(state),
     studyCourses: getStudyCourses(state),
     studyRegulations: getStudyRegulations(state),
 });
 
 const mapDispatchToProps = {
+    fetchStudent: entitiesActions.student.fetch,
+    fetchStudentInformationByStudentId: entitiesActions.studentInformation.fetchByKey('studentId'),
     updateStudent: entitiesActions.student.update,
     updateStudentInformation: entitiesActions.studentInformation.update,
     deleteStudy: entitiesActions.study.delete,

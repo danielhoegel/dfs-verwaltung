@@ -12,7 +12,12 @@ import HiddenDivider from '../HiddenDivider';
 import SearchSelect from '../SearchSelect';
 
 
-const SubjectCourseFields = ({ change, values, onCancel, subjects }) => {
+const SubjectCourseFields = ({
+    change,
+    values,
+    onCancel,
+    subjects
+}) => {
     function subjectOptions() {
         const options = [];
         if (isNotEmpty(subjects)) {

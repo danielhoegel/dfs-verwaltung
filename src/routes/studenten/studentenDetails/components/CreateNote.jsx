@@ -44,7 +44,7 @@ class NoteCreateUpdate extends Component {
             studentId: this.props.data.studentId,
             subjectCourseId: '',
             subject: '',
-            gradingSystemId: 0
+            gradingSystem: 'de'
         }
     }
 
@@ -190,10 +190,10 @@ class NoteCreateUpdate extends Component {
                     >
                         <Field
                             name='grade'
-                            label={`Punkte (0 - ${this.state.form.gradingSystemId === 0 ? 18 : 20})`}
+                            label={`Punkte (0 - ${this.state.form.gradingSystem === 'de' ? 18 : 20})`}
                             type='number'
                             min={0}
-                            max={this.state.form.gradingSystemId === 'de' ? 18 : 20}
+                            max={this.state.form.gradingSystem === 'de' ? 18 : 20}
                             step={1}
                             value={this.state.form.grade}
                             onChange={this.changeHandler}
@@ -212,9 +212,9 @@ class NoteCreateUpdate extends Component {
                     >
                         <FieldGroup>
                             <FieldRadioGroup
-                                name='gradingSystemId'
+                                name='gradingSystem'
                                 label='Note'
-                                value={this.state.form.gradingSystemId}
+                                value={this.state.form.gradingSystem}
                                 onChange={this.changeHandler}
                                 options={[
                                     { value: 0, label: 'DE' },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,7 +23,6 @@ const FieldSelect = ({ options, disabled, ...fieldProps }) => {
         return (
             <MenuItem disabled>
                 Keine Einträge gefunden :(<br />
-                Bitte laden Sie die Seite neu.
             </MenuItem>
         );
     }
@@ -39,14 +38,16 @@ const FieldSelect = ({ options, disabled, ...fieldProps }) => {
     }
 
     return (
-        <Field
-            select
-            disabled={disabled}
-            title={getTitle()}
-            {...fieldProps}
-        >
-            {generateMenuItems()}
-        </Field>
+        <Fragment>
+            <Field
+                select
+                disabled={disabled}
+                title={getTitle()}
+                {...fieldProps}
+            >
+                {generateMenuItems()}
+            </Field>
+        </Fragment>
     );
 };
 

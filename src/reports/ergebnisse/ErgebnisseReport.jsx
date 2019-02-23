@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
 import UEGruppe from './components/UEGruppe';
-import faecherData from '../../data/subjects.json';
 import { getTodayDate } from '../../helper/helper';
 
 
 class Ergebnisse extends Component {
     state = {
         datum: getTodayDate(),
-        faecher: faecherData
+        faecher: this.props.subjects
     }
 
     semester() {
@@ -27,6 +26,9 @@ class Ergebnisse extends Component {
                 student={student}
                 semester={Number(semester)}
                 key={ue}
+                getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
+                getPunkteForVeranstaltungAndStudent={this.props.getPunkteForVeranstaltungAndStudent}
+                getFaecherDataForUEAndSemester={this.props.getFaecherDataForUEAndSemester}
             />
         ));
     }

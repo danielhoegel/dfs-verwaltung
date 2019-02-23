@@ -114,8 +114,7 @@ class StudentenListe extends Component {
 
     exportPDF = () => {
         const data = this.props.filteredStudenten.map(student => {
-            const { studies, studentInformations, ...studentData } = student;
-            const { studentId, ...studentInformation } = studentInformations[0]
+            const { studies, studentInformation, ...studentData } = student;
             return Object.assign({}, studentData, studentInformation);
         });
         exportToCSV(data);
@@ -154,9 +153,9 @@ class StudentenListe extends Component {
                 <Paper className={classes.tablePaper}>
                     <StudentenTableToolbar
                         numSelected={this.state.selected.length}
+                        numStudents={this.props.filteredStudenten.length}
                         selectedStudents={this.selectedStudents()}
                         fetchStudents={this.fetchStudents}
-                        fetching={this.props.fetching}
                     />
                     <Table>
                         <StudentenTableHead

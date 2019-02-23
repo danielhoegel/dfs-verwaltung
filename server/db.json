@@ -197,14 +197,6 @@
   ],
   "studies": [
     {
-      "id": 0,
-      "studentId": 0,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "year": 2015,
-      "status": 1
-    },
-    {
       "id": 1,
       "studentId": 1,
       "studyCourseId": 1,
@@ -225,8 +217,8 @@
       "studentId": 3,
       "studyCourseId": 1,
       "studyRegulationId": 2,
-      "year": 2016,
-      "status": 1
+      "year": 2015,
+      "status": 2
     },
     {
       "id": 4,
@@ -269,20 +261,12 @@
       "id": 10
     },
     {
-      "studentId": 0,
+      "year": 2019,
       "studyCourseId": 1,
       "studyRegulationId": 2,
-      "year": 2015,
       "status": 2,
-      "id": 11
-    },
-    {
-      "year": 2019,
-      "studyCourseId": 2,
-      "studyRegulationId": 2,
-      "status": 1,
       "studentId": 0,
-      "id": 12
+      "id": 11
     }
   ],
   "subjects": [
@@ -845,60 +829,6 @@
       "credits": 2,
       "zpk": false,
       "participationType": "Note"
-    },
-    {
-      "title": "Hallo",
-      "type": "Vorlesung",
-      "subjectId": 56,
-      "credits": 2,
-      "participationType": "Note",
-      "zpk": false,
-      "id": 57
-    },
-    {
-      "title": "World",
-      "type": "Vorlesung",
-      "subjectId": 56,
-      "credits": 3,
-      "participationType": "Notenbgeleitend",
-      "zpk": false,
-      "id": 58
-    },
-    {
-      "title": "Kann",
-      "type": "Vorlesung",
-      "subjectId": 56,
-      "credits": 5,
-      "participationType": "Notenbgeleitend",
-      "zpk": false,
-      "id": 59
-    },
-    {
-      "title": "Hello",
-      "type": "CM",
-      "subjectId": 56,
-      "credits": "",
-      "participationType": "",
-      "zpk": false,
-      "id": 60
-    },
-    {
-      "title": "Test",
-      "type": "Arbeitsgemeinschaft",
-      "subjectId": 56,
-      "credits": "",
-      "participationType": "",
-      "zpk": false,
-      "id": 61
-    },
-    {
-      "title": "Testkurs",
-      "type": "Arbeitsgemeinschaft",
-      "subjectId": 55,
-      "credits": 1,
-      "participationType": "Teilnahme",
-      "zpk": false,
-      "id": 62
     }
   ],
   "grades": [
@@ -907,18 +837,8 @@
       "studentId": 0,
       "subjectCourseId": 0,
       "grade": 3,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
-      "date": "2018-02-01",
-      "lecturer": ""
-    },
-    {
-      "id": 1,
-      "studentId": 0,
-      "subjectCourseId": 0,
-      "grade": 7,
-      "gradingSystemId": 0,
-      "try": 2,
       "date": "2018-02-01",
       "lecturer": ""
     },
@@ -927,7 +847,7 @@
       "studentId": 0,
       "subjectCourseId": 2,
       "grade": 8,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -937,7 +857,7 @@
       "studentId": 0,
       "subjectCourseId": 4,
       "grade": 11,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -947,7 +867,7 @@
       "studentId": 0,
       "subjectCourseId": 6,
       "grade": 9,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -957,7 +877,7 @@
       "studentId": 0,
       "subjectCourseId": 8,
       "grade": 6,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -967,33 +887,41 @@
       "studentId": 0,
       "subjectCourseId": 9,
       "grade": 7,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
+    },
+    {
+      "studentId": 1,
+      "subjectCourseId": 11,
+      "grade": 12,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 1,
+      "subjectId": 3,
+      "id": 7
+    },
+    {
+      "studentId": 1,
+      "subjectCourseId": 11,
+      "grade": 13,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "",
+      "lecturer": "",
+      "studyId": 1,
+      "subjectId": 3,
+      "id": 8
     }
   ],
   "studyCourses": [
     {
       "id": 1,
       "title": "Grundstudienkurs",
-      "description": "Grundlagen des deutsche und französischen Rechts mit Abschluss des ersten deutschen Staatsexamens.\nDauer: 6 Semester, davon 4 in Deutschland und 2 in Paris.",
-      "studyRegulations": [
-        {
-          "id": 0,
-          "title": "Studienordnung 2002",
-          "date": "2002-01-01",
-          "studyCourseId": 1,
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic eum quas labore."
-        },
-        {
-          "id": 2,
-          "title": "Studienordnung 2016",
-          "date": "2016-04-01",
-          "studyCourseId": 1,
-          "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-        }
-      ]
+      "description": "Grundlagen des deutsche und französischen Rechts mit Abschluss des ersten deutschen Staatsexamens.\nDauer: 6 Semester, davon 4 in Deutschland und 2 in Paris."
     },
     {
       "id": 2,
@@ -1022,24 +950,6 @@
       "date": "2012-01-01",
       "studyCourseId": 2,
       "id": 3
-    }
-  ],
-  "gradingSystems": [
-    {
-      "id": 0,
-      "title": "DE",
-      "min": 0,
-      "max": 18,
-      "passed": 4,
-      "description": ""
-    },
-    {
-      "id": 1,
-      "title": "FR",
-      "min": 0,
-      "max": 20,
-      "passed": 10,
-      "description": ""
     }
   ]
 }

@@ -9,7 +9,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import FeaturedPlayListOutlineIcon from '@material-ui/icons/FeaturedPlayListOutlined';
-import EditIcon from '@material-ui/icons/EditOutlined';
 
 function Sidebar({ location }) {
     return (
@@ -26,12 +25,6 @@ function Sidebar({ location }) {
                     <FeaturedPlayListOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary='Studienkurse' />
-            </ListItem>
-            <ListItem component={NavLink} to='/forms' button selected={location.pathname.startsWith('/forms')}>
-                <ListItemIcon>
-                    <EditIcon />
-                </ListItemIcon>
-                <ListItemText primary='Formulare' />
             </ListItem>
             
             <Divider />

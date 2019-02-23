@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +18,7 @@ import {
     getVeranstaltungenForFach,
     getNotenForStudentAndVeranstaltung,
 } from '../../../../helper/selectors';
+import { formatNote } from '../../../../helper/gradeConverter';
 
 
 const notenStyles = theme => ({
@@ -31,26 +33,37 @@ const notenStyles = theme => ({
 
 const Noten = withStyles(notenStyles)(({
     veranstaltung,
+    fach,
     noten,
     studentId,
+    studyId,
     openNoteModal,
     classes
 }) => {
+    const openCreateGradeModal = () => {
+        openNoteModal({
+            studentId,
+            studyId,
+            subjectCourseId: veranstaltung.id,
+            try: noten.length + 1
+        })
+    }
+
     return veranstaltung.participationType === 'Note' ? (
         <div>
             {noten.map(note => (
                 <div
                     key={note.id}
                     className='clickable-note'
-                    onClick={() => openNoteModal({ noteId: note.id })}
+                    onClick={() => openNoteModal({ gradeId: note.id, studyId })}
                 >
                     <i className='fa fa-wrench' />
-                    {note.grade} Pkt.
+                    {formatNote(note, fach.type)}
                     {noten.length > 1 && ` (${note.try}. Versuch)`}
                 </div>
             ))}
             <Button
-                onClick={() => openNoteModal({ studentId, veranstaltungId: veranstaltung.id })}
+                onClick={openCreateGradeModal}
                 style={{ marginTop: noten.length && '0.25rem' }}
                 className={classes.noteCreateButton}
                 size='small'
@@ -82,51 +95,55 @@ const fachStyles = theme => ({
     }
 });
 
-const Fach = withStyles(fachStyles)(({
-    fach, studentId, openNoteModal, study, classes
-}) => {
-    const veranstaltungen = getVeranstaltungenForFach(fach.id);
-    return (
-        <TableBody>
-            {veranstaltungen
-                .sort((a, b) => (
-                    a.type.localeCompare(b.type) ||
-                    a.title.localeCompare(b.title) ||
-                    a.id - b.id
-                ))
-                .map((veranstaltung, index) => {
-                    const noten = getNotenForStudentAndVeranstaltung(studentId, veranstaltung.id);
-                    return (
-                        <TableRow key={veranstaltung.id} className={classes.bodyRow}>
-                            {index === 0 && (
-                                <TableCell rowSpan={veranstaltungen.length}>
-                                    <Link
-                                        to={`/studienkurse/${study.studyCourseId}/studienordnung/${study.studyRegulationId}/${fach.id}`}
-                                        className={classes.subjectLink}
-                                    >
-                                        {fach.title}
-                                    </Link>
+const Fach = connect(state => ({ state }))(
+    withStyles(fachStyles)(({
+        fach, studentId, openNoteModal, study, classes, state
+    }) => {
+        const veranstaltungen = getVeranstaltungenForFach(state)(fach.id);
+        return (
+            <TableBody>
+                {veranstaltungen
+                    .sort((a, b) => (
+                        a.type.localeCompare(b.type) ||
+                        a.title.localeCompare(b.title) ||
+                        a.id - b.id
+                    ))
+                    .map((veranstaltung, index) => {
+                        const noten = getNotenForStudentAndVeranstaltung(state)(studentId, veranstaltung.id);
+                        return (
+                            <TableRow key={veranstaltung.id} className={classes.bodyRow}>
+                                {index === 0 && (
+                                    <TableCell rowSpan={veranstaltungen.length}>
+                                        <Link
+                                            to={`/studienkurse/${study.studyCourseId}/studienordnung/${study.studyRegulationId}/${fach.id}`}
+                                            className={classes.subjectLink}
+                                        >
+                                            {fach.title}
+                                        </Link>
+                                    </TableCell>
+                                )}
+                                <TableCell>
+                                    {veranstaltung.type}
+                                    {veranstaltung.title && ` (${veranstaltung.title})`}
                                 </TableCell>
-                            )}
-                            <TableCell>
-                                {veranstaltung.type}
-                                {veranstaltung.title && ` (${veranstaltung.title})`}
-                            </TableCell>
-                            <TableCell style={{textAlign: 'right'}}>
-                                <Noten
-                                    noten={noten}
-                                    veranstaltung={veranstaltung}
-                                    studentId={studentId}
-                                    openNoteModal={openNoteModal}
-                                />
-                            </TableCell>
-                        </TableRow>
-                    );
-                })
-            }
-        </TableBody>
-    );
-});
+                                <TableCell style={{textAlign: 'right'}}>
+                                    <Noten
+                                        noten={noten}
+                                        veranstaltung={veranstaltung}
+                                        fach={fach}
+                                        studentId={studentId}
+                                        studyId={study.id}
+                                        openNoteModal={openNoteModal}
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })
+                }
+            </TableBody>
+        );
+    })
+);
 
 
 const typenGroupStyles = theme => ({
@@ -208,10 +225,11 @@ class FaecherGrouped extends Component {
         studyCourseId: PropTypes.number.isRequired,
         openNoteModal: PropTypes.func.isRequired,
         study: PropTypes.object.isRequired,
+        subjects: PropTypes.object.isRequired,
     }
 
     state = {
-        faecher: getFaecherForStudyCourseGroupedBySemesterAndTyp(this.props.studyCourseId),
+        faecher: this.props.subjects,
     }
 
     shouldComponentUpdate() {
@@ -235,4 +253,6 @@ class FaecherGrouped extends Component {
     }
 };
 
-export default FaecherGrouped;
+export default connect((state, props) => ({
+    subjects: getFaecherForStudyCourseGroupedBySemesterAndTyp(state, props.studyCourseId)
+}))(FaecherGrouped);

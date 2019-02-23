@@ -1,12 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-    getFaecherDataForUEAndSemester,
-    getVeranstaltungenForFach,
-    getPunkteForVeranstaltungAndStudent
-} from '../../../helper/selectors';
-
 class Faecher extends Component {
     static propTypes = {
         ue: PropTypes.number.isRequired,
@@ -18,7 +12,7 @@ class Faecher extends Component {
         if (nextProps.semester !== prevState.lastSemester) {
             return {
                 ...prevState,
-                faecher: getFaecherDataForUEAndSemester(nextProps.ue, nextProps.semester),
+                faecher: nextProps.getFaecherDataForUEAndSemester(nextProps.ue, nextProps.semester),
                 lastSemester: nextProps.semester
             };
         }
@@ -34,7 +28,7 @@ class Faecher extends Component {
         return (
             <Fragment>
                 {this.state.faecher.map(fach => {
-                    const veranstaltungen = getVeranstaltungenForFach(fach.id);
+                    const veranstaltungen = this.props.getVeranstaltungenForFach(fach.id);
                     return (
                         <tbody key={fach.id}>
                             {veranstaltungen.map((veranstaltung, index) => (
@@ -48,7 +42,7 @@ class Faecher extends Component {
                                     </td>
                                     <td>{veranstaltung.credits}</td>
                                     <td>
-                                        {getPunkteForVeranstaltungAndStudent(veranstaltung.id, this.props.student.id)}
+                                        {this.props.getPunkteForVeranstaltungAndStudent(veranstaltung.id, this.props.student.id)}
                                     </td>
                                 </tr>
                             ))}

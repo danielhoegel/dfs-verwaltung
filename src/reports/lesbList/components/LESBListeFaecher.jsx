@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import LESBListeFach from './LESBListeFach'
-import {
-    getVeranstaltungenForFach
-} from '../../../helper/selectors';
+import LESBListeFach from './LESBListeFach';
 
 
 class LESBListeFaecher extends Component {
@@ -26,7 +23,7 @@ class LESBListeFaecher extends Component {
                     </tr>
                 </thead>
                 {faecher.map(fach =>
-                    getVeranstaltungenForFach(fach.id)
+                    this.props.getVeranstaltungenForFach(fach.id)
                         .filter(veranstaltung =>
                             ['Vorlesung', 'TD'].includes(veranstaltung.type)
                         )
@@ -36,6 +33,7 @@ class LESBListeFaecher extends Component {
                                 veranstaltung={veranstaltung}
                                 student={student}
                                 key={veranstaltung.id}
+                                getNotenForStudentAndVeranstaltung={this.props.getNotenForStudentAndVeranstaltung}
                             />
                         )
                     )
