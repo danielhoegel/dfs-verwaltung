@@ -110,7 +110,6 @@ const MultipleSelectFilter = withStyles(multipleSelectFilterStyles)(({
         <InputLabel shrink htmlFor={name}>
             {label}
         </InputLabel>
-        {console.log(console.log('MultipleSelectFilter', value))}
         <Select
             onChange={onChange}
             value={value}

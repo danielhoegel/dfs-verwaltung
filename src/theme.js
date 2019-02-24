@@ -1,5 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 
 const defaultTheme = createMuiTheme();
 
@@ -11,7 +12,9 @@ const customColors = {
     disabled: 'rgba(0, 0, 0, 0.26)',
     borderBottom: 'rgba(0, 0, 0, 0.42)',
     red: red[500],
-    darkred: red[700]
+    darkred: red[700],
+    green: green[500],
+    darkgreen: green[700]
 };
 
 const theme = createMuiTheme({
@@ -23,7 +26,9 @@ const theme = createMuiTheme({
         disabled: customColors.disabled,
         borderBottom: customColors.borderBottom,
         red: customColors.red,
-        darkred: customColors.darkred
+        darkred: customColors.darkred,
+        green: customColors.green,
+        darkgreen: customColors.darkgreen,
     },
     overrides: {
         MuiInput: {

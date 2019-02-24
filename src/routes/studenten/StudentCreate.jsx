@@ -43,6 +43,9 @@ class StudentCreate extends Component {
             mailUni: '',
             phoneNumber: '',
             mobileNumber: '',
+
+            iban: '',
+            bic: ''
         },
         studies: [
             {

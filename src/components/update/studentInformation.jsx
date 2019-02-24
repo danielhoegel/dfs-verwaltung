@@ -27,14 +27,12 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     value={values.birthDate}
                     onChange={onChange}
                     InputLabelProps={dateInputLabelProps}
-                    required
                 />
                 <Field
                     name={`${__prefix}.birthPlace`}
                     label='Geburtsort'
                     value={values.birthPlace}
                     onChange={onChange}
-                    required
                 />
                 <NativeSelectField
                     name={`${__prefix}.birthCountry`}
@@ -42,7 +40,6 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     value={values.birthCountry}
                     options={laenderOptions}
                     onChange={onChange}
-                    required
                 />
             </FieldGroup>
 
@@ -93,14 +90,12 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     onChange={onChange}
                     label='Straße'
                     width={2}
-                    required
                 />
                 <Field
                     name={`${__prefix}.streetNumber`}
                     value={values.streetNumber}
                     onChange={onChange}
                     label='Hausnummer'
-                    required
                 />
                 <Field
                     name={`${__prefix}.addressExtra`}
@@ -116,14 +111,12 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     onChange={onChange}
                     label='Postleitzahl'
                     width={0.5}
-                    required
                 />
                 <Field
                     name={`${__prefix}.city`}
                     value={values.city}
                     onChange={onChange}
                     label='Ort'
-                    required
                 />
                 <NativeSelectField
                     name={`${__prefix}.country`}
@@ -131,7 +124,23 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     value={values.country}
                     options={laenderOptions}
                     onChange={onChange}
-                    required
+                />
+            </FieldGroup>
+
+            <HiddenDivider height={2} />
+            <FieldGroup>
+                <Field
+                    name={`${__prefix}.iban`}
+                    label='IBAN'
+                    value={values.iban}
+                    onChange={onChange}
+                    width={2}
+                />
+                <Field
+                    name={`${__prefix}.bic`}
+                    label='BIC'
+                    value={values.bic}
+                    onChange={onChange}
                 />
             </FieldGroup>
         </Fragment>

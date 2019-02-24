@@ -55,6 +55,13 @@
       "prefix": "Herr",
       "matrikelnummer": "123456",
       "id": 7
+    },
+    {
+      "firstName": "Zacharias",
+      "lastName": "Reinhardt",
+      "prefix": "Herr",
+      "matrikelnummer": "123456",
+      "id": 8
     }
   ],
   "studentInformations": [
@@ -73,7 +80,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "DE123456789",
+      "bic": "myBIC"
     },
     {
       "id": 1,
@@ -90,7 +99,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 2,
@@ -107,7 +118,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 3,
@@ -124,7 +137,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 4,
@@ -141,7 +156,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 5,
@@ -158,7 +175,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "birthDate": "1996-01-11",
@@ -174,6 +193,8 @@
       "mailUni": "daniel.hoegel@hhu.de",
       "phoneNumber": 1234562150,
       "mobileNumber": "",
+      "iban": "",
+      "bic": "",
       "studentId": 6,
       "id": 6
     },
@@ -193,6 +214,25 @@
       "mobileNumber": 123456789,
       "studentId": 7,
       "id": 7
+    },
+    {
+      "birthDate": "1992-07-23",
+      "birthPlace": "Köln",
+      "birthCountry": "Deutschland",
+      "street": "Neuer Weg",
+      "streetNumber": "32",
+      "addressExtra": "",
+      "postal": "123456",
+      "city": "Köln",
+      "country": "Deutschland",
+      "mailPrivate": "",
+      "mailUni": "zacharias.reinhardt@hhu.de",
+      "phoneNumber": "",
+      "mobileNumber": "",
+      "iban": "",
+      "bic": "",
+      "studentId": 8,
+      "id": 8
     }
   ],
   "studies": [
@@ -264,9 +304,17 @@
       "year": 2019,
       "studyCourseId": 1,
       "studyRegulationId": 2,
-      "status": 2,
+      "status": 1,
+      "studentId": 8,
+      "id": 12
+    },
+    {
+      "year": 2019,
+      "studyCourseId": 1,
+      "studyRegulationId": 2,
+      "status": 1,
       "studentId": 0,
-      "id": 11
+      "id": 13
     }
   ],
   "subjects": [
@@ -449,6 +497,16 @@
       "studyCourseId": 1,
       "studyRegulationId": 2,
       "semester": 2
+    },
+    {
+      "title": "Test",
+      "description": "",
+      "type": "de",
+      "studyCourseId": 2,
+      "studyRegulationId": 3,
+      "semester": 1,
+      "ue": 1,
+      "id": 55
     }
   ],
   "subjectCourses": [
@@ -829,6 +887,15 @@
       "credits": 2,
       "zpk": false,
       "participationType": "Note"
+    },
+    {
+      "title": "Test",
+      "type": "Arbeitsgemeinschaft",
+      "subjectId": 55,
+      "credits": 1,
+      "participationType": "Teilnahme",
+      "zpk": false,
+      "id": 57
     }
   ],
   "grades": [
@@ -915,6 +982,42 @@
       "studyId": 1,
       "subjectId": 3,
       "id": 8
+    },
+    {
+      "studentId": 4,
+      "subjectCourseId": 11,
+      "grade": 12,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 4,
+      "subjectId": 3,
+      "id": 9
+    },
+    {
+      "studentId": 8,
+      "subjectCourseId": 11,
+      "grade": 2,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 12,
+      "subjectId": 3,
+      "id": 10
+    },
+    {
+      "studentId": 8,
+      "subjectCourseId": 11,
+      "grade": 5,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "",
+      "lecturer": "",
+      "studyId": 12,
+      "subjectId": 3,
+      "id": 11
     }
   ],
   "studyCourses": [
