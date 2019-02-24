@@ -14,12 +14,22 @@ import { getStudentById } from './redux/entitiesSelector';
 
 
 /* Custom Breadcrumbs */
+
 const StudentBreadcrumb = connect((state, props) => ({
     student: getStudentById(state, props.match.params.id)
 }))(props => props.student
     ? `${props.student.firstName} ${props.student.lastName}`
     : props.match.params.id
 );
+
+const ReportBreadcrumb = ({ match }) => {
+    switch (match.params.report) {
+        case 'studenten': return 'Studentenliste';
+        case 'lesb': return 'LESB-Liste';
+        case 'ergebnisse': return 'Prüfungsergebnisse';
+        default: return match.params.report;
+    }
+}
 
 
 /* ROUTES */
@@ -29,7 +39,7 @@ export default [
     { path: '/studenten/create', component: StudentCreate, exact: true, breadcrumb: 'Neuer Student' },
     { path: '/studenten/:id', component: StudentDetails, exact: true, breadcrumb: StudentBreadcrumb },
     { path: '/studenten/:id/update', component: StudentUpdate, breadcrumb: EditIcon },
-    { path: '/berichte/:report?', component: Reports, breadcrumb: 'Berichte' },
+    { path: '/berichte/:report', component: Reports, breadcrumb: ReportBreadcrumb },
     { path: '/studienkurse', component: StudyCourseList, exact: true, breadcrumb: 'Studienkurse' },
     { path: '/studienkurse/:studyCourseId', component: null, exact: true, breadcrumb: null },
     { path: '/studienkurse/:studyCourseId/studienordnung', component: null, exact: true, breadcrumb: null },

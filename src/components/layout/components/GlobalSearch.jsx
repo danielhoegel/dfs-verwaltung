@@ -102,7 +102,7 @@ class GlobalSearch extends Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.search}>
+            <div className={classes.search} title='Suche nach Student, Matrikelnummer oder Fach'>
                 <div className={classes.searchIcon}>
                     {this.state.fetching
                         ? <CircularProgress color='inherit' size={24} />

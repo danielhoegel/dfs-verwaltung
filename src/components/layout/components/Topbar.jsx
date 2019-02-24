@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import cn from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -33,6 +34,7 @@ const Topbar = ({ classes, fetchAllData, fetching }) => {
                 color='inherit'
                 size='small'
                 onClick={fetchAllData}
+                title='Aktualisiere alle Daten'
             >
                 <RefreshIcon className={cn({[classes.loadingIcon]: fetching})}/>
             </Button>
@@ -77,6 +79,8 @@ const mapStateToProps = state => ({
     fetching: getStudentenFetching(state),
 });
 
-export default connect(mapStateToProps, { fetchAllData })(
-    withStyles(styles)(Topbar)
+export default withRouter(
+    connect(mapStateToProps, { fetchAllData })(
+        withStyles(styles)(Topbar)
+    )
 );
