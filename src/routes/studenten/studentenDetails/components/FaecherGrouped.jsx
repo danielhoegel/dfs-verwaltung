@@ -12,6 +12,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/EditOutlined';
 
 import {
     getFaecherForStudyCourseGroupedBySemesterAndTyp,
@@ -70,7 +71,7 @@ const Noten = withStyles(notenStyles)(({
                 variant='outlined'
             >
                 <AddIcon className={classes.leftIcon} />
-                Note hinzufügen
+                {noten.length > 0 ? `${noten.length + 1}. Versuch`: 'Note'}
             </Button>
         </div>
     ) : (
@@ -84,15 +85,28 @@ const Noten = withStyles(notenStyles)(({
 
 const fachStyles = theme => ({
     bodyRow: {
-        height: 4 * theme.spacing.unit
+        height: 4 * theme.spacing.unit,
+    },
+    subject: {
+        '&:hover $subjectEditIcon': {
+            opacity: 1,
+        }
+    },
+    subjectEditIcon: {
+        opacity: 0,
+        color: 'rgba(0, 0, 0, 0.54)',
+        marginLeft: theme.spacing.unit,
+        fontSize: '1.5em',
     },
     subjectLink: {
         color: 'inherit',
         textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
         '&:hover': {
             textDecoration: 'underline',
         },
-    }
+    },
 });
 
 const Fach = connect(state => ({ state }))(
@@ -101,7 +115,7 @@ const Fach = connect(state => ({ state }))(
     }) => {
         const veranstaltungen = getVeranstaltungenForFach(state)(fach.id);
         return (
-            <TableBody>
+            <TableBody className={classes.subject}>
                 {veranstaltungen
                     .sort((a, b) => (
                         a.type.localeCompare(b.type) ||
@@ -119,6 +133,7 @@ const Fach = connect(state => ({ state }))(
                                             className={classes.subjectLink}
                                         >
                                             {fach.title}
+                                            <EditIcon className={classes.subjectEditIcon} />
                                         </Link>
                                     </TableCell>
                                 )}
