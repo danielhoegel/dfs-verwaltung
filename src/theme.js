@@ -58,6 +58,20 @@ const theme = createMuiTheme({
                 color: customColors.red,
             },
         },
+        MuiInputLabel: {
+            // add manuel cutout for outlined field label
+            outlined: {
+                '&:after': {
+                    content: '""',
+                    position: 'absolute',
+                    left: '-0.6em',
+                    background: '#fff',
+                    width: 'calc(100% + 1.2em)',
+                    height: '100%',
+                    zIndex: -1
+                }
+            },
+        },
         MuiSelect: {
             disabled: {
                 '&$select': {

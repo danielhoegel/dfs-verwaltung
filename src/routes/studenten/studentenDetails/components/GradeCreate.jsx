@@ -35,12 +35,11 @@ class GradeCreate extends Component {
 
     defaultValues = () => {
         const { grade, subjectCourses, subjects, data } = this.props;
-        const { studentId, subjectCourseId, studyId, try: _try } = data;
         
         // get subject
         let subject = {};
-        if (isNotEmpty(subjectCourseId || grade)) {
-            const __subjectCourseId = isNotEmpty(grade) ? grade.subjectCourseId : subjectCourseId;
+        if ((data && isNotEmpty(data.subjectCourseId)) || isNotEmpty(grade)) {
+            const __subjectCourseId = isNotEmpty(grade) ? grade.subjectCourseId : data.subjectCourseId;
             const subjectCourse = subjectCourses.find(
                 ({ id }) => id === __subjectCourseId
             );
@@ -52,11 +51,10 @@ class GradeCreate extends Component {
 
         // study and subject are needed to filter subjectCourses
         const extraValues = {
-            studyId: isNotEmpty(studyId) ? studyId :  '',
+            studyId: (data && isNotEmpty(data.studyId)) ? data.studyId :  '',
             subjectId: isNotEmpty(subject.id) ? subject.id : '',
         }
 
-        console.log({ gradeId: data.gradeId, grade: grade });
         if (isNotEmpty(grade)) {
             return {
                 ...grade,
@@ -65,11 +63,11 @@ class GradeCreate extends Component {
         }
 
         return {
-            studentId: isNotEmpty(studentId) ? studentId : '',
-            subjectCourseId: isNotEmpty(subjectCourseId) ? subjectCourseId : '',
+            studentId: (data && isNotEmpty(data.studentId)) ? data.studentId : '',
+            subjectCourseId: (data && isNotEmpty(data.subjectCourseId)) ? data.subjectCourseId : '',
             grade: '',
             gradingSystem: isNotEmpty(subject.type) ? subject.type : 'de',
-            try: _try || 1,
+            try: (data && data.try) || 1,
             date: '',
             lecturer: '',
             ...extraValues
@@ -129,7 +127,7 @@ class GradeCreate extends Component {
 };
 
 const mapStateToProps = (state, props) => ({
-    grade: getGradeById(state, props.data.gradeId),
+    grade: getGradeById(state, props.data && props.data.gradeId),
     students: getStudents(state),
     studyCourses: getStudyCourses(state),
     studyRegulations: getStudyRegulations(state),

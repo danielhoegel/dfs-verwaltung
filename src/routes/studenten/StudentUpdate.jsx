@@ -61,8 +61,10 @@ class StudentUpdate extends Component {
         requests.push(this.props.updateStudentInformation(data.studentInformation));
 
         // delete studies
-        const nextStudiesWithId = data.studies.filter(({ id }) => id !== undefined );
-        console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies });
+        const nextStudiesWithId = data.studies
+            .filter(({ id }) => id !== undefined)
+            .map(({ id }) => id);
+        console.log({ 'this.props.student': this.props.student, 'data.studies': data.studies, nextStudiesWithId });
         this.props.student.studies.forEach(study => {
             if(!nextStudiesWithId.includes(study.id)) {
                 requests.push(this.props.deleteStudy(study));
