@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 // import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 
 import SelectButton from '../../SelectButton';
+import Modal from '../../Modal';
+import GradeCreate from '../../../routes/studenten/studentenDetails/components/GradeCreate';
 
 
 const VALUES = {
@@ -15,6 +17,12 @@ const VALUES = {
 };
 
 class GlobalAddMenu extends Component {
+    state = {
+        gradeCreateModalOpen: false,
+    }
+
+    closeGradeCreateModal = () => this.setState({ gradeCreateModalOpen: false, });
+
     clickHandler = value => {
         switch (value) {
             case VALUES.createStudent:
@@ -22,10 +30,8 @@ class GlobalAddMenu extends Component {
                 break;
 
             case VALUES.createGrade:
-                return alert('createGrade');
-
-            case VALUES.createStudyRegulation:
-                return alert('createStudyRegulation');
+                this.setState({ gradeCreateModalOpen: true, });
+                break;
 
             default:
                 break;
@@ -33,16 +39,24 @@ class GlobalAddMenu extends Component {
     }
     render() {
         return (
-            <SelectButton
-                icon={<AddIcon />}
-                options={[
-                    {value: VALUES.createStudent, label: 'Student'},
-                    {value: VALUES.createGrade, label: 'Note'},
-                    {value: VALUES.createStudyRegulation, label: 'Prüfungsordnung'},
-                ]}
-                onClick={this.clickHandler}
-                className={this.props.className}
-            />
+            <Fragment>
+                <SelectButton
+                    icon={<AddIcon />}
+                    options={[
+                        {value: VALUES.createStudent, label: 'Student'},
+                        {value: VALUES.createGrade, label: 'Note'},
+                    ]}
+                    onClick={this.clickHandler}
+                    className={this.props.className}
+                />
+                <Modal
+                    component={GradeCreate}
+                    title='Note hinzufügen'
+                    open={this.state.gradeCreateModalOpen}
+                    close={this.closeGradeCreateModal}
+                    preventClosing
+                />
+            </Fragment>
         );
     }
 };
