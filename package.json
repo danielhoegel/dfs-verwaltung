@@ -5,13 +5,11 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject",
-    "_server": "node server/server.js",
-    "server": "json-server --watch server/db.json --port 3333 --snapshots server/snapshots",
+    "backup": "node scripts/backup.js",
+    "server": "json-server --watch server/db.json --port 3333 --snapshots server/backups",
+    "frontend": "concurrently \"start http://localhost:3303\" \"serve -s build -l 3303\"",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server\"",
-    "static-server": "start http://localhost:3303 && serve -s build -l 3303",
-    "production": "concurrently --kill-others \"npm run server\" \"npm run static-server\""
+    "production": "concurrently \"npm run backup\" \"npm run server\" \"npm run frontend\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.3.1",
@@ -45,7 +43,7 @@
     "react-hot-loader": "^4.3.11",
     "react-scripts": "^2.1.5",
     "redux-devtools-extension": "^2.13.5",
-    "serve": "^10.0.2"
+    "serve": "^10.1.2"
   },
   "browserslist": [
     ">0.2%",
