@@ -51,10 +51,17 @@
     },
     {
       "firstName": "Leopold",
-      "lastName": "Högel",
+      "lastName": "Adams",
       "prefix": "Herr",
       "matrikelnummer": "123456",
       "id": 7
+    },
+    {
+      "firstName": "Zacharias",
+      "lastName": "Reinhardt",
+      "prefix": "Herr",
+      "matrikelnummer": "123456",
+      "id": 8
     }
   ],
   "studentInformations": [
@@ -64,8 +71,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -73,7 +79,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "DE123456789",
+      "bic": "myBIC"
     },
     {
       "id": 1,
@@ -81,8 +89,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -90,7 +97,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 2,
@@ -98,8 +107,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -107,7 +115,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 3,
@@ -115,8 +125,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -124,7 +133,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 4,
@@ -132,8 +143,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -141,7 +151,9 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "id": 5,
@@ -149,8 +161,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -158,14 +169,15 @@
       "mailUni": "max.mustermann@hhu.de",
       "mailPrivate": "max-mustermann@gmail.com",
       "phoneNumber": "",
-      "mobileNumber": "+49 123 456 789 10"
+      "mobileNumber": "+49 123 456 789 10",
+      "iban": "",
+      "bic": ""
     },
     {
       "birthDate": "1996-01-11",
       "birthPlace": "Neuss",
       "birthCountry": "Deutschland",
-      "street": "Uerdinger Str.",
-      "streetNumber": "17c",
+      "address": "Uerdinger Str. 17c",
       "addressExtra": "",
       "postal": "40668",
       "city": "Meerbusch",
@@ -174,6 +186,8 @@
       "mailUni": "daniel.hoegel@hhu.de",
       "phoneNumber": 1234562150,
       "mobileNumber": "",
+      "iban": "",
+      "bic": "",
       "studentId": 6,
       "id": 6
     },
@@ -181,8 +195,7 @@
       "birthDate": "1996-01-11",
       "birthPlace": "Neuss",
       "birthCountry": "Deutschland",
-      "street": "Uerdinger Str.",
-      "streetNumber": "17c",
+      "address": "Uerdinger Str. 17c",
       "addressExtra": "",
       "postal": 40668,
       "city": "Meerbusch",
@@ -190,20 +203,30 @@
       "mailPrivate": "",
       "mailUni": "daniel.hoegel@hhu.de",
       "phoneNumber": "",
-      "mobileNumber": "",
+      "mobileNumber": 123456789,
       "studentId": 7,
       "id": 7
+    },
+    {
+      "birthDate": "1992-07-23",
+      "birthPlace": "Köln",
+      "birthCountry": "Deutschland",
+      "address": "Neuer Weg 32",
+      "addressExtra": "",
+      "postal": "123456",
+      "city": "Köln",
+      "country": "Deutschland",
+      "mailPrivate": "",
+      "mailUni": "zacharias.reinhardt@hhu.de",
+      "phoneNumber": "",
+      "mobileNumber": "",
+      "iban": "",
+      "bic": "",
+      "studentId": 8,
+      "id": 8
     }
   ],
   "studies": [
-    {
-      "id": 0,
-      "studentId": 0,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "year": 2015,
-      "status": 1
-    },
     {
       "id": 1,
       "studentId": 1,
@@ -225,16 +248,8 @@
       "studentId": 3,
       "studyCourseId": 1,
       "studyRegulationId": 2,
-      "year": 2016,
-      "status": 1
-    },
-    {
-      "id": 4,
-      "studentId": 4,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "year": 2016,
-      "status": 1
+      "year": 2015,
+      "status": 2
     },
     {
       "id": 5,
@@ -253,20 +268,44 @@
       "status": 1
     },
     {
-      "year": 2019,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "status": 1,
-      "studentId": 7,
-      "id": 8
-    },
-    {
       "year": 2018,
       "studyCourseId": 2,
       "studyRegulationId": 0,
       "status": 1,
       "studentId": 6,
       "id": 9
+    },
+    {
+      "year": 2017,
+      "studyCourseId": 1,
+      "studyRegulationId": 2,
+      "status": 1,
+      "studentId": 7,
+      "id": 10
+    },
+    {
+      "year": 2019,
+      "studyCourseId": 1,
+      "studyRegulationId": 2,
+      "status": 1,
+      "studentId": 8,
+      "id": 12
+    },
+    {
+      "year": 2019,
+      "studyCourseId": 2,
+      "studyRegulationId": 3,
+      "status": 1,
+      "studentId": 4,
+      "id": 13
+    },
+    {
+      "year": 2016,
+      "studyCourseId": 1,
+      "studyRegulationId": 2,
+      "status": 2,
+      "studentId": 4,
+      "id": 14
     }
   ],
   "subjects": [
@@ -449,6 +488,26 @@
       "studyCourseId": 1,
       "studyRegulationId": 2,
       "semester": 2
+    },
+    {
+      "title": "Test",
+      "description": "",
+      "type": "de",
+      "studyCourseId": 2,
+      "studyRegulationId": 3,
+      "semester": 1,
+      "ue": 1,
+      "id": 55
+    },
+    {
+      "title": "Test 2",
+      "description": "",
+      "type": "de",
+      "studyCourseId": 2,
+      "studyRegulationId": 3,
+      "semester": 2,
+      "ue": 1,
+      "id": 56
     }
   ],
   "subjectCourses": [
@@ -829,6 +888,24 @@
       "credits": 2,
       "zpk": false,
       "participationType": "Note"
+    },
+    {
+      "title": "Test",
+      "type": "Arbeitsgemeinschaft",
+      "subjectId": 55,
+      "credits": 1,
+      "participationType": "Teilnahme",
+      "zpk": false,
+      "id": 57
+    },
+    {
+      "title": "Hello123",
+      "type": "Vorlesung",
+      "subjectId": 56,
+      "credits": 2,
+      "participationType": "Teilnahme",
+      "zpk": false,
+      "id": 58
     }
   ],
   "grades": [
@@ -837,18 +914,8 @@
       "studentId": 0,
       "subjectCourseId": 0,
       "grade": 3,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
-      "date": "2018-02-01",
-      "lecturer": ""
-    },
-    {
-      "id": 1,
-      "studentId": 0,
-      "subjectCourseId": 0,
-      "grade": 7,
-      "gradingSystemId": 0,
-      "try": 2,
       "date": "2018-02-01",
       "lecturer": ""
     },
@@ -857,7 +924,7 @@
       "studentId": 0,
       "subjectCourseId": 2,
       "grade": 8,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -867,7 +934,7 @@
       "studentId": 0,
       "subjectCourseId": 4,
       "grade": 11,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -877,7 +944,7 @@
       "studentId": 0,
       "subjectCourseId": 6,
       "grade": 9,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -887,7 +954,7 @@
       "studentId": 0,
       "subjectCourseId": 8,
       "grade": 6,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
@@ -897,33 +964,89 @@
       "studentId": 0,
       "subjectCourseId": 9,
       "grade": 7,
-      "gradingSystemId": 0,
+      "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
+    },
+    {
+      "studentId": 1,
+      "subjectCourseId": 11,
+      "grade": 12,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 1,
+      "subjectId": 3,
+      "id": 7
+    },
+    {
+      "studentId": 1,
+      "subjectCourseId": 11,
+      "grade": 13,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "",
+      "lecturer": "",
+      "studyId": 1,
+      "subjectId": 3,
+      "id": 8
+    },
+    {
+      "studentId": 8,
+      "subjectCourseId": 11,
+      "grade": 2,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 12,
+      "subjectId": 3,
+      "id": 10
+    },
+    {
+      "studentId": 8,
+      "subjectCourseId": 11,
+      "grade": 5,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "",
+      "lecturer": "",
+      "studyId": 12,
+      "subjectId": 3,
+      "id": 11
+    },
+    {
+      "studentId": 5,
+      "subjectCourseId": 11,
+      "grade": 6,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 5,
+      "subjectId": 3,
+      "id": 13
+    },
+    {
+      "studentId": 5,
+      "subjectCourseId": 11,
+      "grade": 1,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "",
+      "lecturer": "",
+      "studyId": 5,
+      "subjectId": 3,
+      "id": 14
     }
   ],
   "studyCourses": [
     {
       "id": 1,
       "title": "Grundstudienkurs",
-      "description": "Grundlagen des deutsche und französischen Rechts mit Abschluss des ersten deutschen Staatsexamens.\nDauer: 6 Semester, davon 4 in Deutschland und 2 in Paris.",
-      "studyRegulations": [
-        {
-          "id": 0,
-          "title": "Studienordnung 2002",
-          "date": "2002-01-01",
-          "studyCourseId": 1,
-          "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic eum quas labore."
-        },
-        {
-          "id": 2,
-          "title": "Studienordnung 2016",
-          "date": "2016-04-01",
-          "studyCourseId": 1,
-          "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
-        }
-      ]
+      "description": "Grundlagen des deutsche und französischen Rechts mit Abschluss des ersten deutschen Staatsexamens.\nDauer: 6 Semester, davon 4 in Deutschland und 2 in Paris."
     },
     {
       "id": 2,
@@ -940,36 +1063,41 @@
       "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic eum quas labore."
     },
     {
-      "id": 1,
-      "title": "Studienordnung 2012",
-      "date": "2012-10-01",
-      "studyCourseId": 2,
-      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, nam."
-    },
-    {
       "id": 2,
       "title": "Studienordnung 2016",
       "date": "2016-04-01",
       "studyCourseId": 1,
       "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit."
+    },
+    {
+      "title": "Studienordnung 2012-3",
+      "description": "",
+      "date": "2012-01-01",
+      "studyCourseId": 2,
+      "id": 3
     }
   ],
-  "gradingSystems": [
+  "notes": [
     {
       "id": 0,
-      "title": "DE",
-      "min": 0,
-      "max": 18,
-      "passed": 4,
-      "description": ""
+      "studentId": 0,
+      "type": "warning",
+      "content": "Hat Semesterbeitrag noch nicht gezahlt",
+      "color": "orange"
     },
     {
       "id": 1,
-      "title": "FR",
-      "min": 0,
-      "max": 20,
-      "passed": 10,
-      "description": ""
+      "studentId": 0,
+      "type": "info",
+      "content": "sehr fleißig",
+      "color": ""
+    },
+    {
+      "id": 2,
+      "studentId": 0,
+      "type": "info",
+      "content": "Spricht kein französisch",
+      "color": "yellow"
     }
-  ]
+  ] 
 }
