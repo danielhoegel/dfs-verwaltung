@@ -13,8 +13,7 @@ const StudentInformation = ({ classes, student }) => {
         birthDate,
         birthPlace,
         birthCountry,
-        street,
-        streetNumber,
+        address,
         addressExtra,
         postal,
         country,
@@ -23,6 +22,8 @@ const StudentInformation = ({ classes, student }) => {
         mailPrivate,
         phoneNumber,
         mobileNumber,
+        bank,
+        accountHolder,
         iban,
         bic
     } = student.studentInformation;
@@ -34,51 +35,66 @@ const StudentInformation = ({ classes, student }) => {
     return (
         <div>
             <Typography as='h3' variant='body2' className={classes.subheading}>Geburtsdatum</Typography>
-                geboren am {formatDate(birthDate)}<br />
-                in {birthPlace}, {birthCountry}
+                <div>
+                    <span className={classes.noSelect}>Geburtsdatum: </span>
+                    {formatDate(birthDate)}
+                </div>
+                <div>
+                    <span className={classes.noSelect}>Geburtsort: </span>
+                    {birthPlace}, {birthCountry}
+                </div>
             
             <Typography as='h3' variant='body2' className={classes.subheading}>Adresse</Typography>
-                {street} {streetNumber} {addressExtra && `, ${addressExtra}`}<br />
+                {address} {addressExtra && `, ${addressExtra}`}<br />
                 {postal} {city}, {country}
 
-            {(mailUni || mailPrivate) && (
-                <>
-                    <Typography as='h3' variant='body2' className={classes.subheading}>E-Mail</Typography>
-                    {mailUni && <><span className={classes.noSelect}>Mail (Uni): </span><a href={`mailto:${mailUni}`} className={classes.link}>{mailUni}</a><br /></>}
-                    {mailPrivate && <><span className={classes.noSelect}>Mail (Privat): </span><a href={`mailto:${mailPrivate}`} className={classes.link}>{mailPrivate}</a></>}
-                </>
-            )}
+            <Typography as='h3' variant='body2' className={classes.subheading}>E-Mail</Typography>
+            <div>
+                <span className={classes.noSelect}>Mail (Uni): </span>
+                <a href={`mailto:${mailUni}`} className={classes.link}>{mailUni}</a>
+            </div>
+            <div>
+                <span className={classes.noSelect}>Mail (Privat): </span>
+                <a href={`mailto:${mailPrivate}`} className={classes.link}>{mailPrivate}</a>
+            </div>
                 
-            {(phoneNumber || mobileNumber) && (
-                <>
-                    <Typography as='h3' variant='body2' className={classes.subheading}>Telefonnummer</Typography>
-                    {phoneNumber && <><span className={classes.noSelect}>Festnetz: </span><a href={`tel:${phoneNumber}`} className={classes.link}>{phoneNumber}</a><br /></>}
-                    {mobileNumber && <><span className={classes.noSelect}>Mobieltelefon: </span><a href={`tel:${mobileNumber}`} className={classes.link}>{mobileNumber}</a></>}
-                </>
-            )}
-            {(iban || bic) && (
-                <>
-                    <Typography as='h3' variant='body2' className={classes.subheading}>Kontodaten</Typography>
-                    {iban && (
-                        <div className={classes.copyContainer}>
-                            <span>
-                                <span className={classes.noSelect}>IBAN: </span>
-                                {iban}
-                            </span>
-                            <FileCopyIcon className={classes.copyIcon} onClick={copyIban} />
-                        </div>
-                    )}
-                    {bic && (
-                        <div className={classes.copyContainer}>
-                            <span>
-                                <span className={classes.noSelect}>BIC: </span>
-                                {bic}
-                            </span>
-                            <FileCopyIcon className={classes.copyIcon} onClick={copyBic} />
-                        </div>
-                    )}
-                </>
-            )}
+            <Typography as='h3' variant='body2' className={classes.subheading}>Telefonnummer</Typography>
+            <div>
+                <span className={classes.noSelect}>Festnetz: </span>
+                <a href={`tel:${phoneNumber}`} className={classes.link}>{phoneNumber}</a>
+            </div>
+            <div>
+                <span className={classes.noSelect}>Mobieltelefon: </span>
+                <a href={`tel:${mobileNumber}`} className={classes.link}>{mobileNumber}</a>
+            </div>
+            
+            <Typography as='h3' variant='body2' className={classes.subheading}>Kontodaten</Typography>
+            <div>
+                <span>
+                    <span className={classes.noSelect}>Kontoinhaber: </span>
+                    {accountHolder}
+                </span>
+            </div>
+            <div>
+                <span>
+                    <span className={classes.noSelect}>Bank: </span>
+                    {bank}
+                </span>
+            </div>
+            <div className={classes.copyContainer}>
+                <span>
+                    <span className={classes.noSelect}>IBAN: </span>
+                    {iban}
+                </span>
+                {iban && <FileCopyIcon className={classes.copyIcon} onClick={copyIban} />}
+            </div>
+            <div className={classes.copyContainer}>
+                <span>
+                    <span className={classes.noSelect}>BIC: </span>
+                    {bic}
+                </span>
+                {bic && <FileCopyIcon className={classes.copyIcon} onClick={copyBic} />}
+            </div>
         </div>
     );
 };

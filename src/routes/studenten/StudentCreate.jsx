@@ -32,8 +32,7 @@ class StudentCreate extends Component {
             birthPlace: '',
             birthCountry: 'Deutschland',
             
-            street: '',
-            streetNumber: '',
+            address: '',
             addressExtra: '',
             postal: '',
             city: '',

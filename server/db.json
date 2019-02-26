@@ -71,8 +71,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -90,8 +89,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -109,8 +107,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -128,8 +125,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -147,8 +143,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -166,8 +161,7 @@
       "birthDate": "1990-01-01",
       "birthPlace": "Düsseldorf",
       "birthCountry": "Deutschland",
-      "street": "Musterstraße",
-      "streetNumber": "123",
+      "address": "Musterstraße 123",
       "addressExtra": "3. Etage",
       "postal": 40040,
       "city": "Düsseldorf",
@@ -183,8 +177,7 @@
       "birthDate": "1996-01-11",
       "birthPlace": "Neuss",
       "birthCountry": "Deutschland",
-      "street": "Uerdinger Str.",
-      "streetNumber": "17c",
+      "address": "Uerdinger Str. 17c",
       "addressExtra": "",
       "postal": "40668",
       "city": "Meerbusch",
@@ -202,8 +195,7 @@
       "birthDate": "1996-01-11",
       "birthPlace": "Neuss",
       "birthCountry": "Deutschland",
-      "street": "Uerdinger Str.",
-      "streetNumber": "17c",
+      "address": "Uerdinger Str. 17c",
       "addressExtra": "",
       "postal": 40668,
       "city": "Meerbusch",
@@ -219,8 +211,7 @@
       "birthDate": "1992-07-23",
       "birthPlace": "Köln",
       "birthCountry": "Deutschland",
-      "street": "Neuer Weg",
-      "streetNumber": "32",
+      "address": "Neuer Weg 32",
       "addressExtra": "",
       "postal": "123456",
       "city": "Köln",
@@ -259,14 +250,6 @@
       "studyRegulationId": 2,
       "year": 2015,
       "status": 2
-    },
-    {
-      "id": 4,
-      "studentId": 4,
-      "studyCourseId": 1,
-      "studyRegulationId": 2,
-      "year": 2016,
-      "status": 1
     },
     {
       "id": 5,
@@ -310,11 +293,19 @@
     },
     {
       "year": 2019,
+      "studyCourseId": 2,
+      "studyRegulationId": 3,
+      "status": 1,
+      "studentId": 4,
+      "id": 13
+    },
+    {
+      "year": 2016,
       "studyCourseId": 1,
       "studyRegulationId": 2,
-      "status": 1,
-      "studentId": 0,
-      "id": 13
+      "status": 2,
+      "studentId": 4,
+      "id": 14
     }
   ],
   "subjects": [
@@ -507,6 +498,16 @@
       "semester": 1,
       "ue": 1,
       "id": 55
+    },
+    {
+      "title": "Test 2",
+      "description": "",
+      "type": "de",
+      "studyCourseId": 2,
+      "studyRegulationId": 3,
+      "semester": 2,
+      "ue": 1,
+      "id": 56
     }
   ],
   "subjectCourses": [
@@ -896,6 +897,15 @@
       "participationType": "Teilnahme",
       "zpk": false,
       "id": 57
+    },
+    {
+      "title": "Hello123",
+      "type": "Vorlesung",
+      "subjectId": 56,
+      "credits": 2,
+      "participationType": "Teilnahme",
+      "zpk": false,
+      "id": 58
     }
   ],
   "grades": [
@@ -984,18 +994,6 @@
       "id": 8
     },
     {
-      "studentId": 4,
-      "subjectCourseId": 11,
-      "grade": 12,
-      "gradingSystem": "de",
-      "try": 1,
-      "date": "",
-      "lecturer": "",
-      "studyId": 4,
-      "subjectId": 3,
-      "id": 9
-    },
-    {
       "studentId": 8,
       "subjectCourseId": 11,
       "grade": 2,
@@ -1018,6 +1016,30 @@
       "studyId": 12,
       "subjectId": 3,
       "id": 11
+    },
+    {
+      "studentId": 5,
+      "subjectCourseId": 11,
+      "grade": 6,
+      "gradingSystem": "de",
+      "try": 1,
+      "date": "",
+      "lecturer": "",
+      "studyId": 5,
+      "subjectId": 3,
+      "id": 13
+    },
+    {
+      "studentId": 5,
+      "subjectCourseId": 11,
+      "grade": 1,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "",
+      "lecturer": "",
+      "studyId": 5,
+      "subjectId": 3,
+      "id": 14
     }
   ],
   "studyCourses": [
