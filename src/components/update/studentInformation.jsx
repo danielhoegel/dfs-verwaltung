@@ -69,7 +69,7 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     value={values.phoneNumber}
                     onChange={onChange}
                     placeholder='+49 1234 5678'
-                    label='Festnetznummer (optional)'
+                    label='Festnetz (optional)'
                     type='phone'
                 />
                 <Field
@@ -77,7 +77,7 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
                     value={values.mobileNumber}
                     onChange={onChange}
                     placeholder='+49 123 456 789 10'
-                    label='Mobiltelefon (optional)'
+                    label='Mobil (optional)'
                     type='phone'
                 />
             </FieldGroup>
@@ -85,17 +85,11 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
             <HiddenDivider height={2} />
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.street`}
-                    value={values.street}
+                    name={`${__prefix}.address`}
+                    value={values.address}
                     onChange={onChange}
-                    label='Straße'
+                    label='Straße, Nr.'
                     width={2}
-                />
-                <Field
-                    name={`${__prefix}.streetNumber`}
-                    value={values.streetNumber}
-                    onChange={onChange}
-                    label='Hausnummer'
                 />
                 <Field
                     name={`${__prefix}.addressExtra`}
@@ -128,6 +122,20 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
             </FieldGroup>
 
             <HiddenDivider height={2} />
+            <FieldGroup>
+                <Field
+                    name={`${__prefix}.bank`}
+                    label='Bank'
+                    value={values.bank}
+                    onChange={onChange}
+                />
+                <Field
+                    name={`${__prefix}.accountHolder`}
+                    label='Kontoinhaber'
+                    value={values.accountHolder}
+                    onChange={onChange}
+                />
+            </FieldGroup>
             <FieldGroup>
                 <Field
                     name={`${__prefix}.iban`}
