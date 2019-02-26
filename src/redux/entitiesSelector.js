@@ -93,6 +93,10 @@ export function getSubjectCoursesBySubjectId(state, subjectId) {
     return __entities(state).subjectCourses[subjectId] || [];
 }
 
+export const getNotesByStudentId = state => studentId => {
+    return __entities(state).notes[studentId] || [];
+}
+
 
 /**
  * COMPOSED SELECTORS
@@ -102,10 +106,12 @@ export function getFullStudent(state, studentId) {
     const student = getStudentById(state, studentId);
     const studentInformation = getStudentInformationsByStudentId(state, studentId);
     const studies = getStudiesByStudentId(state, studentId);
+    const notes = getNotesByStudentId(state)(studentId);
     return {
         ...student,
         studentInformation,
-        studies
+        studies,
+        notes
     };
 }
 

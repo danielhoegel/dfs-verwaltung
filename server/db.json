@@ -1054,5 +1054,28 @@
       "studyCourseId": 2,
       "id": 3
     }
-  ]
+  ],
+  "notes": [
+    {
+      "id": 0,
+      "studentId": 0,
+      "type": "warning",
+      "content": "Hat Semesterbeitrag noch nicht gezahlt",
+      "color": "orange"
+    },
+    {
+      "id": 1,
+      "studentId": 0,
+      "type": "info",
+      "content": "sehr fleißig",
+      "color": ""
+    },
+    {
+      "id": 2,
+      "studentId": 0,
+      "type": "info",
+      "content": "Spricht kein französisch",
+      "color": "yellow"
+    }
+  ] 
 }

@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import MailIcon from '@material-ui/icons/MailOutlined';
 
 import { translateStudienkurse, translateStudyStatus, isNotEmpty } from '../../../../helper/helper';
+import NotesIndicator from './NotesIndicator';
 
 class StudentenRow extends Component {
     shouldComponentUpdate(nextProps) {
@@ -51,6 +52,9 @@ class StudentenRow extends Component {
                             ({translateStudyStatus(study.status)})
                         </div>
                     ))}
+                </TableCell>
+                <TableCell padding='checkbox'>
+                    {student.notes.length > 0 && <NotesIndicator notes={student.notes} />}
                 </TableCell>
                 <TableCell padding='checkbox'>
                     {isNotEmpty(student.studentInformation) && student.studentInformation.mailUni && (

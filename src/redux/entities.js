@@ -63,4 +63,12 @@ export default [
         isArray: true,
         key: 'subjectId'
     },
+    {
+        singular: 'note',
+        plural: 'notes',
+        typeSingular: 'NOTE',
+        typePlural: 'NOTES',
+        isArray: true,
+        key: 'studentId'
+    }
 ];
