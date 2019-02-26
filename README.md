@@ -10,13 +10,13 @@
     * Schreibe `npm --version` in die Eingabeaufforderung. Es sollte die Version 6.4 oder höher angezeigt werden
     * Sollte git, node oder npm nicht gefunden werden können, überprüfe ob die Installationsordner der Path-Variable hinzugefügt worden sind.
     * Suche dafür im Startmenü nach `Umgebungsvariablen für dieses Konto bearbeiten`
-    * Wähle unter Benutzervariablen `Path` aus und klicke auf Bearbeiten
-    * Klicke auf Neu und füge dann jeweils den Installationspfad für den fehlenden Befehl ein. Standardmäßig sind dies die folgenden Pfade:
+    * Wähle unter Benutzervariablen `Path` aus und klicke auf Bearbeiten. Sollte keine Variable mit dem Namen Path existieren, erstelle ein.
+    * Klicke auf Neu und füge dann jeweils den Installationspfad für den fehlenden Befehl ein. Sollte der Button Neu nicht vorhanden sein, füge den Pfad an den Ende des bisherigen Inhaltes an und trenne ihn mit einem Semikolon (;) ab. Standardmäßig sind handelt es sich um die folgenden Pfade:
       - Git: `C:\Program Files\Git\cmd`
-      - Node.js oder npm: `C:\Program Files\NodeJS`
+      - Node.js und npm: `C:\Program Files\NodeJS`
 4. Führe `+INSTALLATION.bat` aus. Es sollte sich ein schwarzes Konsolenfenster öffnen. Während dieses Vorgangs ist eine Internetverbindung erfordelrich. Die Installation kann je nach PC und Internetverbindung mehrere Minuten dauern. Die Installation ist beendet, sobald sich das schwarze Konsolenfenster von selbst wieder schließt. Sollten während der Installation Fehler (`ERR`) in der Konsole angezeigt werden, sollten diese kopiert und ein Adminsitrator um Hilfe gebeten werden.
-5. Wenn die Installation erfolgreich abgeschlossen wurde, kann das Programm mit über `+START.bat` gestartet werden. Es sollte sich ein schwarzes Konsolenfenster und der Webbrowser öffnen. Das Programm läuft solange, wie die Konsole geöffnet ist.
-6. Sollte versehntlich der Browser geschlossen werden, kann solange die Konsole geöffnet ist das Programm jederzeit durch aufrufen von `http://localhost:3303` im Browser geöffnet werden.
+5. Wenn die Installation erfolgreich abgeschlossen wurde, kann das Programm über `+START.bat` gestartet werden. Es sollte sich ein schwarzes Konsolenfenster und der Webbrowser öffnen. Das Programm läuft solange, wie die Konsole geöffnet ist.
+6. Sollte versehntlich der Browser geschlossen werden, kann, solange die Konsole geöffnet ist, das Programm jederzeit durch aufrufen von `http://localhost:3303` im Browser geöffnet werden.
 7. Zum Beenden der Anwendung muss die Konsole manuell geschlossen werden.
 
 ## FAQ
@@ -30,7 +30,7 @@ Ja. Auf jedem PC, auf dem das Programm ausgeführt werden sollen, müssen die Sc
 Führe dazu die Datei `+UPDATE.bat` aus. Eine Aktualisierung ist nur dann sinnvoll, wenn Sie dazu vorher von einem Adminsitrator aufgefordert wurden.
 
 * **_Wie kann ich eine Sicherung der Datenbank erstellen?_**  
-Alle Daten werden in der Datei `./server/db.json` gespeichert. Diese Datei kann jederzeit zur Sicherung an einen anderen Ort kopiert werden. Während das Programm läuft kann man auch eine automatische Sicherung erstellen, indem man in das Konsolenfenster klickt, dort `s` eingibt und die `Enter`-Taste drückt
+Alle Daten werden in der Datei `./server/db.json` gespeichert. Diese Datei kann jederzeit zur Sicherung an einen anderen Ort kopiert werden. Außerdem wird automatisch bei jedem Start des Programmes eine Sicherung in dem Ordner `.server/backups` angelegt.
 
 * **_Wie kann ich die Daten manuell auslesen oder in ein anderes Programm importieren?_**  
 Alle Daten liegen im Klartext in der Datei `./server/db.json`. Dabei handelt es sich um eine Textdatei im JSON-Format. Diese Datei kann mit jedem normalen Texteditor wie z.B. dem Editor von Windows (notepad.exe) oder kostenloser Drittanbietersoftware wie z.B. [Notepad++](https://notepad-plus-plus.org/download/v7.6.3.html) oder [Atom](https://atom.io/) geöffnet werden. Wie das JSON-Format zu lesen ist, kann [hier](https://www.json.org/json-de.html) recherchiert werden. Bei Fragen, wie die Daten z.B. in eine Excel-Datei übertragen werden können, kann sicher das ZIM oder Google helfen.  
