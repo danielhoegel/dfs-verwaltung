@@ -63,7 +63,7 @@ class StudentenTableToolbar extends Component {
                             >
                                 <MailIcon />
                             </IconButton>
-                            <IconButton
+                            {/* <IconButton
                                 aria-label='Print'
                                 title={`Berichte für ${numSelected} Studenten drucken`}
                                 color='inherit'
@@ -76,7 +76,7 @@ class StudentenTableToolbar extends Component {
                                 color='inherit'
                             >
                                 <DeleteIcon />
-                            </IconButton>
+                            </IconButton> */}
                         </Fragment>
                     )}
                 </div>

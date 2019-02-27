@@ -53,9 +53,9 @@ class StudentenRow extends Component {
                         </div>
                     ))}
                 </TableCell>
-                <TableCell padding='checkbox'>
+                {/* <TableCell padding='checkbox'>
                     {student.notes.length > 0 && <NotesIndicator notes={student.notes} />}
-                </TableCell>
+                </TableCell> */}
                 <TableCell padding='checkbox'>
                     {isNotEmpty(student.studentInformation) && student.studentInformation.mailUni && (
                         <a href={`mailto:${student.studentInformation.mailUni}`}>

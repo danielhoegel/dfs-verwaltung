@@ -125,7 +125,7 @@ class StudentenListe extends Component {
         {id: 'firstName', width: '15%', label: 'Vorname' },
         {id: 'lastName', width: '20%', label: 'Nachname' },
         {id: 'studyCourse', width: '45%', label: 'Studienkurs' },
-        {id: 'notes', width: '1%', label: '', padding: 'checkbox' },
+        // {id: 'notes', width: '1%', label: '', padding: 'checkbox' },
         {id: 'mail', width: '5%', label: '', padding: 'checkbox' }
     ]
 
