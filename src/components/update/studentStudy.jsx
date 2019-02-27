@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
+import { studyStatusList } from '../../helper/helper';
 
 
 function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange, classes }) {
@@ -53,8 +54,9 @@ function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange,
                         onChange={onChange}
                         required
                     >
-                        <MenuItem value={1}>Aktiv</MenuItem>
-                        <MenuItem value={2}>Abgeschlossen</MenuItem>
+                        {studyStatusList.map(({ id, value }) => (
+                            <MenuItem key={id} value={id}>{value}</MenuItem>
+                        ))}
                     </Field>
                     <Field
                         name={`${__prefix}.year`}

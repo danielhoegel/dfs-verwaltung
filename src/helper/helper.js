@@ -99,18 +99,20 @@ export function translateStudienkurse(studienkurs) {
     }
 }
 
+export const studyStatusList = [
+    { id: 0, value: 'Beworben' },
+    { id: 1, value: 'Aktiv'},
+    { id: 2, value: 'Abgeschlossen'},
+    { id: 3, value: 'Abgebrochen'},
+    { id: 4, value: 'Unterbrochen'}
+];
+
 /**
  * Translate study status into title
  * @param {string} studyStatus 
  */
 export function translateStudyStatus(studyStatus) {
-    switch (studyStatus) {
-        case 0: return 'Beworben';
-        case 1: return 'Aktiv';
-        case 2: return 'Abgeschlossen';
-        case 3: return 'Abgebrochen';
-        default: return studyStatus;
-    }
+    return studyStatusList[studyStatus] || studyStatus;
 }
 
 export function shortVorlesungTyp(typ) {
