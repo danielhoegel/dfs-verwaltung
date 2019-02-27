@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const database = './server/db.json';
-const backup = `./server/backups/db-${Date.now()}.json`;
+const backup = `./server/backups/datenbank-backup-${Date.now()}.json`;
 
 // destination.txt will be created or overwritten by default.
 fs.copyFile(database, backup, (err) => {

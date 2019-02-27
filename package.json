@@ -6,7 +6,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "backup": "node scripts/backup.js",
-    "server": "json-server --watch server/db.json --port 3333 --snapshots server/backups",
+    "server": "json-server --watch server/datenbank.json --port 3333 --snapshots server/backups",
     "frontend": "concurrently \"start http://localhost:3303\" \"serve -s build -l 3303\"",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server\"",
     "production": "concurrently \"npm run backup\" \"npm run server\" \"npm run frontend\""

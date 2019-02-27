@@ -5,7 +5,30 @@
       "matrikelnummer": 200011,
       "firstName": "John",
       "lastName": "Doe",
-      "prefix": "Herr"
+      "prefix": "Herr",
+      "notes": [
+        {
+          "id": 0,
+          "studentId": 0,
+          "type": "warning",
+          "content": "Hat Semesterbeitrag noch nicht gezahlt",
+          "color": "orange"
+        },
+        {
+          "id": 1,
+          "studentId": 0,
+          "type": "info",
+          "content": "sehr fleißig",
+          "color": ""
+        },
+        {
+          "id": 2,
+          "studentId": 0,
+          "type": "info",
+          "content": "Spricht kein französisch",
+          "color": "yellow"
+        }
+      ]
     },
     {
       "id": 1,
@@ -62,6 +85,13 @@
       "prefix": "Herr",
       "matrikelnummer": "123456",
       "id": 8
+    },
+    {
+      "firstName": "Julia Nina",
+      "lastName": "Féron",
+      "prefix": "Frau",
+      "matrikelnummer": "2733854",
+      "id": 9
     }
   ],
   "studentInformations": [
@@ -224,12 +254,30 @@
       "bic": "",
       "studentId": 8,
       "id": 8
+    },
+    {
+      "birthDate": "1999-04-27",
+      "birthPlace": "",
+      "birthCountry": "Deutschland",
+      "address": "Sternwartstraße 46a",
+      "addressExtra": "",
+      "postal": "40223",
+      "city": "Düsseldorf",
+      "country": "Deutschland",
+      "mailPrivate": "",
+      "mailUni": "Jn.feron@web.de",
+      "phoneNumber": "",
+      "mobileNumber": "",
+      "iban": "",
+      "bic": "",
+      "studentId": 9,
+      "id": 9
     }
   ],
   "studies": [
     {
       "id": 1,
-      "studentId": 1,
+      "studentId": 0,
       "studyCourseId": 1,
       "studyRegulationId": 2,
       "year": 2015,
@@ -911,7 +959,7 @@
   "grades": [
     {
       "id": 0,
-      "studentId": 0,
+      "studyId": 1,
       "subjectCourseId": 0,
       "grade": 3,
       "gradingSystem": "de",
@@ -920,8 +968,18 @@
       "lecturer": ""
     },
     {
+      "id": 1,
+      "studyId": 1,
+      "subjectCourseId": 0,
+      "grade": 7,
+      "gradingSystem": "de",
+      "try": 2,
+      "date": "2018-07-10",
+      "lecturer": ""
+    },
+    {
       "id": 2,
-      "studentId": 0,
+      "studyId": 1,
       "subjectCourseId": 2,
       "grade": 8,
       "gradingSystem": "de",
@@ -931,7 +989,7 @@
     },
     {
       "id": 3,
-      "studentId": 0,
+      "studyId": 1,
       "subjectCourseId": 4,
       "grade": 11,
       "gradingSystem": "de",
@@ -941,7 +999,7 @@
     },
     {
       "id": 4,
-      "studentId": 0,
+      "studyId": 1,
       "subjectCourseId": 6,
       "grade": 9,
       "gradingSystem": "de",
@@ -951,7 +1009,7 @@
     },
     {
       "id": 5,
-      "studentId": 0,
+      "studyId": 1,
       "subjectCourseId": 8,
       "grade": 6,
       "gradingSystem": "de",
@@ -961,85 +1019,13 @@
     },
     {
       "id": 6,
-      "studentId": 0,
+      "studyId": 1,
       "subjectCourseId": 9,
       "grade": 7,
       "gradingSystem": "de",
       "try": 1,
       "date": "2018-02-01",
       "lecturer": ""
-    },
-    {
-      "studentId": 1,
-      "subjectCourseId": 11,
-      "grade": 12,
-      "gradingSystem": "de",
-      "try": 1,
-      "date": "",
-      "lecturer": "",
-      "studyId": 1,
-      "subjectId": 3,
-      "id": 7
-    },
-    {
-      "studentId": 1,
-      "subjectCourseId": 11,
-      "grade": 13,
-      "gradingSystem": "de",
-      "try": 2,
-      "date": "",
-      "lecturer": "",
-      "studyId": 1,
-      "subjectId": 3,
-      "id": 8
-    },
-    {
-      "studentId": 8,
-      "subjectCourseId": 11,
-      "grade": 2,
-      "gradingSystem": "de",
-      "try": 1,
-      "date": "",
-      "lecturer": "",
-      "studyId": 12,
-      "subjectId": 3,
-      "id": 10
-    },
-    {
-      "studentId": 8,
-      "subjectCourseId": 11,
-      "grade": 5,
-      "gradingSystem": "de",
-      "try": 2,
-      "date": "",
-      "lecturer": "",
-      "studyId": 12,
-      "subjectId": 3,
-      "id": 11
-    },
-    {
-      "studentId": 5,
-      "subjectCourseId": 11,
-      "grade": 6,
-      "gradingSystem": "de",
-      "try": 1,
-      "date": "",
-      "lecturer": "",
-      "studyId": 5,
-      "subjectId": 3,
-      "id": 13
-    },
-    {
-      "studentId": 5,
-      "subjectCourseId": 11,
-      "grade": 1,
-      "gradingSystem": "de",
-      "try": 2,
-      "date": "",
-      "lecturer": "",
-      "studyId": 5,
-      "subjectId": 3,
-      "id": 14
     }
   ],
   "studyCourses": [
@@ -1099,5 +1085,5 @@
       "content": "Spricht kein französisch",
       "color": "yellow"
     }
-  ] 
+  ]
 }
