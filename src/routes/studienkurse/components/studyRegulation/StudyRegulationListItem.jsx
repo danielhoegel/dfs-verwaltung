@@ -4,13 +4,11 @@ import { withRouter } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
-import EventAvailableIcon from '@material-ui/icons/EventAvailableOutlined';
 import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 
-import { formatDate } from '../../../../helper/helper';
+import StudyRegulationDateChip from './StudyRegulationDateChip';
 
 
 const StudyRegulationListItem = ({
@@ -33,10 +31,8 @@ const StudyRegulationListItem = ({
                 className={classes.regulationContent}
             >
                 <div className={classes.regulationTitle}>
-                    <Chip
-                        label={formatDate(date)}
-                        icon={<EventAvailableIcon />}
-                        variant='outlined'
+                    <StudyRegulationDateChip
+                        date={date}
                         className={classes.regulationDate}
                     />
                     {title}

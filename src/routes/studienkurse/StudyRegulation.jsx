@@ -30,6 +30,7 @@ import SubjectDelete from './components/subject/SubjectDelete';
 import SubjectCourseCreate from './components/subjectCourse/SubjectCourseCreate';
 import SubjectCourseUpdate from './components/subjectCourse/SubjectCourseUpdate';
 import SubjectCourseDelete from './components/subjectCourse/SubjectCourseDelete';
+import StudyRegulationDateChip from './components/studyRegulation/StudyRegulationDateChip';
 
 
 class StudyRegulation extends Component {
@@ -271,12 +272,25 @@ class StudyRegulation extends Component {
         const { studyRegulation, subjects, classes } = this.props;
         return (
             <div>
-                <Typography variant='display1'>
-                    {studyRegulation && studyRegulation.studyCourse
-                        ? `${studyRegulation.title} (${studyRegulation.studyCourse.title})`
-                        : 'Studienordnung'
-                    }
-                </Typography>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <Typography variant='display1'>
+                        {studyRegulation.studyCourse.title} |
+                        <span style={{ fontSize: '0.6em' }}> {studyRegulation.title}</span>
+                    </Typography>
+                    <StudyRegulationDateChip date={studyRegulation.date} />
+                </div>
+                
+                <HiddenDivider />
+                {studyRegulation.description && (
+                    <Typography variant='body2'>
+                        {studyRegulation.description}
+                    </Typography>
+                )}
+
                 <HiddenDivider />
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Button onClick={this.goBack} className={classes.button}>
