@@ -6,12 +6,41 @@ import Paper from '@material-ui/core/Paper';
 
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
-import { studyStatusList } from '../../helper/helper';
+import { studyStatusList, isEmpty } from '../../helper/helper';
 
 
-function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange, classes }) {
+function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange, classes }) {
     const __prefix = prefix || 'study';
     const year = new Date().getFullYear();
+
+    function studyCourseOptions() {
+        return studyCourses.map(({ id, title }) => (
+            <MenuItem key={id} value={id}>
+                {title}
+            </MenuItem>
+        ));
+    }
+
+    function studyRegulationOptions() {
+        const results = [];
+        for (let i = 0; i < studyRegulations.length; i++) {
+            const { id, title, studyCourseId } = studyRegulations[i];
+            if (isEmpty(values.studyCourseId) || values.studyCourseId === studyCourseId)  {
+                results.push(
+                    <MenuItem key={id} value={id}>
+                        {title}
+                    </MenuItem>
+                );
+            }
+        }
+        return results;
+    }
+
+    const studyCourseChangeHandler = (e) => {
+        onChange(e);
+        onChange({ target: { name: 'studyRegulationId', value: '' }});
+    }
+
     return (
         <Fragment>
             <Paper className={classes.paper}>
@@ -21,14 +50,10 @@ function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange,
                         name={`${__prefix}.studyCourseId`}
                         label='Studienkurs'
                         value={values.studyCourseId}
-                        onChange={onChange}
+                        onChange={studyCourseChangeHandler}
                         required
                     >
-                        {studyCourses.map(({ id, title }) => (
-                            <MenuItem key={id} value={id}>
-                                {title}
-                            </MenuItem>
-                        ))}
+                        {studyCourseOptions()}
                     </Field>
                     <Field
                         select
@@ -38,11 +63,7 @@ function UpdateStudy({ values, prefix, studyCourses, studyRegulations, onChange,
                         onChange={onChange}
                         required
                     >
-                        {studyRegulations.map(({ id, title }) => (
-                            <MenuItem key={id} value={id}>
-                                {title}
-                            </MenuItem>
-                        ))}
+                        {studyRegulationOptions()}
                     </Field>
                 </FieldGroup>
                 <FieldGroup>
@@ -81,4 +102,4 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(UpdateStudy);
+export default withStyles(styles)(StudyFields);

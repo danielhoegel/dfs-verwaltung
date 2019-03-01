@@ -15,7 +15,7 @@ const laenderOptions = generateLaenderOptions().map(({ value, label }) => (
     </option>
 ));
 
-function UpdateStudentInformation({ values, prefix, onChange }) {
+function StudentInformationFields({ values, prefix, onChange }) {
     const __prefix = prefix ? `${prefix}.studentInformation` : 'studentInformation';
     return (
         <Fragment>
@@ -46,20 +46,20 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
             <HiddenDivider height={2} />
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.mailUni`}
-                    value={values.mailUni}
+                    name={`${__prefix}.mailPrimary`}
+                    value={values.mailPrimary}
                     onChange={onChange}
                     placeholder='vorname.nachname@hhu.de'
-                    label='E-Mail Uni'
+                    label='Standard-E-Mail'
                     required
                     type='email'
                 />
                 <Field
-                    name={`${__prefix}.mailPrivate`}
-                    value={values.mailPrivate}
+                    name={`${__prefix}.mailSecondary`}
+                    value={values.mailSecondary}
                     onChange={onChange}
                     placeholder='vorname.nachname@gmail.com'
-                    label='E-Mail Privat (optional)'
+                    label='Extra-E-Mail (optional)'
                     type='email'
                 />
             </FieldGroup>
@@ -155,4 +155,4 @@ function UpdateStudentInformation({ values, prefix, onChange }) {
     );
 };
 
-export default UpdateStudentInformation;
+export default StudentInformationFields;

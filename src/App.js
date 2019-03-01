@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -6,7 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
 
 import routes from './routes';
-import { FilterContextProvider } from './components/filter/FilterContext';
 import Layout from './components/layout/Layout';
 import { isEmpty } from './helper/helper';
 
@@ -25,7 +24,7 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <FilterContextProvider>
+                <Fragment>
                     <CssBaseline />
                     <Layout>
                         <Switch>
@@ -35,7 +34,7 @@ class App extends Component {
                             ))}
                         </Switch>
                     </Layout>
-                </FilterContextProvider>
+                </Fragment>
             </BrowserRouter>
         );
     }

@@ -10,7 +10,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import { isNotEmpty, isEmpty } from '../../helper/helper';
 import HiddenDivider from '../../components/HiddenDivider';
 import MyForm from '../../components/MyForm';
-import StudentFields from '../../components/fields/StudentFields';
+import StudentCombinedFields from '../../components/fields/StudentCombinedFields';
 
 import { getStudentenFetching } from './redux/studentenSelectors';
 import { getStudyCourses, getStudyRegulations, getFullStudent } from '../../redux/entitiesSelector';
@@ -34,13 +34,6 @@ class StudentUpdate extends Component {
             ])
             .then(() => this.setState({ error: null, fetching: false }))
             .catch(err => this.setState({ error: err.message, fetching: false }));
-
-            // this.props.dispatch({
-            //     type: 'FETCH_STUDENT',
-            //     request: {
-            //         url: `/students/${this.props.match.params.id}?_embed=studies&_embed=studentInformations`
-            //     }
-            // });
         }
     }
     
@@ -109,7 +102,7 @@ class StudentUpdate extends Component {
                     </Button>
 
                     <MyForm
-                        fields={StudentFields}
+                        fields={StudentCombinedFields}
                         onSubmit={this.updateStudent}
                         defaultValues={{ studentInformation, studies, student }}
                         onCancel={this.goBack}

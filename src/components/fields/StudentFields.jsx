@@ -1,103 +1,52 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import FieldGroup from '../FieldGroup';
+import Field from '../Field';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-
-// import Field from '../Field';
-// import FieldGroup from '../FieldGroup';
-import HiddenDivider from '../HiddenDivider';
-import FieldArray from '../FieldArray';
-import UpdateStudent from '../update/student';
-import UpdateStudentInformation from '../update/studentInformation';
-import UpdateStudy from '../update/studentStudy';
-
-
-const StudentFields = ({
-    change,
-    values,
-    onCancel,
-    add,
-    remove,
-    studyRegulations,
-    studyCourses,
-    classes,
-}) => {
-    const addStudyHandler = (index) => {
-        const item = {
-            year: new Date().getFullYear(),
-            studyCourseId: 1,
-            studyRegulationId: '',
-            status: 1,
-        };
-        add('studies', item);
-    }
-
-    const removeStudyHandler = (index) => {
-        remove('studies', index);
-    }
-
+function StudentFields({ values, prefix, onChange }) {
+    const __prefix = prefix ? `${prefix}.student` : 'student';
     return (
         <Fragment>
-            <Paper className={classes.paper}>
-                <UpdateStudent
-                    onChange={change}
-                    values={values.student}
+            <FieldGroup>
+                <Field
+                    select
+                    name={`${__prefix}.prefix`}
+                    label='Anrede'
+                    value={values.prefix}
+                    onChange={onChange}
+                    required
+                >
+                    <MenuItem key='Frau' value='Frau'>Frau</MenuItem>
+                    <MenuItem key='Herr' value='Herr'>Herr</MenuItem>
+                </Field>
+                <Field
+                    name={`${__prefix}.firstName`}
+                    label='Vorname'
+                    value={values.firstName}
+                    onChange={onChange}
+                    width={2}
+                    required
                 />
-
-            <UpdateStudentInformation
-                onChange={change}
-                values={values.studentInformation}
+                <Field
+                    name={`${__prefix}.lastName`}
+                    label='Nachname'
+                    value={values.lastName}
+                    onChange={onChange}
+                    width={2}
+                    required
                 />
-            </Paper>
-
-            <HiddenDivider height={2} />
-            <Typography component='h3' variant='title'>
-                Studium
-            </Typography>
-            <FieldArray
-                component={UpdateStudy}
-                values={values.studies}
-                onChange={change}
-                addLabel='Studienkurs hinzufügen'
-                removeLabel='Studienkurs entfernen'
-                prefix='studies'
-                addHandler={addStudyHandler}
-                removeHandler={removeStudyHandler}
-                min={1}
-                studyRegulations={studyRegulations}
-                studyCourses={studyCourses}
-            />
-
-            <HiddenDivider height={2} />
-            <Button variant='raised' color='primary' type='submit'>
-                Speichern
-            </Button>
-            <Button variant='raised' onClick={onCancel} style={{ marginLeft: '1rem' }}>
-                Abbrechen
-            </Button>
+                <Field
+                    name={`${__prefix}.matrikelnummer`}
+                    value={values.matrikelnummer}
+                    onChange={onChange}
+                    label='Matrikelnummer'
+                    type='number'
+                    width={1.5}
+                    required
+                />
+            </FieldGroup>
         </Fragment>
     );
 };
 
-StudentFields.propTypes = {
-    change: PropTypes.func.isRequired,
-    values: PropTypes.object.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    add: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
-    studyRegulations: PropTypes.array.isRequired,
-    studyCourses: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired,
-};
-
-const styles = theme => ({
-    paper: {
-        padding: 2 * theme.spacing.unit,
-        marginTop: 2 * theme.spacing.unit,
-    },
-});
-
-export default withStyles(styles)(StudentFields);
+export default StudentFields;
