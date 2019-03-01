@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 
 import HiddenDivider from '../../components/HiddenDivider';
-import { isEmpty, changeNestedObject, removeByIndex, isNotEmpty } from '../../helper/helper'
+import MyForm from '../../components/MyForm';
+import StudentCombinedFields from '../../components/fields/StudentCombinedFields';
 
-import { fetchStudyRegulations, fetchStudyCourses } from '../studienkurse/redux/studyActions';
 import { getStudyCourses, getStudyRegulations } from '../../redux/entitiesSelector';
-import UpdateStuent from '../../components/update/student';
-import UpdateStudentInformation from '../../components/update/studentInformation';
-import FieldArray from '../../components/FieldArray';
-import UpdateStudy from '../../components/update/studentStudy';
 import entitiesActions from '../../redux/entitiesActions';
 
-
-class StudentCreate extends Component {
-    year = new Date().getFullYear()
+class StudentUpdate extends Component {
     state = {
+        fetching: false,
+        creating: false,
+        errors: null
+    }
+
+    defaultValues = {
         student: {
             firstName : '',
             lastName: '',
@@ -38,219 +40,137 @@ class StudentCreate extends Component {
             city: '',
             country: 'Deutschland',
     
-            mailPrivate: '',
-            mailUni: '',
+            mailPrimary: '',
+            mailSecondary: '',
             phoneNumber: '',
             mobileNumber: '',
 
             iban: '',
-            bic: ''
+            bic: '',
+            bank: '',
+            acountHolder: '',
         },
         studies: [
             {
-                year: this.year,
+                year: new Date().getFullYear(),
                 studyCourseId: 1,
                 studyRegulationId: '',
                 status: 1,
             }
         ]
-
     }
 
+    
     componentDidMount() {
-        if (isEmpty(this.props.studyRegulations)) {
-            this.props.fetchStudyRegulations();
-        }
-        
-        if (isEmpty(this.props.studyCourses)) {
-            this.props.fetchStudyCourses();
-        }
-
-        if (isNotEmpty(this.props.values) ) {
-            this.setState(this.props.values);
-        }
+        Promise.all([
+            this.props.fetchStudyRegulations(),
+            this.props.fetchStudyCourses(),
+        ])
+        .catch(err => this.setState({ fetching: false, errors: err.message }));
     }
     
     goBack = () => {
         this.props.history.goBack();
     }
 
-    submitHandler = (e) => {
-        e.preventDefault();
+    validate(data) {
+        const errors = [];
 
-        const { __options, __prevProps, ...data } = this.state;
+        // RETURN
+        if (errors.length) {
+            this.setState({ errors });
+            return false;
+        }
+        return true;
+    }
 
-        // validate input
-        if (true || (// TODO: fix implementation with new data structure
-            data.firstName && data.firstName.length > 1 &&
-            data.lastName && data.lastName.length > 1 &&
-            data.matrikelnummer && data.matrikelnummer.toString().length === 6 &&
-            (data.year <=  this.year + 2 && data.year >= 1990) &&
-            (data.studyCourse === 1 || data.studyCourse === 2)
-        )) {
-            console.log('SUBMIT', data);
-            // apiRequest('/students', { method: 'post', data: data.student })
-            //     .then(({ id: studentId }) => {
-            //         apiRequest('/studentInformations', {
-            //             method: 'post',
-            //             data: { ...data.studentInformation, studentId }
-            //         });
-            //         data.studies.forEach(study => {
-            //             apiRequest('/studies', {
-            //                 method: 'post',
-            //                 data: { ...study, studentId }
-            //             });
-            //         })
-            //     })
-            //     .catch(err => {
-            //         console.log('Error while creating new Student', { err, data });
-            //     });
+    createStudent = (data) => {
+        console.log('CREATE', data);
+        if (this.validate(data)) {
+            this.setState({ creating: true, error: null });
+
             this.props.createStudent(data.student)
-                .then(({ id: studentId }) => {
-                    const studentInformationRequest= this.props.createStudentInformation({ ...data.studentInformation, studentId });
-                    const studyRequests = [];
-                    data.studies.forEach(study => {
-                        studyRequests.push(this.props.createStudy({ ...study, studentId }));
-                    });
-                    Promise.all([studentInformationRequest, ...studyRequests])
-                        .then(res => {
-                            console.log('CREATE STUDENT + EXTRAS SUCCESS', res);
-                        })
+            .then(({ id: studentId }) => {
+                const requests = [];
+                requests.push(this.props.createStudentInformation({ ...data.studentInformation, studentId }));
+                data.studies.forEach(study => {
+                    requests.push(this.props.createStudy({ ...study, studentId }));
                 });
-        } else {
-            console.warn('VALIDATION FAILED', data);
+                return Promise.all(requests);
+            })
+            .then(this.goBack)
+            .catch( err => this.setState({ creating: false, error: err.message }));
         }
     }
 
-    parseValue(value) {
-        return (isNaN(value) || value === '')
-            ? value
-            : Number(value);
-    }
-
-    changeHandler = ({ target: { name, value } }) => {
-        this.setState({
-            [name]: this.parseValue(value)
-        });
-    }
-
-    deepChangeHandler = ({ target: { name, value } }) => {
-        const [firstKey, ...keys] = name.split('.');
-        const nextState = changeNestedObject(keys, value, this.state[firstKey]);
-        // console.log('DEEP-CHANGE', {keys, nextState});
-        this.setState({
-            [firstKey]: nextState
-        });
-    }
-
-    addStudy = () => {
-        this.setState(state => ({
-            studies: [
-                ...state.studies,
-                {
-                    year: this.year,
-                    studyCourse: '',
-                    studyRegulation: '',
-                }
-            ]
-        }));
-    }
-
-    removeStudy = (index) => {
-        const nextStudies = removeByIndex(this.state.studies, index);
-        this.setState({ studies: nextStudies });
-    }
-
     render() {
-        const { classes } = this.props;
-
-        return (
-            <form onSubmit={this.submitHandler} className={classes.form}>
-                <Typography variant='display1' gutterBottom>
-                    Neuer Student
-                </Typography>
-                <HiddenDivider />
-                <Paper className={classes.paper} >
-                    
-                    <UpdateStuent
-                        onChange={this.deepChangeHandler}
-                        values={this.state.student}
-                    />
-
-                    <UpdateStudentInformation
-                        onChange={this.deepChangeHandler}
-                        values={this.state.studentInformation}
-                    />
-
-                    <HiddenDivider height={2} />
-                    <Typography component='h3' variant='title'>
-                        Studium
+        if (!this.state.fetching) {
+            const { classes } = this.props;
+            return (
+                <div>
+                    <Typography variant="display1" gutterBottom>
+                        Neuer Student
                     </Typography>
-                    <FieldArray
-                        component={UpdateStudy}
-                        values={this.state.studies}
-                        onChange={this.deepChangeHandler}
-                        addlabel='Studienkurs hinzufügen'
-                        prefix='studies'
-                        addHandler={this.addStudy}
-                        removeHandler={this.removeStudy}
-                        min={1}
-                        studyRegulations={this.props.studyRegulations}
-                        studyCourses={this.props.studyCourses}
-                    />
-                </Paper>
 
-                <HiddenDivider height={2} />
-                <Button variant='raised' onClick={this.submitHandler} color='primary' className={classes.button}>
-                    Student hinzufügen
-                </Button>
-                <Button variant='raised' onClick={this.goBack} className={classes.button}>
-                    Abbrechen
-                </Button>
-            </form>
-        );
+                    <HiddenDivider />
+                    <Button onClick={this.goBack} className={classes.button} >
+                        <ChevronLeftIcon className={classes.leftIcon} />
+                        Zurück
+                    </Button>
+
+                    <MyForm
+                        fields={StudentCombinedFields}
+                        onSubmit={this.createStudent}
+                        defaultValues={this.defaultValues}
+                        onCancel={this.goBack}
+                        studyCourses={this.props.studyCourses}
+                        studyRegulations={this.props.studyRegulations}
+                        loading={this.state.creating}
+                        error={this.state.errors}
+                    />
+                </div>
+            );
+        } else {
+            return <CircularProgress />;
+        }
     }
 }
 
 const styles = theme => ({
-    form: {
-        maxWidth: '720px'
-    },
-    paper: {
-        padding: 2 * theme.spacing.unit
-    },
-    fieldGroup: {
-        display: 'flex'
-    },
-    stackedFieldGroup: {
-        flexDirection: 'column'
-    },
-    textField: {
-        margin: theme.spacing.unit,
-        flex: 1
-    },
     button: {
-        marginRight: theme.spacing.unit
+        '&:not(:last-child)': {
+            marginRight: theme.spacing.unit,
+        },
     },
     leftIcon: {
-        marginRight: theme.spacing.unit
-    },
+        marginRight: theme.spacing.unit,
+    }
 });
 
-
-const mapStateToProps = (state) => ({
-    studyRegulations: getStudyRegulations(state),
+const mapStateToProps = state => ({
     studyCourses: getStudyCourses(state),
+    studyRegulations: getStudyRegulations(state),
 });
 
 const mapDispatchToProps = {
-    fetchStudyRegulations,
-    fetchStudyCourses,
+    fetchStudyRegulations: entitiesActions.studyRegulation.fetchAll,
+    fetchStudyCourses: entitiesActions.studyCourse.fetchAll,
     createStudent: entitiesActions.student.create,
     createStudentInformation: entitiesActions.studentInformation.create,
     createStudy: entitiesActions.study.create,
+}
+
+StudentUpdate.propTypes = {
+    history: PropTypes.object.isRequired,
+    studyCourses: PropTypes.array.isRequired,
+    studyRegulations: PropTypes.array.isRequired,
+    fetchStudyRegulations: PropTypes.func.isRequired,
+    fetchStudyCourses: PropTypes.func.isRequired,
+    createStudent: PropTypes.func.isRequired,
+    createStudentInformation: PropTypes.func.isRequired,
+    createStudy: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    withStyles(styles)(StudentCreate)
+    withStyles(styles)(StudentUpdate)
 );
