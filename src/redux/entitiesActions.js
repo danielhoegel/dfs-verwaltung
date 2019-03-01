@@ -17,6 +17,14 @@ const asyncAction = action => dispatch => new Promise(
 
 
 /**
+ * Generates a unique id as the primary key
+ * The id is a timestamp in milliseconds
+ */
+function uniqueId() {
+    return Date.now();
+}
+
+/**
  * Generate async CREATE, UPDATE and DELETE actions for all entities
  */
 const entitiesActions = {};
@@ -52,7 +60,7 @@ for (let i = 0; i < entities.length; i++) {
             request: {
                 url: `/${plural}`,
                 method: 'post',
-                data
+                data: { ...data, id: uniqueId() }
             }
         }),
         update: data => asyncAction({
