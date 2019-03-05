@@ -86,19 +86,6 @@ export function highlightMatch(string, searchValue, highlightTag = 'strong') {
     return{string};
 }
 
-
-/**
- * Translate studienkurs id into name
- * @param {string} studienkurs 
- */
-export function translateStudienkurse(studienkurs) {
-    switch (Number(studienkurs)) {
-        case 1: return 'Grundstudienkurs';
-        case 2: return 'Aufbaustudienkurs';
-        default: return studienkurs;
-    }
-}
-
 export const studyStatusList = [
     { id: 0, value: 'Beworben' },
     { id: 1, value: 'Aktiv'},
@@ -111,8 +98,9 @@ export const studyStatusList = [
  * Translate study status into title
  * @param {string} studyStatus 
  */
-export function translateStudyStatus(studyStatus) {
-    return studyStatusList[studyStatus] || studyStatus;
+export function translateStudyStatus(statusId) {
+    const status = studyStatusList.find(({ id }) => id === statusId);
+    return status ? status.value : statusId;
 }
 
 export function shortVorlesungTyp(typ) {
@@ -303,3 +291,23 @@ export function copyToClipboard(value) {
     
     document.body.removeChild(textArea);
 };
+
+/**
+ * Groups an array of objects by a key from the object 
+ * @param {array} items Array of objects
+ * @param {string} key Property of the objects
+ * @returns {object} Returns an object with the values of the key as keys
+ */
+export function groupItemsByKey(items, key) {
+    const groupedItems = {};
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const groupName = item[key];
+        if (groupedItems[groupName]) {
+            groupedItems[groupName].push(item);
+        } else {
+            groupedItems[groupName] = [item];
+        }
+    }
+    return groupedItems;
+}

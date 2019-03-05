@@ -31,7 +31,7 @@ export function getStudyRegulationWithStudyCourse(state, studyCourseId, studyReg
 
 export function getStudyRegulationByIdWithStudyCourse(state, studyRegulationId) {
     const studyRegulation = getStudyRegulationById(state, studyRegulationId);
-    studyRegulation.studyCourse = getStudyCourseById(state, studyRegulation.studyCourseId);
+    studyRegulation.studyCourse = getStudyCourseById(state)(studyRegulation.studyCourseId);
     return studyRegulation;
 }
 

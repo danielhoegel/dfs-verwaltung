@@ -13,10 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { getFullStudents } from '../../../../redux/entitiesSelector';
+import { getFullStudents, getStudyCourseById } from '../../../../redux/entitiesSelector';
 import { getStudentenFilter } from '../../redux/studentenSelectors';
 import { filterStudenten, resetStudentenFilter } from '../../redux/studentenActions';
-import { translateStudienkurse, translateStudyStatus } from '../../../../helper/helper';
+import { translateStudyStatus } from '../../../../helper/helper';
 
 
 const selectFilterStyles = theme => ({
@@ -145,6 +145,7 @@ const StudentenFilter = ({
     filter,
     filterStudenten,
     resetStudentenFilter,
+    getStudyCourseById,
 }) => {
     const changeHandler = ({ target }) => {
         console.log('onChange', target);
@@ -163,7 +164,7 @@ const StudentenFilter = ({
 
         return [...new Set(stuyCourses)]
             .map(stuyCourse => (
-                { value: stuyCourse, label: translateStudienkurse(stuyCourse) }
+                { value: stuyCourse, label: getStudyCourseById(stuyCourse).title }
             ));
     };
 
@@ -253,7 +254,8 @@ const styles = theme => ({
 
 const mapStateToProps = state => ({
     studenten: getFullStudents(state),
-    filter: getStudentenFilter(state)
+    filter: getStudentenFilter(state),
+    getStudyCourseById: getStudyCourseById(state)
 });
 
 export default connect(mapStateToProps, { filterStudenten, resetStudentenFilter })(

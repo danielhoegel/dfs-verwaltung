@@ -8,6 +8,7 @@ class LESBListeFaecher extends Component {
     static propTypes = {
         student: PropTypes.object.isRequired,
         faecher: PropTypes.array.isRequired,
+        getGradesForStudentAndSubjectCourse: PropTypes.func.isRequired,
     }
 
     render() {
@@ -33,7 +34,7 @@ class LESBListeFaecher extends Component {
                                 veranstaltung={veranstaltung}
                                 student={student}
                                 key={veranstaltung.id}
-                                getNotenForStudentAndVeranstaltung={this.props.getNotenForStudentAndVeranstaltung}
+                                getGradesForStudentAndSubjectCourse={this.props.getGradesForStudentAndSubjectCourse}
                             />
                         )
                     )

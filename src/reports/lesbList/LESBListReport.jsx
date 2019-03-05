@@ -14,13 +14,6 @@ class LESBListReport extends Component {
         // const { filter: { studyCourse, status, year} } = this.props;
         return (
             <div className='lesb-liste'>
-                {/* <h1>LESB-Listen</h1>
-                <div>
-                    Studienkurs: {studyCourse ? translateStudienkurse(studyCourse) : 'Alle'}{', '}
-                    Status: {status ? translateStudyStatus(status) : 'Alle'}{', '}
-                    Jahrgang: {year || 'Alle'}
-                </div>
-                <br /> */}
                 {this.props.students
                     .map(student => (
                         <div className='student' key={student.id}>
@@ -31,14 +24,14 @@ class LESBListReport extends Component {
                                 student={student}
                                 faecher={this.state.faecher.de}
                                 getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
-                                getNotenForStudentAndVeranstaltung={this.props.getNotenForStudentAndVeranstaltung}
+                                getGradesForStudentAndSubjectCourse={this.props.getGradesForStudentAndSubjectCourse}
                             />
                             <p className='anmerkung'>(aus den oben angegebenen Klausuren müssen 5 von den 6 fett gedruckten Klausuren bestanden werden, davon mindestens 1 in jedem Rechtsgebiet - sollte der/die Studierende den Studienkurs verlassen, müssen 9 von den 12 Klausuren bestanden sein)</p>
                             <LESBListeFaecher
                                 student={student}
                                 faecher={this.state.faecher.fr}
                                 getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
-                                getNotenForStudentAndVeranstaltung={this.props.getNotenForStudentAndVeranstaltung}
+                                getGradesForStudentAndSubjectCourse={this.props.getGradesForStudentAndSubjectCourse}
                             />
                             <p className='anmerkung'>(dür den deutsch-französischen Studienkurs müssen zusätzlich zu den oben geforderten 5 von 6 Klausuren noch 4 aus den angegebenen französischen Klausuren bestanden werden)</p>
                         </div>

@@ -18,8 +18,8 @@ const StudentInformation = ({ classes, student }) => {
         postal,
         country,
         city,
-        mailUni,
-        mailPrivate,
+        mailPrimary,
+        mailSecondary,
         phoneNumber,
         mobileNumber,
         bank,
@@ -51,11 +51,11 @@ const StudentInformation = ({ classes, student }) => {
             <Typography as='h3' variant='body2' className={classes.subheading}>E-Mail</Typography>
             <div>
                 <span className={classes.noSelect}>Mail (Uni): </span>
-                <a href={`mailto:${mailUni}`} className={classes.link}>{mailUni}</a>
+                <a href={`mailto:${mailPrimary}`} className={classes.link}>{mailPrimary}</a>
             </div>
             <div>
                 <span className={classes.noSelect}>Mail (Privat): </span>
-                <a href={`mailto:${mailPrivate}`} className={classes.link}>{mailPrivate}</a>
+                <a href={`mailto:${mailSecondary}`} className={classes.link}>{mailSecondary}</a>
             </div>
                 
             <Typography as='h3' variant='body2' className={classes.subheading}>Telefonnummer</Typography>

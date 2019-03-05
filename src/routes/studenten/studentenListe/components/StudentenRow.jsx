@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,8 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import MailIcon from '@material-ui/icons/MailOutlined';
 
-import { translateStudienkurse, translateStudyStatus, isNotEmpty } from '../../../../helper/helper';
-import NotesIndicator from './NotesIndicator';
+import { translateStudyStatus, isNotEmpty } from '../../../../helper/helper';
+import { getStudyCourseById } from '../../../../redux/entitiesSelector';
+// import NotesIndicator from './NotesIndicator';
 
 class StudentenRow extends Component {
     shouldComponentUpdate(nextProps) {
@@ -47,7 +49,7 @@ class StudentenRow extends Component {
                 <TableCell onClick={this.goToDetails}>
                     {student.studies && student.studies.map(study => (
                         <div key={`${study.id}`}>
-                            {translateStudienkurse(study.studyCourseId)}{' '}
+                            {this.props.getStudyCourseById(study.studyCourseId).title}{' '}
                             {study.year}{' '}
                             ({translateStudyStatus(study.status)})
                         </div>
@@ -57,9 +59,9 @@ class StudentenRow extends Component {
                     {student.notes.length > 0 && <NotesIndicator notes={student.notes} />}
                 </TableCell> */}
                 <TableCell padding='checkbox'>
-                    {isNotEmpty(student.studentInformation) && student.studentInformation.mailUni && (
-                        <a href={`mailto:${student.studentInformation.mailUni}`}>
-                            <IconButton aria-label='E-Mail' title={`E-Mail an ${student.studentInformation.mailUni}`}>
+                    {isNotEmpty(student.studentInformation) && student.studentInformation.mailPrimary && (
+                        <a href={`mailto:${student.studentInformation.mailPrimary}`}>
+                            <IconButton aria-label='E-Mail' title={`E-Mail an ${student.studentInformation.mailPrimary}`}>
                                 <MailIcon />
                             </IconButton>
                         </a>
@@ -84,4 +86,10 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(StudentenRow);
+const mapStateToProps = state => ({
+    getStudyCourseById: getStudyCourseById(state)
+});
+
+export default connect(mapStateToProps)(
+    withStyles(styles)(StudentenRow)
+);

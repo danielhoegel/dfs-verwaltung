@@ -1,14 +1,14 @@
 import React from 'react';
-import { translateStudienkurse, translateStudyStatus } from '../../helper/helper';
+import { translateStudyStatus } from '../../helper/helper';
 
-function StudentListReport ({ students, filter: { studyCourse, year, status } }) {
+function StudentListReport ({ students, filter, getStudyCourseById }) {
     return (
         <div className='root'>
             <h1>Studentenliste</h1>
             <div>
-                Studienkurs: {studyCourse ? translateStudienkurse(studyCourse) : 'Alle'}{', '}
-                Status: {status ? translateStudyStatus(status) : 'Alle'}{', '}
-                Jahrgang: {year || 'Alle'}
+                Studienkurs: {filter.studyCourse ? getStudyCourseById(filter.studyCourse).title : 'Alle'}{', '}
+                Status: {filter.status ? translateStudyStatus(filter.status) : 'Alle'}{', '}
+                Jahrgang: {filter.year.length ? filter.year.join(', ') : 'Alle'}
             </div>
             <br />
             <table border='1' className='table'>
@@ -31,8 +31,8 @@ function StudentListReport ({ students, filter: { studyCourse, year, status } })
                             <td>{student.firstName}</td>
                             <td>{student.lastName}</td>
                             <td>{student.studentInformation.birthDate}</td>
-                            <td>{student.studentInformation.mailUni}</td>
-                            <td>{student.studentInformation.mailPrivate}</td>
+                            <td>{student.studentInformation.mailPrimary}</td>
+                            <td>{student.studentInformation.mailSecondary}</td>
                             <td>{student.studentInformation.phoneNumber}</td>
                             <td>{student.studentInformation.mobileNumber}</td>
                         </tr>

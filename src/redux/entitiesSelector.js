@@ -1,3 +1,5 @@
+import { groupItemsByKey } from "../helper/helper";
+
 /**
  * BASE SELECTORS
  */
@@ -34,19 +36,35 @@ export function getGrades(state) {
 }
 
 export function getGradeById(state, gradeId) {
-    console.log('getGradeById', gradeId, getGrades(state));
     return getGrades(state).find(({ id }) => id === gradeId);
 };
 
-export function getGradesByStudentId(state, studentId) {
-    return __entities(state).grades[studentId] || [];
+export function getGradesByStudyId(state, studyId) {
+    const grades = __entities(state).grades[studyId] || [];
+    return grades;
 }
+
+export function getGradesByStudentId(state, studentId) {
+    const studies = getStudiesByStudentId(state, studentId);
+    return studies.reduce((gradeArray, study) => {
+            const grades = getGradesByStudyId(state, study.id);
+            return gradeArray.concat(grades);
+        }, []);
+}
+
+export const getGradesForStudentAndSubjectCourse = state => (studentId, subjectCourseId) => {
+    const grades = getGradesByStudentId(state, studentId).filter(grade =>
+        grade.subjectCourseId === subjectCourseId
+    );  
+    // console.log({ studentId, subjectCourseId, grades });
+    return grades;
+};
 
 export function getStudyCourses(state) {
     return Object.values(__entities(state).studyCourses);
 }
 
-export function getStudyCourseById(state, studyCourseId) {
+export const getStudyCourseById = state => studyCourseId => {
     return __entities(state).studyCourses[studyCourseId] || null;
 }
 
@@ -122,4 +140,15 @@ export function getFullStudents(state) {
         results.push(getFullStudent(state, students[i].id))
     }
     return results;
+}
+
+export function getSubjectsByStudyRegulationIdGroupedBySemesterAndType(state, studyRegulationId) {
+    const subjects = getSubjectsByStudyRegulationId(state, studyRegulationId);
+    const groupedSubjects = groupItemsByKey(subjects, 'semester');
+    for (const semester in groupedSubjects) {
+        if (groupedSubjects.hasOwnProperty(semester)) {
+            groupedSubjects[semester] = groupItemsByKey(groupedSubjects[semester], 'type')
+        }
+    }
+    return groupedSubjects;
 }

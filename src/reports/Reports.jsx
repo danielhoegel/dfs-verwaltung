@@ -23,8 +23,8 @@ import ErgebnisseReport from './ergebnisse/ErgebnisseReport';
 import ergebnisseReportStyles from './ergebnisse/ergebnisseReportStyles';
 import juice from 'juice';
 import { printPage } from '../components/Printing';
-import { getFaecherGroupedByTyp, getVeranstaltungenForFach, getNotenForStudentAndVeranstaltung, getPunkteForVeranstaltungAndStudent, getFaecherDataForUEAndSemester } from '../helper/selectors';
-import { getSubjects } from '../redux/entitiesSelector';
+import { getFaecherGroupedByTyp, getVeranstaltungenForFach, getPunkteForVeranstaltungAndStudent, getFaecherDataForUEAndSemester } from '../helper/selectors';
+import { getSubjects, getGradesForStudentAndSubjectCourse, getStudyCourseById } from '../redux/entitiesSelector';
 
 
 const StudentenlisteLoading = () => (
@@ -62,7 +62,13 @@ class Reports extends Component {
                     fileName: 'Studentenliste',
                     orientation: 'landscape',
                     styles: studentListReportStyles,
-                    html: renderToString(<StudentListReport students={filteredStudenten} filter={filter} />)
+                    html: renderToString(
+                        <StudentListReport
+                            students={filteredStudenten}
+                            filter={filter}
+                            getStudyCourseById={this.props.getStudyCourseById}
+                        />
+                    )
                 });
                 break;
             
@@ -76,7 +82,7 @@ class Reports extends Component {
                             filter={filter}
                             subjects={this.props.subjectsGrouped}
                             getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
-                            getNotenForStudentAndVeranstaltung={this.props.getNotenForStudentAndVeranstaltung}
+                            getGradesForStudentAndSubjectCourse={this.props.getGradesForStudentAndSubjectCourse}
                         />
                     )
                 });
@@ -174,9 +180,10 @@ const styles = theme => ({
 
 const mapStateToProps = state => ({
     getVeranstaltungenForFach: getVeranstaltungenForFach(state),
-    getNotenForStudentAndVeranstaltung: getNotenForStudentAndVeranstaltung(state),
+    getGradesForStudentAndSubjectCourse: getGradesForStudentAndSubjectCourse(state),
     getPunkteForVeranstaltungAndStudent: getPunkteForVeranstaltungAndStudent(state),
     getFaecherDataForUEAndSemester: getFaecherDataForUEAndSemester(state),
+    getStudyCourseById: getStudyCourseById(state),
     filteredStudenten: getFilteredStudenten(state),
     fetching: getStudentenFetching(state),
     filter: getStudentenFilter(state),

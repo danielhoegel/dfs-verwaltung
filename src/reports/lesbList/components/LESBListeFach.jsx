@@ -6,11 +6,12 @@ class LESBListeFach extends Component {
         fach: PropTypes.object.isRequired,
         veranstaltung: PropTypes.object.isRequired,
         student: PropTypes.object.isRequired,
+        getGradesForStudentAndSubjectCourse: PropTypes.func.isRequired,
     }
 
     render() {
         const { student, fach, veranstaltung } = this.props;
-        const noten = this.props.getNotenForStudentAndVeranstaltung(student.id, veranstaltung.id);
+        const noten = this.props.getGradesForStudentAndSubjectCourse(student.id, veranstaltung.id);
 
         if (noten.length > 0) {
             return (

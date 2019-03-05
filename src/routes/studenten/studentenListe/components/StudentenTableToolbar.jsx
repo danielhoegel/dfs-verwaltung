@@ -7,8 +7,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MailIcon from '@material-ui/icons/MailOutlined';
-import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import PrintIcon from '@material-ui/icons/PrintOutlined';
+// import DeleteIcon from '@material-ui/icons/DeleteOutlined';
+// import PrintIcon from '@material-ui/icons/PrintOutlined';
+
 import { isNotEmpty } from '../../../../helper/helper';
 
 class StudentenTableToolbar extends Component {
@@ -23,9 +24,9 @@ class StudentenTableToolbar extends Component {
         return this.props.selectedStudents
             .map(student => {
                 if (isNotEmpty(student.studentInformation)) {
-                    const { mailUni, mailPrivate } = student.studentInformation;
-                    return mailUni ? mailUni :
-                        mailPrivate ? mailPrivate : null;
+                    const { mailPrimary, mailSecondary } = student.studentInformation;
+                    return mailPrimary ? mailPrimary :
+                        mailSecondary ? mailSecondary : null;
                 }
                 return null;
             })

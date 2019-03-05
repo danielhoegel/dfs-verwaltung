@@ -60,7 +60,7 @@ export function generateGradeString(grade, target) {
     return target === 'de' ? `${grade} Pkt.` : `${grade} / 20`;
 }
 
-export function formatNote(note, target) {
+export function formatGrade(note, target) {
     if (
         (note.gradingSystem === 'de' && target === 'de' )||
         (note.gradingSystem === 'fr' && target === 'fr')

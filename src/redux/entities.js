@@ -29,7 +29,7 @@ export default [
         typeSingular: 'GRADE',
         typePlural: 'GRADES',
         isArray: true,
-        key: 'studentId'
+        key: 'studyId'
     },
     {
         singular: 'studyCourse',

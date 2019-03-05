@@ -18,9 +18,8 @@ import LESBListReport from '../../../../reports/lesbList/LESBListReport';
 import lesbListReportStyles from '../../../../reports/lesbList/lesbListReportStyles';
 import ErgebnisseReport from '../../../../reports/ergebnisse/ErgebnisseReport';
 import ergebnisseReportStyles from '../../../../reports/ergebnisse/ergebnisseReportStyles';
-import { getVeranstaltungenForFach, getNotenForStudentAndVeranstaltung, getPunkteForVeranstaltungAndStudent, getFaecherDataForUEAndSemester, getFaecherGroupedByTyp } from '../../../../helper/selectors';
-import { getSubjects } from '../../../../redux/entitiesSelector';
-
+import { getVeranstaltungenForFach, getPunkteForVeranstaltungAndStudent, getFaecherDataForUEAndSemester, getFaecherGroupedByTyp } from '../../../../helper/selectors';
+import { getSubjects, getGradesForStudentAndSubjectCourse, getStudyCourseById } from '../../../../redux/entitiesSelector';
 
 const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props }) => {
     return (
@@ -38,7 +37,12 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
             }
         >
             <Printing
-                component={<StudentListReport students={props.filteredStudenten} filter={props.filter} />}
+                component={
+                    <StudentListReport
+                        students={props.filteredStudenten}
+                        filter={props.filter}
+                        getStudyCourseById={props.getStudyCourseById}
+                    />}
                 styles={studentListReportStyles}
                 fileName='Studentenliste'
                 orientation='landscape'
@@ -52,7 +56,7 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
                         filter={props.filter}
                         subjects={props.subjectsGrouped}
                         getVeranstaltungenForFach={props.getVeranstaltungenForFach}
-                        getNotenForStudentAndVeranstaltung={props.getNotenForStudentAndVeranstaltung}
+                        getGradesForStudentAndSubjectCourse={props.getGradesForStudentAndSubjectCourse}
                     />
                 }
                 styles={lesbListReportStyles}
@@ -96,9 +100,10 @@ const mapStateToProps = state => ({
     filteredStudenten: getFilteredStudenten(state),
     filter: getStudentenFilter(state),
     getVeranstaltungenForFach: getVeranstaltungenForFach(state),
-    getNotenForStudentAndVeranstaltung: getNotenForStudentAndVeranstaltung(state),
+    getGradesForStudentAndSubjectCourse: getGradesForStudentAndSubjectCourse(state),
     getPunkteForVeranstaltungAndStudent: getPunkteForVeranstaltungAndStudent(state),
     getFaecherDataForUEAndSemester: getFaecherDataForUEAndSemester(state),
+    getStudyCourseById: getStudyCourseById(state),
     subjects: getSubjects(state),
     subjectsGrouped: getFaecherGroupedByTyp(state),
 });

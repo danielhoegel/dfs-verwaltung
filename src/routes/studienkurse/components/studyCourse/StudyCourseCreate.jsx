@@ -12,6 +12,8 @@ class StudyCourseCreate extends Component {
     }
 
     submitHandler = (data) => {
+        console.log('CREATE StudyCourse', data);
+
         this.setState({
             loading: true,
             error: null

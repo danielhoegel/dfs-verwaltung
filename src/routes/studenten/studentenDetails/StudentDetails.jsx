@@ -14,10 +14,10 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { fetchStudentForId } from '../redux/studentenActions';
-import { getFullStudent } from '../../../redux/entitiesSelector';
+import { getFullStudent, getStudyCourseById } from '../../../redux/entitiesSelector';
 
-import { translateStudienkurse, translateStudyStatus, isNotEmpty } from '../../../helper/helper';
-import FaecherGrouped from './components/FaecherGrouped';
+import { translateStudyStatus, isNotEmpty } from '../../../helper/helper';
+import SubjectList from './components/SubjectList';
 import StudentInformation from './components/StudentInformation';
 import GradeCreate from './components/GradeCreate';
 import Modal from '../../../components/Modal';
@@ -55,22 +55,24 @@ class StudentDetails extends Component {
     }
 
     state = {
-        studentId: Number(this.props.match.params.id),
         gradeCreateModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
         gradeCreateModalData: null,
-        tab: 0
+        tab: (isNotEmpty(this.props.student) && this.props.student.studies.length)
+            ? this.__sortedStudies[0].id
+            : 'contact'
     }
+
+    studentId = Number(this.props.match.params.id);
 
     componentDidMount() {
         if (!this.props.student) {
-            // this.props.fetchStudentForId(this.state.studentId);
             this.fetchStudent();
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (prevProps.match.params.id !== this.props.match.params.id) {
             this.fetchStudent();
         }
@@ -80,7 +82,7 @@ class StudentDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_STUDENT',
             request: {
-                url: `/students/${this.state.studentId}?_embed=studies&_embed=studentInformations`
+                url: `/students/${this.studentId}?_embed=studies&_embed=studentInformations`
             }
         });
     }
@@ -90,7 +92,7 @@ class StudentDetails extends Component {
     }
 
     updateStudent = () => {
-        this.props.history.push(`/studenten/${this.state.studentId}/update`);
+        this.props.history.push(`/studenten/${this.studentId}/update`);
     }
 
     openNoteModal = (data) => {
@@ -110,7 +112,7 @@ class StudentDetails extends Component {
 
     createNote = () => {
         this.openNoteModal({
-            studentId: this.state.studentId
+            studentId: this.studentId
         });
     }
 
@@ -119,16 +121,17 @@ class StudentDetails extends Component {
     };
 
     sortStudies() {
-        return this.props.student && isNotEmpty(this.props.student)
+        return isNotEmpty(this.props.student)
             ? this.props.student.studies.sort(
                 (a, b) => b.year - a.year
             ) : [];
     }
 
+    __sortedStudies = [{id: 0}, {id: 1}];
+
     render() {
         const { tab } = this.state;
         const { student, classes } = this.props;
-        const sortedStudies = this.sortStudies();
         return student ? (
             <Fragment>
                 <div>
@@ -156,49 +159,42 @@ class StudentDetails extends Component {
                 </div>
 
                 <Divider hidden height='1rem' />
-                {(isNotEmpty(this.props.student.studentInformation) || isNotEmpty(this.props.student.studies)) && (
-                    <Paper component="div" className={classes.tabsContainer}>
-                        <Tabs
-                            value={tab}
-                            onChange={this.tabChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
-                            scrollButtons='auto'
-                            className={classes.tabsHeader}
-                        >
-                            {isNotEmpty(this.props.student.studentInformation) && (
-                                <Tab value='contact' label='Kontaktdaten' />
+                <Paper component="div" className={classes.tabsContainer}>
+                    <Tabs
+                        value={tab}
+                        onChange={this.tabChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
+                        scrollButtons='auto'
+                        className={classes.tabsHeader}
+                    >
+                        <Tab value='contact' label='Kontaktdaten' />
+                        {this.__sortedStudies.map(study => (
+                            <Tab
+                                key={study.id}
+                                value={study.id}
+                                label={`${this.props.getStudyCourseById(study.studyCourseId).title} ${study.year} (${translateStudyStatus(study.status)})`}
+                            />
+                        ))}
+                    </Tabs>
+                    <div className={classes.tabContainer}>
+                        <div className={classes.tabContainerInside}>
+                            {tab === 'contact' && <StudentInformation student={this.props.student} />}
+                            {this.__sortedStudies.map(study =>
+                                tab === study.id && (
+                                    <SubjectList
+                                        key={study.id}
+                                        studentId={student.id}
+                                        studyRegulationId={study.studyRegulationId}
+                                        openNoteModal={this.openNoteModal}
+                                        study={study}
+                                    />
+                                )
                             )}
-                            {sortedStudies.map((study, index) => (
-                                <Tab
-                                    key={index}
-                                    value={index}
-                                    label={`${translateStudienkurse(study.studyCourseId)} ${study.year} (${translateStudyStatus(study.status)})`}
-                                />
-                            ))}
-                        </Tabs>
-                        <div className={classes.tabContainer}>
-                            <div className={classes.tabContainerInside}>
-                                {tab === 'contact' && isNotEmpty(this.props.student.studentInformation) && (
-                                    <StudentInformation student={this.props.student} />
-                                )}
-                                {sortedStudies.map((study, index) => (
-                                    <Fragment key={index}>
-                                        {tab === index && (
-                                            <FaecherGrouped
-                                                studentId={student.id}
-                                                studyCourseId={study.studyCourseId}
-                                                openNoteModal={this.openNoteModal}
-                                                study={study}
-                                            />
-                                        )}
-                                    </Fragment>
-                                ))}
-                            </div>
                         </div>
-                    </Paper>
-                )}
+                    </div>
+                </Paper>
                 
                 <Modal
                     component={GradeCreate}
@@ -242,7 +238,8 @@ const styles = theme => ({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-    student: getFullStudent(state, ownProps.match.params.id)
+    student: getFullStudent(state, ownProps.match.params.id),
+    getStudyCourseById: getStudyCourseById(state),
 });
 
 export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(

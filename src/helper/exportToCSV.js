@@ -23,7 +23,7 @@ export default function exportToCSV(arrayOfObjects, fileName = 'Export') {
     if (!arrayOfObjects.length) return;
 
     const csvRows = [];
-    const keys = ['id', 'matrikelnummer', 'firstName', 'lastName', 'prefix', 'birthDate', 'birthPlace', 'birthCountry', 'street', 'streetNumber', 'addressExtra', 'postal', 'city', 'country', 'mailUni', 'mailPrivate', 'phoneNumber', 'mobileNumber'];
+    const keys = ['id', 'matrikelnummer', 'firstName', 'lastName', 'prefix', 'birthDate', 'birthPlace', 'birthCountry', 'street', 'streetNumber', 'addressExtra', 'postal', 'city', 'country', 'mailPrimary', 'mailSecondary', 'phoneNumber', 'mobileNumber'];
 
     // header
     csvRows.push(arrayToCSVRow(keys));
