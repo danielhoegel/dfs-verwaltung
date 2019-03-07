@@ -100,7 +100,7 @@ class SubjectList extends Component {
         for (const semester in this.props.groupedSubjects) {
             if (this.props.groupedSubjects.hasOwnProperty(semester)) {
                 semesterGroups.push(
-                    <Fragment>
+                    <Fragment key={semester}>
                         <Typography
                             variant='display1'
                             component='h3'
