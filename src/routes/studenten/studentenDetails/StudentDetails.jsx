@@ -60,7 +60,7 @@ class StudentDetails extends Component {
         noteUpdateModalData: null,
         gradeCreateModalData: null,
         tab: (isNotEmpty(this.props.student) && this.props.student.studies.length)
-            ? this.__sortedStudies[0].id
+            ? this.props.student.studies[0].id
             : 'contact'
     }
 
@@ -120,15 +120,6 @@ class StudentDetails extends Component {
         this.setState({ tab });
     };
 
-    sortStudies() {
-        return isNotEmpty(this.props.student)
-            ? this.props.student.studies.sort(
-                (a, b) => b.year - a.year
-            ) : [];
-    }
-
-    __sortedStudies = [{id: 0}, {id: 1}];
-
     render() {
         const { tab } = this.state;
         const { student, classes } = this.props;
@@ -170,7 +161,7 @@ class StudentDetails extends Component {
                         className={classes.tabsHeader}
                     >
                         <Tab value='contact' label='Kontaktdaten' />
-                        {this.__sortedStudies.map(study => (
+                        {student.studies.map(study => (
                             <Tab
                                 key={study.id}
                                 value={study.id}
@@ -181,7 +172,7 @@ class StudentDetails extends Component {
                     <div className={classes.tabContainer}>
                         <div className={classes.tabContainerInside}>
                             {tab === 'contact' && <StudentInformation student={this.props.student} />}
-                            {this.__sortedStudies.map(study =>
+                            {student.studies.map(study =>
                                 tab === study.id && (
                                     <SubjectList
                                         key={study.id}

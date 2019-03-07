@@ -25,7 +25,10 @@ export function getStudentInformationsByStudentId(state, studentId) {
 }
 
 export function getStudiesByStudentId(state, studentId) {
-    return __entities(state).studies[studentId] || [];
+    const studies = __entities(state).studies[studentId];
+    return studies
+        ? studies.sort( (a, b) => b.year - a.year )
+        : [];
 }
 
 export function getGrades(state) {
@@ -69,10 +72,11 @@ export const getStudyCourseById = state => studyCourseId => {
 }
 
 export function getStudyRegulations(state) {
-    return Object.values(__entities(state).studyRegulations)
+    const studyRegulations = Object.values(__entities(state).studyRegulations)
         .reduce((studyRegulationArray, studyRegulations) => {
             return studyRegulations.concat(studyRegulationArray);
         }, []);
+    return studyRegulations.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
 export function getStudyRegulationsByStudyCourseId(state, studyCourseId) {
