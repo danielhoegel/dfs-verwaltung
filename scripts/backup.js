@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const database = './server/db.json';
+const database = './server/datenbank.json';
 const backup = `./server/backups/datenbank-backup-${Date.now()}.json`;
 
 // destination.txt will be created or overwritten by default.
