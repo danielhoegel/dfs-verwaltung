@@ -48,7 +48,7 @@ class StudentUpdate extends Component {
             iban: '',
             bic: '',
             bank: '',
-            acountHolder: '',
+            accountHolder: '',
         },
         studies: [
             {

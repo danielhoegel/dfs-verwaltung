@@ -28,8 +28,8 @@ const TypeGroup = withStyles(theme => ({
     },
     headCell: {}
 }))(({
-    typ,
-    faecher,
+    type,
+    subjects,
     studentId,
     openGradeModal,
     study,
@@ -38,12 +38,12 @@ const TypeGroup = withStyles(theme => ({
     <Table padding='dense' className={classes.table}>
         <TableHead className={classes.tableHead}>
             <TableRow className={classes.headRow}>
-                <TableCell className={classes.headCell} style={{width: '30%'}}>Fach ({typ.toUpperCase()})</TableCell>
+                <TableCell className={classes.headCell} style={{width: '30%'}}>Fach ({type.toUpperCase()})</TableCell>
                 <TableCell className={classes.headCell} style={{width: '50%'}}>Veranstaltung</TableCell>
                 <TableCell className={classes.headCell} style={{width: '20%'}}>(Punkte)</TableCell>
             </TableRow>
         </TableHead>
-        {faecher    
+        {subjects    
             .sort((a, b) => (
                 a.type.localeCompare(b.type) ||
                 a.title.localeCompare(b.title) ||
