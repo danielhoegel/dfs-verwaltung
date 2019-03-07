@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from "prop-types";
 import { NavLink } from 'react-router-dom';
 
-import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownloadOutlined';
@@ -14,22 +16,44 @@ class StudentenActions extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <Fragment>
                 <StudentPrintMenu ButtonComponent={
-                    <IconButton title='PDF herunterladen oder drucken'>
-                        <PrintIcon />
-                    </IconButton>
+                    <Button className={styles.button} title='PDF herunterladen oder drucken'>
+                        <PrintIcon className={classes.leftIcon} />
+                        Berichte
+                    </Button>
                 } />
-                <IconButton onClick={this.props.exportPDF} title='CSV-/Excel-Datei herunterladen'>
-                    <CloudDownloadIcon />
-                </IconButton>
-                <IconButton component={NavLink} to='/studenten/create' title='Student hinzufügen'>
-                    <AddIcon />
-                </IconButton>
+                <Button className={styles.button} onClick={this.props.exportPDF} title='CSV-/Excel-Datei herunterladen'>
+                    <CloudDownloadIcon className={classes.leftIcon} />
+                    Export
+                </Button>
+                <Button className={styles.button} component={NavLink} to='/studenten/create' title='Student hinzufügen'>
+                    <AddIcon className={classes.leftIcon} />
+                    Student
+                </Button>
             </Fragment>
         );
     }
 }
 
-export default StudentenActions;
+const styles = theme => ({
+    button: {
+        '&:not(:last-child)': {
+            marginRight: theme.spacing.unit
+        },
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit
+    },
+});
+
+StudentenActions.propTypes = {
+    classes: PropTypes.object.isRequired,
+    exportPDF: PropTypes.func.isRequired,
+};
+
+export default withStyles(styles)(StudentenActions);
+
+
