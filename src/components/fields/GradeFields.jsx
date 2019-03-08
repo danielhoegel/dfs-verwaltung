@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,9 +12,10 @@ import FieldGroup from '../FieldGroup';
 import FieldRadioGroup from '../FieldRadioGroup';
 import HiddenDivider from '../HiddenDivider';
 import SearchSelect from '../../components/SearchSelect';
-import { getStudiesByStudentId } from '../../redux/entitiesSelector';
+import { getStudiesByStudentId, getStudyById } from '../../redux/entitiesSelector';
 import { translateStudyStatus } from '../../helper/helper';
 import FieldSelect from '../FieldSelect';
+import MessageBox from '../MessageBox';
 
 
 const GradeFields = ({
@@ -23,18 +25,14 @@ const GradeFields = ({
     onCancel,
     deleteGrade,
     students,
+    study,
     studies,
     studyCourses,
     subjects,
     subjectCourses,
     grade,
+    history
 }) => {
-    function getStudy() {
-        // console.log({ studies, studyId: values.studyId});
-        return (studies && values.studyId !== '')
-            ? studies.find(({ id }) => id === values.studyId)
-            : {};
-    }
 
     function studentOptions() {
         return students.map(({ id, firstName, lastName}) => ({
@@ -58,10 +56,9 @@ const GradeFields = ({
     }
 
     function subjectOptions() {
-        const study = getStudy();
         return subjects
             .filter(({ studyRegulationId }) =>
-                studyRegulationId === study.studyRegulationId
+                !study || (studyRegulationId === study.studyRegulationId)
             )
             .map(({ id, title }) => ({
                 value: id,
@@ -100,6 +97,27 @@ const GradeFields = ({
         change(e);
         // reset subjectCourseId
         change({ target: { name: 'subjectCourseId', value: '' }});
+    }
+
+    // check missing data
+    if (!students.length) {
+        return (
+            <Fragment>
+                <MessageBox
+                    variant='warning'
+                    message='Bitte fügen Sie zuerst mindestens einen Studenten hinzu.'
+                    actions={[
+                        <Button onClick={() => {
+                            history.push('/studenten/create');
+                            onCancel();
+                        }}>
+                            Student hinzufügen
+                        </Button>
+                    ]}
+                />
+                <HiddenDivider />
+            </Fragment>
+        );
     }
 
     return (
@@ -283,14 +301,13 @@ GradeFields.propTypes = {
     subjectCourses: PropTypes.array.isRequired,
     deleteGrade: PropTypes.func,
     grade: PropTypes.object,
+    history: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state, props) => {
-    return {
-        studies: getStudiesByStudentId(state, props.values.studentId),
-    }
-};
+const mapStateToProps = (state, props) => ({
+    studies: getStudiesByStudentId(state, props.values.studentId),
+});
 
 export default connect(mapStateToProps)(
-    withStyles(styles)(GradeFields)
+    withRouter(withStyles(styles)(GradeFields))
 );

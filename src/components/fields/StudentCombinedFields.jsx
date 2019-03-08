@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,7 @@ import FieldArray from '../FieldArray';
 import StudentFields from './StudentFields';
 import StudentInformationFields from './StudentInformationFields';
 import StudyFields from './StudyFields';
+import MessageBox from '../MessageBox';
 
 
 const StudentCombinedFields = ({
@@ -24,6 +26,7 @@ const StudentCombinedFields = ({
     studyRegulations,
     studyCourses,
     classes,
+    history
 }) => {
     const addStudyHandler = (index) => {
         const item = {
@@ -37,6 +40,24 @@ const StudentCombinedFields = ({
 
     const removeStudyHandler = (index) => {
         remove('studies', index);
+    }
+
+    // check missing data
+    if (!studyRegulations.length || !studyCourses.length) {
+        return (
+            <Fragment>
+                <MessageBox
+                    variant='warning'
+                    message='Bitte fügen Sie zuerst mindestens einen Studienkurs mit einer Studienordnung hinzu.'
+                    actions={[
+                        <Button onClick={() => history.push('/studienkurse')}>
+                            Studienkurs hinzufügen
+                        </Button>
+                    ]}
+                />
+                <HiddenDivider />
+            </Fragment>
+        );
     }
 
     return (
@@ -100,4 +121,4 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(StudentCombinedFields);
+export default withRouter(withStyles(styles)(StudentCombinedFields));
