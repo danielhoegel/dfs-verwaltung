@@ -20,7 +20,10 @@ function arrayToCSVRow(dataArray) {
 }
 
 export default function exportToCSV(arrayOfObjects, fileName = 'Export') {
-    if (!arrayOfObjects.length) return;
+    if (!arrayOfObjects.length) {
+        alert('Keine Einträge vorhanden, die exportiert werden könnten.');
+        return;
+    };
 
     const csvRows = [];
     const keys = ['id', 'matrikelnummer', 'firstName', 'lastName', 'prefix', 'birthDate', 'birthPlace', 'birthCountry', 'street', 'streetNumber', 'addressExtra', 'postal', 'city', 'country', 'mailPrimary', 'mailSecondary', 'phoneNumber', 'mobileNumber'];

@@ -11,35 +11,37 @@ function StudentListReport ({ students, filter, getStudyCourseById }) {
                 Jahrgang: {filter.year.length ? filter.year.join(', ') : 'Alle'}
             </div>
             <br />
-            <table border='1' className='table'>
-                <thead>
-                    <tr>
-                        <th>Matr.-Nr.</th>
-                        <th>Vorname</th>
-                        <th>Nachname</th>
-                        <th>Geburtsdatum</th>
-                        <th>E-Mail (Uni)</th>
-                        <th>E-Mail (Privat)</th>
-                        <th>Festnetz</th>
-                        <th>Mobiletelefon</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {students && students.map(student => (
-                        <tr key={student.id}>
-                            <td>{student.matrikelnummer}</td>
-                            <td>{student.firstName}</td>
-                            <td>{student.lastName}</td>
-                            <td>{student.studentInformation.birthDate}</td>
-                            <td>{student.studentInformation.mailPrimary}</td>
-                            <td>{student.studentInformation.mailSecondary}</td>
-                            <td>{student.studentInformation.phoneNumber}</td>
-                            <td>{student.studentInformation.mobileNumber}</td>
+            {students.length ? (
+                <table border='1' className='table'>
+                    <thead>
+                        <tr>
+                            <th>Matr.-Nr.</th>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>Geburtsdatum</th>
+                            <th>E-Mail (Standard)</th>
+                            <th>E-Mail (Extra)</th>
+                            <th>Festnetz</th>
+                            <th>Mobiletelefon</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {students.map(student => (
+                            <tr key={student.id}>
+                                <td>{student.matrikelnummer}</td>
+                                <td>{student.firstName}</td>
+                                <td>{student.lastName}</td>
+                                <td>{student.studentInformation.birthDate}</td>
+                                <td>{student.studentInformation.mailPrimary}</td>
+                                <td>{student.studentInformation.mailSecondary}</td>
+                                <td>{student.studentInformation.phoneNumber}</td>
+                                <td>{student.studentInformation.mobileNumber}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : 'Keine Studenten gefunden.'}
+            </div>
     );
 }
 

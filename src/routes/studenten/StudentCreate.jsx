@@ -53,8 +53,8 @@ class StudentUpdate extends Component {
         studies: [
             {
                 year: new Date().getFullYear(),
-                studyCourseId: 1,
-                studyRegulationId: '',
+                studyCourseId: 1551985404032, // TODO: get value from database (defaultValues entity?)
+                studyRegulationId: 1551985442150, // TODO: get value from database (defaultValues entity?)
                 status: 1,
             }
         ]
@@ -106,6 +106,7 @@ class StudentUpdate extends Component {
     render() {
         if (!this.state.fetching) {
             const { classes } = this.props;
+
             return (
                 <div>
                     <Typography variant="display1" gutterBottom>

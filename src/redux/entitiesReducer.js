@@ -36,23 +36,27 @@ function replaceItemAsArray(state, item, idKey = 'id') {
 /* util function */
 function replaceAllItems(items, idKey = 'id' ) {
     const nextState = {};
-    items.forEach(item => {
-        nextState[item[idKey]] = item;
-    });
+    if (items) {
+        items.forEach(item => {
+            nextState[item[idKey]] = item;
+        });
+    }
     return nextState;
 }
 
 /* util function */
 function replaceAllItemsAsArray(items, idKey = 'id' ) {
     const nextState = {};
-    items.forEach(item => {
-        const key = item[idKey];
-        if (nextState[key]) {
-            nextState[key].push(item);
-        } else {
-            nextState[key] = [ item ];
-        }
-    });
+    if (items) {
+        items.forEach(item => {
+            const key = item[idKey];
+            if (nextState[key]) {
+                nextState[key].push(item);
+            } else {
+                nextState[key] = [ item ];
+            }
+        });
+    }
     return nextState;
 }
 

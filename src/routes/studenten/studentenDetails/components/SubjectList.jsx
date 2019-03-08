@@ -66,7 +66,7 @@ const TypeGroup = withStyles(theme => ({
 class SubjectList extends Component {
     static propTypes = {
         studentId: PropTypes.number.isRequired,
-        openNoteModal: PropTypes.func.isRequired,
+        openGradeModal: PropTypes.func.isRequired,
         study: PropTypes.object.isRequired,
         groupedSubjects: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,

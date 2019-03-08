@@ -19,7 +19,7 @@ import {
 const SubjectListItem = ({
     subject,
     studentId,
-    openNoteModal,
+    openGradeModal,
     study,
     subjectCourses,
     grades,
@@ -66,7 +66,7 @@ const SubjectListItem = ({
                             subject={subject}
                             studentId={studentId}
                             studyId={study.id}
-                            openGradeModal={openNoteModal}
+                            openGradeModal={openGradeModal}
                             studies={studies}
                         />
                     </TableCell>

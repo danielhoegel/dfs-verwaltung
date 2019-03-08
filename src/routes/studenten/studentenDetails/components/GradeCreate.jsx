@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import omit from 'lodash/omit';
 
 import entitiesActions from '../../../../redux/entitiesActions';
-import { getStudents, getSubjects, getSubjectCourses, getStudyCourses, getStudyRegulations, getGradeById } from '../../../../redux/entitiesSelector';
+import { getStudents, getSubjects, getSubjectCourses, getStudyCourses, getStudyRegulations, getGradeById, getStudyById } from '../../../../redux/entitiesSelector';
 import MyForm from '../../../../components/MyForm';
 import GradeFields from '../../../../components/fields/GradeFields';
 import { isNotEmpty, isDate } from '../../../../helper/helper';
@@ -13,19 +13,19 @@ class GradeCreate extends Component {
     state = { loading: false, error: null }
 
     submitHandler = (data) => {
-        const cleanData = omit(data, ['studyId', 'subjectId']);
+        const cleanData = omit(data, ['studentId', 'subjectId']);
         
-        if (this.validate(data)) {
+        if (this.validate(cleanData)) {
             console.log('CREATE GRADE', { data, cleanData });
             this.setState({ loading: true, error: null });
-            if (data.id) {
+            if (cleanData.id) {
                 // update
-                this.props.updateGrade(data)
+                this.props.updateGrade(cleanData)
                     .then(this.props.closeModal)
                     .catch(err => this.setState({ loading: false, error: err.message }));
             } else {
                 // create
-                this.props.createGrade(data)
+                this.props.createGrade(cleanData)
                     .then(this.props.closeModal)
                     .catch(err => this.setState({ loading: false, error: err.message }));
             }
@@ -34,7 +34,7 @@ class GradeCreate extends Component {
     }
 
     defaultValues = () => {
-        const { grade, subjectCourses, subjects, data } = this.props;
+        const { grade, subjectCourses, subjects, data, study } = this.props;
         
         // get subject
         let subject = {};
@@ -49,9 +49,9 @@ class GradeCreate extends Component {
             console.log({ subject, subjectCourse });
         }
 
-        // study and subject are needed to filter subjectCourses
+        // student and subject are needed to filter subjectCourses
         const extraValues = {
-            studyId: (data && isNotEmpty(data.studyId)) ? data.studyId :  '',
+            studentId: (data && isNotEmpty(data.studyId)) ? study.studentId : '',
             subjectId: isNotEmpty(subject.id) ? subject.id : '',
         }
 
@@ -63,7 +63,7 @@ class GradeCreate extends Component {
         }
 
         return {
-            studentId: (data && isNotEmpty(data.studentId)) ? data.studentId : '',
+            studyId: (data && isNotEmpty(data.studyId)) ? data.studyId :  '',            
             subjectCourseId: (data && isNotEmpty(data.subjectCourseId)) ? data.subjectCourseId : '',
             grade: '',
             gradingSystem: isNotEmpty(subject.type) ? subject.type : 'de',
@@ -74,11 +74,11 @@ class GradeCreate extends Component {
         }
     }
 
-    validate({ studentId, subjectCourseId, grade, gradingSystem, try: _try, date, lecturer }) {
+    validate({ studyId, subjectCourseId, grade, gradingSystem, try: _try, date }) {
         let error = [];
 
-        if (typeof studentId !== 'number' || studentId < 0)
-            error.push('Bitte wähle einen Studenten aus.');
+        if (typeof studyId !== 'number' || studyId < 0)
+            error.push('Bitte wähle einen Studienkurs aus.');
 
         if (typeof subjectCourseId !== 'number' || subjectCourseId < 0)
             error.push('Bitte wähle eine Veranstaltung aus.');
@@ -118,6 +118,7 @@ class GradeCreate extends Component {
                     studyRegulations={this.props.studyRegulations}
                     subjects={this.props.subjects}
                     subjectCourses={this.props.subjectCourses}
+                    study={this.props.study}
                     grade={this.props.grade}
                     deleteGrade={this.props.deleteGrade}
                 />
@@ -127,6 +128,7 @@ class GradeCreate extends Component {
 };
 
 const mapStateToProps = (state, props) => ({
+    study: getStudyById(state, props.data && props.data.studyId),
     grade: getGradeById(state, props.data && props.data.gradeId),
     students: getStudents(state),
     studyCourses: getStudyCourses(state),

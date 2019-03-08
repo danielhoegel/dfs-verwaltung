@@ -11,7 +11,6 @@ const GradesList = ({
     subjectCourse,
     subject,
     grades,
-    studentId,
     studyId,
     openGradeModal,
     classes
@@ -24,7 +23,6 @@ const GradesList = ({
     } 
     const openCreateGradeModal = () => {
         openGradeModal({
-            studentId,
             studyId,
             subjectCourseId: subjectCourse.id,
             try: grades.length + 1

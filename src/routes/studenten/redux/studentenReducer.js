@@ -5,7 +5,7 @@ const defaultState = {
     fetching: false,
     error: null,
     filter: {
-        studyCourse: 1,
+        studyCourse: 1551985404032, // TODO: get value from database (defaultValues entity?)
         status: 1,
         year: getLastYears(4)
     },

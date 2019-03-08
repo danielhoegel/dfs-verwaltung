@@ -278,13 +278,17 @@ class StudyRegulation extends Component {
                     alignItems: 'center'
                 }}>
                     <Typography variant='display1'>
-                        {studyRegulation.studyCourse.title} |
-                        <span style={{ fontSize: '0.6em' }}> {studyRegulation.title}</span>
+                        {studyRegulation.studyCourse.title}
                     </Typography>
                     <StudyRegulationDateChip date={studyRegulation.date} />
                 </div>
                 
                 <HiddenDivider />
+                {studyRegulation.title && (
+                    <Typography variant='body2'>
+                        {studyRegulation.title}
+                    </Typography>
+                )}
                 {studyRegulation.description && (
                     <Typography variant='body2'>
                         {studyRegulation.description}

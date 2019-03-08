@@ -1,22 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import UEGruppe from './components/UEGruppe';
 import { getTodayDate } from '../../helper/helper';
 
 
-class Ergebnisse extends Component {
-    state = {
-        datum: getTodayDate(),
-        faecher: this.props.subjects
+function ErgebnisseReport(props) {
+    function semesters() {
+        return [ ...new Set(props.subjects.map(f => f.semester)) ];
     }
 
-    semester() {
-        return [ ...new Set(this.state.faecher.map(f => f.semester)) ];
-    }
-
-    renderUEGruppen(student, semester) {
+    function renderUEGruppen(student, semester) {
         const ueGroups = [...new Set(
-            this.state.faecher
+            props.subjects
                 .filter(f => !semester || f.semester === parseInt(semester, 10))
                 .map(f => f.ue)
         )];
@@ -26,32 +22,40 @@ class Ergebnisse extends Component {
                 student={student}
                 semester={Number(semester)}
                 key={ue}
-                getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
-                getPunkteForVeranstaltungAndStudent={this.props.getPunkteForVeranstaltungAndStudent}
-                getFaecherDataForUEAndSemester={this.props.getFaecherDataForUEAndSemester}
+                getVeranstaltungenForFach={props.getVeranstaltungenForFach}
+                getPunkteForVeranstaltungAndStudent={props.getPunkteForVeranstaltungAndStudent}
+                getFaecherDataForUEAndSemester={props.getFaecherDataForUEAndSemester}
             />
         ));
     }
-
-    render() {
-        return (
-            <div>
-                {this.props.students.map(student => (
-                    <div key={student.id} className='student'>
-                        <h2>
-                            Prüfungsergebnisse - Mtknr. {student.matrikelnummer} - {student.lastName}, {student.firstName} - Datum {this.state.datum}
-                        </h2>
-                        {this.semester().map(semester => (
-                            <div key={semester}>
-                                <h4 className='semester-title'>{semester}. Semester</h4>
-                                {this.renderUEGruppen(student, semester)}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div>
-        );
-    }
+    
+    const __today = getTodayDate();
+    
+    return (
+        <div>
+            {props.students.length ? props.students.map(student => (
+                <div key={student.id} className='student'>
+                    <h2>
+                        Prüfungsergebnisse - Mtknr. {student.matrikelnummer} - {student.lastName}, {student.firstName} - Datum {__today}
+                    </h2>
+                    {semesters().map(semester => (
+                        <div key={semester}>
+                            <h4 className='semester-title'>{semester}. Semester</h4>
+                            {renderUEGruppen(student, semester)}
+                        </div>
+                    ))}
+                </div>
+            )) : 'Keine Studenten gefunden.'}
+        </div>
+    );
 }
 
-export default Ergebnisse;
+ErgebnisseReport.propTypes = {
+    students: PropTypes.array.isRequired,
+    subjects: PropTypes.array.isRequired,
+    getVeranstaltungenForFach: PropTypes.func.isRequired,
+    getPunkteForVeranstaltungAndStudent: PropTypes.func.isRequired,
+    getFaecherDataForUEAndSemester: PropTypes.func.isRequired,
+};
+
+export default ErgebnisseReport;

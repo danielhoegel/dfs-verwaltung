@@ -95,8 +95,8 @@ class StudentDetails extends Component {
         this.props.history.push(`/studenten/${this.studentId}/update`);
     }
 
-    openNoteModal = (data) => {
-        console.log('openNoteModal', data);
+    openGradeModal = (data) => {
+        console.log('openGradeModal', data);
         this.setState({
             gradeCreateModalOpen: true,
             gradeCreateModalData: data
@@ -111,7 +111,7 @@ class StudentDetails extends Component {
     }
 
     createNote = () => {
-        this.openNoteModal({
+        this.openGradeModal({
             studentId: this.studentId
         });
     }
@@ -178,7 +178,7 @@ class StudentDetails extends Component {
                                         key={study.id}
                                         studentId={student.id}
                                         studyRegulationId={study.studyRegulationId}
-                                        openNoteModal={this.openNoteModal}
+                                        openGradeModal={this.openGradeModal}
                                         study={study}
                                     />
                                 )
