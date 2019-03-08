@@ -24,11 +24,23 @@ export function getStudentInformationsByStudentId(state, studentId) {
     return __entities(state).studentInformations[studentId] || {};
 }
 
+export function getStudies(state) {
+    return Object.values(__entities(state).studies)
+        .reduce((studyArray, studies) => {
+            return studies.concat(studyArray);
+        }, [])
+        .sort( (a, b) => b.year - a.year );
+}
+
 export function getStudiesByStudentId(state, studentId) {
     const studies = __entities(state).studies[studentId];
     return studies
         ? studies.sort( (a, b) => b.year - a.year )
         : [];
+}
+
+export function getStudyById(state, studyId) {
+    return getStudies(state).find(({ id }) => id === studyId);
 }
 
 export function getGrades(state) {
@@ -68,7 +80,7 @@ export function getStudyCourses(state) {
 }
 
 export const getStudyCourseById = state => studyCourseId => {
-    return __entities(state).studyCourses[studyCourseId] || null;
+    return __entities(state).studyCourses[studyCourseId] || {};
 }
 
 export function getStudyRegulations(state) {
