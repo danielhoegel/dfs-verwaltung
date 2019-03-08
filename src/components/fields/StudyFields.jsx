@@ -37,7 +37,7 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
     }
 
     const studyCourseChangeHandler = (e) => {
-        onChange(e);
+        onChange(e, true);
         onChange({ target: { name: 'studyRegulationId', value: '' }});
     }
 
@@ -60,7 +60,7 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                         name={`${__prefix}.studyRegulationId`}
                         label='Studienordnung'
                         value={values.studyRegulationId}
-                        onChange={onChange}
+                        onChange={e => onChange(e, true)}
                         required
                     >
                         {studyRegulationOptions()}

@@ -28,13 +28,23 @@ class MyForm extends Component {
 
     state = this.props.defaultValues || {}
 
-    changeHandler = (e) => {
+    __valueToNumber(value) {
+        return (typeof value === 'boolean' || isNaN(value) || value === '') 
+            ? value
+            : Number(value);
+    }
+
+    __isNested(name) {
+        return name.indexOf('.') !== -1  || name.indexOf('[') !== -1;
+    }
+
+    changeHandler = (e, asNumber) => {
         const { name, value } = e.target;
-        const cleanedValue = (typeof value === 'boolean' || isNaN(value) || value === '') ? value : Number(value);
-        if (name.indexOf('.') !== -1  || name.indexOf('[') !== -1) {
-            this.deepChangeHandler(name, cleanedValue);
+        const __value = asNumber ? this.__valueToNumber(value) : value;
+        if (this.__isNested) {
+            this.deepChangeHandler(name, __value);
         } else {
-            this.flatChangeHandler(name, cleanedValue);
+            this.flatChangeHandler(name, __value);
         }
     }
 
