@@ -21,6 +21,7 @@ class Expandable extends Component {
     }
 
     bodyEl = React.createRef()
+    bodyWrapperEl = React.createRef()
 
     toggleExpanded = () => {
         if (this.props.expanded !== undefined) {
@@ -40,16 +41,23 @@ class Expandable extends Component {
 
     bodyWrapperStyles() {
         const body = this.bodyEl.current;
-        return {
+        const styles = {
             height: !body ? (this.isExpanded() ? 'auto' : 0) : (this.isExpanded() ? body.offsetHeight : 0),
             duration: !body ? 200 : (Math.floor(body.offsetHeight / 1.5))
         }
+        return styles;
+    }
+
+    componentDidUpdate() {
+        const { height, duration } = this.bodyWrapperStyles();
+        this.bodyWrapperEl.current.style.transition = `height ${duration}ms linear`;
+        this.bodyWrapperEl.current.style.height = `${height}px`;
     }
 
     render() {
         const { header, children, classes } = this.props;
-        const expanded = this.isExpanded();
         const { height, duration } = this.bodyWrapperStyles();
+        const expanded = this.isExpanded();
         return (
             <Paper
                 className={classNames(classes.expandable, { [classes.expanded]: expanded })}
@@ -60,9 +68,9 @@ class Expandable extends Component {
                     {header}
                     <ExpandMoreIcon className={classes.expandIcon} />
                 </div>
-                <div className={classes.bodyWrapper} style={{
+                <div className={classes.bodyWrapper} ref={this.bodyWrapperEl} style={{
                     transition: `height ${duration}ms linear`,
-                    height,
+                    height: `${height}px`
                 }}>
                     <div className={classes.body} ref={this.bodyEl}>
                         {children}
