@@ -72,6 +72,24 @@ const SubjectFields = ({
     return (
         <Fragment>
             <FieldGroup>
+                <FieldSelect
+                    name='studyCourseId'
+                    value={values.studyCourseId}
+                    label='Studienkurs'
+                    options={__studyCourseOptions}
+                    onChange={onStudyCourseChange}
+                    disabled
+                />
+                <FieldSelect
+                    name='studyRegulationId'
+                    value={values.studyRegulationId}
+                    label='Studienordung'
+                    options={__studyRegulationOptions}
+                    onChange={change}
+                    disabled
+                />
+            </FieldGroup>
+            <FieldGroup>
                 <Field
                     name='title'
                     value={values.title}
@@ -80,6 +98,7 @@ const SubjectFields = ({
                     onChange={change}
                     required
                     width={1}
+                    autoFocus
                 />
                 <FieldRadioGroup
                     name='type'
@@ -90,24 +109,6 @@ const SubjectFields = ({
                         { label: 'deutsch', value: 'de' },
                         { label: 'französich', value: 'fr' }
                     ]}
-                    required
-                />
-            </FieldGroup>
-            <FieldGroup>
-                <FieldSelect
-                    name='studyCourseId'
-                    value={values.studyCourseId}
-                    label='Studienkurs'
-                    options={__studyCourseOptions}
-                    onChange={onStudyCourseChange}
-                    required
-                />
-                <FieldSelect
-                    name='studyRegulationId'
-                    value={values.studyRegulationId}
-                    label='Studienordung'
-                    options={__studyRegulationOptions}
-                    onChange={change}
                     required
                 />
             </FieldGroup>

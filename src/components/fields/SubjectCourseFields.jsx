@@ -36,22 +36,6 @@ const SubjectCourseFields = ({
     return (
         <Fragment>
             <FieldGroup>
-                <Field
-                    name='title'
-                    value={values.title}
-                    label='Titel'
-                    type='text'
-                    onChange={change}
-                    required
-                />
-                <FieldSelect
-                    name='type'
-                    value={values.type}
-                    label='Typ'
-                    options={[ 'Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM' ]}
-                    onChange={change}
-                    required
-                />
                 <SearchSelect
                     name='subjectId'
                     value={values.subjectId}
@@ -60,8 +44,26 @@ const SubjectCourseFields = ({
                     options={__subjectOptions}
                     style={{margin: '8px'}}
                     noClearIcon
-                    required
+                    disabled
                 /> 
+            </FieldGroup>
+            <FieldGroup>
+                <FieldSelect
+                    name='type'
+                    value={values.type}
+                    label='Typ'
+                    options={[ 'Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM' ]}
+                    onChange={change}
+                    required
+                    autoFocus
+                />
+                <Field
+                    name='title'
+                    value={values.title}
+                    label='Titel'
+                    type='text'
+                    onChange={change}
+                />
             </FieldGroup>
             <FieldGroup>
                 <Field

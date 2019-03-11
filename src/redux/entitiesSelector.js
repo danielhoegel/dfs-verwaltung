@@ -96,7 +96,7 @@ export function getStudyRegulationsByStudyCourseId(state, studyCourseId) {
 }
 
 export function getStudyRegulationById(state, studyRegulationId) {
-    return getStudyRegulations(state).find(({ id }) => studyRegulationId === id);
+    return getStudyRegulations(state).find(({ id }) => studyRegulationId === id) || {};
 }
 
 export function getStudyRegulationByIds(state, studyCourseId, studyRegulationId) {

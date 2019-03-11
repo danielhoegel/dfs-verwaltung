@@ -13,6 +13,16 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
     return (
         <Fragment>
             <FieldGroup>
+                <FieldSelect
+                    name='studyCourseId'
+                    label='Studienkurs'
+                    onChange={change}
+                    value={values.studyCourseId}
+                    options={studyCourseOptions}
+                    disabled
+                /> 
+            </FieldGroup>
+            <FieldGroup>
                 <Field
                     name='title'
                     label='Titel'
@@ -20,14 +30,7 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
                     onChange={change}
                     value={values.title}
                     required
-                /> 
-                <FieldSelect
-                    name='studyCourseId'
-                    label='Studienkurs'
-                    onChange={change}
-                    value={values.studyCourseId}
-                    options={studyCourseOptions}
-                    required
+                    autoFocus
                 /> 
                 <Field
                     name='date'
@@ -48,6 +51,7 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
                     type='text'
                     onChange={change}
                     value={values.description}
+                    multiline
                 /> 
             </FieldGroup>
             <HiddenDivider />

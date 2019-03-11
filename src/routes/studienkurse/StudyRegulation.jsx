@@ -106,7 +106,6 @@ class StudyRegulation extends Component {
 
     scrollToExpandedSubject() {
         const { expandedSubject } = this.state;
-        console.log('scroll', { expandedSubject, refs: this.subjectRefs});
         if (isNotEmpty(expandedSubject) && this.subjectRefs[expandedSubject]) {
             this.subjectRefs[expandedSubject].scrollIntoView();
         }

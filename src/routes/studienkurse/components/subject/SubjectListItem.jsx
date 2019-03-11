@@ -24,7 +24,8 @@ class SubjectListItem extends Component {
             (nextProps.expanded !== this.props.expanded) ||
             (nextProps.expanded && (
                 nextProps.allowDelete !== this.props.allowDelete
-                ))
+                )
+            )
         );
         // console.log('SHOULD', update, {nextProps, props: this.props, lengths: nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length});
         return update;
