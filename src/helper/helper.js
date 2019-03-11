@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function isEmpty(value) {
     if (value === null || value === undefined) {
         return true;
@@ -28,16 +30,18 @@ export function isDate(dateString) {
 }
 
 export function formatDate(date, type = 'de') {
-    const dateObject = new Date(date);
-    switch (type) {
-        case 'de':
-            return dateObject.toLocaleDateString('de', { day: '2-digit', month: '2-digit', year: 'numeric'})
-        
-        case 'us':
-            return dateObject.toISOString.slice(0, 10);
-        
-        default:
-            return date;
+    if (date) {
+        const dateObject = new Date(date);
+        switch (type) {
+            case 'de':
+                return dateObject.toLocaleDateString('de', { day: '2-digit', month: '2-digit', year: 'numeric'})
+            case 'us':
+                return dateObject.toISOString.slice(0, 10);
+            default:
+                return date;
+        }
+    } else {
+        return <i>kein Datum</i>;
     }
 }
 
