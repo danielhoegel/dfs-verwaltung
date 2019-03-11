@@ -43,7 +43,7 @@ th:not(:last-child) {
 }
 
 .zpk {
-    font-wheight: 600;
+    font-weight: 600;
 }
 
 .student:not(:last-child) {

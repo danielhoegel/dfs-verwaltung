@@ -39,12 +39,12 @@ class LESBListeFach extends Component {
             return (
                 <tbody>
                     <tr>
-                        <td style={{fontWeight: veranstaltung.zpk ? '800' : 'inherit'}}>
+                        <td className={veranstaltung.zpk ? 'zpk' : ''} >
                             {fach.title} {veranstaltung.title && `(${veranstaltung.title})`}
                         </td>
                         <td style={{ textAlign: 'center' }}>–</td>
-                        <td></td>
-                        <td></td>
+                        <td style={{ textAlign: 'center' }}>–</td>
+                        <td style={{ textAlign: 'center' }}>–</td>
                     </tr>
                 </tbody>
             )
