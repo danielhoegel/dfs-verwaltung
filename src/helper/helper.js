@@ -134,7 +134,6 @@ export function isDescendant(parent, child) {
  * @param {number} index current position inside the keys path
  */
 export function changeNestedObject(keys, value, obj, index = 0) {
-    // console.log('changeNestedObject', { key: keys[index], obj, isNaN: isNaN(keys[index])});
     const key = keys[index];
     if (isNaN(key)) {
         // return new object

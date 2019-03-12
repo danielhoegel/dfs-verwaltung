@@ -71,7 +71,6 @@ export const getGradesForStudentAndSubjectCourse = state => (studentId, subjectC
     const grades = getGradesByStudentId(state, studentId).filter(grade =>
         grade.subjectCourseId === subjectCourseId
     );  
-    // console.log({ studentId, subjectCourseId, grades });
     return grades;
 };
 

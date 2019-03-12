@@ -15,8 +15,8 @@ class StudyRegulationUpdate extends Component {
     }
 
     submitHandler = (data) => {
-        console.log('UPDATE', data);
         this.setState({ loading: true, error: null });
+
         this.props.updateStudyRegulation(omit(data, 'subjectCourses'))
             .then(this.props.fetchAllStudyRegulations)
             .then(this.props.history.replace(

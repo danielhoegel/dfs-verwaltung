@@ -284,7 +284,6 @@ class SearchSelect extends Component {
 
     menuIsVisible() {
         const { matchingOptions, hasFocus } = this.state;
-        // console.log('menuIsVisible', { hasFocus, options: this.props.options, matchingOptions });
         return (
             hasFocus &&
             isNotEmpty(this.props.options) && (

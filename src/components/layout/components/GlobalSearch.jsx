@@ -28,7 +28,6 @@ class GlobalSearch extends Component {
     }
 
     changeHandler = (searchValue) => {
-        // console.log('CHANGE', { searchValue });
         if (isNotEmpty(searchValue)) {
             this.queryData(searchValue);
             this.setState({ searchValue });
@@ -41,11 +40,9 @@ class GlobalSearch extends Component {
     }
 
     selectHandler = (value, group) => {
-        console.log('SELECT', { value, group });
         if (group === GROUPS.STUDENTS) {
             this.props.history.push(`/studenten/${value}`);
         } else if (group === GROUPS.SUBJECTS) {
-            console.log('SELECT SUBJECT - subjects:', this.state.subjects);
             const { studyCourseId, studyRegulationId } = this.state.subjects.filter(subject => subject.id === value)[0];
             this.props.history.push(`/studienkurse/${studyCourseId}/studienordnung/${studyRegulationId}/${value}`);
         }

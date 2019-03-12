@@ -231,7 +231,6 @@ const Autocomplete = ({
                 value: option ? option.value : '',
             }
         };
-        console.log(fakeEvent);
         onChange(fakeEvent);
     }
 

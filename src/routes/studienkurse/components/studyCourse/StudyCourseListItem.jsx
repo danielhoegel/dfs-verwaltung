@@ -89,7 +89,6 @@ const StudyCourseListItem = ({
 
 export default class extends React.Component{
     shouldComponentUpdate(nextProps) {
-        // console.log('SHOULD UPDATE', {nextProps, prevProps: this.props});
         return (
             (nextProps.studyCourse !== this.props.studyCourse) ||
             (nextProps.studyCourse.studyRegulations.length !== this.props.studyCourse.studyRegulations.length) ||

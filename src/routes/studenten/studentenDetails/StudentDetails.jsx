@@ -96,7 +96,6 @@ class StudentDetails extends Component {
     }
 
     openGradeModal = (data) => {
-        console.log('openGradeModal', data);
         this.setState({
             gradeCreateModalOpen: true,
             gradeCreateModalData: data

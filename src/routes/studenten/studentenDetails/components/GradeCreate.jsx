@@ -16,7 +16,6 @@ class GradeCreate extends Component {
         const cleanData = omit(data, ['studentId', 'subjectId']);
         
         if (this.validate(cleanData)) {
-            console.log('CREATE GRADE', { data, cleanData });
             this.setState({ loading: true, error: null });
             if (cleanData.id) {
                 // update
@@ -46,7 +45,6 @@ class GradeCreate extends Component {
             subject = subjects.find(
                 ({ id }) => id === subjectCourse.subjectId
             );
-            console.log({ subject, subjectCourse });
         }
 
         // student and subject are needed to filter subjectCourses

@@ -21,7 +21,6 @@ class Playground extends Component {
     }
 
     changeHandler = (option) => {
-        console.log('change', option);
         if (option === null) {
             this.setState({ value: { value: '', label: '' }})
         } else {

@@ -13,9 +13,8 @@ class StudyCourseCreate extends Component {
     }
 
     submitHandler = (data) => {
-        console.log('CREATE', data);
         this.setState({ loading: true, error: null });
-
+        
         this.props.createStudyRegulation(data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));

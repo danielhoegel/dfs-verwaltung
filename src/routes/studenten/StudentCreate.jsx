@@ -85,7 +85,6 @@ class StudentUpdate extends Component {
     }
 
     createStudent = (data) => {
-        console.log('CREATE', data);
         if (this.validate(data)) {
             this.setState({ creating: true, error: null });
 

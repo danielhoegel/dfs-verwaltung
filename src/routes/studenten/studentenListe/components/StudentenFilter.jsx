@@ -148,7 +148,6 @@ const StudentenFilter = ({
     getStudyCourseById,
 }) => {
     const changeHandler = ({ target }) => {
-        console.log('onChange', target);
         filterStudenten(target.name, target.value);
     };
 

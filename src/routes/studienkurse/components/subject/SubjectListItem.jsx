@@ -27,7 +27,6 @@ class SubjectListItem extends Component {
                 )
             )
         );
-        // console.log('SHOULD', update, {nextProps, props: this.props, lengths: nextProps.subject.subjectCourses.length !== this.props.subject.subjectCourses.length});
         return update;
     }
 
@@ -49,7 +48,6 @@ class SubjectListItem extends Component {
 
     renderSubjectCourses() {
         const { subjectCourses } = this.props.subject;
-        // console.log('renderSubjectCourses', subjectCourses.length);
         if (isNotEmpty(subjectCourses)) {
             return subjectCourses.map(subjectCourse => (
                 <SubjectCourseListItem
