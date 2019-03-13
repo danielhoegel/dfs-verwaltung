@@ -7,10 +7,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MailIcon from '@material-ui/icons/MailOutlined';
+import PrintIcon from '@material-ui/icons/PrintOutlined';
 // import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-// import PrintIcon from '@material-ui/icons/PrintOutlined';
 
 import { isNotEmpty } from '../../../../helper/helper';
+import StudentPrintMenu from './StudentPrintMenu';
 
 class StudentenTableToolbar extends Component {
     shouldComponentUpdate(nextProps) {
@@ -34,7 +35,7 @@ class StudentenTableToolbar extends Component {
     }
 
     render() {
-        const { numSelected, numStudents, classes } = this.props;
+        const { numSelected, numStudents, selectedStudents, classes } = this.props;
         return (
             <Toolbar
                 className={classNames(classes.root, {
@@ -55,6 +56,15 @@ class StudentenTableToolbar extends Component {
                 <div className={classes.actions}>
                     {numSelected > 0 && (
                         <Fragment>
+                            <StudentPrintMenu students={selectedStudents} ButtonComponent={
+                                <IconButton
+                                    aria-label={`Berichte für ${numSelected} Studenten drucken`}
+                                    title={`Berichte für ${numSelected} Studenten drucken`}
+                                    color='inherit'
+                                >
+                                    <PrintIcon />
+                                </IconButton>
+                            } />
                             <IconButton
                                 component='a'
                                 href={`mailto:${this.mailDistributor()}`}
@@ -65,13 +75,6 @@ class StudentenTableToolbar extends Component {
                                 <MailIcon />
                             </IconButton>
                             {/* <IconButton
-                                aria-label='Print'
-                                title={`Berichte für ${numSelected} Studenten drucken`}
-                                color='inherit'
-                            >
-                                <PrintIcon />
-                            </IconButton>
-                            <IconButton
                                 aria-label='Delete'
                                 title={`${numSelected} Studenten löschen`}
                                 color='inherit'

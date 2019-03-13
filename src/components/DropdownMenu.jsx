@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles'
@@ -60,7 +60,7 @@ class DropdownMenu extends Component {
         };
     
         return (
-            <div>
+            <Fragment>
                 {this.props.button
                     ? React.cloneElement(this.props.button, buttonProps)
                     : (
@@ -82,7 +82,7 @@ class DropdownMenu extends Component {
                 >
                     {this.props.children ? this.renderChildren() : this.renderItems()}
                 </Menu>
-            </div>
+            </Fragment>
         );
     }
 };

@@ -19,7 +19,7 @@ class StudentenActions extends Component {
         const { classes } = this.props;
         return (
             <Fragment>
-                <StudentPrintMenu ButtonComponent={
+                <StudentPrintMenu students={this.props.students} ButtonComponent={
                     <Button className={styles.button} title='PDF herunterladen oder drucken'>
                         <PrintIcon className={classes.leftIcon} />
                         Berichte
@@ -52,6 +52,7 @@ const styles = theme => ({
 StudentenActions.propTypes = {
     classes: PropTypes.object.isRequired,
     exportPDF: PropTypes.func.isRequired,
+    students: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(StudentenActions);

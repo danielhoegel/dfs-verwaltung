@@ -144,7 +144,10 @@ class StudentenListe extends Component {
                         Studentenliste
                     </Typography>
                     <div className={classes.actionContainer}>
-                        <StudentenActions exportPDF={this.exportPDF} />
+                        <StudentenActions
+                            exportPDF={this.exportPDF}
+                            students={this.props.filteredStudenten}
+                        />
                     </div>
                 </div>
                 <HiddenDivider height={2} />

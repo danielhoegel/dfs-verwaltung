@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -7,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { getFilteredStudenten, getStudentenFilter } from '../../redux/studentenSelectors';
+import { getStudentenFilter } from '../../redux/studentenSelectors';
 
 import Printing from '../../../../components/Printing';
 import DropdownMenu from '../../../../components/DropdownMenu';
@@ -39,7 +40,7 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
             <Printing
                 component={
                     <StudentListReport
-                        students={props.filteredStudenten}
+                        students={props.students}
                         filter={props.filter}
                         getStudyCourseById={props.getStudyCourseById}
                     />}
@@ -52,7 +53,7 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
             <Printing
                 component={
                     <LESBListReport
-                        students={props.filteredStudenten}
+                        students={props.students}
                         filter={props.filter}
                         subjects={props.subjectsGrouped}
                         getVeranstaltungenForFach={props.getVeranstaltungenForFach}
@@ -68,7 +69,7 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
             <Printing
                 component={
                     <ErgebnisseReport
-                        students={props.filteredStudenten}
+                        students={props.students}
                         filter={props.filter}
                         subjects={props.subjects}
                         getVeranstaltungenForFach={props.getVeranstaltungenForFach}
@@ -86,6 +87,10 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
     );
 };
 
+StudentPrintMenu.propTypes = {
+    students: PropTypes.array.isRequired,
+};
+
 const styles = theme => ({
     printButton: {
         marginLeft: 2 * theme.spacing.unit,
@@ -97,7 +102,6 @@ const styles = theme => ({
 })
 
 const mapStateToProps = state => ({
-    filteredStudenten: getFilteredStudenten(state),
     filter: getStudentenFilter(state),
     getVeranstaltungenForFach: getVeranstaltungenForFach(state),
     getGradesForStudentAndSubjectCourse: getGradesForStudentAndSubjectCourse(state),
