@@ -1,5 +1,5 @@
 const express = require('express');
-const open = require('open');
+const open = require('opn');
 const path = require('path');
 
 const server = express();
