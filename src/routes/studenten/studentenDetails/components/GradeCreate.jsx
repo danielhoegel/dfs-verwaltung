@@ -49,7 +49,9 @@ class GradeCreate extends Component {
 
         // student and subject are needed to filter subjectCourses
         const extraValues = {
-            studentId: (data && isNotEmpty(data.studyId)) ? study.studentId : '',
+            studentId: (data && isNotEmpty(data.studyId))
+                ? study.studentId : (data && data.studentId)
+                ? data.studentId : '',
             subjectId: isNotEmpty(subject.id) ? subject.id : '',
         }
 

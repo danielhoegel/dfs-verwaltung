@@ -41,7 +41,7 @@ class MyForm extends Component {
     changeHandler = (e, asNumber) => {
         const { name, value } = e.target;
         const __value = asNumber ? this.__valueToNumber(value) : value;
-        if (this.__isNested) {
+        if (this.__isNested(name)) {
             this.deepChangeHandler(name, __value);
         } else {
             this.flatChangeHandler(name, __value);

@@ -71,7 +71,7 @@ const SubjectCourseFields = ({
                     value={values.credits}
                     label='Credits'
                     type='number'
-                    onChange={change}
+                    onChange={e => change(e, true)}
                     required
                 />
                 <FieldSelect

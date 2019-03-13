@@ -18,6 +18,7 @@ class SubjectDelete extends Component {
 
     deleteHandler = () => {
         this.setState({ loading: true, error: null });
+        // TODO: delte subjectCourses and Grades
         this.props.deleteSubject(this.props.data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err.message }));

@@ -50,7 +50,7 @@ const SubjectFields = ({
 
     const onStudyCourseChange = (e) => {
         // change studyCourseId
-        change(e);
+        change(e, true);
 
         // set latest studyRegulation for studyCourse 
         const results = studyRegulations
@@ -63,7 +63,7 @@ const SubjectFields = ({
             name: 'studyRegulationId',
             value: studyCourseId || ''
         }}
-        change(fakeEvent);
+        change(fakeEvent, true);
     }
 
     const __studyRegulationOptions = studyRegulationOptions();
@@ -85,7 +85,7 @@ const SubjectFields = ({
                     value={values.studyRegulationId}
                     label='Studienordung'
                     options={__studyRegulationOptions}
-                    onChange={change}
+                    onChange={e => change(e, true)}
                     disabled
                 />
             </FieldGroup>
@@ -119,7 +119,7 @@ const SubjectFields = ({
                     label='Semester'
                     type='number'
                     min={1}
-                    onChange={change}
+                    onChange={e => change(e, true)}
                     required
                 />
                 <Field
@@ -127,7 +127,7 @@ const SubjectFields = ({
                     value={values.ue}
                     label='UE-Gruppe'
                     type='number'
-                    onChange={change}
+                    onChange={e => change(e, true)}
                     required
                 />
             </FieldGroup>

@@ -113,6 +113,8 @@ const styles = theme => ({
     body: {
         padding: theme.spacing.unit * 3,
         position: 'relative',
+        maxHeight: '80vh',
+        overflowY: 'auto',
     }
 });
 

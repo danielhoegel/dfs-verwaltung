@@ -82,21 +82,21 @@ const GradeFields = ({
     }
 
     const studentIdChange = e => {
-        change(e);
+        change(e, true);
         // reset studyId
         studyIdChange({ target: { name: 'studyId', value: '' }});
     }
 
     const studyIdChange = e => {
-        change(e);
+        change(e, true);
         // reset subjectId
         subjectIdChange({ target: { name: 'subjectId', value: '' }});
     }
 
     const subjectIdChange = e => {
-        change(e);
+        change(e, true);
         // reset subjectCourseId
-        change({ target: { name: 'subjectCourseId', value: '' }});
+        change({ target: { name: 'subjectCourseId', value: '' }}, true);
     }
 
     // check missing data

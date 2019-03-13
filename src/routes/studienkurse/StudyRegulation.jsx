@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import cn from 'classnames';
 import omit from 'lodash/omit';
 
@@ -322,7 +323,7 @@ class StudyRegulation extends Component {
                         variant='flat'
                         title='Fach entfernen'
                         className={cn(classes.button, classes.deleteButton)}
-                        onClick={this.openCreateSubjectModal}
+                        onClick={this.openDeleteStudyRegulationModal}
                         disabled={!this.state.allowDelete}
                     >
                         <DeleteIcon className={classes.leftIcon} />
@@ -533,5 +534,5 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-    withStyles(styles)(StudyRegulation)
+    withRouter(withStyles(styles)(StudyRegulation))
 );

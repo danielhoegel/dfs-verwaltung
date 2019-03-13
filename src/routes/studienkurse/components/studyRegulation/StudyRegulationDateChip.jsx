@@ -18,7 +18,7 @@ const StudyRegulationDateChip = ({date, ...chipProps}) => {
 };
 
 StudyRegulationDateChip.propTypes = {
-    date: PropTypes.string.isRequired,
+    date: PropTypes.string,
     className: PropTypes.string,
 }
 

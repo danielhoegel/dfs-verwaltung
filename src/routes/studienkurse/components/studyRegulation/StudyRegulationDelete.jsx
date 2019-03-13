@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -18,7 +19,9 @@ class StudyRegulationDelete extends Component {
 
     deleteHandler = () => {
         this.setState({ loading: true, error: null });
+        // TODO: delete subjects, subjectCourses and Grades
         this.props.deleteStudyRegulation(this.props.data)
+            .then(this.props.history.replace('/studienkurse'))
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err.message }));
     } 
@@ -72,5 +75,5 @@ StudyRegulationDelete.propTypes = {
 };
 
 export default connect(null, mapDispatchToProps)(
-    withStyles(styles)(StudyRegulationDelete)
+    withRouter(withStyles(styles)(StudyRegulationDelete))
 );
