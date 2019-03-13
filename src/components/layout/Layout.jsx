@@ -82,7 +82,7 @@ const styles = theme => ({
         width: `calc(100vw - ${drawerWidth}px)`
     },
     contentInside: {
-        // maxWidth: '960px',
+        maxWidth: '960px',
         padding: theme.spacing.unit * 4,
     },
     toolbar: theme.mixins.toolbar,
