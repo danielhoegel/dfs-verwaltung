@@ -63,7 +63,7 @@ class Playground extends Component {
     render() {
         return (
             <div>
-                <Typography variant='display1'>Playground</Typography>
+                <Typography variant='h4'>Playground</Typography>
                 <HiddenDivider height={2} />
                 <Paper style={{ padding: '1.5rem', maxWidth: '800px' }}>
                     <GradeCreate

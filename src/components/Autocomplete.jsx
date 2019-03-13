@@ -19,6 +19,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 function NoOptionsMessage({ innerProps, children, selectProps: { classes } }) {
     return (
         <Typography
+            variant='body2'
             color="textSecondary"
             className={classes.noOptionsMessage}
             {...innerProps}
@@ -119,6 +120,7 @@ function Option({
 function Placeholder({ innerProps, children, selectProps: { classes }}) {
     return (
         <Typography
+            variant='body2'
             color="textSecondary"
             className={classes.placeholder}
             {...innerProps}
@@ -130,7 +132,7 @@ function Placeholder({ innerProps, children, selectProps: { classes }}) {
 
 function SingleValue({ innerProps, children, selectProps: { classes }}) {
     return (
-        <Typography className={classes.singleValue} {...innerProps}>
+        <Typography variant='body2' className={classes.singleValue} {...innerProps}>
             {children}
         </Typography>
     );

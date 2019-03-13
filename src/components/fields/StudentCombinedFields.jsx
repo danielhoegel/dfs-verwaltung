@@ -50,7 +50,7 @@ const StudentCombinedFields = ({
                     variant='warning'
                     message='Bitte fügen Sie zuerst mindestens einen Studienkurs mit einer Studienordnung hinzu.'
                     actions={[
-                        <Button onClick={() => history.push('/studienkurse')}>
+                        <Button variant='text' onClick={() => history.push('/studienkurse')}>
                             Studienkurs hinzufügen
                         </Button>
                     ]}
@@ -75,7 +75,7 @@ const StudentCombinedFields = ({
             </Paper>
 
             <HiddenDivider height={2} />
-            <Typography component='h3' variant='title'>
+            <Typography component='h3' variant='h6'>
                 Studium
             </Typography>
             <FieldArray
@@ -93,10 +93,10 @@ const StudentCombinedFields = ({
             />
 
             <HiddenDivider height={2} />
-            <Button variant='raised' color='primary' type='submit'>
+            <Button variant='contained' color='primary' type='submit'>
                 Speichern
             </Button>
-            <Button variant='raised' onClick={onCancel} style={{ marginLeft: '1rem' }}>
+            <Button variant='contained' onClick={onCancel} style={{ marginLeft: '1rem' }}>
                 Abbrechen
             </Button>
         </Fragment>

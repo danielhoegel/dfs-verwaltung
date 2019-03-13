@@ -40,7 +40,7 @@ class SubjectDelete extends Component {
         return (
             <div>
                 <Loader loading={loading} />
-                <Typography>
+                <Typography variant='body2'>
                     Sind Sie sicher, dass sie das Fach <strong>{data.title}</strong> entfernen möchten?
                     <br />
                     <strong>Dadurch werden auch alle mit dem Fach assozierten Veranstaltungen und Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
@@ -55,14 +55,14 @@ class SubjectDelete extends Component {
                 />
                 <HiddenDivider height={2} />
                 <Button
-                    variant='raised'
+                    variant='contained'
                     onClick={this.deleteHandler}
                     className={classes.deleteButton}
                     disabled={!this.controlCheck()}
                 >
                     Löschen
                 </Button>
-                <Button onClick={closeModal}>
+                <Button variant='text' onClick={closeModal}>
                     Abbrechen
                 </Button>
                 {error && <Typography className={classes.error}>{error}</Typography>}

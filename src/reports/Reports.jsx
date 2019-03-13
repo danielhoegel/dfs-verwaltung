@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
 
 import HiddenDivider from '../components/HiddenDivider';
@@ -126,7 +126,7 @@ class Reports extends Component {
             <div>
                 {fetching ? <StudentenlisteLoading /> : (
                     <div>
-                        <Typography variant="display1">
+                        <Typography variant="h4">
                             Report: {this.state.fileName}
                         </Typography>
                         <HiddenDivider height={2} />
@@ -141,14 +141,13 @@ class Reports extends Component {
                                 : '404 - Kein Report gefunden.'
                             }
                         </Paper>
-                        <Button
-                            variant='fab'
+                        <Fab
                             color='primary'
                             className={classes.printButton}
                             onClick={this.__printPage}
                         >
                             <PrintIcon />
-                        </Button>
+                        </Fab>
                     </div>
                 )}
             </div>

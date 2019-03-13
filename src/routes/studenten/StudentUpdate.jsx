@@ -89,12 +89,12 @@ class StudentUpdate extends Component {
             const { studentInformation, studies, ...student } = this.props.student;
             return (
                 <div>
-                    <Typography variant="display1" gutterBottom>
+                    <Typography variant="h4" gutterBottom>
                         Bearbeite {student.firstName} {student.lastName}
                     </Typography>
 
                     <HiddenDivider />
-                    <Button onClick={this.goBack} className={classes.button} >
+                    <Button variant='text' onClick={this.goBack} className={classes.button} >
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
                     </Button>

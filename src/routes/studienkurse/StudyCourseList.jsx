@@ -133,11 +133,11 @@ class StudyCourseList extends Component {
         const { studyCourses, classes } = this.props;
         return (
             <div>
-                <Typography variant='display1'>Studienkursverwaltung</Typography>
+                <Typography variant='h4'>Studienkursverwaltung</Typography>
                 <HiddenDivider />
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Button
-                        variant='flat'
+                        variant='text'
                         title='Studienkurs hinzufügen'
                         onClick={this.openCreateModal}
                     >

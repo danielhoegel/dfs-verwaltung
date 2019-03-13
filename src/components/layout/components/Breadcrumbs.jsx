@@ -15,6 +15,7 @@ const Breadcrumbs = ({ breadcrumbs, classes }) => (
         {breadcrumbs.map((breadcrumb, index) => (
             <span key={breadcrumb.key} className={classes.flexContainer}>
                 <Typography
+                    variant='body2'
                     color='inherit'
                     component={(index === 0 || index === breadcrumbs.length -1 )
                         ? 'span' : NavLink

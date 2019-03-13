@@ -140,7 +140,7 @@ class StudentenListe extends Component {
         return (
             <div>
                 <div className={classes.flexbox}>
-                    <Typography variant="display1">
+                    <Typography variant="h4">
                         Studentenliste
                     </Typography>
                     <div className={classes.actionContainer}>

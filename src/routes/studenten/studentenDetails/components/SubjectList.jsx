@@ -102,7 +102,7 @@ class SubjectList extends Component {
                 semesterGroups.push(
                     <Fragment key={semester}>
                         <Typography
-                            variant='display1'
+                            variant='h4'
                             component='h3'
                             gutterBottom
                             className={this.props.classes.header}

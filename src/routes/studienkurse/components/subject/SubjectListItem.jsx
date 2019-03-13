@@ -69,7 +69,7 @@ class SubjectListItem extends Component {
             <RootRef rootRef={this.props.rootRef}>
                 <Expandable
                     header={
-                        <Typography variant='subheading' className={classes.expandableHeader} >
+                        <Typography variant='subtitle1' className={classes.expandableHeader} >
                             {subject.title}
                         </Typography>
                     }
@@ -82,7 +82,7 @@ class SubjectListItem extends Component {
                     </List>
                     <div className={classes.subjectActions}>
                         <Button
-                            variant='flat'
+                            variant='text'
                             size='small'
                             title='Fach bearbeiten'
                             className={classes.actionButton}
@@ -92,7 +92,7 @@ class SubjectListItem extends Component {
                             Bearbeiten
                         </Button>
                         <Button
-                            variant='flat'
+                            variant='text'
                             size='small'
                             title='Veranstaltung hinzufügen'
                             className={classes.actionButton}
@@ -102,7 +102,7 @@ class SubjectListItem extends Component {
                             Veranstaltung
                         </Button>
                         <Button
-                            variant='flat'
+                            variant='text'
                             size='small'
                             title='Fach löschen'
                             className={cn(classes.actionButton, classes.deleteButton)}

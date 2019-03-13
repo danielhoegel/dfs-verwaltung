@@ -132,8 +132,8 @@ const SubjectFields = ({
                 />
             </FieldGroup>
             <HiddenDivider />
-            <Button variant='raised' color='primary' type='submit'>Speichern</Button>
-            <Button onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
+            <Button variant='contained' color='primary' type='submit'>Speichern</Button>
+            <Button variant='text' onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
         </Fragment>
     );
 };

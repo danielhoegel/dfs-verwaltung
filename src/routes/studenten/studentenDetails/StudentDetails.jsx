@@ -137,29 +137,29 @@ class StudentDetails extends Component {
         return student ? (
             <Fragment>
                 <div>
-                    <Typography variant="display1" gutterBottom>
+                    <Typography variant="h4" gutterBottom>
                         {student.prefix} {student.firstName} {student.lastName}
                     </Typography>
-                    <Typography gutterBottom>
+                    <Typography variant='body2' gutterBottom>
                         Matrikelnummer: {student.matrikelnummer}
                     </Typography>
                 </div>
                 <Divider hidden height='1rem' />
                 <div style={{display: 'flex'}}>
-                    <Button onClick={this.goBack} className={classes.button} >
+                    <Button variant='text' onClick={this.goBack} className={classes.button} >
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
                     </Button>
-                    <Button onClick={this.updateStudent} className={classes.button} >
+                    <Button variant='text' onClick={this.updateStudent} className={classes.button} >
                         <EditIcon className={classes.leftIcon} />
                         Bearbeiten
                     </Button>
-                    <Button onClick={this.createNote} className={classes.button} >
+                    <Button variant='text' onClick={this.createNote} className={classes.button} >
                         <AddIcon className={classes.leftIcon} />
                         Note hinzufügen
                     </Button>
                     <Button
-                        variant='flat'
+                        variant='text'
                         title='Student entfernen'
                         className={cn(classes.button, classes.deleteButton)}
                         onClick={this.openDeleteStudentModal}
@@ -176,7 +176,7 @@ class StudentDetails extends Component {
                         onChange={this.tabChange}
                         indicatorColor="primary"
                         textColor="primary"
-                        scrollable={window.innerWidth < this.props.theme.breakpoints.values.lg}
+                        variant={window.innerWidth < this.props.theme.breakpoints.values.lg ? 'scrollable' : 'standard'}
                         scrollButtons='auto'
                         className={classes.tabsHeader}
                     >

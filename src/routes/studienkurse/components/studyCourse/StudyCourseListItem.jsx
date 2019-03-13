@@ -30,14 +30,14 @@ const StudyCourseListItem = ({
             defaultExpanded
             header={
                 <>
-                    <Typography variant='subheading' className={classes.expandableHeader}>
+                    <Typography variant='subtitle1' className={classes.expandableHeader}>
                         {studyCourse.title}
                     </Typography>
                 </>
             }
         >
             {studyCourse.description && (
-                <Typography className={classes.preWrap}>{studyCourse.description}</Typography>
+                <Typography variant='body2' className={classes.preWrap}>{studyCourse.description}</Typography>
             )}
             <List>
                 {studyCourse.studyRegulations &&
@@ -53,7 +53,7 @@ const StudyCourseListItem = ({
                 }
             </List>
             <Button
-                variant='flat'
+                variant='text'
                 size='small'
                 title='Studienordnung hinzufügen'
                 onClick={openCreateStudyRegulationModalHandler}
@@ -63,7 +63,7 @@ const StudyCourseListItem = ({
                 Hinzufügen
             </Button>
             <Button
-                variant='flat'
+                variant='text'
                 size='small'
                 title='Studienkurs bearbeiten'
                 onClick={() => openUpdateModal(studyCourse)}
@@ -73,7 +73,7 @@ const StudyCourseListItem = ({
                 Bearbeiten
             </Button>
             <Button
-                variant='flat'
+                variant='text'
                 size='small'
                 title='Studienkurs entfernen'
                 onClick={() => openDeleteModal(studyCourse)}

@@ -44,7 +44,7 @@ class Modal extends Component {
             >
                 <div className={classes.wrapper}>
                     <Paper className={classes.inside} elevation={8}>
-                        <Typography variant='title' className={classNames(
+                        <Typography variant='h6' className={classNames(
                             classes.header,
                             { [classes.headerWithCloseButton]: this.props.showCloseButton },
                             { [classes.dangerHeader]: this.props.danger }
@@ -60,7 +60,7 @@ class Modal extends Component {
                                 </IconButton>
                             }
                         </Typography>
-                        <Typography component='div' className={classes.body}>
+                        <Typography variant='body2' component='div' className={classes.body}>
                             <this.props.component
                                 closeModal={this.props.close}
                                 data={this.props.data}

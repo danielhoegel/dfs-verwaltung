@@ -344,7 +344,7 @@ class SearchSelect extends Component {
         if (grouped) {
             return Object.entries(groupedOptions).map(([ group, listItems ]) => (
                 <div className={classes.optionGroup} key={group}>
-                    <Typography className={classes.groupHeader}>
+                    <Typography variant='body2' className={classes.groupHeader}>
                         {group}
                     </Typography>
                     <div className={cn('groupedItem', classes.groupItems)}>

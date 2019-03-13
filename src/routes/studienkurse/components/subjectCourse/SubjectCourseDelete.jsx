@@ -40,7 +40,7 @@ class SubjectCourseDelete extends Component {
         return (
             <div>
                 <Loader loading={loading} />
-                <Typography>
+                <Typography variant='body2'>
                     Sind Sie sicher, dass sie die Veranstaltung <strong>{data.title}</strong> löschen möchten?<br />
                     <br />
                     <strong>Dadurch werden auch alle mit der Veranstaltung assozierten Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
@@ -55,17 +55,17 @@ class SubjectCourseDelete extends Component {
                 />
                 <HiddenDivider height={2} />
                 <Button
-                    variant='raised'
+                    variant='contained'
                     onClick={this.deleteHandler}
                     className={classes.deleteButton}
                     disabled={!this.controlCheck()}
                 >
                     Löschen
                 </Button>
-                <Button onClick={closeModal}>
+                <Button variant='text' onClick={closeModal}>
                     Abbrechen
                 </Button>
-                {error && <Typography className={classes.error}>{error}</Typography>}
+                {error && <Typography variant='body2' className={classes.error}>{error}</Typography>}
             </div>
         );
     }

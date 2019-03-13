@@ -107,7 +107,7 @@ const GradeFields = ({
                     variant='warning'
                     message='Bitte fügen Sie zuerst mindestens einen Studenten hinzu.'
                     actions={[
-                        <Button onClick={() => {
+                        <Button variant='text' onClick={() => {
                             history.push('/studenten/create');
                             onCancel();
                         }}>
@@ -235,24 +235,24 @@ const GradeFields = ({
             </FieldGroup>
             <HiddenDivider />
             <div style={{ display: 'flex' }}>
-                <Button variant='raised' color='primary' type='submit'>
+                <Button variant='contained' color='primary' type='submit'>
                     <SaveIcon className={classes.leftIcon} />
                     Speichern
                 </Button>
-                {/* <Button variant='raised' color='secondary' type='button' style={{marginLeft: '1rem'}}>
+                {/* <Button variant='contained' color='secondary' type='button' style={{marginLeft: '1rem'}}>
                     <SaveIcon className={classes.leftIcon} />
                     Nächste Note
                 </Button>
-                <Button variant='raised' color='secondary' type='button' style={{marginLeft: '1rem'}}>
+                <Button variant='contained' color='secondary' type='button' style={{marginLeft: '1rem'}}>
                     <SaveIcon className={classes.leftIcon} />
                     Nächster Student
                 </Button> */}
-                <Button variant='flat' onClick={onCancel} style={{marginLeft: '1rem'}}>
+                <Button variant='contained' onClick={onCancel} style={{marginLeft: '1rem'}}>
                     Abbrechen
                 </Button>
                 {grade && (
                     <Button
-                        variant='raised'
+                        variant='contained'
                         type='button'
                         onClick={() => deleteGrade(grade).then(onCancel)}
                         className={classes.deleteButton}

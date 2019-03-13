@@ -108,12 +108,12 @@ class StudentUpdate extends Component {
 
             return (
                 <div>
-                    <Typography variant="display1" gutterBottom>
+                    <Typography variant="h4" gutterBottom>
                         Neuer Student
                     </Typography>
 
                     <HiddenDivider />
-                    <Button onClick={this.goBack} className={classes.button} >
+                    <Button variant='text' onClick={this.goBack} className={classes.button} >
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
                     </Button>

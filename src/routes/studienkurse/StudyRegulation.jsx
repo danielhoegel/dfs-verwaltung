@@ -277,7 +277,7 @@ class StudyRegulation extends Component {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <Typography variant='display1'>
+                    <Typography variant='h4'>
                         {studyRegulation.studyCourse.title}
                     </Typography>
                     <StudyRegulationDateChip date={studyRegulation.date} />
@@ -285,24 +285,24 @@ class StudyRegulation extends Component {
                 
                 <HiddenDivider />
                 {studyRegulation.title && (
-                    <Typography variant='body2'>
+                    <Typography variant='body1'>
                         {studyRegulation.title}
                     </Typography>
                 )}
                 {studyRegulation.description && (
-                    <Typography variant='body2'>
+                    <Typography variant='body1'>
                         {studyRegulation.description}
                     </Typography>
                 )}
 
                 <HiddenDivider />
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Button onClick={this.goBack} className={classes.button}>
+                    <Button variant='text' onClick={this.goBack} className={classes.button}>
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
                     </Button>
                     <Button
-                        variant='flat'
+                        variant='text'
                         title='Studienkurs bearbeiten'
                         className={classes.button}
                         onClick={this.openUpdateStudyRegulationModal}
@@ -311,7 +311,7 @@ class StudyRegulation extends Component {
                         Bearbeiten
                     </Button>
                     <Button
-                        variant='flat'
+                        variant='text'
                         title='Fach hinzufügen'
                         className={classes.button}
                         onClick={this.openCreateSubjectModal}
@@ -320,7 +320,7 @@ class StudyRegulation extends Component {
                         Hinzufügen
                     </Button>
                     <Button
-                        variant='flat'
+                        variant='text'
                         title='Fach entfernen'
                         className={cn(classes.button, classes.deleteButton)}
                         onClick={this.openDeleteStudyRegulationModal}
@@ -351,7 +351,7 @@ class StudyRegulation extends Component {
                     {subjects.length
                         ? Object.entries(this.groupSubjectsBySemester()).map(([ semester, subjects ]) => (
                             <Fragment key={semester} >
-                                <Typography variant='body2'>{semester}. Semester</Typography>
+                                <Typography variant='body1'>{semester}. Semester</Typography>
                                 {subjects.map(subject => (
                                     <SubjectListItem
                                         key={subject.id}

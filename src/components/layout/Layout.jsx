@@ -38,7 +38,7 @@ const Layout = ({ pageLoading, children, classes }) => {
             <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <div className={classes.contentScrollWrapper}>
-                    <Typography component='div' className={classes.contentInside}>
+                    <Typography variant='body2' component='div' className={classes.contentInside}>
                         { children }
                     </Typography>
                 </div>

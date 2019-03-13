@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -26,15 +26,14 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
     return (
         <DropdownMenu
             button={ButtonComponent ||
-                <Button
-                    variant='fab'
+                <Fab
                     className={classNames(classes.printButton, className)}
                     title='Drucken oder als PDF speichern'
                     style={style}
                     color='primary'
                 >
                     <PrintIcon />
-                </Button>
+                </Fab>
             }
         >
             <Printing

@@ -35,8 +35,8 @@ const StudyCourseFields = ({ change, values, onCancel, disabled }) => {
                 /> 
             </FieldGroup>
             <HiddenDivider height={2} />
-            <Button variant='raised' color='primary' type='submit' disabled={disabled}>Speichern</Button>
-            <Button onClick={onCancel} style={{marginLeft: '1rem'}} disabled={disabled}>Abbrechen</Button>
+            <Button variant='contained' color='primary' type='submit' disabled={disabled}>Speichern</Button>
+            <Button variant='text' onClick={onCancel} style={{marginLeft: '1rem'}} disabled={disabled}>Abbrechen</Button>
         </Fragment>
     );
 };

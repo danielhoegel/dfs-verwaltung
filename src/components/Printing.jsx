@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 
 
 export function printPage({
@@ -68,7 +69,7 @@ function Printing({
 
     return children
         ? React.cloneElement(children, { onClick: __printPage })
-        : <button onClick={__printPage}>Download PDF</button>;
+        : <Button variant='text' onClick={__printPage}>Download PDF</Button>;
 }
 
 Printing.propTypes = {

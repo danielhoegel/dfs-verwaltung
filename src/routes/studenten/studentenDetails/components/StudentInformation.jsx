@@ -34,7 +34,7 @@ const StudentInformation = ({ classes, student }) => {
 
     return (
         <div>
-            <Typography as='h3' variant='body2' className={classes.subheading}>Geburtsdatum</Typography>
+            <Typography component='h3' variant='body1' className={classes.subheading}>Geburtsdatum</Typography>
                 <div>
                     <span className={classes.noSelect}>Geburtsdatum: </span>
                     {formatDate(birthDate)}
@@ -44,11 +44,11 @@ const StudentInformation = ({ classes, student }) => {
                     {birthPlace}, {birthCountry}
                 </div>
             
-            <Typography as='h3' variant='body2' className={classes.subheading}>Adresse</Typography>
+            <Typography component='h3' variant='body1' className={classes.subheading}>Adresse</Typography>
                 {address} {addressExtra && `, ${addressExtra}`}<br />
                 {postal} {city}, {country}
 
-            <Typography as='h3' variant='body2' className={classes.subheading}>E-Mail</Typography>
+            <Typography component='h3' variant='body1' className={classes.subheading}>E-Mail</Typography>
             <div>
                 <span className={classes.noSelect}>Mail (Uni): </span>
                 <a href={`mailto:${mailPrimary}`} className={classes.link}>{mailPrimary}</a>
@@ -58,7 +58,7 @@ const StudentInformation = ({ classes, student }) => {
                 <a href={`mailto:${mailSecondary}`} className={classes.link}>{mailSecondary}</a>
             </div>
                 
-            <Typography as='h3' variant='body2' className={classes.subheading}>Telefonnummer</Typography>
+            <Typography component='h3' variant='body1' className={classes.subheading}>Telefonnummer</Typography>
             <div>
                 <span className={classes.noSelect}>Festnetz: </span>
                 <a href={`tel:${phoneNumber}`} className={classes.link}>{phoneNumber}</a>
@@ -68,7 +68,7 @@ const StudentInformation = ({ classes, student }) => {
                 <a href={`tel:${mobileNumber}`} className={classes.link}>{mobileNumber}</a>
             </div>
             
-            <Typography as='h3' variant='body2' className={classes.subheading}>Kontodaten</Typography>
+            <Typography component='h3' variant='body1' className={classes.subheading}>Kontodaten</Typography>
             <div>
                 <span>
                     <span className={classes.noSelect}>Kontoinhaber: </span>

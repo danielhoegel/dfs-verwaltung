@@ -30,6 +30,10 @@ const theme = createMuiTheme({
         green: customColors.green,
         darkgreen: customColors.darkgreen,
     },
+    typography: {
+        useNextVariants: true,
+        suppressDeprecationWarnings: true
+    },
     overrides: {
         MuiInput: {
             underline: {
@@ -72,12 +76,13 @@ const theme = createMuiTheme({
                 }
             },
         },
+        disabled: {}, // needs to be here in order to use it inside MuiSelect
         MuiSelect: {
-            disabled: {
-                '&$select': {
+            select: {
+                '&$disabled': {
                     cursor: 'not-allowed',
-                },
-            },
+                }
+            }
         },
         MuiNativeSelect: {
             select: {

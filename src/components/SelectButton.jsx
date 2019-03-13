@@ -51,7 +51,6 @@ class SelectButton extends Component {
                     disableUnderline: true,
                     startAdornment: (
                         <InputAdornment
-                        variant='standard'
                         position='start'
                         className={classes.adornment}
                         >

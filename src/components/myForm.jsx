@@ -100,7 +100,7 @@ class MyForm extends Component {
                     {...formProps}
                 />
                 {error &&
-                    <Typography className={classes.error}>
+                    <Typography variant='body2' className={classes.error}>
                         {typeof error === 'string'
                             ? error
                             : error.map((err, i) => <Fragment key={i}>{err}<br /></Fragment>)
