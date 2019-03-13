@@ -6,8 +6,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "backup": "node scripts/backup.js",
-    "server:database": "json-server --watch server/datenbank.json --port 3333 --snapshots server/backups",
-    "server:frontend": "node server/frontend-server.js",
+    "server:database": "json-server --watch datenbank/datenbank.json --port 3333 --snapshots datenbank/backups",
+    "server:frontend": "node server-frontend.js",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server\"",
     "production": "concurrently \"npm run backup\" \"npm run server:database\" \"npm run server:frontend\""
   },

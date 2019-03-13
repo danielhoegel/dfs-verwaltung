@@ -1,12 +1,12 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # database
-/server/datenbank.json
-/server/backups
+/datenbank/datenbank.json
+/datenbank/backups
 
 # ssh key
-/server/ssh_key
-/server/ssh_key.pub
+/datenbank/ssh_key
+/datenbank/ssh_key.pub
 
 # dependencies
 /node_modules

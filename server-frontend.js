@@ -5,11 +5,11 @@ const path = require('path');
 const server = express();
 
 // static file declaration
-server.use(express.static(path.join(__dirname, '../build')));
+server.use(express.static(path.join(__dirname, 'build')));
 
 // always server index.html
 server.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build/index.html'));
+    res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
 const PORT = process.env.PORT || 3303;
