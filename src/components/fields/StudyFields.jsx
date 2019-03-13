@@ -38,7 +38,7 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
 
     const studyCourseChangeHandler = (e) => {
         onChange(e, true);
-        onChange({ target: { name: 'studyRegulationId', value: '' }});
+        onChange({ target: { name: 'studyRegulationId', value: '' }}, true);
     }
 
     return (
@@ -72,7 +72,7 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                         name={`${__prefix}.status`}
                         label='Status'
                         value={values.status}
-                        onChange={onChange}
+                        onChange={e => onChange(e, true)}
                         required
                     >
                         {studyStatusList.map(({ id, value }) => (
@@ -82,7 +82,7 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                     <Field
                         name={`${__prefix}.year`}
                         value={values.year}
-                        onChange={onChange}
+                        onChange={e => onChange(e, true)}
                         label='Jahrgang'
                         required
                         type='number'

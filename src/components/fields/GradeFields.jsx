@@ -179,7 +179,7 @@ const GradeFields = ({
                         min={0}
                         max={values.gradingSystem === 'de' ? 18 : 20}
                         step={1}
-                        onChange={change}
+                        onChange={e => change(e, true)}
                         autoFocus
                         required
                         variant='outlined'
@@ -209,7 +209,7 @@ const GradeFields = ({
                             value={values.try}
                             label='Versuch'
                             type='number'
-                            onChange={change}
+                            onChange={e => change(e, true)}
                             required
                             width={1.5}
                         />
