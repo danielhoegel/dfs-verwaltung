@@ -12,7 +12,7 @@ import FieldGroup from '../FieldGroup';
 import FieldRadioGroup from '../FieldRadioGroup';
 import HiddenDivider from '../HiddenDivider';
 import SearchSelect from '../../components/SearchSelect';
-import { getStudiesByStudentId, getStudyById } from '../../redux/entitiesSelector';
+import { getStudiesByStudentId } from '../../redux/entitiesSelector';
 import { translateStudyStatus } from '../../helper/helper';
 import FieldSelect from '../FieldSelect';
 import MessageBox from '../MessageBox';

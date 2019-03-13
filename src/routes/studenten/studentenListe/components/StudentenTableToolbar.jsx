@@ -45,7 +45,7 @@ class StudentenTableToolbar extends Component {
                 <div className={classes.title}>
                     {numSelected > 0 ? (
                         <Typography color="inherit" variant="subheading">
-                            {numSelected} Studenten ausgewählt
+                            {numSelected} Student{numSelected > 1 && 'en'} ausgewählt
                         </Typography>
                     ) : (
                         <Typography variant="title">
