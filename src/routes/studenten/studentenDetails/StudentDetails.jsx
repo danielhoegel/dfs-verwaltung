@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import cn from 'classnames';
+import { withRouter } from "react-router-dom";
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { fetchStudentForId } from '../redux/studentenActions';
 import { getFullStudent, getStudyCourseById } from '../../../redux/entitiesSelector';
@@ -22,6 +25,7 @@ import StudentInformation from './components/StudentInformation';
 import GradeCreate from './components/GradeCreate';
 import Modal from '../../../components/Modal';
 import Divider from '../../../components/Divider';
+import StudentDelete from './components/StudentDelete';
 // import Placeholder from '../../components/placeholder/Placeholder';
 
 
@@ -55,6 +59,7 @@ class StudentDetails extends Component {
     }
 
     state = {
+        studentDeleteModalOpen: false,
         gradeCreateModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
@@ -95,6 +100,9 @@ class StudentDetails extends Component {
         this.props.history.push(`/studenten/${this.studentId}/update`);
     }
 
+    openDeleteStudentModal = () => { this.setState({ studentDeleteModalOpen: true }); }
+    closeStudentDeleteModal = () => { this.setState({ studentDeleteModalOpen: false }); }
+
     openGradeModal = (data) => {
         this.setState({
             gradeCreateModalOpen: true,
@@ -110,9 +118,13 @@ class StudentDetails extends Component {
     }
 
     createNote = () => {
-        this.openGradeModal({
-            studentId: this.studentId
-        });
+        let data = {};
+        if (this.state.tab !== 'contact') {
+            data.studyId = this.state.tab;
+        } else {
+            data.studentId = this.studentId;
+        }
+        this.openGradeModal(data);
     }
 
     tabChange = (e, tab) => {
@@ -133,7 +145,7 @@ class StudentDetails extends Component {
                     </Typography>
                 </div>
                 <Divider hidden height='1rem' />
-                <div>
+                <div style={{display: 'flex'}}>
                     <Button onClick={this.goBack} className={classes.button} >
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
@@ -145,6 +157,15 @@ class StudentDetails extends Component {
                     <Button onClick={this.createNote} className={classes.button} >
                         <AddIcon className={classes.leftIcon} />
                         Note hinzufügen
+                    </Button>
+                    <Button
+                        variant='flat'
+                        title='Student entfernen'
+                        className={cn(classes.button, classes.deleteButton)}
+                        onClick={this.openDeleteStudentModal}
+                    >
+                        <DeleteIcon className={classes.leftIcon} />
+                        Entfernen
                     </Button>
                 </div>
 
@@ -187,6 +208,14 @@ class StudentDetails extends Component {
                 </Paper>
                 
                 <Modal
+                    component={StudentDelete}
+                    title='Student entfernen'
+                    close={this.closeStudentDeleteModal}
+                    open={this.state.studentDeleteModalOpen}
+                    data={student}
+                    danger
+                />
+                <Modal
                     component={GradeCreate}
                     title='Note hinzufügen'
                     close={this.closeGradeCreateModal}
@@ -204,6 +233,12 @@ const styles = theme => ({
         '&:not(:last-child)': {
             marginRight: theme.spacing.unit
         },
+    },
+    deleteButton: {
+        marginLeft: 'auto',
+        '&:hover': {
+            color: theme.palette.darkred,
+        }
     },
     leftIcon: {
         marginRight: theme.spacing.unit
@@ -233,5 +268,5 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(
-    withStyles(styles, { withTheme: true })(StudentDetails)
+    withRouter(withStyles(styles, { withTheme: true })(StudentDetails))
 );
