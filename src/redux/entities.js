@@ -1,4 +1,4 @@
-export default [
+const entities = [
     {
         singular: 'student',
         plural: 'students',
