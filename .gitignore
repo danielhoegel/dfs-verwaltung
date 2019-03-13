@@ -4,6 +4,10 @@
 /server/datenbank.json
 /server/backups
 
+# ssh key
+/server/ssh_key
+/server/ssh_key.pub
+
 # dependencies
 /node_modules
 
