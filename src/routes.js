@@ -24,10 +24,10 @@ const StudentBreadcrumb = connect((state, props) => ({
 
 const ReportBreadcrumb = ({ match }) => {
     switch (match.params.report) {
-        case 'studenten': return 'Studentenliste';
-        case 'lesb': return 'LESB-Liste';
-        case 'ergebnisse': return 'Prüfungsergebnisse';
-        default: return match.params.report;
+        case 'studenten':   return 'Studentenliste';
+        case 'lesb':        return 'LESB-Liste';
+        case 'ergebnisse':  return 'Prüfungsergebnisse';
+        default:            return match.params.report;
     }
 }
 

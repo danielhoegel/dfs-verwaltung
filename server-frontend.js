@@ -4,10 +4,10 @@ const path = require('path');
 
 const server = express();
 
-// static file declaration
+// path for static files
 server.use(express.static(path.join(__dirname, 'build')));
 
-// always server index.html
+// always serve index.html
 server.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build/index.html'));
 });
