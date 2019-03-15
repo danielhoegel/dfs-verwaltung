@@ -11,6 +11,7 @@ import HiddenDivider from '../../../../components/HiddenDivider';
 import Loader from '../../../../components/Loader';
 import entitiesActions from '../../../../redux/entitiesActions';
 import Field from '../../../../components/Field';
+// import { getStudiesByStudentId, getGradesByStudyId } from '../../../../redux/entitiesSelector';
 
 
 class StudentDelete extends Component {
@@ -24,10 +25,33 @@ class StudentDelete extends Component {
         return this.state.controlValue === this.props.data.matrikelnummer;
     }
 
+    // deleteAndCascade = () => {
+    //     /*
+    //      * this seems to work out of the box with json-server
+    //      */
+    
+    //     // delete student
+    //     const requests = [this.props.deleteStudent(this.props.data)];
+
+    //     // cascade studies and grades
+    //     const studies = getStudiesByStudentId(this.props.state, this.props.data.id);
+    //     studies.forEach(study => {
+    //         // delete studies
+    //         requests.push(this.props.deleteStudy(study));
+            
+    //         // delete grades
+    //         const grades = getGradesByStudyId(this.props.state, study.id);
+    //         grades.forEach(grade => {
+    //             requests.push(this.props.deleteGrade(grade));
+    //         });
+    //     });
+        
+    //     return Promise.all(requests);
+    // }
+
     deleteHandler = () => {
         if (this.controlCheck()) {
             this.setState({ loading: true, error: null });
-            // TODO: delete studies and grades
             this.props.deleteStudent(this.props.data)
                 .then(this.props.history.replace('/studenten'))
                 .then(this.props.closeModal)
@@ -90,10 +114,12 @@ const styles = theme => ({
         fontFamily: 'monospace',
         fontSize: '1.25em',
     },
-})
+});
 
 const mapDispatchToProps = {
-    deleteStudent: entitiesActions.student.delete
+    deleteStudent: entitiesActions.student.delete,
+    deleteStudy: entitiesActions.study.delete,
+    deleteGrade: entitiesActions.grade.delete,
 };
 
 StudentDelete.propTypes = {
@@ -103,6 +129,6 @@ StudentDelete.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(
+export default connect(state => ({ state }), mapDispatchToProps)(
     withRouter(withStyles(styles)(StudentDelete))
 );
