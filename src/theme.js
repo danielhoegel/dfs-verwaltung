@@ -2,8 +2,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 
-const defaultTheme = createMuiTheme();
-
 const customColors = {
     primary: '#006ab3',
     secondary: '#e2e3e3',
@@ -18,6 +16,9 @@ const customColors = {
 };
 
 const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true
+    },
     palette: {
         primary: { main: customColors.primary },
         secondary: { main: customColors.secondary },
@@ -29,10 +30,6 @@ const theme = createMuiTheme({
         darkred: customColors.darkred,
         green: customColors.green,
         darkgreen: customColors.darkgreen,
-    },
-    typography: {
-        useNextVariants: true,
-        suppressDeprecationWarnings: true
     },
     overrides: {
         MuiInput: {
@@ -88,7 +85,7 @@ const theme = createMuiTheme({
             select: {
                 // reset native select option background
                 '& option': {
-                    backgroundColor: defaultTheme.palette.common.white,
+                    backgroundColor: '#fff',
                 },
             },
         },
