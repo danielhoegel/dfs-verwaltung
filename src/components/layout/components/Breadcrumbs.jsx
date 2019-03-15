@@ -10,22 +10,19 @@ import routes from '../../../routes.js';
 
 // map & render your breadcrumb components however you want.
 // each `breadcrumb` has the props `key`, `location`, and `match` included!
-// TODO: Typography is assigning every prop of its child (breadcrumb) to its
-//       component (span|NavLink); assigning the boolean prop `exact` to a span
-//       results in a React console warning
 const Breadcrumbs = ({ breadcrumbs, classes }) => (
     <div className={classes.flexContainer}>
-        {breadcrumbs.map((breadcrumb, index) => (
-            <span key={breadcrumb.key} className={classes.flexContainer}>
+        {breadcrumbs.map(({ match, breadcrumb }, index) => (
+            <span key={match.url} className={classes.flexContainer}>
                 <Typography
                     variant='body2'
                     color='inherit'
                     component={(index === 0 || index === breadcrumbs.length -1 )
                         ? 'span' : NavLink
                     }
-                    to={breadcrumb.props.match.url}
+                    to={match.url}
                 >
-                   {breadcrumb}
+                    {breadcrumb}
                 </Typography>
                 {(index < breadcrumbs.length - 1) && (
                     <ChevronRightIcon />
@@ -42,6 +39,6 @@ const styles = {
     }
 };
 
-export default withBreadcrumbs(routes)(
+export default withBreadcrumbs(routes, { disableDefaults: true })(
     withStyles(styles)(Breadcrumbs)
 );
