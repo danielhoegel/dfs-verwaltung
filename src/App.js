@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { hot } from 'react-hot-loader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import 'typeface-roboto';
@@ -44,4 +45,8 @@ const mapStateToProps = state => ({
     entities: state.entities,
 });
 
-export default connect(mapStateToProps)(App);
+const AppContainer = connect(mapStateToProps)(App);
+
+export default process.env.NODE_ENV === "development"
+    ? hot(module)(AppContainer)
+    : AppContainer
