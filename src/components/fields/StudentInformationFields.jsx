@@ -24,6 +24,7 @@ function StudentInformationFields({ values, prefix, onChange }) {
                     name={`${__prefix}.birthDate`}
                     label='Geburtsdatum'
                     type='date'
+                    placeholder='YYYY-MM-DD'
                     value={values.birthDate}
                     onChange={onChange}
                     InputLabelProps={dateInputLabelProps}

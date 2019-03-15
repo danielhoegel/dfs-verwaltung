@@ -34,8 +34,9 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
                 /> 
                 <Field
                     name='date'
-                    label='Gültig ab (TT.MM.JJJJ)'
+                    label='Gültig ab'
                     type='date'
+                    placeholder='YYYY-MM-DD'
                     onChange={change}
                     value={values.date}
                     InputLabelProps={{ shrink: true }}

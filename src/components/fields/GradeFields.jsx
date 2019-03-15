@@ -221,6 +221,7 @@ const GradeFields = ({
                             label='Prüfungsdatum'
                             onChange={change}
                             type='date'
+                            placeholder='YYYY-MM-DD'
                             InputLabelProps={{ shrink: true }}
                         />
                         <Field
