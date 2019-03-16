@@ -5,7 +5,6 @@ import omit from 'lodash/omit';
 
 import StudyRegulationFields from '../../../../components/fields/StudyRegulationFields';
 import MyForm from '../../../../components/MyForm';
-import { isNotEmpty } from '../../../../helper/helper';
 import entitiesActions from '../../../../redux/entitiesActions';
 
 class StudyRegulationUpdate extends Component {
@@ -26,16 +25,6 @@ class StudyRegulationUpdate extends Component {
             .catch(err => this.setState({ loading: false, error: err }));
     } 
 
-    studyCourseOptions() {
-        if (isNotEmpty(this.props.data.studyCourses)) {
-            return this.props.data.studyCourses.map(studyCourse => ({
-                value: studyCourse.id,
-                label: studyCourse.title
-            }));
-        }
-        return [];
-    }
-
     render() {
         return (
             <div>
@@ -45,7 +34,7 @@ class StudyRegulationUpdate extends Component {
                     onCancel={this.props.closeModal}
                     defaultValues={this.props.data.studyRegulation}
                     loading={this.state.loading}
-                    studyCourseOptions={this.studyCourseOptions()}
+                    studyCourses={this.props.data.studyCourses}
                 />
             </div>
         );

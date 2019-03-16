@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import StudyRegulationFields from '../../../../components/fields/StudyRegulationFields';
 import MyForm from '../../../../components/MyForm';
-import { isNotEmpty } from '../../../../helper/helper';
 import entitiesActions from '../../../../redux/entitiesActions';
 
 class StudyCourseCreate extends Component {
@@ -18,16 +17,6 @@ class StudyCourseCreate extends Component {
         this.props.createStudyRegulation(data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));
-    } 
-
-    studyCourseOptions() {
-        if (isNotEmpty(this.props.data.studyCourses)) {
-            return this.props.data.studyCourses.map(studyCourse => ({
-                value: studyCourse.id,
-                label: studyCourse.title
-            }));
-        }
-        return [];
     }
 
     render() {
@@ -44,7 +33,7 @@ class StudyCourseCreate extends Component {
                         studyCourseId: this.props.data.studyCourse.id
                     }}
                     loading={this.state.loading}
-                    studyCourseOptions={this.studyCourseOptions()}
+                    studyCourses={this.props.data.studyCourses}
                 />
             </div>
         );

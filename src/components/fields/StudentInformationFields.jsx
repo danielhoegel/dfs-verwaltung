@@ -16,12 +16,15 @@ const laenderOptions = generateLaenderOptions().map(({ value, label }) => (
 ));
 
 function StudentInformationFields({ values, prefix, onChange }) {
-    const __prefix = prefix ? `${prefix}.studentInformation` : 'studentInformation';
+    function prefixed(name) {
+        return prefix ? `${prefix}.${name}` : name;
+    }
+
     return (
         <Fragment>
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.birthDate`}
+                    name={prefixed('birthDate')}
                     label='Geburtsdatum'
                     type='date'
                     placeholder='YYYY-MM-DD'
@@ -30,13 +33,13 @@ function StudentInformationFields({ values, prefix, onChange }) {
                     InputLabelProps={dateInputLabelProps}
                 />
                 <Field
-                    name={`${__prefix}.birthPlace`}
+                    name={prefixed('birthPlace')}
                     label='Geburtsort'
                     value={values.birthPlace}
                     onChange={onChange}
                 />
                 <NativeSelectField
-                    name={`${__prefix}.birthCountry`}
+                    name={prefixed('birthCountry')}
                     label='Geburtsland'
                     value={values.birthCountry}
                     options={laenderOptions}
@@ -47,7 +50,7 @@ function StudentInformationFields({ values, prefix, onChange }) {
             <HiddenDivider height={2} />
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.mailPrimary`}
+                    name={prefixed('mailPrimary')}
                     value={values.mailPrimary}
                     onChange={onChange}
                     placeholder='vorname.nachname@hhu.de'
@@ -56,7 +59,7 @@ function StudentInformationFields({ values, prefix, onChange }) {
                     type='email'
                 />
                 <Field
-                    name={`${__prefix}.mailSecondary`}
+                    name={prefixed('mailSecondary')}
                     value={values.mailSecondary}
                     onChange={onChange}
                     placeholder='vorname.nachname@gmail.com'
@@ -66,7 +69,7 @@ function StudentInformationFields({ values, prefix, onChange }) {
             </FieldGroup>
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.phoneNumber`}
+                    name={prefixed('phoneNumber')}
                     value={values.phoneNumber}
                     onChange={onChange}
                     placeholder='+49 1234 5678'
@@ -74,7 +77,7 @@ function StudentInformationFields({ values, prefix, onChange }) {
                     type='phone'
                 />
                 <Field
-                    name={`${__prefix}.mobileNumber`}
+                    name={prefixed('mobileNumber')}
                     value={values.mobileNumber}
                     onChange={onChange}
                     placeholder='+49 123 456 789 10'
@@ -86,14 +89,14 @@ function StudentInformationFields({ values, prefix, onChange }) {
             <HiddenDivider height={2} />
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.address`}
+                    name={prefixed('address')}
                     value={values.address}
                     onChange={onChange}
                     label='Straße, Nr.'
                     width={2}
                 />
                 <Field
-                    name={`${__prefix}.addressExtra`}
+                    name={prefixed('addressExtra')}
                     value={values.addressExtra}
                     onChange={onChange}
                     label='Zusatz (optional)'
@@ -101,20 +104,20 @@ function StudentInformationFields({ values, prefix, onChange }) {
             </FieldGroup>
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.postal`}
+                    name={prefixed('postal')}
                     value={values.postal}
                     onChange={onChange}
                     label='Postleitzahl'
                     width={0.5}
                 />
                 <Field
-                    name={`${__prefix}.city`}
+                    name={prefixed('city')}
                     value={values.city}
                     onChange={onChange}
                     label='Ort'
                 />
                 <NativeSelectField
-                    name={`${__prefix}.country`}
+                    name={prefixed('country')}
                     label='Land'
                     value={values.country}
                     options={laenderOptions}
@@ -125,13 +128,13 @@ function StudentInformationFields({ values, prefix, onChange }) {
             <HiddenDivider height={2} />
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.bank`}
+                    name={prefixed('bank')}
                     label='Bank'
                     value={values.bank}
                     onChange={onChange}
                 />
                 <Field
-                    name={`${__prefix}.accountHolder`}
+                    name={prefixed('accountHolder')}
                     label='Kontoinhaber'
                     value={values.accountHolder}
                     onChange={onChange}
@@ -139,14 +142,14 @@ function StudentInformationFields({ values, prefix, onChange }) {
             </FieldGroup>
             <FieldGroup>
                 <Field
-                    name={`${__prefix}.iban`}
+                    name={prefixed('iban')}
                     label='IBAN'
                     value={values.iban}
                     onChange={onChange}
                     width={2}
                 />
                 <Field
-                    name={`${__prefix}.bic`}
+                    name={prefixed('bic')}
                     label='BIC'
                     value={values.bic}
                     onChange={onChange}

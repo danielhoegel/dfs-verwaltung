@@ -9,7 +9,14 @@ import FieldSelect from '../FieldSelect';
 import HiddenDivider from '../HiddenDivider';
 
 
-const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions }) => {
+const StudyRegulationFields = ({ change, values, onCancel, studyCourses }) => {
+    function studyCourseOptions() {
+        return studyCourses.map(studyCourse => ({
+            value: studyCourse.id,
+            label: studyCourse.title
+        }));
+    }
+
     return (
         <Fragment>
             <FieldGroup>
@@ -18,7 +25,7 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourseOptions })
                     label='Studienkurs'
                     onChange={change}
                     value={values.studyCourseId}
-                    options={studyCourseOptions}
+                    options={studyCourseOptions()}
                     disabled
                 /> 
             </FieldGroup>
@@ -66,7 +73,7 @@ StudyRegulationFields.propTypes = {
     change: PropTypes.func.isRequired,
     values: PropTypes.object.isRequired,
     onCancel: PropTypes.func.isRequired,
-    studyCourseOptions: PropTypes.array.isRequired,
+    studyCourses: PropTypes.array.isRequired,
 };
 
 export default StudyRegulationFields;

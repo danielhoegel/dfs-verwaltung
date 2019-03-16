@@ -4,13 +4,16 @@ import Field from '../Field';
 import MenuItem from '@material-ui/core/MenuItem';
 
 function StudentFields({ values, prefix, onChange }) {
-    const __prefix = prefix ? `${prefix}.student` : 'student';
+    function prefixed(name) {
+        return prefix ? `${prefix}.${name}` : name;
+    }
+
     return (
         <Fragment>
             <FieldGroup>
                 <Field
                     select
-                    name={`${__prefix}.prefix`}
+                    name={prefixed('prefix')}
                     label='Anrede'
                     value={values.prefix}
                     onChange={onChange}
@@ -20,7 +23,7 @@ function StudentFields({ values, prefix, onChange }) {
                     <MenuItem key='Herr' value='Herr'>Herr</MenuItem>
                 </Field>
                 <Field
-                    name={`${__prefix}.firstName`}
+                    name={prefixed('firstName')}
                     label='Vorname'
                     value={values.firstName}
                     onChange={onChange}
@@ -28,7 +31,7 @@ function StudentFields({ values, prefix, onChange }) {
                     required
                 />
                 <Field
-                    name={`${__prefix}.lastName`}
+                    name={prefixed('lastName')}
                     label='Nachname'
                     value={values.lastName}
                     onChange={onChange}
@@ -36,7 +39,7 @@ function StudentFields({ values, prefix, onChange }) {
                     required
                 />
                 <Field
-                    name={`${__prefix}.matrikelnummer`}
+                    name={prefixed('matrikelnummer')}
                     value={values.matrikelnummer}
                     onChange={onChange}
                     label='Matrikelnummer'

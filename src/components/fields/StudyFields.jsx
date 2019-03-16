@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,8 +10,7 @@ import Field from '../Field';
 import { studyStatusList, isEmpty } from '../../helper/helper';
 
 
-function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange, classes }) {
-    const __prefix = prefix || 'study';
+function StudyFields({ values, prefix, studyCourses, studyRegulations, change, onCancel, classes }) {
     const year = new Date().getFullYear();
 
     function studyCourseOptions() {
@@ -19,6 +19,10 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                 {title}
             </MenuItem>
         ));
+    }
+
+    function prefixed(name) {
+        return prefix ? `${prefix}.${name}` : name;
     }
 
     function studyRegulationOptions() {
@@ -37,17 +41,16 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
     }
 
     const studyCourseChangeHandler = (e) => {
-        onChange(e, true);
-        onChange({ target: { name: 'studyRegulationId', value: '' }}, true);
+        change(e, true);
+        change({ target: { name: 'studyRegulationId', value: '' }}, true);
     }
-
     return (
         <Fragment>
             <Paper className={classes.paper}>
                 <FieldGroup>
                     <Field
                         select
-                        name={`${__prefix}.studyCourseId`}
+                        name={prefixed('studyCourseId')}
                         label='Studienkurs'
                         value={values.studyCourseId}
                         onChange={studyCourseChangeHandler}
@@ -57,10 +60,10 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                     </Field>
                     <Field
                         select
-                        name={`${__prefix}.studyRegulationId`}
+                        name={prefixed('studyRegulationId')}
                         label='Studienordnung'
                         value={values.studyRegulationId}
-                        onChange={e => onChange(e, true)}
+                        onChange={e => change(e, true)}
                         required
                     >
                         {studyRegulationOptions()}
@@ -69,10 +72,10 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                 <FieldGroup>
                     <Field
                         select
-                        name={`${__prefix}.status`}
+                        name={prefixed('status')}
                         label='Status'
                         value={values.status}
-                        onChange={e => onChange(e, true)}
+                        onChange={e => change(e, true)}
                         required
                     >
                         {studyStatusList.map(({ id, value }) => (
@@ -80,9 +83,9 @@ function StudyFields({ values, prefix, studyCourses, studyRegulations, onChange,
                         ))}
                     </Field>
                     <Field
-                        name={`${__prefix}.year`}
+                        name={prefixed('year')}
                         value={values.year}
-                        onChange={e => onChange(e, true)}
+                        onChange={e => change(e, true)}
                         label='Jahrgang'
                         required
                         type='number'
@@ -100,6 +103,17 @@ const styles = theme => ({
         padding: 2 * theme.spacing.unit,
         margin: [[2 * theme.spacing.unit, 0]],
     }
-})
+});
+
+StudyFields.propTypes = {
+    change: PropTypes.func.isRequired,
+    values: PropTypes.object.isRequired,
+    onCancel: PropTypes.func,
+    studyCourses: PropTypes.array.isRequired,
+    studyRegulations: PropTypes.array.isRequired,
+    prefix: PropTypes.string,
+    classes: PropTypes.object.isRequired,
+};
+
 
 export default withStyles(styles)(StudyFields);
