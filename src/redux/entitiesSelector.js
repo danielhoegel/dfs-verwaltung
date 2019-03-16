@@ -75,7 +75,7 @@ export const getGradesForStudentAndSubjectCourse = state => (studentId, subjectC
 };
 
 export function getStudyCourses(state) {
-    return Object.values(__entities(state).studyCourses);
+    return Object.values(__entities(state).studyCourses) || [];
 }
 
 export const getStudyCourseById = state => studyCourseId => {
@@ -166,4 +166,12 @@ export function getSubjectsByStudyRegulationIdGroupedBySemesterAndType(state, st
         }
     }
     return groupedSubjects;
+}
+
+export function getSubjectsWithStudyCourseAndStudyRegulation(state) {
+    return getSubjects(state).map(subject => ({
+        ...subject,
+        studyCourse: getStudyCourseById(state)(subject.studyCourseId),
+        studyRegulation: getStudyRegulationById(state, subject.studyRegulationId)
+    }));
 }

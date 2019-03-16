@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,6 +11,8 @@ import Search from '../../Search';
 
 import { isNotEmpty } from '../../../helper/helper';
 import { intersectionBy } from 'lodash';
+import { getStudents, getSubjectsWithStudyCourseAndStudyRegulation } from '../../../redux/entitiesSelector';
+// import { resolve } from 'path';
 
 
 const GROUPS = {
@@ -43,9 +46,62 @@ class GlobalSearch extends Component {
         if (group === GROUPS.STUDENTS) {
             this.props.history.push(`/studenten/${value}`);
         } else if (group === GROUPS.SUBJECTS) {
-            const { studyCourseId, studyRegulationId } = this.state.subjects.filter(subject => subject.id === value)[0];
+            const { studyCourseId, studyRegulationId } = this.props.subjects.find(subject => subject.id === value);
             this.props.history.push(`/studienkurse/${studyCourseId}/studienordnung/${studyRegulationId}/${value}`);
         }
+    }
+
+    getMatchingData(trimmedSearchValue) {
+        const searchWords = trimmedSearchValue.split(' ');
+
+        // API SEARCH
+        // const studentRequests = [];
+        // searchWords.forEach(searchWord => {
+        //     studentRequests.push(axios.get(`/students?q=${searchWord}&_limit=3`));
+        // });
+
+        // const subjectRequest = axios.get(`/subjects?_expand=studyCourse&_expand=studyRegulation&title_like=${trimmedSearchValue}&_limit=3`);
+
+        // return axios.all(studentRequests.concat(subjectRequest))
+
+        // LOCAL SEARCH
+        return new Promise(resolve => {
+            const LIMIT = 5;
+
+            const studentArrays = searchWords.map(searchWord => {
+                let studentsCounter = 0;
+                return this.props.students.filter(student => {
+                    if (studentsCounter < LIMIT) {
+                        const match = (
+                            student.firstName.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 ||
+                            student.lastName.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 ||
+                            student.matrikelnummer.toString().indexOf(searchWord.toLowerCase()) > -1
+                            );
+                        if (match) {
+                            studentsCounter++;
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            });
+            
+            const subjectArrays = searchWords.map(searchWord => {
+                let subjectsCounter = 0;
+                return this.props.subjects.filter(subject => {
+                    if (subjectsCounter < LIMIT) {
+                        const match = subject.title.toLowerCase().indexOf(searchWord.toLowerCase()) > -1;
+                        if (match) {
+                            subjectsCounter++;
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            });
+            
+            resolve({studentArrays, subjectArrays});
+        });
     }
 
     queryData(searchValue) {
@@ -53,24 +109,16 @@ class GlobalSearch extends Component {
 
         // remove spaces at start and end, replace multiple spaces with single space
         const trimmedSearchValue = searchValue.trim().replace(/ +(?= )/g,'');
-        
-        const studentRequests = [];
-        const searchWords = trimmedSearchValue.split(' ');
-        searchWords.forEach(searchWord => {
-            studentRequests.push(axios.get(`/students?q=${searchWord}&_limit=3`));
-        });
-
-        const subjectRequest = axios.get(`/subjects?_expand=studyCourse&_expand=studyRegulation&title_like=${trimmedSearchValue}&_limit=3`);
-
-        // combine all requests
-        axios.all(studentRequests.concat(subjectRequest))
-            .then(results => {
+    
+        this.getMatchingData(trimmedSearchValue)
+            .then(({ subjectArrays, studentArrays }) => {
                 // remove the last element from results and save it in matchingSubjects
-                const matchingSubjects = results.splice(-1)[0].data;
+                // const matchingSubjects = results.splice(-1)[0].data;
                 
                 // create intersection of all student requests
-                const studentArrays = results.map(studentResult => studentResult.data);
+                // const studentArrays = results.map(studentResult => studentResult.data);
                 const matchingStudents = intersectionBy(...studentArrays, 'id');
+                const matchingSubjects = intersectionBy(...subjectArrays, 'id');
                 
                 const studentOptions = matchingStudents.map(student => ({
                     label: `${student.firstName} ${student.lastName}`,
@@ -170,6 +218,11 @@ const styles = theme => ({
     },
 });
 
-export default withRouter(
-    withStyles(styles)(GlobalSearch)
+const mapStateToProps = state => ({
+    students: getStudents(state),
+    subjects: getSubjectsWithStudyCourseAndStudyRegulation(state),
+});
+
+export default connect(mapStateToProps)(
+    withRouter(withStyles(styles)(GlobalSearch))
 );
