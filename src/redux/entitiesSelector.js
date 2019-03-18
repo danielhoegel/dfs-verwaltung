@@ -26,8 +26,8 @@ export function getStudentInformationsByStudentId(state, studentId) {
 
 export function getStudies(state) {
     return Object.values(__entities(state).studies)
-        .reduce((studyArray, studies) => {
-            return studies.concat(studyArray);
+        .reduce((accumulator, studies) => {
+            return accumulator.concat(studies);
         }, [])
         .sort( (a, b) => b.year - a.year );
 }
@@ -45,8 +45,8 @@ export function getStudyById(state, studyId) {
 
 export function getGrades(state) {
     return Object.values(__entities(state).grades)
-        .reduce((gradeArray, grades) => {
-            return grades.concat(gradeArray);
+        .reduce((accumulator, grades) => {
+            return accumulator.concat(grades);
         }, []);
 }
 
@@ -61,9 +61,9 @@ export function getGradesByStudyId(state, studyId) {
 
 export function getGradesByStudentId(state, studentId) {
     const studies = getStudiesByStudentId(state, studentId);
-    return studies.reduce((gradeArray, study) => {
+    return studies.reduce((accumulator, study) => {
             const grades = getGradesByStudyId(state, study.id);
-            return gradeArray.concat(grades);
+            return accumulator.concat(grades);
         }, []);
 }
 
@@ -84,8 +84,8 @@ export const getStudyCourseById = state => studyCourseId => {
 
 export function getStudyRegulations(state) {
     const studyRegulations = Object.values(__entities(state).studyRegulations)
-        .reduce((studyRegulationArray, studyRegulations) => {
-            return studyRegulations.concat(studyRegulationArray);
+        .reduce((accumulator, studyRegulations) => {
+            return accumulator.concat(studyRegulations);
         }, []);
     return studyRegulations.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
@@ -106,8 +106,8 @@ export function getStudyRegulationByIds(state, studyCourseId, studyRegulationId)
 
 export function getSubjects(state) {
     return Object.values(__entities(state).subjects)
-        .reduce((studyRegulationsArray, studyReggulations) => {
-            return studyReggulations.concat(studyRegulationsArray);
+        .reduce((accumulator, studyRegulations) => {
+            return accumulator.concat(studyRegulations);
         }, []);
 }
 
@@ -117,8 +117,8 @@ export function getSubjectsByStudyRegulationId(state, studyRegulationId) {
 
 export function getSubjectCourses(state) {
     return Object.values(__entities(state).subjectCourses)
-        .reduce((subjectCoursesArray, subjectCourses) => {
-            return subjectCourses.concat(subjectCoursesArray);
+        .reduce((accumulator, subjectCourses) => {
+            return accumulator.concat(subjectCourses);
         }, []);
 }
 

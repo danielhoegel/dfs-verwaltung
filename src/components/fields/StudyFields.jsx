@@ -13,13 +13,13 @@ import { studyStatusList, isEmpty } from '../../helper/helper';
 function StudyFields({ values, prefix, students, studyCourses, studyRegulations, change, onCancel, classes }) {
     const year = new Date().getFullYear();
 
-    function studentOptions() {
-        return students.map(({ id, firstName, lastName }) => (
-            <MenuItem key={id} value={id}>
-                {firstName} {lastName}
-            </MenuItem>
-        ));
-    }
+    // function studentOptions() {
+    //     return students.map(({ id, firstName, lastName }) => (
+    //         <MenuItem key={id} value={id}>
+    //             {firstName} {lastName}
+    //         </MenuItem>
+    //     ));
+    // }
 
     function studyCourseOptions() {
         return studyCourses.map(({ id, title }) => (
@@ -55,18 +55,18 @@ function StudyFields({ values, prefix, students, studyCourses, studyRegulations,
     return (
         <Fragment>
             <Paper className={classes.paper}>
-            <FieldGroup>
-                <Field
-                    select
-                    name={prefixed('studentId')}
-                    label='Student'
-                    value={values.studentId}
-                    onChange={e => change(e, true)}
-                    required
-                >
-                    {studentOptions()}
-                </Field>
-            </FieldGroup>
+                {/* <FieldGroup>
+                    <Field
+                        select
+                        name={prefixed('studentId')}
+                        label='Student'
+                        value={values.studentId}
+                        onChange={e => change(e, true)}
+                        required
+                    >
+                        {studentOptions()}
+                    </Field>
+                </FieldGroup> */}
                 <FieldGroup>
                     <Field
                         select

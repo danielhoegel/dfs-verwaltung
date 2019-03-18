@@ -8,14 +8,6 @@ import {
     getStudyCourseById,
 } from  '../../../redux/entitiesSelector';
 
-function getStudyData(state) {
-    return state.study;
-}
-
-export function getStudyFetching(state) {
-    return getStudyData(state).fetching;
-}
-
 export function getStudyCoursesWithRegulations(state) {
     return getStudyCourses(state).map(studyCourse => ({
         ...studyCourse,
