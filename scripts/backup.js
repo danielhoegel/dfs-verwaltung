@@ -1,10 +1,14 @@
 const fs = require('fs');
 
 const database = './datenbank/datenbank.json';
-const backup = `./datenbank/backups/datenbank-backup-${Date.now()}.json`;
+const backupDir = './datenbank/backups';
+const backup = `${backupDir}/datenbank-backup-${Date.now()}.json`;
 
-// destination.txt will be created or overwritten by default.
+if (!fs.existsSync(backupDir)) {
+    fs.mkdirSync(backupDir);
+}
+
 fs.copyFile(database, backup, (err) => {
-  if (err) throw err;
-  console.log(`${database} was backuped to ${backup}`);
+    if (err) throw err;
+    console.log(`${database} was backuped to ${backup}`);
 });
