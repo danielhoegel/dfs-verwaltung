@@ -17,7 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { fetchStudentForId } from '../redux/studentenActions';
-import { getFullStudent, getStudyCourseById } from '../../../redux/entitiesSelector';
+import { getFullStudent, getStudyCourseById, getStudyCourses, getStudyRegulations, getStudents } from '../../../redux/entitiesSelector';
 
 import { translateStudyStatus, isNotEmpty } from '../../../helper/helper';
 import SubjectList from './components/SubjectList';
@@ -26,6 +26,7 @@ import GradeCreate from './components/GradeCreate';
 import Modal from '../../../components/Modal';
 import Divider from '../../../components/Divider';
 import StudentDelete from './components/StudentDelete';
+import StudyCreate from './components/StudyCreate';
 // import Placeholder from '../../components/placeholder/Placeholder';
 
 
@@ -60,6 +61,7 @@ class StudentDetails extends Component {
 
     state = {
         studentDeleteModalOpen: false,
+        studyCreateModalOpen: false,
         gradeCreateModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
@@ -102,6 +104,9 @@ class StudentDetails extends Component {
 
     openDeleteStudentModal = () => { this.setState({ studentDeleteModalOpen: true }); }
     closeStudentDeleteModal = () => { this.setState({ studentDeleteModalOpen: false }); }
+
+    openStudyCreateModal = () => this.setState({ studyCreateModalOpen: true });
+    closeStudyCreateModal = () => this.setState({ studyCreateModalOpen: false });
 
     openGradeModal = (data) => {
         this.setState({
@@ -154,9 +159,13 @@ class StudentDetails extends Component {
                         <EditIcon className={classes.leftIcon} />
                         Bearbeiten
                     </Button>
+                    <Button variant='text' onClick={this.openStudyCreateModal} className={classes.button} >
+                        <AddIcon className={classes.leftIcon} />
+                        Studium
+                    </Button>
                     <Button variant='text' onClick={this.createNote} className={classes.button} >
                         <AddIcon className={classes.leftIcon} />
-                        Note hinzufügen
+                        Note
                     </Button>
                     <Button
                         variant='text'
@@ -170,6 +179,7 @@ class StudentDetails extends Component {
                 </div>
 
                 <Divider hidden height='1rem' />
+                
                 <Paper component="div" className={classes.tabsContainer}>
                     <Tabs
                         value={tab}
@@ -213,6 +223,19 @@ class StudentDetails extends Component {
                     close={this.closeStudentDeleteModal}
                     open={this.state.studentDeleteModalOpen}
                     data={student}
+                    danger
+                />
+                <Modal
+                    component={StudyCreate}
+                    title='Studium hinzufüge '
+                    close={this.closeStudyCreateModal}
+                    open={this.state.studyCreateModalOpen}
+                    data={{
+                        student,
+                        students: this.props.students,
+                        studyCourses: this.props.studyCourses,
+                        studyRegulations: this.props.studyRegulations
+                    }}
                     danger
                 />
                 <Modal
@@ -265,6 +288,9 @@ const styles = theme => ({
 const mapStateToProps = (state, ownProps) => ({
     student: getFullStudent(state, ownProps.match.params.id),
     getStudyCourseById: getStudyCourseById(state),
+    students: getStudents(state),
+    studyCourses: getStudyCourses(state),
+    studyRegulations: getStudyRegulations(state)
 });
 
 export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(
