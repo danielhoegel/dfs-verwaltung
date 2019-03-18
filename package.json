@@ -6,10 +6,11 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "backup": "node scripts/backup.js",
-    "dev:server": "nodemon server/server.js --ignore server/db.json",
+    "dev:server": "nodemon server/server.js --ignore server/datenbank.json --ignore server/server_logs.logs",
+    "server": "node server/server.js",
     "server:database": "json-server --watch datenbank/datenbank.json --port 3333 --snapshots datenbank/backups",
     "server:frontend": "node server-frontend.js",
-    "dev": "concurrently --kill-others \"npm run start\" \"npm run server\"",
+    "dev": "concurrently --kill-others \"npm run start\" \"npm run server:database\"",
     "production": "concurrently \"npm run backup\" \"npm run server:database\" \"npm run server:frontend\""
   },
   "dependencies": {
@@ -22,6 +23,8 @@
     "juice": "^5.1.0",
     "lodash": "^4.17.11",
     "lowdb": "^1.0.0",
+    "moment-timezone": "^0.5.23",
+    "morgan": "^1.9.1",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
     "opn": "^5.4.0",

@@ -3,7 +3,7 @@
 # database
 /datenbank/datenbank.json
 /datenbank/backups
-/server/db.json
+/server/datenbank.json
 
 # ssh key
 /datenbank/ssh_key
@@ -12,11 +12,14 @@
 # dependencies
 /node_modules
 
-# testing
-/coverage
-
 # production
 /build
+
+# logs
+.log
+
+# testing
+/coverage
 
 # misc
 .DS_Store

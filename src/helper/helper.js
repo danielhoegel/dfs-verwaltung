@@ -314,3 +314,7 @@ export function groupItemsByKey(items, key) {
     }
     return groupedItems;
 }
+
+export function getId(idString) {
+    return isNaN(idString) ? idString : parseInt(idString, 10);
+}

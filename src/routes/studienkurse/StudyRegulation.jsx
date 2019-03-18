@@ -16,7 +16,7 @@ import EditIcon from '@material-ui/icons/EditOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import entitiesActions from '../../redux/entitiesActions';
-import { isNotEmpty } from '../../helper/helper';
+import { isNotEmpty, getId } from '../../helper/helper';
 import HiddenDivider from '../../components/HiddenDivider';
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
@@ -270,6 +270,7 @@ class StudyRegulation extends Component {
     
     render() {
         const { studyRegulation, subjects, classes } = this.props;
+        console.log(this.props);
         return (
             <div>
                 <div style={{
@@ -520,7 +521,7 @@ StudyRegulation.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-    const studyRegulationId = Number(props.match.params.studyRegulationId);
+    const studyRegulationId = getId(props.match.params.studyRegulationId);
     return {
         studyRegulation: getStudyRegulationByIdWithStudyCourse(state, studyRegulationId),
         subjects: getSubjectsWithSubjectCourses(state, studyRegulationId),
