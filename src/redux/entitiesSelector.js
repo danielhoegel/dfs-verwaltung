@@ -1,4 +1,4 @@
-import { groupItemsByKey } from "../helper/helper";
+import { groupItemsByKey } from '../helper/helper';
 
 /**
  * BASE SELECTORS
@@ -6,6 +6,7 @@ import { groupItemsByKey } from "../helper/helper";
 
 function __entities(state) {
     if (state === undefined) {
+        // eslint-disable-next-line no-console
         console.warn('STATE is undefined');
         return null;
     }
@@ -26,16 +27,14 @@ export function getStudentInformationsByStudentId(state, studentId) {
 
 export function getStudies(state) {
     return Object.values(__entities(state).studies)
-        .reduce((accumulator, studies) => {
-            return accumulator.concat(studies);
-        }, [])
-        .sort( (a, b) => b.year - a.year );
+        .reduce((accumulator, studies) => accumulator.concat(studies), [])
+        .sort((a, b) => b.year - a.year);
 }
 
 export function getStudiesByStudentId(state, studentId) {
     const studies = __entities(state).studies[studentId];
     return studies
-        ? studies.sort( (a, b) => b.year - a.year )
+        ? studies.sort((a, b) => b.year - a.year)
         : [];
 }
 
@@ -52,7 +51,7 @@ export function getGrades(state) {
 
 export function getGradeById(state, gradeId) {
     return getGrades(state).find(({ id }) => id === gradeId);
-};
+}
 
 export function getGradesByStudyId(state, studyId) {
     const grades = __entities(state).grades[studyId] || [];
@@ -62,15 +61,15 @@ export function getGradesByStudyId(state, studyId) {
 export function getGradesByStudentId(state, studentId) {
     const studies = getStudiesByStudentId(state, studentId);
     return studies.reduce((accumulator, study) => {
-            const grades = getGradesByStudyId(state, study.id);
-            return accumulator.concat(grades);
-        }, []);
+        const grades = getGradesByStudyId(state, study.id);
+        return accumulator.concat(grades);
+    }, []);
 }
 
 export const getGradesForStudentAndSubjectCourse = state => (studentId, subjectCourseId) => {
     const grades = getGradesByStudentId(state, studentId).filter(grade =>
         grade.subjectCourseId === subjectCourseId
-    );  
+    );
     return grades;
 };
 
@@ -80,12 +79,12 @@ export function getStudyCourses(state) {
 
 export const getStudyCourseById = state => studyCourseId => {
     return __entities(state).studyCourses[studyCourseId] || {};
-}
+};
 
 export function getStudyRegulations(state) {
     const studyRegulations = Object.values(__entities(state).studyRegulations)
-        .reduce((accumulator, studyRegulations) => {
-            return accumulator.concat(studyRegulations);
+        .reduce((accumulator, __studyRegulations) => {
+            return accumulator.concat(__studyRegulations);
         }, []);
     return studyRegulations.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
@@ -128,7 +127,7 @@ export function getSubjectCoursesBySubjectId(state, subjectId) {
 
 export const getNotesByStudentId = state => studentId => {
     return __entities(state).notes[studentId] || [];
-}
+};
 
 
 /**
@@ -152,7 +151,7 @@ export function getFullStudents(state) {
     const students = getStudents(state);
     const results = [];
     for (let i = 0; i < students.length; i++) {
-        results.push(getFullStudent(state, students[i].id))
+        results.push(getFullStudent(state, students[i].id));
     }
     return results;
 }
@@ -160,11 +159,9 @@ export function getFullStudents(state) {
 export function getSubjectsByStudyRegulationIdGroupedBySemesterAndType(state, studyRegulationId) {
     const subjects = getSubjectsByStudyRegulationId(state, studyRegulationId);
     const groupedSubjects = groupItemsByKey(subjects, 'semester');
-    for (const semester in groupedSubjects) {
-        if (groupedSubjects.hasOwnProperty(semester)) {
-            groupedSubjects[semester] = groupItemsByKey(groupedSubjects[semester], 'type')
-        }
-    }
+    Object.keys(groupedSubjects).forEach(semester => {
+        groupedSubjects[semester] = groupItemsByKey(groupedSubjects[semester], 'type');
+    });
     return groupedSubjects;
 }
 

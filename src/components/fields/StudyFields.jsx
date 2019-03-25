@@ -10,7 +10,9 @@ import Field from '../Field';
 import { studyStatusList, isEmpty } from '../../helper/helper';
 
 
-function StudyFields({ values, prefix, students, studyCourses, studyRegulations, change, onCancel, classes }) {
+function StudyFields({
+    values, prefix, /* students,  */studyCourses, studyRegulations, change, /* onCancel,  */classes
+}) {
     const year = new Date().getFullYear();
 
     // function studentOptions() {
@@ -37,7 +39,7 @@ function StudyFields({ values, prefix, students, studyCourses, studyRegulations,
         const results = [];
         for (let i = 0; i < studyRegulations.length; i++) {
             const { id, title, studyCourseId } = studyRegulations[i];
-            if (isEmpty(values.studyCourseId) || values.studyCourseId === studyCourseId)  {
+            if (isEmpty(values.studyCourseId) || values.studyCourseId === studyCourseId) {
                 results.push(
                     <MenuItem key={id} value={id}>
                         {title}
@@ -51,7 +53,8 @@ function StudyFields({ values, prefix, students, studyCourses, studyRegulations,
     const studyCourseChangeHandler = (e) => {
         change(e, true);
         change({ target: { name: 'studyRegulationId', value: '' }}, true);
-    }
+    };
+
     return (
         <Fragment>
             <Paper className={classes.paper}>
@@ -116,7 +119,7 @@ function StudyFields({ values, prefix, students, studyCourses, studyRegulations,
             </Paper>
         </Fragment>
     );
-};
+}
 
 const styles = theme => ({
     paper: {
