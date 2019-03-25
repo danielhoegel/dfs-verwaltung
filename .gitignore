@@ -16,7 +16,7 @@
 /build
 
 # logs
-.log
+**.log
 
 # testing
 /coverage
