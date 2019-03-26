@@ -14,7 +14,11 @@ const { time } = require('./utils/utils');
 const server = express();
 
 // create a write stream (in append mode) for the logger
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/server_logs.log'), { flags: 'a' })
+const logDir = path.join(__dirname, 'logs');
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+}
+const accessLogStream = fs.createWriteStream(path.join(logDir, 'server_logs.log'), { flags: 'a' });
 
 // setup logger
 morgan.token('time', () => time());
