@@ -157,6 +157,6 @@ function StudentInformationFields({ values, prefix, onChange }) {
             </FieldGroup>
         </Fragment>
     );
-};
+}
 
 export default StudentInformationFields;

@@ -12,7 +12,7 @@ import { isNotEmpty } from '../../helper/helper';
 
 const SubjectFields = ({
     change,
-    values ,
+    values,
     onCancel,
     studyCourses,
     studyRegulations
@@ -30,7 +30,7 @@ const SubjectFields = ({
         return options;
     }
 
-    
+
     function studyRegulationOptions() {
         const options = [];
         if (isNotEmpty(studyRegulations)) {
@@ -52,19 +52,21 @@ const SubjectFields = ({
         // change studyCourseId
         change(e, true);
 
-        // set latest studyRegulation for studyCourse 
+        // set latest studyRegulation for studyCourse
         const results = studyRegulations
             .filter(({ studyCourseId }) => studyCourseId === e.target.value)
             .sort((a, b) => new Date(b.date) - new Date(a.date));
 
         const studyCourseId = results.length > 0 ? results[0].id : '';
 
-        const fakeEvent = { target: {
-            name: 'studyRegulationId',
-            value: studyCourseId || ''
-        }}
+        const fakeEvent = {
+            target: {
+                name: 'studyRegulationId',
+                value: studyCourseId || ''
+            }
+        };
         change(fakeEvent, true);
-    }
+    };
 
     const __studyRegulationOptions = studyRegulationOptions();
     const __studyCourseOptions = studyCourseOptions();
@@ -133,7 +135,7 @@ const SubjectFields = ({
             </FieldGroup>
             <HiddenDivider />
             <Button variant='contained' color='primary' type='submit'>Speichern</Button>
-            <Button variant='text' onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
+            <Button variant='text' onClick={onCancel} style={{ marginLeft: '1rem' }}>Abbrechen</Button>
         </Fragment>
     );
 };
@@ -144,6 +146,6 @@ SubjectFields.propTypes = {
     onCancel: PropTypes.func.isRequired,
     studyCourses: PropTypes.array.isRequired,
     studyRegulations: PropTypes.array.isRequired,
-}
+};
 
 export default SubjectFields;

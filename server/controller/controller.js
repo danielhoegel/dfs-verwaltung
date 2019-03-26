@@ -10,7 +10,7 @@ function deleteStudent(id, write = true) {
     db.get('students').find({ id }).remove();
 
     // delete studies for student
-    const studies = db.get('studies').filter({ studentId: id}).value();
+    const studies = db.get('studies').filter({ studentId: id }).value();
     studies.forEach(study => {
         deleteStudy(study.id, false);
     });
@@ -30,7 +30,7 @@ function deleteStudy(id, write = true) {
     db.get('studies').find({ id }).remove();
 
     // delete grades for study
-    db.get('grades').filter({ studyId: id}).remove();
+    db.get('grades').filter({ studyId: id }).remove();
 
     if (write) {
         db.write();
@@ -67,12 +67,12 @@ function deleteStudyRegulation(id, write = true) {
     db.get('studyRegulations').find({ id }).remove();
 
     // delete studies for studyRegulation
-    db.get('studies').filter({ studyRegulationId: id}).remove();
+    db.get('studies').filter({ studyRegulationId: id }).remove();
 
     // delete subjects for studyRegulation
     const subjects = db.get('subjects').filter({ studyRegulationId: id }).value();
     subjects.forEach(subject => {
-        deleteSubject(subject.id, false)
+        deleteSubject(subject.id, false);
     });
 
     if (write) {
@@ -93,7 +93,7 @@ function deleteSubject(id, write = true) {
     const subjectsCourses = db.get('subjectCourses').filter({ subjectId: id }).value();
     subjectsCourses.forEach(subjectCourse => {
         deleteSubjectCourse(subjectCourse.id, false);
-    })
+    });
 
     if (write) {
         db.write();
@@ -107,7 +107,7 @@ function deleteSubject(id, write = true) {
  */
 function deleteSubjectCourse(id, write = true) {
     // delete subjectCourse
-    subjectsCourse = db.get('subjectCourses').find({ id }).remove();
+    db.get('subjectCourses').find({ id }).remove();
 
     // delete grades for subjectCourse
     db.get('grades').filter({ subjectCourseId: id }).remove();

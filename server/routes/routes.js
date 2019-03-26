@@ -22,7 +22,8 @@ router.get('/', (req, res) => {
         </style>
         <h1>DFS Datenbank</h1>
         <p>Unter der Route <a href="/db">/db</a> können alle Daten abgerufen werden</p>
-        <p>Für folgende Entitäten existieren separate Routen, die jeweils mit den Befehlen get, post, put und delete bearbeitet werden können:</p>
+        <p>Für folgende Entitäten existieren separate Routen, die jeweils mit den Befehlen \
+        GET, POST, PUT und DELETE bearbeitet werden können:</p>
         <ul>
             ${entities.map(entity => (
                 `<li><a href="/${entity}">/${entity}</a></li>`
@@ -31,7 +32,7 @@ router.get('/', (req, res) => {
     `;
 
     res.send(html);
-})
+});
 
 router.get('/db', (req, res) => {
     res.json(db.getState());
@@ -43,14 +44,14 @@ entities.forEach(entity => {
         const results = db.get(entity).value();
         res.json(results);
     });
-    
+
     // GET BY ID
     router.get(`/${entity}/:id`, (req, res) => {
         const id = getId(req.params.id);
         const result = db.get(entity).find({ id }).value();
         res.json(result);
     });
-    
+
     // POST
     router.post(`/${entity}`, (req, res) => {
         const id = shortid.generate();

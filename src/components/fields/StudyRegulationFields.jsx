@@ -9,7 +9,9 @@ import FieldSelect from '../FieldSelect';
 import HiddenDivider from '../HiddenDivider';
 
 
-const StudyRegulationFields = ({ change, values, onCancel, studyCourses }) => {
+const StudyRegulationFields = ({
+    change, values, onCancel, studyCourses
+}) => {
     function studyCourseOptions() {
         return studyCourses.map(studyCourse => ({
             value: studyCourse.id,
@@ -64,7 +66,7 @@ const StudyRegulationFields = ({ change, values, onCancel, studyCourses }) => {
             </FieldGroup>
             <HiddenDivider />
             <Button variant='contained' color='primary' type='submit'>Speichern</Button>
-            <Button variant='text' onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
+            <Button variant='text' onClick={onCancel} style={{ marginLeft: '1rem' }}>Abbrechen</Button>
         </Fragment>
     );
 };

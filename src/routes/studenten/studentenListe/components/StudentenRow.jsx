@@ -61,7 +61,10 @@ class StudentenRow extends Component {
                 <TableCell padding='checkbox'>
                     {isNotEmpty(student.studentInformation) && student.studentInformation.mailPrimary && (
                         <a href={`mailto:${student.studentInformation.mailPrimary}`}>
-                            <IconButton aria-label='E-Mail' title={`E-Mail an ${student.studentInformation.mailPrimary}`}>
+                            <IconButton
+                                aria-label='E-Mail'
+                                title={`E-Mail an ${student.studentInformation.mailPrimary}`}
+                            >
                                 <MailIcon />
                             </IconButton>
                         </a>
@@ -80,7 +83,7 @@ StudentenRow.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const styles = theme => ({
+const styles = () => ({
     row: {
         cursor: 'pointer'
     },

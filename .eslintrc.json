@@ -20,7 +20,8 @@
         // "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
         // "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
         "linebreak-style": "off",
-        "indent": ["error", 4],
+        // "indent": ["error", 4],
+        "indent": "off",
         "max-len": ["warn", { "code": 120 }],
         "no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
         "comma-dangle": "off",
@@ -30,6 +31,7 @@
         "implicit-arrow-linebreak": "off",
         "arrow-body-style": "off",
         "arrow-parens": "off",
-        "function-paren-newline": "off"
+        "function-paren-newline": "off",
+        "no-use-before-define": ["error", { "functions": false }]
     }
 }

@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
-import MenuItem from '@material-ui/core/MenuItem';
 
 function StudentFields({ values, prefix, onChange }) {
     function prefixed(name) {
@@ -50,6 +51,6 @@ function StudentFields({ values, prefix, onChange }) {
             </FieldGroup>
         </Fragment>
     );
-};
+}
 
 export default StudentFields;

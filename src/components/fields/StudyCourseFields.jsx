@@ -8,10 +8,12 @@ import FieldGroup from '../FieldGroup';
 import HiddenDivider from '../HiddenDivider';
 
 
-const StudyCourseFields = ({ change, values, onCancel, disabled }) => {
+const StudyCourseFields = ({
+    change, values, onCancel, disabled
+}) => {
     return (
         <Fragment>
-            <FieldGroup width={`33.333`}>
+            <FieldGroup width='33.333'>
                 <Field
                     name='title'
                     label='Title'
@@ -21,7 +23,7 @@ const StudyCourseFields = ({ change, values, onCancel, disabled }) => {
                     disabled={disabled}
                     required
                     autoFocus
-                /> 
+                />
             </FieldGroup>
             <FieldGroup>
                 <Field
@@ -32,11 +34,15 @@ const StudyCourseFields = ({ change, values, onCancel, disabled }) => {
                     onChange={change}
                     value={values.description}
                     disabled={disabled}
-                /> 
+                />
             </FieldGroup>
             <HiddenDivider height={2} />
-            <Button variant='contained' color='primary' type='submit' disabled={disabled}>Speichern</Button>
-            <Button variant='text' onClick={onCancel} style={{marginLeft: '1rem'}} disabled={disabled}>Abbrechen</Button>
+            <Button variant='contained' color='primary' type='submit' disabled={disabled}>
+                Speichern
+            </Button>
+            <Button variant='text' onClick={onCancel} style={{ marginLeft: '1rem' }} disabled={disabled}>
+                Abbrechen
+            </Button>
         </Fragment>
     );
 };

@@ -42,17 +42,17 @@ const SubjectCourseFields = ({
                     label='Fach'
                     onSelect={change}
                     options={__subjectOptions}
-                    style={{margin: '8px'}}
+                    style={{ margin: '8px' }}
                     noClearIcon
                     disabled
-                /> 
+                />
             </FieldGroup>
             <FieldGroup>
                 <FieldSelect
                     name='type'
                     value={values.type}
                     label='Typ'
-                    options={[ 'Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM' ]}
+                    options={['Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM']}
                     onChange={change}
                     required
                     autoFocus
@@ -78,7 +78,7 @@ const SubjectCourseFields = ({
                     name='participationType'
                     value={values.participationType}
                     label='Teilnahmeart'
-                    options={[ 'Note', 'Teilnahme', 'Notenbgeleitend' ]}
+                    options={['Note', 'Teilnahme', 'Notenbgeleitend']}
                     onChange={change}
                     required
                 />
@@ -91,7 +91,7 @@ const SubjectCourseFields = ({
             </FieldGroup>
             <HiddenDivider />
             <Button variant='contained' color='primary' type='submit'>Speichern</Button>
-            <Button variant='text' onClick={onCancel} style={{marginLeft: '1rem'}}>Abbrechen</Button>
+            <Button variant='text' onClick={onCancel} style={{ marginLeft: '1rem' }}>Abbrechen</Button>
         </Fragment>
     );
 };
