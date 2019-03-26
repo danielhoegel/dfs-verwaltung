@@ -16,7 +16,7 @@
 /build
 
 # logs
-**.log
+/server/logs/*.log
 
 # testing
 /coverage
