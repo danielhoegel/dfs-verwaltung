@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
@@ -16,15 +18,15 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/server_l
 
 // setup logger
 morgan.token('time', () => time());
-const loggerFormat = `[:time] :method :url :status - :response-time ms`;
+const loggerFormat = '[:time] :method :url :status - :response-time ms';
 server.use(morgan(loggerFormat, { stream: accessLogStream })); // log to file
 server.use(morgan(loggerFormat)); // log to console
 
 // allow CORS
 server.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     next();
 });
 
