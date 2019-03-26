@@ -119,11 +119,11 @@ function deleteSubjectCourse(id, write = true) {
 
 module.exports = {
     delete: {
-        student: deleteStudent,
-        study: deleteStudy,
-        studyCourse: deleteStudyCourse,
-        studyRegulation: deleteStudyRegulation,
-        subject: deleteSubject,
-        subjectCourse: deleteSubjectCourse,
+        students: deleteStudent,
+        studies: deleteStudy,
+        studyCourses: deleteStudyCourse,
+        studyRegulations: deleteStudyRegulation,
+        subjects: deleteSubject,
+        subjectCourses: deleteSubjectCourse,
     }
 };
