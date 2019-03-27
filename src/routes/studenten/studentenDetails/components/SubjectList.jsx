@@ -12,6 +12,8 @@ import TableCell from '@material-ui/core/TableCell';
 import { getSubjectsByStudyRegulationIdGroupedBySemesterAndType } from '../../../../redux/entitiesSelector';
 import SubjectListItem from './SubjectListItem';
 import { isNotEmpty } from '../../../../helper/helper';
+import entitiesActions from '../../../../redux/entitiesActions';
+import Placeholder from '../../../../components/placeholder/Placeholder';
 
 
 const TypeGroup = withStyles(theme => ({
@@ -63,17 +65,39 @@ const TypeGroup = withStyles(theme => ({
 ));
 
 
+const SubjectsLoading = () => (
+    <Placeholder>
+        <Placeholder.Item height='2rem' />
+        <Placeholder.Item height='3rem' width='80%' />
+        <Placeholder.Item height='4rem' width='90%' />
+        <Placeholder.Item width='60%' />
+        <Placeholder.Item height='2rem' width='80%' />
+        <Placeholder.Item height='3rem' width='85%' />
+        <Placeholder.Item height='4rem' width='75%' />
+    </Placeholder>
+);
+
 class SubjectList extends Component {
     static propTypes = {
-        studentId: PropTypes.number.isRequired,
+        studentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
         openGradeModal: PropTypes.func.isRequired,
         study: PropTypes.object.isRequired,
         groupedSubjects: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
     }
 
-    shouldComponentUpdate() {
-        return false;
+    state = {
+        fetchingGrades: true,
+    }
+
+    componentDidMount() {
+        this.setState({ fetchingGrades: true });
+        this.props.fetchGradesByStudyId(this.props.study.id)
+        .then(() => this.setState({ fetchingGrades: false }));
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.fetchingGrades !== this.props.fetchingGrades;
     }
 
     renderTypeGroups(groupedSubjects) {
@@ -89,7 +113,7 @@ class SubjectList extends Component {
                         openGradeModal={this.props.openGradeModal}
                         study={this.props.study}
                     />
-                )
+                );
             }
         }
         return typeGroupes;
@@ -118,15 +142,11 @@ class SubjectList extends Component {
     }
 
     render() {
-        return isNotEmpty(this.props.groupedSubjects)
+        return this.state.fetchingGrades ? <SubjectsLoading /> : isNotEmpty(this.props.groupedSubjects)
             ? this.renderSemesterGroups()
             : 'Keine Fächer gefunden.';
     }
-};
-
-const mapStateToProps = (state, props) => ({
-    groupedSubjects: getSubjectsByStudyRegulationIdGroupedBySemesterAndType(state, props.studyRegulationId)
-});
+}
 
 const styles = theme => ({
     header: {
@@ -134,6 +154,15 @@ const styles = theme => ({
     }
 });
 
-export default connect(mapStateToProps)(
+
+const mapStateToProps = (state, props) => ({
+    groupedSubjects: getSubjectsByStudyRegulationIdGroupedBySemesterAndType(state, props.studyRegulationId)
+});
+
+const mapDispatchToProps = {
+    fetchGradesByStudyId: entitiesActions.grade.fetchByKey('studyId'),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
     withStyles(styles)(SubjectList)
 );
