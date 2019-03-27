@@ -61,6 +61,38 @@ function replaceAllItemsAsArray(items, idKey = 'id') {
 }
 
 /* util function */
+function replaceMultipleItems(prevState, items, idKey = 'id') {
+    const nextState = { ...prevState };
+    if (items) {
+        items.forEach(item => {
+            nextState[item[idKey]] = item;
+        });
+    }
+    return nextState;
+}
+
+/* util function */
+function replaceMultipleItemsAsArray(prevState, items, idKey = 'id') {
+    const nextState = { ...prevState };
+    if (items) {
+        items.forEach(item => {
+            const key = item[idKey];
+            if (nextState[key]) {
+                const index = nextState[key].map(({ id }) => id).indexOf(item.id);
+                if (index > -1) {
+                    nextState[key][index] = item;
+                } else {
+                    nextState[key].push(item);
+                }
+            } else {
+                nextState[key] = [item];
+            }
+        });
+    }
+    return nextState;
+}
+
+/* util function */
 function deleteItem(state, item, idKey = 'id') {
     const key = item[idKey];
     const nextState = { ...state };
@@ -90,8 +122,11 @@ function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
                 return asArray
                     ? replaceAllItemsAsArray(action.data, key)
                     : replaceAllItems(action.data, key);
+            case `FETCH_${typePlural}_BY_KEY_SUCCESS`:
+                return asArray
+                    ? replaceMultipleItemsAsArray(state, action.data, key)
+                    : replaceMultipleItems(state, action.data, key);
             case `FETCH_${typeSingular}_SUCCESS`:
-            case `FETCH_${typeSingular}_BY_KEY_SUCCESS`:
             case `CREATE_${typeSingular}_SUCCESS`:
             case `UPDATE_${typeSingular}_SUCCESS`:
                 return asArray

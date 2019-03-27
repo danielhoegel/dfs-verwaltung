@@ -41,9 +41,9 @@ for (let i = 0; i < entities.length; i++) {
             }
         }),
         fetchByKey: key => value => asyncAction({
-            type: `FETCH_${typeSingular}_BY_KEY`,
+            type: `FETCH_${typePlural}_BY_KEY`,
             request: {
-                url: `/${plural}?${key}=${value}`,
+                url: `/${plural}/${key}/${value}`,
                 method: 'get',
             },
             key
