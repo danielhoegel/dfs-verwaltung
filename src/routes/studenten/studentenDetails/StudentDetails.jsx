@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -9,46 +9,49 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeftRounded';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { fetchStudentForId } from '../redux/studentenActions';
-import { getFullStudent, getStudyCourseById, getStudyCourses, getStudyRegulations, getStudents } from '../../../redux/entitiesSelector';
+import {
+    getFullStudent,
+    getStudyCourseById,
+    getStudyCourses,
+    getStudyRegulations,
+    getStudents
+} from '../../../redux/entitiesSelector';
 
-import { translateStudyStatus, isNotEmpty } from '../../../helper/helper';
+import { translateStudyStatus, getId, isEmpty } from '../../../helper/helper';
 import SubjectList from './components/SubjectList';
 import StudentInformation from './components/StudentInformation';
 import GradeCreate from './components/GradeCreate';
 import Modal from '../../../components/Modal';
 import Divider from '../../../components/Divider';
+import Placeholder from '../../../components/placeholder/Placeholder';
 import StudentDelete from './components/StudentDelete';
-import StudyCreate from './components/StudyCreate';
-// import Placeholder from '../../components/placeholder/Placeholder';
+// import StudyCreate from './components/StudyCreate';
+import entitiesActions from '../../../redux/entitiesActions';
 
 
-/* const StudentDetailsLoading = () => (
+const StudentDetailsLoading = () => (
     <Placeholder>
-        <Placeholder.Item width='20%' height='1.25rem' />
+        <Placeholder.Item width='20%' height='2.5rem' />
         <Placeholder.Item width='35%' />
         <Placeholder.Item width='100px' height='2rem' inline />
         <Placeholder.Item width='125px' height='2rem' inline />
         <Placeholder.Item width='150px' height='2rem' inline />
-        <Divider hidden height='2.5rem' />
-        <Placeholder.Item width='15%' height='1.5rem' />
+        <Divider hidden height='1rem' />
         <Placeholder.Item height='2rem' />
         <Placeholder.Item height='3rem' width='80%' />
         <Placeholder.Item height='4rem' width='90%' />
-        <Placeholder.Item               width='60%' />
+        <Placeholder.Item width='60%' />
         <Placeholder.Item height='2rem' width='80%' />
         <Placeholder.Item height='3rem' width='85%' />
         <Placeholder.Item height='4rem' width='75%' />
     </Placeholder>
-) */
-
+);
 
 class StudentDetails extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -60,23 +63,20 @@ class StudentDetails extends Component {
     }
 
     state = {
+        fetching: true,
+        tab: 'contact',
         studentDeleteModalOpen: false,
         studyCreateModalOpen: false,
         gradeCreateModalOpen: false,
         noteUpdateModalOpen: false,
         noteUpdateModalData: null,
         gradeCreateModalData: null,
-        tab: (isNotEmpty(this.props.student) && this.props.student.studies.length)
-            ? this.props.student.studies[0].id
-            : 'contact'
     }
 
-    studentId = Number(this.props.match.params.id);
+    studentId = getId(this.props.match.params.id);
 
     componentDidMount() {
-        if (!this.props.student) {
-            this.fetchStudent();
-        }
+        this.fetchStudent();
     }
 
     componentDidUpdate(prevProps) {
@@ -86,11 +86,17 @@ class StudentDetails extends Component {
     }
 
     fetchStudent() {
-        this.props.dispatch({
-            type: 'FETCH_STUDENT',
-            request: {
-                url: `/students/${this.studentId}?_embed=studies&_embed=studentInformations`
-            }
+        this.setState({ fetching: true });
+        Promise.all([
+            this.props.fetchStudent(this.studentId),
+            this.props.fetchStudiesByStudentId(this.studentId),
+            this.props.fetchStudentInformationByStudentId(this.studentId)
+        ])
+        .then(([student, studies, studentInformation]) => {
+            this.setState({
+                fetching: false,
+                tab: studies.length ? studies[0].id : 'contact'
+            });
         });
     }
 
@@ -103,10 +109,11 @@ class StudentDetails extends Component {
     }
 
     openDeleteStudentModal = () => { this.setState({ studentDeleteModalOpen: true }); }
+
     closeStudentDeleteModal = () => { this.setState({ studentDeleteModalOpen: false }); }
 
-    openStudyCreateModal = () => this.setState({ studyCreateModalOpen: true });
-    closeStudyCreateModal = () => this.setState({ studyCreateModalOpen: false });
+    // openStudyCreateModal = () => this.setState({ studyCreateModalOpen: true });
+    // closeStudyCreateModal = () => this.setState({ studyCreateModalOpen: false });
 
     openGradeModal = (data) => {
         this.setState({
@@ -123,7 +130,7 @@ class StudentDetails extends Component {
     }
 
     createNote = () => {
-        let data = {};
+        const data = {};
         if (this.state.tab !== 'contact') {
             data.studyId = this.state.tab;
         } else {
@@ -137,9 +144,9 @@ class StudentDetails extends Component {
     };
 
     render() {
-        const { tab } = this.state;
+        const { fetching, tab } = this.state;
         const { student, classes } = this.props;
-        return student ? (
+        return (fetching || isEmpty(student)) ? <StudentDetailsLoading /> : (
             <Fragment>
                 <div>
                     <Typography variant="h4" gutterBottom>
@@ -159,10 +166,10 @@ class StudentDetails extends Component {
                         <EditIcon className={classes.leftIcon} />
                         Bearbeiten
                     </Button>
-                    <Button variant='text' onClick={this.openStudyCreateModal} className={classes.button} >
+                    {/* <Button variant='text' onClick={this.openStudyCreateModal} className={classes.button} >
                         <AddIcon className={classes.leftIcon} />
                         Studium
-                    </Button>
+                    </Button> */}
                     <Button variant='text' onClick={this.createNote} className={classes.button} >
                         <AddIcon className={classes.leftIcon} />
                         Note
@@ -179,44 +186,52 @@ class StudentDetails extends Component {
                 </div>
 
                 <Divider hidden height='1rem' />
-                
+
                 <Paper component="div" className={classes.tabsContainer}>
-                    <Tabs
-                        value={tab}
-                        onChange={this.tabChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant={window.innerWidth < this.props.theme.breakpoints.values.lg ? 'scrollable' : 'standard'}
-                        scrollButtons='auto'
-                        className={classes.tabsHeader}
-                    >
-                        <Tab value='contact' label='Kontaktdaten' />
-                        {student.studies.map(study => (
-                            <Tab
-                                key={study.id}
-                                value={study.id}
-                                label={`${this.props.getStudyCourseById(study.studyCourseId).title} ${study.year} (${translateStudyStatus(study.status)})`}
-                            />
-                        ))}
-                    </Tabs>
-                    <div className={classes.tabContainer}>
-                        <div className={classes.tabContainerInside}>
-                            {tab === 'contact' && <StudentInformation student={this.props.student} />}
-                            {student.studies.map(study =>
-                                tab === study.id && (
-                                    <SubjectList
-                                        key={study.id}
-                                        studentId={student.id}
-                                        studyRegulationId={study.studyRegulationId}
-                                        openGradeModal={this.openGradeModal}
-                                        study={study}
-                                    />
-                                )
-                            )}
+                    <Fragment>
+                        <Tabs
+                            value={tab}
+                            onChange={this.tabChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            variant={(window.innerWidth < this.props.theme.breakpoints.values.lg)
+                                ? 'scrollable'
+                                : 'standard'
+                            }
+                            scrollButtons='auto'
+                            className={classes.tabsHeader}
+                        >
+                            <Tab value='contact' label='Kontaktdaten' />
+                            {student.studies.map(study => (
+                                <Tab
+                                    key={study.id}
+                                    value={study.id}
+                                    label={
+                                        `${this.props.getStudyCourseById(study.studyCourseId).title} ${study.year} \
+                                        (${translateStudyStatus(study.status)})`
+                                    }
+                                />
+                            ))}
+                        </Tabs>
+                        <div className={classes.tabContainer}>
+                            <div className={classes.tabContainerInside}>
+                                {tab === 'contact' && <StudentInformation student={this.props.student} />}
+                                {student.studies.map(study =>
+                                    tab === study.id && (
+                                        <SubjectList
+                                            key={study.id}
+                                            studentId={student.id}
+                                            studyRegulationId={study.studyRegulationId}
+                                            openGradeModal={this.openGradeModal}
+                                            study={study}
+                                        />
+                                    )
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    </Fragment>
                 </Paper>
-                
+
                 <Modal
                     component={StudentDelete}
                     title='Student entfernen'
@@ -225,7 +240,7 @@ class StudentDetails extends Component {
                     data={student}
                     danger
                 />
-                <Modal
+                {/* <Modal
                     component={StudyCreate}
                     title='Studium hinzufüge '
                     close={this.closeStudyCreateModal}
@@ -236,8 +251,7 @@ class StudentDetails extends Component {
                         studyCourses: this.props.studyCourses,
                         studyRegulations: this.props.studyRegulations
                     }}
-                    danger
-                />
+                /> */}
                 <Modal
                     component={GradeCreate}
                     title='Note hinzufügen'
@@ -247,7 +261,7 @@ class StudentDetails extends Component {
                     preventClosing
                 />
             </Fragment>
-        ) : <CircularProgress className={classes.loader} />;
+        );
     }
 }
 
@@ -293,6 +307,12 @@ const mapStateToProps = (state, ownProps) => ({
     studyRegulations: getStudyRegulations(state)
 });
 
-export default connect(mapStateToProps, { fetchStudentForId, dispatch: action => action })(
+const mapDispatchToProps = {
+    fetchStudent: entitiesActions.student.fetch,
+    fetchStudentInformationByStudentId: entitiesActions.studentInformation.fetchByKey('studentId'),
+    fetchStudiesByStudentId: entitiesActions.study.fetchByKey('studentId'),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
     withRouter(withStyles(styles, { withTheme: true })(StudentDetails))
 );

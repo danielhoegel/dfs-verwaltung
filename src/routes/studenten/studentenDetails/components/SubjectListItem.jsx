@@ -81,11 +81,6 @@ const styles = theme => ({
     bodyRow: {
         height: 4 * theme.spacing.unit,
     },
-    subject: {
-        '&:hover $subjectEditIcon': {
-            opacity: 1,
-        }
-    },
     subjectEditIcon: {
         opacity: 0,
         color: 'rgba(0, 0, 0, 0.54)',
@@ -99,6 +94,9 @@ const styles = theme => ({
         alignItems: 'center',
         '&:hover': {
             textDecoration: 'underline',
+            '& $subjectEditIcon': {
+                opacity: 1,
+            }
         },
     },
 });
