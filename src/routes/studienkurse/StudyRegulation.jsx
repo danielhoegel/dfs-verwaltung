@@ -105,7 +105,7 @@ class StudyRegulation extends Component {
             this.props.fetchSubjects(),
             this.props.fetchSubjectCourses()
         ])
-        .then(this.setState({ loading: false, error: null }))
+        .then(() => this.setState({ loading: false, error: null }))
         .catch(err => this.setState({ loading: false, error: err.message }));
     }
 

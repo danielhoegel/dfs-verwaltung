@@ -48,7 +48,7 @@ class StudyCourseList extends Component {
             this.props.fetchStudies(),
             this.props.fetchStudyRegulations()
         ])
-        .then(this.setState({ loading: false, error: null }))
+        .then(() => this.setState({ loading: false, error: null }))
         .catch(err => this.setState({ loading: false, error: err.message }));
     }
 
