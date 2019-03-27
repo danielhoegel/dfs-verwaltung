@@ -1,25 +1,13 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
-
-# database
-/datenbank/datenbank.json
-/datenbank/backups
-/server/datenbank.json
-
-# ssh key
-/datenbank/ssh_key
-/datenbank/ssh_key.pub
-
-# dependencies
+# node and react stuff
 /node_modules
-
-# production
 /build
 
-# logs
+# backend server
+/server/backups
+/server/datenbank.json
 /server/logs/*.log
-
-# testing
-/coverage
+/server/ssh_key
+/server/ssh_key.pub
 
 # misc
 .DS_Store
