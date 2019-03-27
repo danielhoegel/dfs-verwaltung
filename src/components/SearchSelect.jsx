@@ -31,7 +31,9 @@ class SearchSelect extends Component {
                 matchingOptions: nextProps.options
             }
         }
-        if (nextProps.value === '') {
+
+        // reset state on external value reset
+        if (nextProps.value === '' && prevState._value !== '') {
             return {
                 inputValue: '',
                 activeIndex: 0,
