@@ -45,7 +45,7 @@ const SubjectListItem = ({
             {sortedSubjectCourses().map((subjectCourse, index) => (
                 <TableRow key={subjectCourse.id} className={classes.bodyRow}>
                     {index === 0 && (
-                        <TableCell rowSpan={subjectCourses.length}>
+                        <TableCell className={classes.tableCell} rowSpan={subjectCourses.length}>
                             <Link
                                 to={`/studienkurse/${study.studyCourseId}\
                                 /studienordnung/${study.studyRegulationId}/${subject.id}`}
@@ -56,11 +56,11 @@ const SubjectListItem = ({
                             </Link>
                         </TableCell>
                     )}
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                         {subjectCourse.type}
                         {subjectCourse.title && ` (${subjectCourse.title})`}
                     </TableCell>
-                    <TableCell style={{ textAlign: 'right' }}>
+                    <TableCell className={classes.tableCell} style={{ textAlign: 'right' }}>
                         <GradesList
                             grades={getGradesForSubjectCourse(subjectCourse.id)}
                             subjectCourse={subjectCourse}
@@ -80,6 +80,9 @@ const SubjectListItem = ({
 const styles = theme => ({
     bodyRow: {
         height: 4 * theme.spacing.unit,
+    },
+    tableCell: {
+        padding: `${theme.spacing.unit}px`
     },
     subjectEditIcon: {
         opacity: 0,

@@ -14,7 +14,9 @@ function LESBListReport(props) {
                 .map(student => (
                     <div className='student' key={student.id}>
                         <h2>
-                            LESB - Anmeldung - Mtknr. {student.matrikelnummer} - {student.lastName}, {student.firstName} - Datum {__today}
+                            LESB - Anmeldung - Mtknr.{' '}
+                            {student.matrikelnummer} - {student.lastName}, {student.firstName}{' '}
+                            - Datum {__today}
                         </h2>
                         <LESBListeFaecher
                             student={student}
@@ -22,20 +24,29 @@ function LESBListReport(props) {
                             getVeranstaltungenForFach={props.getVeranstaltungenForFach}
                             getGradesForStudentAndSubjectCourse={props.getGradesForStudentAndSubjectCourse}
                         />
-                        <p className='anmerkung'>(aus den oben angegebenen Klausuren müssen 5 von den 6 fett gedruckten Klausuren bestanden werden, davon mindestens 1 in jedem Rechtsgebiet - sollte der/die Studierende den Studienkurs verlassen, müssen 9 von den 12 Klausuren bestanden sein)</p>
+                        <p className='anmerkung'>
+                            (aus den oben angegebenen Klausuren müssen 5 von den 6 fett gedruckten{' '}
+                            Klausuren bestanden werden, davon mindestens 1 in jedem Rechtsgebiet{' '}
+                            - sollte der/die Studierende den Studienkurs verlassen, müssen 9 von{' '}
+                            den 12 Klausuren bestanden sein)
+                        </p>
                         <LESBListeFaecher
                             student={student}
                             faecher={props.subjects.fr}
                             getVeranstaltungenForFach={props.getVeranstaltungenForFach}
                             getGradesForStudentAndSubjectCourse={props.getGradesForStudentAndSubjectCourse}
                         />
-                        <p className='anmerkung'>(für den deutsch-französischen Studienkurs müssen zusätzlich zu den oben geforderten 5 von 6 Klausuren noch 4 aus den angegebenen französischen Klausuren bestanden werden)</p>
+                        <p className='anmerkung'>
+                            (für den deutsch-französischen Studienkurs müssen zusätzlich zu den{' '}
+                            oben geforderten 5 von 6 Klausuren noch 4 aus den angegebenen{' '}
+                            französischen Klausuren bestanden werden)
+                        </p>
                     </div>
                 ))
             : 'Keine Studenten gefunden.'}
         </div>
     );
-};
+}
 
 LESBListReport.propTypes = {
     students: PropTypes.array.isRequired,

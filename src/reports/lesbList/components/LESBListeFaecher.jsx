@@ -23,12 +23,15 @@ class LESBListeFaecher extends Component {
                         <th style={{ width: '10%', textAlign: 'right' }}>(Versuch)</th>
                     </tr>
                 </thead>
-                {faecher.map(fach =>
-                    this.props.getVeranstaltungenForFach(fach.id)
+                {faecher
+                    .sort((a, b) => (
+                        a.title.localeCompare(b.title)
+                    ))
+                    .map(fach => this.props.getVeranstaltungenForFach(fach.id)
                         .filter(veranstaltung =>
                             ['Vorlesung', 'TD'].includes(veranstaltung.type)
                         )
-                        .map(veranstaltung => 
+                        .map(veranstaltung =>
                             <LESBListeFach
                                 fach={fach}
                                 veranstaltung={veranstaltung}

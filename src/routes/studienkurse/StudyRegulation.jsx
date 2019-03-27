@@ -356,22 +356,28 @@ class StudyRegulation extends Component {
                         ? Object.entries(this.groupSubjectsBySemester()).map(([semester, _subjects]) => (
                             <Fragment key={semester} >
                                 <Typography variant='body1'>{semester}. Semester</Typography>
-                                {_subjects.map(subject => (
-                                    <SubjectListItem
-                                        key={subject.id}
-                                        subject={subject}
-                                        classes={classes}
-                                        handleChange={this.handleExpansionChange}
-                                        expanded={this.state.expandedSubject === subject.id}
-                                        allowDelete={this.state.allowDelete}
-                                        rootRef={ref => this.refHandler(ref, subject.id)}
-                                        openUpdateSubjectModal={this.openUpdateSubjectModal}
-                                        openDeleteSubjectModal={this.openDeleteSubjectModal}
-                                        openCreateSubjectCourseModal={this.openCreateSubjectCourseModal}
-                                        openUpdateSubjectCourseModal={this.openUpdateSubjectCourseModal}
-                                        openDeleteSubjectCourseModal={this.openDeleteSubjectCourseModal}
-                                    />
-                                ))}
+                                {_subjects
+                                    .sort((a, b) => (
+                                        a.ue - b.ue ||
+                                        a.title.localeCompare(b.title)
+                                    ))
+                                    .map(subject =>
+                                        <SubjectListItem
+                                            key={subject.id}
+                                            subject={subject}
+                                            classes={classes}
+                                            handleChange={this.handleExpansionChange}
+                                            expanded={this.state.expandedSubject === subject.id}
+                                            allowDelete={this.state.allowDelete}
+                                            rootRef={ref => this.refHandler(ref, subject.id)}
+                                            openUpdateSubjectModal={this.openUpdateSubjectModal}
+                                            openDeleteSubjectModal={this.openDeleteSubjectModal}
+                                            openCreateSubjectCourseModal={this.openCreateSubjectCourseModal}
+                                            openUpdateSubjectCourseModal={this.openUpdateSubjectCourseModal}
+                                            openDeleteSubjectCourseModal={this.openDeleteSubjectCourseModal}
+                                        />
+                                    )
+                                }
                                 <HiddenDivider />
                             </Fragment>
                             ))

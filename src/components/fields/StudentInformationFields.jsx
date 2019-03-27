@@ -53,7 +53,7 @@ function StudentInformationFields({ values, prefix, onChange }) {
                     name={prefixed('mailPrimary')}
                     value={values.mailPrimary}
                     onChange={onChange}
-                    placeholder='vorname.nachname@hhu.de'
+                    placeholder='vorname.nachname@gmail.com'
                     label='Standard-E-Mail'
                     required
                     type='email'
@@ -62,26 +62,26 @@ function StudentInformationFields({ values, prefix, onChange }) {
                     name={prefixed('mailSecondary')}
                     value={values.mailSecondary}
                     onChange={onChange}
-                    placeholder='vorname.nachname@gmail.com'
+                    placeholder='vorname.nachname@hhu.de'
                     label='Extra-E-Mail (optional)'
                     type='email'
                 />
             </FieldGroup>
             <FieldGroup>
                 <Field
-                    name={prefixed('phoneNumber')}
-                    value={values.phoneNumber}
-                    onChange={onChange}
-                    placeholder='+49 1234 5678'
-                    label='Festnetz (optional)'
-                    type='phone'
-                />
-                <Field
                     name={prefixed('mobileNumber')}
                     value={values.mobileNumber}
                     onChange={onChange}
                     placeholder='+49 123 456 789 10'
                     label='Mobil (optional)'
+                    type='phone'
+                />
+                <Field
+                    name={prefixed('phoneNumber')}
+                    value={values.phoneNumber}
+                    onChange={onChange}
+                    placeholder='+49 1234 5678'
+                    label='Festnetz (optional)'
                     type='phone'
                 />
             </FieldGroup>

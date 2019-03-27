@@ -40,9 +40,9 @@ const TypeGroup = withStyles(theme => ({
     <Table padding='dense' className={classes.table}>
         <TableHead className={classes.tableHead}>
             <TableRow className={classes.headRow}>
-                <TableCell className={classes.headCell} style={{ width: '30%' }}>Fach ({type.toUpperCase()})</TableCell>
+                <TableCell className={classes.headCell} style={{ width: '38%' }}>Fach ({type.toUpperCase()})</TableCell>
                 <TableCell className={classes.headCell} style={{ width: '40%' }}>Veranstaltung</TableCell>
-                <TableCell className={classes.headCell} style={{ width: '30%' }}>(Punkte)</TableCell>
+                <TableCell className={classes.headCell} style={{ width: '22%' }}>(Punkte)</TableCell>
             </TableRow>
         </TableHead>
         {subjects
