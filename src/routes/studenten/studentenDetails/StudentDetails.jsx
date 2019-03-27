@@ -51,10 +51,10 @@ import StudyCreate from './components/StudyCreate';
 
 
 class StudentDetails extends Component {
-    static getDerivedStateFromProps(nextProps, prevState){
-        const studentId = Number(nextProps.match.params.id);
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const studentId = getId(nextProps.match.params.id);
         if (studentId !== prevState.studentId) {
-            return { ...prevState, studentId }
+            return { ...prevState, studentId };
         }
         return null;
     }

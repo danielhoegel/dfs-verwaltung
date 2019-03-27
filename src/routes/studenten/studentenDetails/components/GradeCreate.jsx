@@ -77,10 +77,10 @@ class GradeCreate extends Component {
     validate({ studyId, subjectCourseId, grade, gradingSystem, try: _try, date }) {
         let error = [];
 
-        if (typeof studyId !== 'number' || studyId < 0)
+        if (!studyId)
             error.push('Bitte wähle einen Studienkurs aus.');
 
-        if (typeof subjectCourseId !== 'number' || subjectCourseId < 0)
+        if (!subjectCourseId)
             error.push('Bitte wähle eine Veranstaltung aus.');
 
         if (!['de', 'fr'].includes(gradingSystem))

@@ -41,9 +41,9 @@ import StudyRegulationDateChip from './components/studyRegulation/StudyRegulatio
 class StudyRegulation extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         const { subjectId } = nextProps.match.params;
-        if (subjectId && subjectId !== prevState.__subjectId ) {
-            const __subjectId = Number(subjectId);
-            if (__subjectId !== prevState.__subjectId ) {
+        if (subjectId && subjectId !== prevState.__subjectId) {
+            const __subjectId = getId(subjectId);
+            if (__subjectId !== prevState.__subjectId) {
                 return {
                     ...prevState,
                     expandedSubject: isNotEmpty(__subjectId) ? __subjectId : null,
