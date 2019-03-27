@@ -23,15 +23,20 @@
         // "indent": ["error", 4],
         "indent": "off",
         "max-len": ["warn", { "code": 120 }],
-        "no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
+        "no-unused-vars": "off",
         "comma-dangle": "off",
         "no-plusplus": "off",
         "object-curly-spacing": ["error", "always", { "arraysInObjects": false, "objectsInObjects": false }],
+        "object-curly-newline": "off",
         "no-underscore-dangle": "off",
         "implicit-arrow-linebreak": "off",
         "arrow-body-style": "off",
         "arrow-parens": "off",
         "function-paren-newline": "off",
-        "no-use-before-define": ["error", { "functions": false }]
+        "no-use-before-define": ["error", { "functions": false }],
+        "operator-linebreak": "off",
+        "no-restricted-syntax": ["error", "BinaryExpression[operator='in']"],
+        "no-prototype-builtins": "off",
+        "no-nested-ternary": "off"
     }
 }

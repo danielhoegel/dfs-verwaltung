@@ -14,18 +14,18 @@ function replaceItem(state, item, key) {
 /* util function */
 function replaceItemAsArray(state, item, idKey = 'id') {
     const key = item[idKey];
-    const nextState = {...state};
+    const nextState = { ...state };
     if (nextState[key]) {
         let updated = false;
         nextState[key] = nextState[key].map(prevItem => {
             if (prevItem.id === item.id) {
                 updated = true;
-               return item; 
+                return item;
             }
             return prevItem;
         });
         if (!updated) {
-            nextState[key] = [...nextState[key], item]
+            nextState[key] = [...nextState[key], item];
         }
     } else {
         nextState[key] = [item];
@@ -34,7 +34,7 @@ function replaceItemAsArray(state, item, idKey = 'id') {
 }
 
 /* util function */
-function replaceAllItems(items, idKey = 'id' ) {
+function replaceAllItems(items, idKey = 'id') {
     const nextState = {};
     if (items) {
         items.forEach(item => {
@@ -45,7 +45,7 @@ function replaceAllItems(items, idKey = 'id' ) {
 }
 
 /* util function */
-function replaceAllItemsAsArray(items, idKey = 'id' ) {
+function replaceAllItemsAsArray(items, idKey = 'id') {
     const nextState = {};
     if (items) {
         items.forEach(item => {
@@ -53,7 +53,7 @@ function replaceAllItemsAsArray(items, idKey = 'id' ) {
             if (nextState[key]) {
                 nextState[key].push(item);
             } else {
-                nextState[key] = [ item ];
+                nextState[key] = [item];
             }
         });
     }
@@ -63,15 +63,15 @@ function replaceAllItemsAsArray(items, idKey = 'id' ) {
 /* util function */
 function deleteItem(state, item, idKey = 'id') {
     const key = item[idKey];
-    const nextState = {...state};
-    delete nextState[key]
+    const nextState = { ...state };
+    delete nextState[key];
     return nextState;
 }
 
 /* util function */
 function deleteItemAsArray(state, item, idKey = 'id') {
     const key = item[idKey];
-    const nextState = {...state};
+    const nextState = { ...state };
     nextState[key] = nextState[key].filter(
         stateItem => stateItem.id !== item.id
     );
@@ -80,8 +80,8 @@ function deleteItemAsArray(state, item, idKey = 'id') {
 
 
 function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
-    return function(state = {}, action) {
-        switch(action.type) {
+    return function reducer(state = {}, action) {
+        switch (action.type) {
             case 'FETCH_ALL_DATA_SUCCESS':
                 return asArray
                     ? replaceAllItemsAsArray(action.data[entity], key)
@@ -100,7 +100,7 @@ function entityReducer(typeSingular, typePlural, entity, key = 'id', asArray) {
             case `DELETE_${typeSingular}_SUCCESS`:
                 return asArray
                     ? deleteItemAsArray(state, action.request.data, key)
-                    : deleteItem(state, action.request.data, key)
+                    : deleteItem(state, action.request.data, key);
             default:
                 return state;
         }
@@ -119,24 +119,23 @@ function entitiesMetaReducer(state = defaultMetaState, action) {
                 ...state,
                 fetching: true,
                 error: ''
-            }
+            };
         case 'FETCH_ALL_DATA_SUCCESS':
             return {
                 ...state,
                 fetching: false,
                 error: ''
-            }
+            };
         case 'FETCH_ALL_DATA_FAILURE':
             return {
                 ...state,
                 fetching: false,
                 error: action.error
-            }
+            };
         default:
             return state;
     }
 }
-
 
 
 const reducers = {

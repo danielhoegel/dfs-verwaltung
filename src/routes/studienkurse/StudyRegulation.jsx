@@ -21,7 +21,11 @@ import HiddenDivider from '../../components/HiddenDivider';
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
 
-import { getSubjectsWithSubjectCourses, getStudyRegulationByIdWithStudyCourse, getStudyCoursesWithRegulations } from './redux/studySelectors';
+import {
+    getSubjectsWithSubjectCourses,
+    getStudyRegulationByIdWithStudyCourse,
+    getStudyCoursesWithRegulations
+} from './redux/studySelectors';
 import SubjectListItem from './components/subject/SubjectListItem';
 import StudyRegulationUpdate from './components/studyRegulation/StudyRegulationUpdate';
 import StudyRegulationDelete from './components/studyRegulation/StudyRegulationDelete';
@@ -49,13 +53,13 @@ class StudyRegulation extends Component {
         }
         return null;
     }
-    
+
     state = {
         expandedSubject: null,
         allowDelete: false,
         loading: true,
         error: null,
-        
+
         // StudyRegulation modals
         updateStudyRegulationModalOpen: false,
         updateStudyRegulationModalData: null,
@@ -68,7 +72,7 @@ class StudyRegulation extends Component {
         updateSubjectModalData: null,
         deleteSubjectModalOpen: false,
         deleteSubjectModalData: null,
-        
+
         // SubjectCourse Modals
         createSubjectCourseModalOpen: false,
         createSubjectCourseModalData: null,
@@ -79,7 +83,7 @@ class StudyRegulation extends Component {
     }
 
     subjectRefs = {}
-    
+
     componentDidMount() {
         this.loadData();
         if (isNotEmpty(this.props.match.params.subjectId)) {
@@ -95,7 +99,7 @@ class StudyRegulation extends Component {
             this.scrollToExpandedSubject();
         }
     }
-    
+
     loadData = () => {
         Promise.all([
             this.props.fetchSubjects(),
@@ -267,10 +271,9 @@ class StudyRegulation extends Component {
             deleteSubjectCourseModalData: null
         });
     }
-    
+
     render() {
         const { studyRegulation, subjects, classes } = this.props;
-        console.log(this.props);
         return (
             <div>
                 <div style={{
@@ -283,7 +286,7 @@ class StudyRegulation extends Component {
                     </Typography>
                     <StudyRegulationDateChip date={studyRegulation.date} />
                 </div>
-                
+
                 <HiddenDivider />
                 {studyRegulation.title && (
                     <Typography variant='body1'>
@@ -350,10 +353,10 @@ class StudyRegulation extends Component {
                 <div className={classes.listWrapper}>
                     <Loader loading={this.state.loading} />
                     {subjects.length
-                        ? Object.entries(this.groupSubjectsBySemester()).map(([ semester, subjects ]) => (
+                        ? Object.entries(this.groupSubjectsBySemester()).map(([semester, _subjects]) => (
                             <Fragment key={semester} >
                                 <Typography variant='body1'>{semester}. Semester</Typography>
-                                {subjects.map(subject => (
+                                {_subjects.map(subject => (
                                     <SubjectListItem
                                         key={subject.id}
                                         subject={subject}
@@ -401,7 +404,7 @@ class StudyRegulation extends Component {
                     close={this.closeCreateSubjectModal}
                     open={this.state.createSubjectModalOpen}
                     data={{
-                        studyRegulationId: studyRegulation.id, 
+                        studyRegulationId: studyRegulation.id,
                         studyCourseId: studyRegulation.studyCourse.id
                     }}
                     preventClosing
@@ -526,7 +529,7 @@ const mapStateToProps = (state, props) => {
         studyRegulation: getStudyRegulationByIdWithStudyCourse(state, studyRegulationId),
         subjects: getSubjectsWithSubjectCourses(state, studyRegulationId),
         studyCourses: getStudyCoursesWithRegulations(state),
-    }
+    };
 };
 
 const mapDispatchToProps = {

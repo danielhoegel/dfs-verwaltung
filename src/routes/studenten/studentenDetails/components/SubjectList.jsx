@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography'
+import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -38,21 +38,21 @@ const TypeGroup = withStyles(theme => ({
     <Table padding='dense' className={classes.table}>
         <TableHead className={classes.tableHead}>
             <TableRow className={classes.headRow}>
-                <TableCell className={classes.headCell} style={{width: '30%'}}>Fach ({type.toUpperCase()})</TableCell>
-                <TableCell className={classes.headCell} style={{width: '50%'}}>Veranstaltung</TableCell>
-                <TableCell className={classes.headCell} style={{width: '20%'}}>(Punkte)</TableCell>
+                <TableCell className={classes.headCell} style={{ width: '30%' }}>Fach ({type.toUpperCase()})</TableCell>
+                <TableCell className={classes.headCell} style={{ width: '40%' }}>Veranstaltung</TableCell>
+                <TableCell className={classes.headCell} style={{ width: '30%' }}>(Punkte)</TableCell>
             </TableRow>
         </TableHead>
-        {subjects    
+        {subjects
             .sort((a, b) => (
                 a.type.localeCompare(b.type) ||
                 a.title.localeCompare(b.title) ||
                 a.id - b.id
             ))
-            .map(fach =>
+            .map(subject =>
                 <SubjectListItem
-                    key={fach.id}
-                    subject={fach}
+                    key={subject.id}
+                    subject={subject}
                     studentId={studentId}
                     openGradeModal={openGradeModal}
                     study={study}
@@ -111,7 +111,7 @@ class SubjectList extends Component {
                         </Typography>
                         {this.renderTypeGroups(this.props.groupedSubjects[semester])}
                     </Fragment>
-                )
+                );
             }
         }
         return semesterGroups;

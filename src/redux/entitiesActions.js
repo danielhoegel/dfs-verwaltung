@@ -4,12 +4,12 @@ import entities from './entities';
  * Returns a new promise, adds the resolve
  * and reject methods to the action
  * and dispatches the action (requires redux-thunk)
- * 
+ *
  * Can be used to make api requests through
  * the apiRequestMiddleware and get access to the
  * .then and .catch methods e.g. to chain requests
- * 
- * @param {object} action 
+ *
+ * @param {object} action
  */
 const asyncAction = action => dispatch => new Promise(
     (resolve, reject) => dispatch({ ...action, resolve, reject })
@@ -31,7 +31,7 @@ const entitiesActions = {};
 
 for (let i = 0; i < entities.length; i++) {
     const { singular, plural, typeSingular, typePlural } = entities[i];
-    
+
     entitiesActions[singular] = {
         fetch: id => asyncAction({
             type: `FETCH_${typeSingular}`,
@@ -79,7 +79,7 @@ for (let i = 0; i < entities.length; i++) {
             },
             data
         })
-    }
+    };
 }
 
 export default entitiesActions;

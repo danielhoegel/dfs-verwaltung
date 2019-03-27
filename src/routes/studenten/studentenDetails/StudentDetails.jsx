@@ -150,7 +150,7 @@ class StudentDetails extends Component {
                     </Typography>
                 </div>
                 <Divider hidden height='1rem' />
-                <div style={{display: 'flex'}}>
+                <div style={{ display: 'flex' }}>
                     <Button variant='text' onClick={this.goBack} className={classes.button} >
                         <ChevronLeftIcon className={classes.leftIcon} />
                         Zurück
@@ -280,10 +280,10 @@ const styles = theme => ({
         overflowX: 'auto',
     },
     loader: {
-        margin: 2 * theme.spacing.unit + ' auto',
+        margin: `${2 * theme.spacing.unit} auto`,
 
     }
-})
+});
 
 const mapStateToProps = (state, ownProps) => ({
     student: getFullStudent(state, ownProps.match.params.id),

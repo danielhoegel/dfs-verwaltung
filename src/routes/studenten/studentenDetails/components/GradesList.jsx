@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withStyles } from "@material-ui/core";
+import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -20,14 +20,14 @@ const GradesList = ({
             gradeId,
             studyId,
         });
-    } 
+    };
     const openCreateGradeModal = () => {
         openGradeModal({
             studyId,
             subjectCourseId: subjectCourse.id,
             try: grades.length + 1
-        })
-    }
+        });
+    };
 
     return subjectCourse.participationType === 'Note' ? (
         <div>
@@ -50,7 +50,7 @@ const GradesList = ({
                 variant='outlined'
             >
                 <AddIcon className={classes.leftIcon} />
-                {grades.length > 0 ? `${grades.length + 1}. Versuch`: 'Note'}
+                {grades.length > 0 ? `${grades.length + 1}. Versuch` : 'Note'}
             </Button>
         </div>
     ) : (

@@ -51,11 +51,6 @@ entities.forEach(entity => {
         }
     });
 
-    // GET BY SEARCH
-    router.get(`/${entity}`, (req, res) => {
-
-    })
-
     // GET BY ID
     router.get(`/${entity}/:id`, (req, res) => {
         const id = getId(req.params.id);
@@ -68,7 +63,7 @@ entities.forEach(entity => {
         const { key, value } = req.params;
         const results = db.get(entity).filter({ [key]: getId(value) }).value();
         res.json(results);
-    })
+    });
 
     // POST
     router.post(`/${entity}`, (req, res) => {

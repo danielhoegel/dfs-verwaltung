@@ -1,5 +1,5 @@
-import { isNotEmpty } from "../../../helper/helper";
-import { getFullStudents } from "../../../redux/entitiesSelector";
+import { isNotEmpty } from '../../../helper/helper';
+import { getFullStudents } from '../../../redux/entitiesSelector';
 
 /* Base Selector */
 export function getStudentenData(state) {
@@ -23,7 +23,7 @@ export function getStudentenFilter(state) {
 function __studentMatchesFilter(student, filter, searchString) {
     if (isNotEmpty(student.studies)) {
         const studyMatch = student.studies.some(study => {
-            if (filter.year.length && !filter.year.includes(study.year) ) {
+            if (filter.year.length && !filter.year.includes(study.year)) {
                 return false;
             }
             if (isNotEmpty(filter.studyCourse) && filter.studyCourse !== study.studyCourseId) {
@@ -34,7 +34,7 @@ function __studentMatchesFilter(student, filter, searchString) {
             }
             return true;
         });
-        if (!studyMatch) return false;            
+        if (!studyMatch) return false;
     } else if (filter.studies || isNotEmpty(filter.studyCourse) || isNotEmpty(filter.status)) {
         return false;
     }
@@ -64,4 +64,4 @@ export function getFilteredStudenten(state) {
     return studenten
         .filter(student => __studentMatchesFilter(student, filter, searchString))
         .sort(__sortStudents);
-};
+}

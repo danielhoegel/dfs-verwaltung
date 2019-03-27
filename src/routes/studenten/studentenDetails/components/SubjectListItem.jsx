@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import EditIcon from '@material-ui/icons/EditOutlined';
 
-import GradesList from "./GradesList";
+import GradesList from './GradesList';
 import {
     getSubjectCoursesBySubjectId,
     getGradesByStudyId,
@@ -29,7 +29,7 @@ const SubjectListItem = ({
     function getGradesForSubjectCourse(subjectCourseId) {
         return grades.filter(grade =>
             grade.subjectCourseId === subjectCourseId
-        );  
+        );
     }
 
     function sortedSubjectCourses() {
@@ -41,13 +41,14 @@ const SubjectListItem = ({
     }
 
     return (
-        <TableBody className={classes.subject}>
+        <TableBody>
             {sortedSubjectCourses().map((subjectCourse, index) => (
                 <TableRow key={subjectCourse.id} className={classes.bodyRow}>
                     {index === 0 && (
                         <TableCell rowSpan={subjectCourses.length}>
                             <Link
-                                to={`/studienkurse/${study.studyCourseId}/studienordnung/${study.studyRegulationId}/${subject.id}`}
+                                to={`/studienkurse/${study.studyCourseId}\
+                                /studienordnung/${study.studyRegulationId}/${subject.id}`}
                                 className={classes.subjectLink}
                             >
                                 {subject.title}
@@ -59,7 +60,7 @@ const SubjectListItem = ({
                         {subjectCourse.type}
                         {subjectCourse.title && ` (${subjectCourse.title})`}
                     </TableCell>
-                    <TableCell style={{textAlign: 'right'}}>
+                    <TableCell style={{ textAlign: 'right' }}>
                         <GradesList
                             grades={getGradesForSubjectCourse(subjectCourse.id)}
                             subjectCourse={subjectCourse}

@@ -138,7 +138,7 @@ function searchFunction(haystack, needleString) {
             keys.push(key);
         }
     }
-    
+
     for (var i = 0; i < haystack.length; i++) {
         var entity = haystack[i];
         var entityMatch = true;
@@ -146,7 +146,7 @@ function searchFunction(haystack, needleString) {
         for (var j = 0; j < needle.length; j++) {
             var needle = needle[j];
             var needleMatch = false
-            
+
             for (var k = 0; k < keys.length; k++) {
                 var key = keys[k];
                 var keyMatch = entity[key].toString().toLowerCase().indexOf(needle.toLowerCase());
