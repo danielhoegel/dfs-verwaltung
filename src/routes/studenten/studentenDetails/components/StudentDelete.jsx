@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -22,32 +22,8 @@ class StudentDelete extends Component {
     }
 
     controlCheck() {
-        return this.state.controlValue === this.props.data.matrikelnummer;
+        return this.state.controlValue.toString() === this.props.data.matrikelnummer.toString();
     }
-
-    // deleteAndCascade = () => {
-    //     /*
-    //      * this seems to work out of the box with json-server
-    //      */
-    
-    //     // delete student
-    //     const requests = [this.props.deleteStudent(this.props.data)];
-
-    //     // cascade studies and grades
-    //     const studies = getStudiesByStudentId(this.props.state, this.props.data.id);
-    //     studies.forEach(study => {
-    //         // delete studies
-    //         requests.push(this.props.deleteStudy(study));
-            
-    //         // delete grades
-    //         const grades = getGradesByStudyId(this.props.state, study.id);
-    //         grades.forEach(grade => {
-    //             requests.push(this.props.deleteGrade(grade));
-    //         });
-    //     });
-        
-    //     return Promise.all(requests);
-    // }
 
     deleteHandler = () => {
         if (this.controlCheck()) {
@@ -66,9 +42,18 @@ class StudentDelete extends Component {
             <div>
                 <Loader loading={loading} />
                 <Typography variant='body2'>
-                    Sind Sie sicher, dass sie den Studenten <strong>{firstName} {lastName} (Matrikelnummer: <span className={classes.controlValue}>{matrikelnummer}</span>)</strong> löschen möchten?<br />
+                    Sind Sie sicher, dass sie den Studenten{' '}
+                    <strong>
+                        {firstName} {lastName} (Matrikelnummer:{' '}
+                        <span className={classes.controlValue}>{matrikelnummer}</span>)
+                    </strong>{' '}
+                    löschen möchten?<br />
                     <br />
-                    <strong>Dadurch werden auch alle mit dem Studenten assozierten Studiengänge und Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
+                    <strong>
+                        Dadurch werden auch alle mit dem Studenten assozierten Studiengänge und Noten gelöscht.
+                    </strong>{' '}
+                    Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups{' '}
+                    rückgängig gemacht werden.<br />
                     <br />
                     Geben Sie zur Bestätigung die Matrikelnummer des Studenten ein.
                 </Typography>
@@ -94,7 +79,7 @@ class StudentDelete extends Component {
             </div>
         );
     }
-};
+}
 
 const styles = theme => ({
     deleteButton: {

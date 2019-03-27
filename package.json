@@ -6,12 +6,11 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "backup": "node scripts/backup.js",
-    "dev:server": "nodemon server/server.js --ignore server/datenbank.json --ignore server/server_logs.logs",
+    "server:dev": "nodemon server/server.js --ignore server/datenbank.json --ignore server/server_logs.logs",
     "server": "node server/server.js",
-    "server:database": "json-server --watch datenbank/datenbank.json --port 3333 --snapshots datenbank/backups",
-    "server:frontend": "node server-frontend.js",
+    "frontend": "node server-frontend.js",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server:database\"",
-    "production": "concurrently \"npm run backup\" \"npm run server:database\" \"npm run server:frontend\""
+    "production": "concurrently \"npm run backup\" \"npm run server:database\" \"npm run frontend\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
