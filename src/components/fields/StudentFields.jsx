@@ -3,6 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
+import FieldSelect from '../FieldSelect';
 
 function StudentFields({ values, prefix, onChange }) {
     function prefixed(name) {
@@ -12,17 +13,19 @@ function StudentFields({ values, prefix, onChange }) {
     return (
         <Fragment>
             <FieldGroup>
-                <Field
-                    select
+                <FieldSelect
                     name={prefixed('prefix')}
                     label='Anrede'
                     value={values.prefix}
                     onChange={onChange}
                     required
-                >
-                    <MenuItem key='Frau' value='Frau'>Frau</MenuItem>
-                    <MenuItem key='Herr' value='Herr'>Herr</MenuItem>
-                </Field>
+                    autoFocus
+                    openOnFocus={false}
+                    options={[
+                        { value: 'Frau', label: 'Frau' },
+                        { value: 'Herr', label: 'Herr' },
+                    ]}
+                />
                 <Field
                     name={prefixed('firstName')}
                     label='Vorname'

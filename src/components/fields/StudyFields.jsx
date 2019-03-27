@@ -8,31 +8,29 @@ import Paper from '@material-ui/core/Paper';
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
 import { studyStatusList, isEmpty } from '../../helper/helper';
+import FieldSelect from '../FieldSelect';
 
 
 function StudyFields({
-    values, prefix, /* students,  */studyCourses, studyRegulations, change, /* onCancel,  */classes
+    values,
+    prefix,
+    // students,
+    studyCourses,
+    studyRegulations,
+    change,
+    // onCancel,
+    classes,
 }) {
     const year = new Date().getFullYear();
 
-    // function studentOptions() {
-    //     return students.map(({ id, firstName, lastName }) => (
-    //         <MenuItem key={id} value={id}>
-    //             {firstName} {lastName}
-    //         </MenuItem>
-    //     ));
-    // }
-
-    function studyCourseOptions() {
-        return studyCourses.map(({ id, title }) => (
-            <MenuItem key={id} value={id}>
-                {title}
-            </MenuItem>
-        ));
-    }
-
     function prefixed(name) {
         return prefix ? `${prefix}.${name}` : name;
+    }
+
+    function studyCourseOptions() {
+        return studyCourses.map(({ id, title }) => ({
+            value: id, label: title
+        }));
     }
 
     function studyRegulationOptions() {
@@ -40,14 +38,16 @@ function StudyFields({
         for (let i = 0; i < studyRegulations.length; i++) {
             const { id, title, studyCourseId } = studyRegulations[i];
             if (isEmpty(values.studyCourseId) || values.studyCourseId === studyCourseId) {
-                results.push(
-                    <MenuItem key={id} value={id}>
-                        {title}
-                    </MenuItem>
-                );
+                results.push({ value: id, label: title });
             }
         }
         return results;
+    }
+
+    function StudyStatusOptions() {
+        return studyStatusList.map(({ id, value }) => ({
+            value: id, label: value
+        }));
     }
 
     const studyCourseChangeHandler = (e) => {
@@ -59,52 +59,42 @@ function StudyFields({
         <Fragment>
             <Paper className={classes.paper}>
                 {/* <FieldGroup>
-                    <Field
-                        select
+                    <FieldSelect
                         name={prefixed('studentId')}
                         label='Student'
                         value={values.studentId}
                         onChange={e => change(e, true)}
+                        options={studentOptions()}
                         required
-                    >
-                        {studentOptions()}
-                    </Field>
+                    />
                 </FieldGroup> */}
                 <FieldGroup>
-                    <Field
-                        select
+                    <FieldSelect
                         name={prefixed('studyCourseId')}
                         label='Studienkurs'
                         value={values.studyCourseId}
                         onChange={studyCourseChangeHandler}
+                        options={studyCourseOptions()}
                         required
-                    >
-                        {studyCourseOptions()}
-                    </Field>
-                    <Field
-                        select
+                    />
+                    <FieldSelect
                         name={prefixed('studyRegulationId')}
                         label='Studienordnung'
                         value={values.studyRegulationId}
                         onChange={e => change(e, true)}
+                        options={studyRegulationOptions()}
                         required
-                    >
-                        {studyRegulationOptions()}
-                    </Field>
+                    />
                 </FieldGroup>
                 <FieldGroup>
-                    <Field
-                        select
+                    <FieldSelect
                         name={prefixed('status')}
                         label='Status'
                         value={values.status}
                         onChange={e => change(e, true)}
+                        options={StudyStatusOptions()}
                         required
-                    >
-                        {studyStatusList.map(({ id, value }) => (
-                            <MenuItem key={id} value={id}>{value}</MenuItem>
-                        ))}
-                    </Field>
+                    />
                     <Field
                         name={prefixed('year')}
                         value={values.year}
