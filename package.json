@@ -10,7 +10,7 @@
     "server": "node server/server.js",
     "frontend": "node server-frontend.js",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server:database\"",
-    "production": "concurrently \"npm run backup\" \"npm run server:database\" \"npm run frontend\""
+    "production": "concurrently \"npm run backup\" \"npm run server\" \"npm run frontend\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
