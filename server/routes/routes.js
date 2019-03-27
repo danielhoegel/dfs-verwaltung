@@ -41,9 +41,20 @@ router.get('/db', (req, res) => {
 entities.forEach(entity => {
     // GET ALL
     router.get(`/${entity}`, (req, res) => {
-        const results = db.get(entity).value();
-        res.json(results);
+        const allResults = db.get(entity).value();
+        const { search } = req.query;
+        if (search) {
+            const searchResults = controller.search(allResults, search);
+            res.json(searchResults);
+        } else {
+            res.json(allResults);
+        }
     });
+
+    // GET BY SEARCH
+    router.get(`/${entity}`, (req, res) => {
+
+    })
 
     // GET BY ID
     router.get(`/${entity}/:id`, (req, res) => {
@@ -51,6 +62,13 @@ entities.forEach(entity => {
         const result = db.get(entity).find({ id }).value();
         res.json(result);
     });
+
+    // GET BY KEY
+    router.get(`/${entity}/:key/:value`, (req, res) => {
+        const { key, value } = req.params;
+        const results = db.get(entity).filter({ [key]: getId(value) }).value();
+        res.json(results);
+    })
 
     // POST
     router.post(`/${entity}`, (req, res) => {
