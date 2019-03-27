@@ -16,7 +16,7 @@ export const getFaecherDataForUEAndSemester = state => (ue, semester) => {
 
 // TODO: rename + move to entitesSelector
 export function getFaecherGroupedByTyp(state) {
-    const result = {de: [], fr: []};
+    const result = { de: [], fr: []};
     getSubjects(state).forEach(fach => {
         result[fach.type].push(fach);
     });
@@ -27,7 +27,7 @@ export function getFaecherGroupedByTyp(state) {
 // TODO: replace with getSubjectCoursesBySubjectId
 export const getVeranstaltungenForFach = (state) => (subjectId) => {
     return getSubjectCoursesBySubjectId(state, subjectId);
-}
+};
 
 
 // TODO: rename + move to entitesSelector
@@ -41,9 +41,11 @@ export const getPunkteForVeranstaltungAndStudent = state => (veranstaltungID, st
             }
         });
         return lastVersuch.grade;
-    } else if (noten.length > 0){
-        return noten[0].grade;
-    } else {
-        return null;
     }
+
+    if (noten.length > 0) {
+        return noten[0].grade;
+    }
+
+    return null;
 };

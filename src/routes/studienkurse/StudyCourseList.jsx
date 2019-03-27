@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -21,7 +21,6 @@ import { getStudyCoursesWithRegulations } from './redux/studySelectors';
 import entitiesActions from '../../redux/entitiesActions';
 
 
-
 class StudyCourseList extends Component {
     state = {
         loading: true,
@@ -38,11 +37,11 @@ class StudyCourseList extends Component {
         deleteStudyRegulationModalData: null,
     }
 
-    
+
     componentDidMount() {
         this.loadData();
     }
-    
+
     loadData = () => {
         Promise.all([
             this.props.fetchStudies(),
@@ -89,7 +88,7 @@ class StudyCourseList extends Component {
             deleteModalData: null
         });
     }
-    
+
     openCreateStudyRegulationModal = (studyCourse) => {
         this.setState({
             createStudyRegulationModalOpen: true,
@@ -99,14 +98,14 @@ class StudyCourseList extends Component {
             }
         });
     }
-    
+
     closeCreateStudyRegulationModal = () => {
         this.setState({
             createStudyRegulationModalOpen: false,
             createStudyRegulationModalData: null
         });
     }
-    
+
     openDeleteStudyRegulationModal = (studyRegulation) => {
         if (this.state.allowDelete) {
             this.setState({
@@ -128,7 +127,7 @@ class StudyCourseList extends Component {
             allowDelete: !state.allowDelete
         }));
     }
-    
+
     render() {
         const { studyCourses, classes } = this.props;
         return (

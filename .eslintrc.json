@@ -37,6 +37,7 @@
         "operator-linebreak": "off",
         "no-restricted-syntax": ["error", "BinaryExpression[operator='in']"],
         "no-prototype-builtins": "off",
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+        "no-else-return": ["warning", { "allowElseIf": true }]
     }
 }
