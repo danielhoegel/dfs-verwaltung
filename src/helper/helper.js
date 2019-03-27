@@ -9,7 +9,7 @@ export function isEmpty(value) {
         case 'string': return !value;
         case 'number': return !value && value !== 0;
         case 'object':
-            switch (value.__proto__) {
+            switch (Object.getPrototypeOf(value)) {
                 case String.prototype: return !value;
                 case Number.prototype: return !value && value !== 0;
                 case Array.prototype: return !value || value.length === 0;
@@ -34,7 +34,7 @@ export function formatDate(date, type = 'de') {
         const dateObject = new Date(date);
         switch (type) {
             case 'de':
-                return dateObject.toLocaleDateString('de', { day: '2-digit', month: '2-digit', year: 'numeric'})
+                return dateObject.toLocaleDateString('de', { day: '2-digit', month: '2-digit', year: 'numeric' });
             case 'us':
                 return dateObject.toISOString.slice(0, 10);
             default:
@@ -52,7 +52,7 @@ export function formatDate(date, type = 'de') {
  */
 export function stringsMatch(haystack, needle) {
     return String(haystack).toLowerCase().indexOf(String(needle).toLowerCase()) !== -1;
-};
+}
 
 
 /**
@@ -66,18 +66,18 @@ export function highlightMatch(string, searchValue, highlightTag = 'strong') {
     if (searchValue.length > 0) {
         const searchWords = searchValue.split(' ');
         const stringWords = string.split(' ');
-        
+
         const outputWords = stringWords.map(stringWord => {
             let outputWord = stringWord;
             for (let i = 0; i < searchWords.length; i++) {
                 const searchWord = searchWords[i];
                 const startIndex = stringWord.toLowerCase().indexOf(searchWord.toLowerCase());
-               
+
                 if (startIndex !== -1) {
                     const matchingPart = stringWord.slice(startIndex, startIndex + searchWord.length);
                     const beforePart = stringWord.slice(0, startIndex);
                     const afterPart = stringWord.slice(startIndex + searchWord.length);
-                    
+
                     outputWord = `${beforePart}<${highlightTag}>${matchingPart}</${highlightTag}>${afterPart}`;
                     break;
                 }
@@ -87,20 +87,20 @@ export function highlightMatch(string, searchValue, highlightTag = 'strong') {
 
         return outputWords.join(' ');
     }
-    return{string};
+    return { string };
 }
 
 export const studyStatusList = [
     { id: 0, value: 'Beworben' },
-    { id: 1, value: 'Aktiv'},
-    { id: 2, value: 'Abgeschlossen'},
-    { id: 3, value: 'Abgebrochen'},
-    { id: 4, value: 'Unterbrochen'}
+    { id: 1, value: 'Aktiv' },
+    { id: 2, value: 'Abgeschlossen' },
+    { id: 3, value: 'Abgebrochen' },
+    { id: 4, value: 'Unterbrochen' }
 ];
 
 /**
  * Translate study status into title
- * @param {string} studyStatus 
+ * @param {string} studyStatus
  */
 export function translateStudyStatus(statusId) {
     const status = studyStatusList.find(({ id }) => id === statusId);
@@ -110,7 +110,7 @@ export function translateStudyStatus(statusId) {
 export function shortVorlesungTyp(typ) {
     switch (typ) {
         case 'Vorlesung': return 'Vorl.';
-        case 'Arbeitsgemeinschaft': return 'AG';
+        case 'AG': return 'AG';
         default: return typ;
     }
 }
@@ -139,18 +139,17 @@ export function changeNestedObject(keys, value, obj, index = 0) {
         // return new object
         return {
             ...obj,
-            [key]: (index === keys.length -1)
+            [key]: (index === keys.length - 1)
                 ? value
                 : changeNestedObject(keys, value, obj[key], index + 1)
         };
-    } else {
-        // return new array
-        const nextArray = obj;
-        nextArray[key] = (index === keys.length -1)
-            ? value
-            : changeNestedObject(keys, value, obj[key], index + 1);
-        return nextArray;
     }
+    // return new array
+    const nextArray = obj;
+    nextArray[key] = (index === keys.length - 1)
+        ? value
+        : changeNestedObject(keys, value, obj[key], index + 1);
+    return nextArray;
 }
 
 export function removeByIndex(array, index) {
@@ -158,9 +157,8 @@ export function removeByIndex(array, index) {
         return array.slice(1);
     } else if (index === array.length - 1) {
         return array.slice(0, -1);
-    } else {
-        return array.slice(0, index).concat(array.slice(index + 1));
     }
+    return array.slice(0, index).concat(array.slice(index + 1));
 }
 
 
@@ -179,6 +177,7 @@ export function getLastYears(number) {
     return years;
 }
 
+// eslint-disable-next-line max-len
 export const laender = ['Afghanistan', 'Ägypten', 'Aland', 'Albanien', 'Algerien', 'Amerikanisch-Samoa', 'Amerikanische Jungferninseln', 'Andorra', 'Angola', 'Anguilla', 'Antarktis', 'Antigua und Barbuda', 'Äquatorialguinea', 'Argentinien', 'Armenien', 'Aruba', 'Ascension', 'Aserbaidschan', 'Äthiopien', 'Australien', 'Bahamas', 'Bahrain', 'Bangladesch', 'Barbados', 'Belgien', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivien', 'Bosnien und Herzegowina', 'Botswana', 'Bouvetinsel', 'Brasilien', 'Brunei', 'Bulgarien', 'Burkina Faso', 'Burundi', 'Chile', 'China', 'Cookinseln', 'Costa Rica', 'Cote d\'Ivoire', 'Dänemark', 'Deutschland', 'Diego Garcia', 'Dominica', 'Dominikanische Republik', 'Dschibuti', 'Ecuador', 'El Salvador', 'Eritrea', 'Estland', 'Europäische Union', 'Falklandinseln', 'Färöer', 'Fidschi', 'Finnland', 'Frankreich', 'Französisch-Guayana', 'Französisch-Polynesien', 'Gabun', 'Gambia', 'Georgien', 'Ghana', 'Gibraltar', 'Grenada', 'Griechenland', 'Grönland', 'Großbritannien', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard und McDonaldinseln', 'Honduras', 'Hongkong', 'Indien', 'Indonesien', 'Irak', 'Iran', 'Irland', 'Island', 'Israel', 'Italien', 'Jamaika', 'Japan', 'Jemen', 'Jersey', 'Jordanien', 'Kaimaninseln', 'Kambodscha', 'Kamerun', 'Kanada', 'Kanarische Inseln', 'Kap Verde', 'Kasachstan', 'Katar', 'Kenia', 'Kirgisistan', 'Kiribati', 'Kokosinseln', 'Kolumbien', 'Komoren', 'Kongo', 'Kroatien', 'Kuba', 'Kuwait', 'Laos', 'Lesotho', 'Lettland', 'Libanon', 'Liberia', 'Libyen', 'Liechtenstein', 'Litauen', 'Luxemburg', 'Macao', 'Madagaskar', 'Malawi', 'Malaysia', 'Malediven', 'Mali', 'Malta', 'Marokko', 'Marshallinseln', 'Martinique', 'Mauretanien', 'Mauritius', 'Mayotte', 'Mazedonien', 'Mexiko', 'Mikronesien', 'Moldawien', 'Monaco', 'Mongolei', 'Montserrat', 'Mosambik', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Neukaledonien', 'Neuseeland', 'Neutrale Zone', 'Nicaragua', 'Niederlande', 'Niederländische Antillen', 'Niger', 'Nigeria', 'Niue', 'Nordkorea', 'Nördliche Marianen', 'Norfolkinsel', 'Norwegen', 'Oman', 'Österreich', 'Pakistan', 'Palästina', 'Palau', 'Panama', 'Papua-Neuguinea', 'Paraguay', 'Peru', 'Philippinen', 'Pitcairninseln', 'Polen', 'Portugal', 'Puerto Rico', 'Réunion', 'Ruanda', 'Rumänien', 'Russische Föderation', 'Salomonen', 'Sambia', 'Samoa', 'San Marino', 'São Tomé und Príncipe', 'Saudi-Arabien', 'Schweden', 'Schweiz', 'Senegal', 'Serbien und Montenegro', 'Seychellen', 'Sierra Leone', 'Simbabwe', 'Singapur', 'Slowakei', 'Slowenien', 'Somalia', 'Spanien', 'Sri Lanka', 'St. Helena', 'St. Kitts und Nevis', 'St. Lucia', 'St. Pierre und Miquelon', 'St. Vincent/Grenadinen (GB)', 'Südafrika, Republik', 'Sudan', 'Südkorea', 'Suriname', 'Svalbard und Jan Mayen', 'Swasiland', 'Syrien', 'Tadschikistan', 'Taiwan', 'Tansania', 'Thailand', 'Timor-Leste', 'Togo', 'Tokelau', 'Tonga', 'Trinidad und Tobago', 'Tristan da Cunha', 'Tschad', 'Tschechische Republik', 'Tunesien', 'Türkei', 'Turkmenistan', 'Turks- und Caicosinseln', 'Tuvalu', 'Uganda', 'Ukraine', 'Ungarn', 'Uruguay', 'Usbekistan', 'Vanuatu', 'Vatikanstadt', 'Venezuela', 'Vereinigte Arabische Emirate', 'Vereinigte Staaten von Amerika', 'Vietnam', 'Wallis und Futuna', 'Weihnachtsinsel', 'Weißrussland', 'Westsahara', 'Zentralafrikanische Republik', 'Zypern'];
 export function generateLaenderOptions() {
     return laender.map(land => ({
@@ -188,75 +187,75 @@ export function generateLaenderOptions() {
 
 /**
  * forEach
- * @param {array} array 
- * @param {function} callback 
+ * @param {array} array
+ * @param {function} callback
  */
 export function forEach(array, callback) {
     for (let index = 0; index < array.length; index++) {
-        callback(array[index], index, array)
+        callback(array[index], index, array);
     }
-};
+}
 
 /**
  * map
- * @param {array} array 
- * @param {function} callback 
+ * @param {array} array
+ * @param {function} callback
  */
 export function map(array, callback) {
     const nextArray = [];
-    forEach(array, function(item, index, array) {
-        nextArray.push(callback(item, index, array))
-    })
+    forEach(array, (item, index, _array) => {
+        nextArray.push(callback(item, index, _array));
+    });
     return nextArray;
-};
+}
 
 /**
  * filter
- * @param {array} array 
- * @param {function} callback 
+ * @param {array} array
+ * @param {function} callback
  */
 export function filter(array, callback) {
     const nextArray = [];
-    forEach(array, function(item, index, array) {
-        if (callback(item, index, array)) {
-            nextArray.push(item)
-        }
-    })
-    return nextArray;
-};
-
-/**
- * filter and map
- * @param {array} array 
- * @param {function} filterCallback 
- * @param {function} mapCallback 
- */
-export function filterAndMap(array, filterCallback, mapCallback) {
-    const nextArray = [];
-    forEach(array, function(item, index, array) {
-        if (filterCallback(item, index, array)) {
-            nextArray.push(mapCallback((item, index, array)))
+    forEach(array, (item, index, _array) => {
+        if (callback(item, index, _array)) {
+            nextArray.push(item);
         }
     });
     return nextArray;
-};
+}
+
+/**
+ * filter and map
+ * @param {array} array
+ * @param {function} filterCallback
+ * @param {function} mapCallback
+ */
+export function filterAndMap(array, filterCallback, mapCallback) {
+    const nextArray = [];
+    forEach(array, (item, index, _array) => {
+        if (filterCallback(item, index, _array)) {
+            nextArray.push(mapCallback((item, index, _array)));
+        }
+    });
+    return nextArray;
+}
 
 /**
  * map and filter
- * @param {array} array 
- * @param {function} mapCallback 
- * @param {function} filterCallback 
+ * @param {array} array
+ * @param {function} mapCallback
+ * @param {function} filterCallback
  */
 export function mapAndFilter(array, mapCallback, filterCallback) {
     const nextArray = [];
-    forEach(array, function(item, index, array) {
-        const nextItem = mapCallback(item, index, array);
-        if (filterCallback(nextItem, index, array)) {
+    forEach(array, (item, index, _array) => {
+        const nextItem = mapCallback(item, index, _array);
+        if (filterCallback(nextItem, index, _array)) {
             nextArray.push(nextItem);
         }
     });
     return nextArray;
-};
+}
 
 /**
  * Create a new textarea and copy its value
@@ -289,14 +288,15 @@ export function copyToClipboard(value) {
     try {
         document.execCommand('copy');
     } catch (err) {
+        // eslint-disable-next-line no-alert
         window.prompt('Kopiere den Text: Strg+C, Enter', value);
     }
-    
+
     document.body.removeChild(textArea);
-};
+}
 
 /**
- * Groups an array of objects by a key from the object 
+ * Groups an array of objects by a key from the object
  * @param {array} items Array of objects
  * @param {string} key Property of the objects
  * @returns {object} Returns an object with the values of the key as keys
