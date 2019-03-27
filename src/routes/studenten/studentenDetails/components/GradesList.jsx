@@ -3,6 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/EditOutlined';
 
 import { formatGrade } from '../../../../helper/gradeConverter';
 
@@ -34,12 +35,14 @@ const GradesList = ({
             {grades.map(grade => (
                 <div
                     key={grade.id}
-                    className='clickable-note'
+                    className={classes.grade}
                     onClick={() => openUpdateGradeModal(grade.id)}
                 >
-                    <i className='fa fa-wrench' />
-                    {formatGrade(grade, subject.type)}
-                    {grades.length > 1 && ` (${grade.try}. Versuch)`}
+                    <EditIcon className={classes.gradeEditIcon} />
+                    <div>
+                        {formatGrade(grade, subject.type)}
+                        {grades.length > 1 && ` (${grade.try}. Versuch)`}
+                    </div>
                 </div>
             ))}
             <Button
@@ -67,6 +70,24 @@ const styles = theme => ({
     },
     leftIcon: {
         marginRight: theme.spacing.unit,
+    },
+    gradeEditIcon: {
+        opacity: 0,
+        color: 'rgba(0, 0, 0, 0.54)',
+        marginRight: theme.spacing.unit,
+        fontSize: '1.5em',
+    },
+    grade: {
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        '&:hover': {
+            textDecoration: 'underline',
+            '& $gradeEditIcon': {
+                opacity: 1,
+            }
+        },
     },
 });
 
