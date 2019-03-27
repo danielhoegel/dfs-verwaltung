@@ -38,6 +38,9 @@
         "no-restricted-syntax": ["error", "BinaryExpression[operator='in']"],
         "no-prototype-builtins": "off",
         "no-nested-ternary": "off",
-        "no-else-return": ["warning", { "allowElseIf": true }]
+        "no-else-return": ["warn", { "allowElseIf": true }],
+        "class-methods-use-this": "off",
+        "lines-between-class-members": "off",
+        "no-restricted-globals": "off"
     }
 }

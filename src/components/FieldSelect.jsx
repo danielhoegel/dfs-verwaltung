@@ -7,18 +7,18 @@ import Field from './Field';
 
 const FieldSelect = ({ options, disabled, ...fieldProps }) => {
     function generateMenuItems() {
-        if (isNotEmpty(options) ) {
+        if (isNotEmpty(options)) {
             return options.map(option => {
                 const { value, label } = (typeof option === 'string')
                     ? { value: option, label: option }
-                    : option; 
+                    : option;
 
                 return (
                     <MenuItem key={value} value={value}>
                         {label}
                     </MenuItem>
                 );
-            })
+            });
         }
         return (
             <MenuItem disabled>
@@ -35,6 +35,7 @@ const FieldSelect = ({ options, disabled, ...fieldProps }) => {
                 return 'Keine Optionen zur Auswahl verfügbar.';
             }
         }
+        return null;
     }
 
     return (
@@ -70,9 +71,9 @@ FieldSelect.propTypes = {
             ]).isRequired,
             disabled: PropTypes.bool,
         })
-    ]),).isRequired,
+    ])).isRequired,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
-}
+};
 
 export default FieldSelect;

@@ -19,7 +19,7 @@ class Field extends Component {
             (nextProps.children !== this.props.children)
         );
     }
-    
+
     render() {
         const { width, style, classes, className, ...textFieldProps } = this.props;
         return (
@@ -35,7 +35,8 @@ class Field extends Component {
 const styles = theme => ({
     textField: {
         margin: theme.spacing.unit,
-        userSelect: 'none'
+        userSelect: 'none',
+        width: '100%',
     },
 });
 

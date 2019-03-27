@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import 'popper.js/dist/popper';
 
-import { stringsMatch, isNotEmpty } from '../helper/helper';
 
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import RootRef from '@material-ui/core/RootRef';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import { stringsMatch, isNotEmpty } from '../helper/helper';
 
 
 class SearchSelect extends Component {
@@ -29,7 +29,7 @@ class SearchSelect extends Component {
         if (nextProps.noFiltering && nextProps.options !== prevState.matchingOptions) {
             return {
                 matchingOptions: nextProps.options
-            }
+            };
         }
 
         // reset state on external value reset
@@ -40,7 +40,7 @@ class SearchSelect extends Component {
                 matchingOptions: nextProps.options,
                 _value: nextProps.value,
                 _options: nextProps.options
-            }
+            };
         }
         if (
             (nextProps.value !== prevState._value) ||
@@ -49,7 +49,7 @@ class SearchSelect extends Component {
             )
         ) {
             const option = nextProps.options && nextProps.options
-                .filter(option => option.value === nextProps.value)[0];
+                .filter(_option => _option.value === nextProps.value)[0];
             return {
                 inputValue: option ? option.label : '',
                 activeIndex: 0,
@@ -71,7 +71,7 @@ class SearchSelect extends Component {
 
     anchorEl = React.createRef()
     menuEl = React.createRef()
-    
+
     shouldComponentUpdate(nextProps, nextState) {
         return (
             (nextProps.name !== this.props.name) ||
@@ -85,45 +85,39 @@ class SearchSelect extends Component {
             (nextState.matchingOptions !== this.state.matchingOptions)
         );
     }
-    
-    
+
+
     componentDidUpdate(prevProps, prevState) {
         // Adjust scroll so the active MenuItem is always in view.
         if (prevState.activeIndex !== this.state.activeIndex) {
             const menu = this.menuEl;
-            
+
             if (menu) {
                 const { activeIndex } = this.state;
                 const menuItems = this.props.grouped
                     ? menu.querySelectorAll('.groupedItem > *')
                     : menu.children;
-                
-    
-                // scroll to the top for first element
+
+
                 if (activeIndex === 0) {
+                    // scroll to the top for first element
                     menu.scrollTop = 0;
-                }
-                
-                // scroll to the bottom for the last element
-                else if (activeIndex === menuItems.length - 1) {
+                } else if (activeIndex === menuItems.length - 1) {
+                    // scroll to the bottom for the last element
                     menu.scrollTop = menu.scrollHeight;
                     // scrollHeight = (overflowing) height with all children
-                }
-                
-                // scroll to activeElement top/bottom
-                else {
+                } else {
+                    // scroll to activeElement top/bottom
                     const item = menuItems[activeIndex];
                     const offsetUp = item.offsetTop;
                     const offsetDown = item.offsetTop + item.offsetHeight;
                     // clientHeight = outer height with borders
-                    
-                    // scroll up
+
                     if (offsetUp < menu.scrollTop) {
+                        // scroll up
                         menu.scrollTop = offsetUp;
-                    }
-                    
-                    // scroll down
-                    else if (offsetDown > (menu.offsetHeight + menu.scrollTop)) {
+                    } else if (offsetDown > (menu.offsetHeight + menu.scrollTop)) {
+                        // scroll down
                         const offsetDiff = offsetDown - (menu.offsetHeight + menu.scrollTop);
                         // offsetHeight = inner height
                         menu.scrollTop += offsetDiff;
@@ -141,7 +135,7 @@ class SearchSelect extends Component {
     resetInput() {
         const option = this.optionForValue();
         if (this.props.onChange) {
-            this.props.onChange({ target: { value: '' } });
+            this.props.onChange({ target: { value: '' }});
         }
         this.setState({
             inputValue: option ? option.label : '',
@@ -152,7 +146,7 @@ class SearchSelect extends Component {
 
     clearValue = () => {
         if (this.props.onChange) {
-            this.props.onChange({ target: { value: '' } });
+            this.props.onChange({ target: { value: '' }});
         }
         this.changeValue('');
         this.setState({
@@ -164,22 +158,21 @@ class SearchSelect extends Component {
     changeValue = (value, group) => {
         const { name } = this.props;
         this.anchorEl.blur();
-        this.props.onSelect({ target: { name, value } }, group);
+        this.props.onSelect({ target: { name, value }}, group);
     }
 
     clickHandler = (e) => {
         const _target = e.currentTarget;
         const value = _target.getAttribute('data-value');
         const group = _target.getAttribute('data-group');
-        this.changeValue(value, group)
+        this.changeValue(value, group);
     }
 
     focusHandler = () => {
         this.setState({ hasFocus: true });
     }
 
-    blurHandler = (e) => {
-        const currentTarget = e.currentTarget;
+    blurHandler = ({ currentTarget }) => {
         setTimeout(() => {
             if (!currentTarget.contains(document.activeElement)) {
                 this.resetInput();
@@ -208,12 +201,13 @@ class SearchSelect extends Component {
     }
 
     keyEventHandler = (e) => {
-        const { matchingOptions } = this.state;
-        const { activeIndex } = this.state;
+        const { matchingOptions, activeIndex } = this.state;
+        const option = matchingOptions[activeIndex];
+
         switch (e.key) {
             case 'ArrowUp':
                 this.setState(state => ({
-                    activeIndex: state.activeIndex === 0 
+                    activeIndex: state.activeIndex === 0
                         ? matchingOptions.length - 1
                         : state.activeIndex - 1
                 }));
@@ -228,7 +222,6 @@ class SearchSelect extends Component {
                 break;
 
             case 'Enter':
-                const option = matchingOptions[activeIndex];
                 if (option) {
                     this.changeValue(option.value, option.group);
                 }
@@ -238,7 +231,7 @@ class SearchSelect extends Component {
                 e.preventDefault();
                 this.anchorEl.blur();
                 break;
-        
+
             default:
                 break;
         }
@@ -254,11 +247,10 @@ class SearchSelect extends Component {
                         return option.searchValues.some(value =>
                             stringsMatch(value, inputWord)
                         );
-                    } else {
-                        const searchValue = option.label || option.value;
-                        return stringsMatch(searchValue, inputWord);
                     }
-                })
+                    const searchValue = option.label || option.value;
+                    return stringsMatch(searchValue, inputWord);
+                });
             });
             this.setState({ matchingOptions });
         }
@@ -269,18 +261,18 @@ class SearchSelect extends Component {
         if (inputValue.length > 0) {
             const inputWords = inputValue.split(' ');
             const labelWords = label.split(' ');
-            
+
             const outputWords = labelWords.map(labelWord => {
                 let outputWord = labelWord;
                 for (let i = 0; i < inputWords.length; i++) {
                     const inputWord = inputWords[i];
                     const startIndex = labelWord.toLowerCase().indexOf(inputWord.toLowerCase());
-                   
+
                     if (startIndex !== -1) {
                         const matchingPart = labelWord.slice(startIndex, startIndex + inputWord.length);
                         const beforePart = labelWord.slice(0, startIndex);
                         const afterPart = labelWord.slice(startIndex + inputWord.length);
-                        
+
                         outputWord = `${beforePart}<strong>${matchingPart}</strong>${afterPart}`;
                         break;
                     }
@@ -304,7 +296,7 @@ class SearchSelect extends Component {
                     matchingOptions[0].value !== this.props.value
                 )
             )
-        )
+        );
     }
 
     renderOptions() {
@@ -336,7 +328,7 @@ class SearchSelect extends Component {
                 if (groupedOptions[option.group]) {
                     groupedOptions[option.group].push(menuItem);
                 } else {
-                    groupedOptions[option.group] = [ menuItem ];
+                    groupedOptions[option.group] = [menuItem];
                 }
             } else {
                 options.push(menuItem);
@@ -344,7 +336,7 @@ class SearchSelect extends Component {
         });
 
         if (grouped) {
-            return Object.entries(groupedOptions).map(([ group, listItems ]) => (
+            return Object.entries(groupedOptions).map(([group, listItems]) => (
                 <div className={classes.optionGroup} key={group}>
                     <Typography variant='body2' className={classes.groupHeader}>
                         {group}
@@ -354,9 +346,9 @@ class SearchSelect extends Component {
                     </div>
                 </div>
             ));
-        } else {
-            return options;
         }
+
+        return options;
     }
 
     render() {
@@ -392,7 +384,7 @@ class SearchSelect extends Component {
                     className={cn(classes.input, this.props.inputClassName)}
                     style={{
                         paddingRight: (
-                            0 + 
+                            0 +
                             3 * !this.props.noDropdownIcon +
                             2 * !this.props.noClearIcon
                         ) * theme.spacing.unit
