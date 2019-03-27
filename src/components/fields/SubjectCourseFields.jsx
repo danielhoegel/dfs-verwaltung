@@ -52,7 +52,7 @@ const SubjectCourseFields = ({
                     name='type'
                     value={values.type}
                     label='Typ'
-                    options={['Arbeitsgemeinschaft', 'Vorlesung', 'TD', 'CM']}
+                    options={['AG', 'Vorlesung', 'TD', 'CM']}
                     onChange={change}
                     required
                     autoFocus
