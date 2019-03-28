@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import FieldGroup from '../FieldGroup';
 import Field from '../Field';
