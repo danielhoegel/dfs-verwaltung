@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import omit from 'lodash/omit';
 
 import StudyCourseFields from '../../../../components/fields/StudyCourseFields';
 import MyForm from '../../../../components/MyForm';
@@ -17,7 +18,7 @@ class StudyCourseUpdate extends Component {
             error: null
         });
 
-        this.props.updateStudyCourse(data)
+        this.props.updateStudyCourse(omit(data, ['studyRegulations']))
             .then(() => {
                 this.props.closeModal();
             })
@@ -27,7 +28,7 @@ class StudyCourseUpdate extends Component {
                     error: err
                 });
             });
-    } 
+    }
 
     render() {
         return (
@@ -42,7 +43,7 @@ class StudyCourseUpdate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapDispatchToProps = {
     updateStudyCourse: entitiesActions.studyCourse.update

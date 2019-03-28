@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import omit from 'lodash/omit';
 
 import { getStudyCourses, getStudyRegulations } from '../../../../redux/entitiesSelector';
 import SubjectFields from '../../../../components/fields/SubjectFields';
@@ -13,7 +14,7 @@ class SubjectUpdate extends Component {
 
     submitHandler = (data) => {
         this.setState({ loading: true, error: null });
-        this.props.updateSubject(data)
+        this.props.updateSubject(omit(data, ['subjectCourses']))
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));
     }
@@ -33,12 +34,12 @@ class SubjectUpdate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = state => ({
     studyCourses: getStudyCourses(state),
     studyRegulations: getStudyRegulations(state),
-})
+});
 
 const mapDispatchToProps = {
     updateSubject: entitiesActions.subject.update
@@ -50,6 +51,6 @@ SubjectUpdate.propTypes = {
     updateSubject: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubjectUpdate);
