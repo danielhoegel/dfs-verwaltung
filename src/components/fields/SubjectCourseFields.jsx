@@ -16,7 +16,8 @@ const SubjectCourseFields = ({
     change,
     values,
     onCancel,
-    subjects
+    subjects,
+    mode
 }) => {
     function subjectOptions() {
         const options = [];
@@ -56,6 +57,7 @@ const SubjectCourseFields = ({
                     onChange={change}
                     required
                     autoFocus
+                    openOnFocus={mode === 'create'}
                 />
                 <Field
                     name='title'

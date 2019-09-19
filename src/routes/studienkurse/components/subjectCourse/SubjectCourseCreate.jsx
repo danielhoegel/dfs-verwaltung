@@ -38,6 +38,7 @@ class SubjectCourseCreate extends Component {
                     loading={this.state.loading}
                     studyCourses={this.props.subjects}
                     subjects={this.props.subjects}
+                    mode='create'
                 />
             </div>
         );

@@ -29,6 +29,7 @@ class SubjectCourseUpdate extends Component {
                     loading={this.state.loading}
                     subjects={this.props.subjects}
                     error={this.state.error}
+                    mode='update'
                 />
             </div>
         );
