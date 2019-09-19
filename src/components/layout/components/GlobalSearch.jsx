@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import SearchIcon from '@material-ui/icons/Search';
 import Search from '../../Search';
 
-import { isNotEmpty } from '../../../helper/helper';
+import { isNotEmpty, searchInside } from '../../../helper/helper';
 import { intersectionBy } from 'lodash';
 import { getStudents, getSubjectsWithStudyCourseAndStudyRegulation } from '../../../redux/entitiesSelector';
 // import { resolve } from 'path';
@@ -72,10 +72,10 @@ class GlobalSearch extends Component {
                 return this.props.students.filter(student => {
                     if (studentsCounter < LIMIT) {
                         const match = (
-                            student.firstName.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 ||
-                            student.lastName.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 ||
-                            student.matrikelnummer.toString().indexOf(searchWord.toLowerCase()) > -1
-                            );
+                            searchInside(student.firstName, searchWord) ||
+                            searchInside(student.lastName, searchWord) ||
+                            searchInside(student.matrikelnummer, searchWord)
+                        );
                         if (match) {
                             studentsCounter++;
                             return true;
@@ -89,7 +89,7 @@ class GlobalSearch extends Component {
                 let subjectsCounter = 0;
                 return this.props.subjects.filter(subject => {
                     if (subjectsCounter < LIMIT) {
-                        const match = subject.title.toLowerCase().indexOf(searchWord.toLowerCase()) > -1;
+                        const match = searchInside(subject.title, searchWord);
                         if (match) {
                             subjectsCounter++;
                             return true;
@@ -99,7 +99,7 @@ class GlobalSearch extends Component {
                 });
             });
             
-            resolve({studentArrays, subjectArrays});
+            resolve({ studentArrays, subjectArrays });
         });
     }
 

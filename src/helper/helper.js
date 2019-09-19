@@ -318,3 +318,16 @@ export function groupItemsByKey(items, key) {
 export function getId(idString) {
     return isNaN(idString) ? idString : parseInt(idString, 10);
 }
+
+
+/**
+ * Searches for a needle inside a heystick
+ * Returns true or false
+ * The search works with a string omcparision
+ */
+export function searchInside(heystick, needle) {
+    const _heystick = heystick.toString().toLowerCase();
+    const _needle = needle.toString().toLowerCase();
+
+    return _heystick.indexOf(_needle) > -1;
+}
