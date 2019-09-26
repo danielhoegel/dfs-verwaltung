@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel  from '@material-ui/core/FormControlLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const FieldCheckbox = ({
     name,
@@ -37,6 +37,7 @@ const FieldCheckbox = ({
                 <Checkbox
                     onChange={handleChange}
                     value={name}
+                    checked={value}
                     color={color}
                     {...checkboxProps}
                 />
