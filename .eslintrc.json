@@ -43,6 +43,6 @@
         "lines-between-class-members": "off",
         "no-restricted-globals": "off",
         "no-confusing-arrow": "off",
-        "react/jsx-no-duplicate-props": ["error", { "ignoreCase": false }] // TODO: does still not ignore case
+        "react/jsx-no-duplicate-props": ["error", { "ignoreCase": false }]
     }
 }

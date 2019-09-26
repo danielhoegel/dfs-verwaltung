@@ -165,7 +165,16 @@ const GradeFields = ({
                     required
                 /> 
             </FieldGroup>
-            <HiddenDivider />
+            <FieldGroup>
+                <Field
+                    name='description'
+                    value={values.description}
+                    label='Anmerkung'
+                    onChange={change}
+                    width={0.5}
+                /> 
+            </FieldGroup>
+            <HiddenDivider height={2} />
             <FieldGroup>
                 <FieldGroup
                     className={classes.stackedFieldGroup}
@@ -182,7 +191,6 @@ const GradeFields = ({
                         variant='outlined'
                         InputLabelProps={{ shrink: true }}
                         InputProps={{ className: classes.punkteFieldInput }} // Properties applied to the InputBase element.
-                        // eslint-disable-next-line
                         inputProps={{ // Attributes applied to the native input element.
                             min: 0,
                             max: values.gradingSystem === 'de' ? 18 : 20,
