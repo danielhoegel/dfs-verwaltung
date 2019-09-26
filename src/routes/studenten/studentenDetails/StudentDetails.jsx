@@ -164,7 +164,7 @@ class StudentDetails extends Component {
                     </Button>
                     <Button variant='text' onClick={this.updateStudent} className={classes.button} >
                         <EditIcon className={classes.leftIcon} />
-                        Bearbeiten
+                        Kontaktdaten Bearbeiten
                     </Button>
                     {/* <Button variant='text' onClick={this.openStudyCreateModal} className={classes.button} >
                         <AddIcon className={classes.leftIcon} />

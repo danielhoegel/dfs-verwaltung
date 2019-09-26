@@ -41,12 +41,12 @@ const StudentInformation = ({ classes, student }) => {
                 </div>
                 <div>
                     <span className={classes.noSelect}>Geburtsort: </span>
-                    {birthPlace}, {birthCountry}
+                    {birthPlace}{birthPlace && birthCountry && ', '}{birthCountry}
                 </div>
             
             <Typography component='h3' variant='body1' className={classes.subheading}>Adresse</Typography>
-                {address} {addressExtra && `, ${addressExtra}`}<br />
-                {postal} {city}, {country}
+                {address && address}{address && addressExtra && ', '}{addressExtra}{address && <br />}
+                {postal}{postal && city && ' '}{city}{(postal || city) && country && ', '}{country}
 
             <Typography component='h3' variant='body1' className={classes.subheading}>E-Mail</Typography>
             <div>
