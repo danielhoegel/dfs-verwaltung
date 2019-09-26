@@ -176,15 +176,18 @@ const GradeFields = ({
                         value={values.grade}
                         label={`Punkte (0 - ${values.gradingSystem === 'de' ? 18 : 20})`}
                         type='number'
-                        min={0}
-                        max={values.gradingSystem === 'de' ? 18 : 20}
-                        step={1}
                         onChange={e => change(e, true)}
                         autoFocus
                         required
                         variant='outlined'
                         InputLabelProps={{ shrink: true }}
-                        InputProps={{ className: classes.punkteFieldInput }}
+                        InputProps={{ className: classes.punkteFieldInput }} // Properties applied to the InputBase element.
+                        // eslint-disable-next-line
+                        inputProps={{ // Attributes applied to the native input element.
+                            min: 0,
+                            max: values.gradingSystem === 'de' ? 18 : 20,
+                            step: 'any' // allow integers and decimals; TODO: does not work in MS Edge
+                        }}
                         margin='normal'
                     />
                 </FieldGroup>
