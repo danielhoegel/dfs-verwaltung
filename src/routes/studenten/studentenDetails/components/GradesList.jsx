@@ -1,5 +1,6 @@
 import React from 'react';
 
+import cn from 'classnames';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -48,7 +49,7 @@ const GradesList = ({
             <Button
                 onClick={openCreateGradeModal}
                 style={{ marginTop: grades.length && '0.25rem' }}
-                className={classes.noteCreateButton}
+                className={cn([classes.noteCreateButton, { [classes.noteCreateButtonSecondary]: grades.length > 0 }])}
                 size='small'
                 variant='outlined'
             >
@@ -67,6 +68,12 @@ const styles = theme => ({
     noteCreateButton: {
         whiteSpace: 'nowrap',
         padding: '0 0.5rem 0 0.25rem',
+    },
+    noteCreateButtonSecondary: {
+        opacity: 0.4,
+        '&:hover': {
+            opacity: 1
+        }
     },
     leftIcon: {
         marginRight: theme.spacing.unit,
