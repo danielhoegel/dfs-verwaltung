@@ -1,7 +1,7 @@
 import React from 'react';
-import { translateStudyStatus } from '../../helper/helper';
+import { translateStudyStatus, formatDate } from '../../helper/helper';
 
-function StudentListReport ({ students, filter, getStudyCourseById }) {
+function StudentListReport({ students, filter, getStudyCourseById }) {
     return (
         <div className='root'>
             <h1>Studentenliste</h1>
@@ -31,7 +31,7 @@ function StudentListReport ({ students, filter, getStudyCourseById }) {
                                 <td>{student.matrikelnummer}</td>
                                 <td>{student.firstName}</td>
                                 <td>{student.lastName}</td>
-                                <td>{student.studentInformation.birthDate}</td>
+                                <td>{formatDate(student.studentInformation.birthDate)}</td>
                                 <td>{student.studentInformation.mailPrimary}</td>
                                 <td>{student.studentInformation.mailSecondary}</td>
                                 <td>{student.studentInformation.phoneNumber}</td>
