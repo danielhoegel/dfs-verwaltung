@@ -9,7 +9,7 @@ function layoutReducer(state = { pageLoading: false }, action) {
             ...state,
             pageLoading: false
         };
-    
+
         default: return state;
     }
 }

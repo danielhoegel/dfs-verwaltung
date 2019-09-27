@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-multi-spaces */
+/* eslint-disable yoda */
+
 export function convertFrToDe(grade) {
     if (0 <= grade && grade <= 20) {
         if (grade < 5)    return 0;
@@ -19,10 +23,9 @@ export function convertFrToDe(grade) {
         if (grade < 17)   return 16;
         if (grade < 18)   return 17;
         return 18;
-    } else {
-        console.warn('Franz. Note liegt nicht zwischen 0 und 20:', grade);
-        return grade;
     }
+    console.warn('Franz. Note liegt nicht zwischen 0 und 20:', grade);
+    return grade;
 }
 
 export function convertDeToFr(grade) {
@@ -48,12 +51,12 @@ export function convertDeToFr(grade) {
         case 18: return 18;
         default:
             console.warn('Dt. Note liegt nicht zwischen 0 und 18:', grade);
-            return grade
+            return grade;
     }
 }
 
 export function convertGrade(grade, target) {
-    return target === 'de' ? convertFrToDe(grade): convertDeToFr(grade);
+    return target === 'de' ? convertFrToDe(grade) : convertDeToFr(grade);
 }
 
 export function generateGradeString(grade, target) {
@@ -62,12 +65,11 @@ export function generateGradeString(grade, target) {
 
 export function formatGrade(note, target) {
     if (
-        (note.gradingSystem === 'de' && target === 'de' )||
+        (note.gradingSystem === 'de' && target === 'de') ||
         (note.gradingSystem === 'fr' && target === 'fr')
     ) {
         return generateGradeString(note.grade, target);
-    } else {
-        const convertedGrade = convertGrade(note.grade, target);
-        return generateGradeString(convertedGrade, target);
     }
+    const convertedGrade = convertGrade(note.grade, target);
+    return generateGradeString(convertedGrade, target);
 }

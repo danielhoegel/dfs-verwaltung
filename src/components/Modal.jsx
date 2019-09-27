@@ -108,7 +108,7 @@ const styles = theme => ({
         position: 'absolute',
         top: '50%',
         right: theme.spacing.unit,
-        transform:'translateY(-50%)',
+        transform: 'translateY(-50%)',
     },
     body: {
         padding: theme.spacing.unit * 3,

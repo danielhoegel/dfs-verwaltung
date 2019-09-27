@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -36,7 +36,7 @@ class StudentenTableHead extends Component {
                         padding='checkbox'
                         aria-checked={this.checked()}
                         onClick={this.props.onSelectAllClick}
-                        style={{ width: '5%'}}
+                        style={{ width: '5%' }}
                     >
                         <Checkbox
                             indeterminate={this.indeterminate()}
@@ -74,6 +74,6 @@ StudentenTableHead.propTypes = {
     onSelectAllClick: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     fetching: PropTypes.bool.isRequired,
-}
+};
 
 export default withStyles(styles)(StudentenTableHead);

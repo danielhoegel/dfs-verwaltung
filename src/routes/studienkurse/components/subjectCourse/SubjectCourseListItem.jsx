@@ -27,7 +27,6 @@ const SubjectCourseListItem = ({
     const deleteSubjectCourse = () => {
         if (allowDelete) {
             openDeleteSubjectCourseModal(subjectCourse);
-            // window.confirm(`Sind Sie sicher, dass Sie die Veranstaltung ${subject.title} - ${type}${title && ` (${title})`} und alle dazugehörigen Noten löschen möchten?`);
         }
     };
 
@@ -35,7 +34,7 @@ const SubjectCourseListItem = ({
         <ListItem button title='Veranstaltung bearbeiten' onClick={updateSubjectCourse}>
             <ListItemText
                 secondary={`${participationType}, ${credits} Credits${zpk ? ', ZPK' : ''}`}
-                className={classes.subjectCourseContent} 
+                className={classes.subjectCourseContent}
             >
                 <div className={classes.subjectCourseTitle}>
                     {type}{title && ` (${title})`}
@@ -52,16 +51,16 @@ const SubjectCourseListItem = ({
                 </IconButton>
             </ListItemSecondaryAction>
         </ListItem>
-    )
-}
+    );
+};
 
-SubjectCourseListItem.propTypes = { 
+SubjectCourseListItem.propTypes = {
     subjectCourse: PropTypes.object.isRequired,
     subject: PropTypes.object.isRequired,
     allowDelete: PropTypes.bool,
     openUpdateSubjectCourseModal: PropTypes.func.isRequired,
     openDeleteSubjectCourseModal: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-}
+};
 
 export default SubjectCourseListItem;

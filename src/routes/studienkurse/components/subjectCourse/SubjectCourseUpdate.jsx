@@ -34,7 +34,7 @@ class SubjectCourseUpdate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = state => ({
     subjects: getSubjects(state),
@@ -49,6 +49,6 @@ SubjectCourseUpdate.propTypes = {
     updateSubjectCourse: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubjectCourseUpdate);

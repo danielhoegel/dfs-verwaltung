@@ -16,7 +16,7 @@ const HiddenDivider = ({ height }) => {
         <Divider className={classes.divider} />
     );
 
-    return <StyledComponent />
+    return <StyledComponent />;
 };
 
 HiddenDivider.propTypes = {

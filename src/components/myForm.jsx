@@ -29,13 +29,13 @@ class MyForm extends Component {
     state = this.props.defaultValues || {}
 
     __valueToNumber(value) {
-        return (typeof value === 'boolean' || isNaN(value) || value === '') 
+        return (typeof value === 'boolean' || isNaN(value) || value === '')
             ? value
             : Number(value);
     }
 
     __isNested(name) {
-        return name.indexOf('.') !== -1  || name.indexOf('[') !== -1;
+        return name.indexOf('.') !== -1 || name.indexOf('[') !== -1;
     }
 
     changeHandler = (e, asNumber) => {
@@ -55,22 +55,22 @@ class MyForm extends Component {
     }
 
     deepChangeHandler(path, value) {
-        const prevState = {...this.state};
+        const prevState = { ...this.state };
         const nextState = set(prevState, path, value);
         this.setState(nextState);
     }
 
     addHandler = (path, item) => {
-        const nextState = {...this.state};
-        // create new array with items at path and new item 
+        const nextState = { ...this.state };
+        // create new array with items at path and new item
         const prevArray = get(nextState, path);
-        const nextArray = prevArray ?  [...prevArray, item] : [item];
+        const nextArray = prevArray ? [...prevArray, item] : [item];
         set(nextState, path, nextArray);
         this.setState(nextState);
     }
 
     removeHandler = (path, index) => {
-        const nextState = {...this.state};
+        const nextState = { ...this.state };
         // remove item at index from array at path
         const nextArray = get(this.state, path).filter(
             (v, i) => i !== index
@@ -85,7 +85,7 @@ class MyForm extends Component {
     }
 
     render() {
-        const { loading, error, classes, ...props } = this.props; 
+        const { loading, error, classes, ...props } = this.props;
         const formProps = omit(props, ['fields', 'onSubmit', 'defaultValues', 'error']);
         return (
             <form onSubmit={this.submitHandler} className={classes.form}>

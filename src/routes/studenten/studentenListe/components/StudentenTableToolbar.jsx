@@ -4,8 +4,8 @@ import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 import MailIcon from '@material-ui/icons/MailOutlined';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
 // import DeleteIcon from '@material-ui/icons/DeleteOutlined';
@@ -26,8 +26,7 @@ class StudentenTableToolbar extends Component {
             .map(student => {
                 if (isNotEmpty(student.studentInformation)) {
                     const { mailPrimary, mailSecondary } = student.studentInformation;
-                    return mailPrimary ? mailPrimary :
-                        mailSecondary ? mailSecondary : null;
+                    return mailPrimary || mailSecondary || null;
                 }
                 return null;
             })
@@ -105,7 +104,7 @@ const styles = theme => ({
     },
     '@keyframes loading-anim': {
         from: { transform: 'rotate(0)' },
-        to:   { transform: 'rotate(360deg)' }
+        to: { transform: 'rotate(360deg)' }
     },
     loadingButton: {
         animationName: 'loading-anim',
@@ -114,12 +113,12 @@ const styles = theme => ({
         animationIterationCount: 'infinite',
     }
 });
-  
+
 StudentenTableToolbar.propTypes = {
     classes: PropTypes.object.isRequired,
     numStudents: PropTypes.number.isRequired,
     numSelected: PropTypes.number.isRequired,
     selectedStudents: PropTypes.array.isRequired,
 };
-  
+
 export default withStyles(styles)(StudentenTableToolbar);

@@ -25,7 +25,7 @@ const Button = ({
     return (
         <button
             className={generateClassName()}
-            style={{fontSize: size && size, ...style}}
+            style={{ fontSize: size && size, ...style }}
             {...buttonProps}
         >
             {icon && <i className={`fa fa-${icon}`} />}

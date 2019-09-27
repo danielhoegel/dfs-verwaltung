@@ -78,4 +78,3 @@ export default entities;
 export function getEntityByKey(key, value) {
     return entities.filter(entity => entity[key] === value);
 }
-

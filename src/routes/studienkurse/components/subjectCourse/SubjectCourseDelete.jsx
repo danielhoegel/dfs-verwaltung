@@ -32,7 +32,7 @@ class SubjectCourseDelete extends Component {
                 .then(this.props.closeModal)
                 .catch(err => this.setState({ loading: false, error: err.message }));
         }
-    } 
+    }
 
     render() {
         const { data, closeModal, classes } = this.props;
@@ -43,9 +43,12 @@ class SubjectCourseDelete extends Component {
                 <Typography variant='body2'>
                     Sind Sie sicher, dass sie die Veranstaltung <strong>{data.title}</strong> löschen möchten?<br />
                     <br />
-                    <strong>Dadurch werden auch alle mit der Veranstaltung assozierten Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
+                    <strong>Dadurch werden auch alle mit der Veranstaltung assozierten{' '}
+                    Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle{' '}
+                    Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
                     <br />
-                    Geben Sie zur Bestätigung das Wort <span className={classes.controlValue}>{this.controlValue}</span> ein.
+                    Geben Sie zur Bestätigung das Wort{' '}
+                    <span className={classes.controlValue}>{this.controlValue}</span> ein.
                 </Typography>
                 <Field
                     type='text'
@@ -69,7 +72,7 @@ class SubjectCourseDelete extends Component {
             </div>
         );
     }
-};
+}
 
 const styles = theme => ({
     deleteButton: {
@@ -89,7 +92,7 @@ const styles = theme => ({
         fontFamily: 'monospace',
         fontSize: '1.25em',
     },
-})
+});
 
 const mapDispatchToProps = {
     deleteSubjectCourse: entitiesActions.subjectCourse.delete

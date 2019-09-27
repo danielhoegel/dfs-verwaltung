@@ -33,7 +33,7 @@ const FieldRadioGroup = ({
             return options.map(option => {
                 const { value, label, disabled } = (typeof option === 'string')
                     ? { value: option, label: option, disabled: false }
-                    : option; 
+                    : option;
                 return (
                     <FormControlLabel
                         key={value}
@@ -44,18 +44,19 @@ const FieldRadioGroup = ({
                         classes={{ label: classes.radioLabel }}
                         {...radioProps}
                     />
-                )
-            })
+                );
+            });
         }
+        return null;
     }
-    
+
     return (
-        <FormControl 
+        <FormControl
             component='fieldset'
             className={cn(classes.field, className)}
             style={{ flex: width, ...style }}
         >
-            <FormLabel 
+            <FormLabel
                 component='legend'
                 className={classes.label}
                 required={required}

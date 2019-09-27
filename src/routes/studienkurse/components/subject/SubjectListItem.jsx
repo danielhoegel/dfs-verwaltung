@@ -59,8 +59,9 @@ class SubjectListItem extends Component {
                     openUpdateSubjectCourseModal={this.props.openUpdateSubjectCourseModal}
                     openDeleteSubjectCourseModal={this.props.openDeleteSubjectCourseModal}
                 />
-            ))
+            ));
         }
+        return null;
     }
 
     render() {
@@ -115,7 +116,7 @@ class SubjectListItem extends Component {
                     </div>
                 </Expandable>
             </RootRef>
-        )
+        );
     }
 }
 
@@ -131,6 +132,6 @@ SubjectListItem.propTypes = {
     expanded: PropTypes.bool.isRequired,
     allowDelete: PropTypes.bool.isRequired,
     rootRef: PropTypes.func.isRequired,
-}
+};
 
 export default SubjectListItem;

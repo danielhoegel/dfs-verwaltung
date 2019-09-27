@@ -31,7 +31,7 @@ class FieldArray extends PureComponent {
     }
 
     render() {
-        const { 
+        const {
             values,
             component: Component,
             classes,
@@ -68,7 +68,7 @@ class FieldArray extends PureComponent {
             </Fragment>
         );
     }
-};
+}
 
 const styles = theme => ({
     fieldWrapper: {
@@ -100,6 +100,6 @@ FieldArray.propTypes = {
     values: PropTypes.array.isRequired,
     min: PropTypes.number,
     max: PropTypes.number,
-}
+};
 
 export default withStyles(styles)(FieldArray);

@@ -41,7 +41,9 @@ export default [
     { path: '/studenten/:id/update', component: StudentUpdate, breadcrumb: EditIcon },
     { path: '/berichte/:report', component: Reports, breadcrumb: ReportBreadcrumb },
     { path: '/studienkurse', component: StudyCourseList, exact: true, breadcrumb: 'Studienkurse' },
-    { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/', component: StudyRegulation, exact: true, breadcrumb: 'Studienordnung' },
-    { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/:subjectId', component: StudyRegulation, exact: true, breadcrumb: null },
+    { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/',
+        component: StudyRegulation, exact: true, breadcrumb: 'Studienordnung' },
+    { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/:subjectId',
+        component: StudyRegulation, exact: true, breadcrumb: null },
     { path: '/playground/:id?', component: Playground, breadcrumb: 'Playground' },
 ];

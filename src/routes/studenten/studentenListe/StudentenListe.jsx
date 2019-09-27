@@ -38,7 +38,7 @@ const StudentenlisteLoading = () => (
 class StudentenListe extends Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.filteredStudenten !== prevState.__filteredStudenten) {
-            return { 
+            return {
                 selected: [],
                 __filteredStudenten: nextProps.filteredStudenten
             };
@@ -65,12 +65,12 @@ class StudentenListe extends Component {
             request: { url: '/db' }
         });
     }
-    
+
     handleSelection = (e, studentId) => {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(studentId);
         let newSelected = [];
-    
+
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, studentId);
         } else if (selectedIndex === 0) {
@@ -83,7 +83,7 @@ class StudentenListe extends Component {
                 selected.slice(selectedIndex + 1),
             );
         }
-    
+
         this.setState({ selected: newSelected });
     };
 
@@ -96,7 +96,7 @@ class StudentenListe extends Component {
             });
           return;
         }
-        this.setState({ selected: [] });
+        this.setState({ selected: []});
     }
 
     isSelected = (studentId) => this.state.selected.includes(studentId);
@@ -109,13 +109,13 @@ class StudentenListe extends Component {
 
 
     goToDetails = (id) => {
-        this.props.history.push(`studenten/${id}`)
+        this.props.history.push(`studenten/${id}`);
     }
 
     exportPDF = () => {
         const data = this.props.filteredStudenten.map(student => {
             const { studies, studentInformation, ...studentData } = student;
-            return Object.assign({}, studentData, studentInformation);
+            return { ...studentData, ...studentInformation };
         });
         exportToCSV(data);
     }
@@ -152,7 +152,7 @@ class StudentenListe extends Component {
                 </div>
                 <HiddenDivider height={2} />
                 <StudentenFilter />
-               
+
                 <HiddenDivider height={2} />
                 <Paper className={classes.tablePaper}>
                     <StudentenTableToolbar
@@ -197,8 +197,8 @@ class StudentenListe extends Component {
                     </Table>
                 </Paper>
             </div>
-        )
-    };
+        );
+    }
 }
 
 const styles = theme => ({
@@ -248,7 +248,7 @@ StudentenListe.propTypes = {
     fetching: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-}
+};
 
 
 export default connect(mapStateToProps, { dispatch: action => action })(

@@ -1,4 +1,4 @@
-import React from 'react';
+    import React from 'react';
 import cn from 'classnames';
 
 import List from '@material-ui/core/List';
@@ -87,7 +87,7 @@ const StudyCourseListItem = ({
     );
 };
 
-export default class extends React.Component{
+export default class extends React.Component {
     shouldComponentUpdate(nextProps) {
         return (
             (nextProps.studyCourse !== this.props.studyCourse) ||

@@ -18,7 +18,7 @@ class NativeSelectField extends Component {
             (nextProps.className !== this.props.className)
         );
     }
-    
+
     render() {
         const { rootProps, labelProps, name, options, width, className, style, classes, ...selectProps } = this.props;
         return (

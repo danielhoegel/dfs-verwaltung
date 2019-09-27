@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -23,7 +23,7 @@ const selectFilterStyles = theme => ({
     formControl: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        minWidth: 180, 
+        minWidth: 180,
     },
     denseItem: {
         paddingTop: 0.75 * theme.spacing.unit,
@@ -48,11 +48,11 @@ const SelectFilter = withStyles(selectFilterStyles)(({
             onChange={onChange}
             value={value}
             name={name}
-            inputProps={{ name: name, id: name }}
+            inputProps={{ name, id: name }}
             displayEmpty
         >
             <MenuItem value='' className={classes.denseItem}>
-                <em>{defaultLabel ? defaultLabel : `Alle ${label}`}</em>
+                <em>{defaultLabel || `Alle ${label}`}</em>
             </MenuItem>
             <Divider />
             {options.map(option =>
@@ -87,36 +87,36 @@ const MultipleSelectFilter = withStyles(multipleSelectFilterStyles)(({
 
     function multipleRenderValue(selected) {
         if (selected.length === 0) {
-            return defaultLabel ? defaultLabel : `Alle ${label}`;
+            return defaultLabel || `Alle ${label}`;
         }
-    
+
         // check, that values are numbers
         if (selected.every(item => !isNaN(item))) {
-            
+
             // sort numbers ascendong
             const sorted = selected.sort((a, b) => Number(a) - Number(b));
             let res;
             for (let i = 0; i < sorted.length; i++) {
                 const item = sorted[i];
-                
+
                 // always display first item
                 if (i === 0) res = item;
                 else if (Number(item) - 1 === Number(sorted[i - 1])) {
                     // do not show value, that is 1 bigger than first item but has also next value
                     if (i < sorted.length - 1) continue;
-    
+
                     // show last value, that is one bigger than previous value
                     else res += ` - ${item}`;
                 } else {
-                    // add value (and previous value) if it is not 1 bigger than the previous value 
+                    // add value (and previous value) if it is not 1 bigger than the previous value
                     res += (i > 1)
                         ? ` - ${sorted[i - 1]}, ${item}`
-                        : `, ${item}`; 
-                };
+                        : `, ${item}`;
+                }
             }
             return res;
         }
-        
+
         // just join values, that are not numbers
         return selected.join(', ');
     }
@@ -141,7 +141,7 @@ const MultipleSelectFilter = withStyles(multipleSelectFilterStyles)(({
                 }}
             >
                 <MenuItem disabled className={classes.denseItem}>
-                    <em>{defaultLabel ? defaultLabel : `${label}`}</em>
+                    <em>{defaultLabel || `${label}`}</em>
                 </MenuItem>
                 <Divider />
                 {options.map(option =>

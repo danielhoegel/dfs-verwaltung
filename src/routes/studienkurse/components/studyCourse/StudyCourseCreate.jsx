@@ -27,7 +27,7 @@ class StudyCourseCreate extends Component {
                     error: err
                 });
             });
-    } 
+    }
 
     render() {
         return (
@@ -45,7 +45,7 @@ class StudyCourseCreate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapDispatchToProps = {
     createStudyCourse: entitiesActions.studyCourse.create

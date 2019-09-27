@@ -36,7 +36,7 @@ const studentenReducer = (state = defaultState, action) => {
         };
 
         case 'FETCH_STUDENT_SUCCESS':
-            let nextList = [ ...state.list];
+            const nextList = [...state.list];
             if (nextList.length) {
                 let indexOfStudent = -1;
                 for (let i = 0; i < nextList.length; i++) {
@@ -85,15 +85,15 @@ const studentenReducer = (state = defaultState, action) => {
                 status: '',
                 year: []
             },
-        }
+        };
 
         case 'SEARCH_STUDENTEN': return {
             ...state,
             searchString: action.searchString
-        }
+        };
 
         default: return state;
     }
-}
+};
 
 export default studentenReducer;

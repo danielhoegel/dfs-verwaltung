@@ -10,8 +10,8 @@ const Loader = ({ loading, strength, classes }) => {
             }}>
                 <CircularProgress />
             </div>
-        ) : null
-}
+        ) : null;
+};
 
 Loader.defaultProps = {
     loading: true

@@ -32,7 +32,7 @@ class StudyCourseDelete extends Component {
                 .then(this.props.closeModal)
                 .catch(err => this.setState({ loading: false, error: err.message }));
         }
-    } 
+    }
 
     render() {
         const { data, closeModal, classes } = this.props;
@@ -43,9 +43,13 @@ class StudyCourseDelete extends Component {
                 <Typography variant='body2'>
                     Sind Sie sicher, dass sie den Studienkurs <strong>{data.title}</strong> löschen möchten?<br />
                     <br />
-                    <strong>Dadurch werden auch alle mit dem Studienkurs assozierten Studiengänge, Studienordnungen, Fächer, Veranstaltungen und Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
+                    <strong>Dadurch werden auch alle mit dem Studienkurs assozierten{' '}
+                    Studiengänge, Studienordnungen, Fächer, Veranstaltungen und Noten gelöscht.</strong>{' '}
+                    Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten{' '}
+                    Backups rückgängig gemacht werden.<br />
                     <br />
-                    Geben Sie zur Bestätigung das Wort <span className={classes.controlValue}>{this.controlValue}</span> ein.
+                    Geben Sie zur Bestätigung das Wort{' '}
+                    <span className={classes.controlValue}>{this.controlValue}</span> ein.
                 </Typography>
                 <Field
                     type='text'
@@ -69,7 +73,7 @@ class StudyCourseDelete extends Component {
             </div>
         );
     }
-};
+}
 
 const styles = theme => ({
     deleteButton: {
@@ -89,7 +93,7 @@ const styles = theme => ({
         fontFamily: 'monospace',
         fontSize: '1.25em',
     },
-})
+});
 
 const mapDispatchToProps = {
     deleteStudyCourse: entitiesActions.studyCourse.delete

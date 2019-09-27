@@ -1,4 +1,4 @@
-const storageKey = '___dfs___'
+const storageKey = '___dfs___';
 
 export function loadState() {
     console.info('%cLOAD STATE FROM LOCAL STORAGE', 'color: darkgrey; font-weight: bold;');

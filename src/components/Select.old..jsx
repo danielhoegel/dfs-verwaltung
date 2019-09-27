@@ -11,8 +11,8 @@ const Select = ({
     const _options = typeof options === 'function' ? options() : options;
     return (
         <div
-            className={'input-wrapper' + (inputProps.required ? ' required' : '')}
-            style={{ width: `${width / 12 * 100}%`}}
+            className={`input-wrapper${inputProps.required ? ' required' : ''}`}
+            style={{ width: `${width / 12 * 100}%` }}
         >
             {_label && (
                 <label htmlFor={_label}>
@@ -20,7 +20,7 @@ const Select = ({
                 </label>
             )}
             <select {...inputProps}>
-                {_options.map(({value, label, disabled, selected}) => (
+                {_options.map(({ value, label, disabled, selected }) => (
                     <option key={value} value={value} disabled={disabled} selected={selected}>
                         {label}
                     </option>
@@ -47,10 +47,10 @@ Select.propTypes = {
         }))
     ]).isRequired,
     onChange: PropTypes.func.isRequired,
-}
+};
 
 Select.defaultProps = {
     width: 12
-}
+};
 
 export default Select;

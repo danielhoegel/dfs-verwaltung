@@ -13,7 +13,7 @@ class StudyCourseCreate extends Component {
 
     submitHandler = (data) => {
         this.setState({ loading: true, error: null });
-        
+
         this.props.createStudyRegulation(data)
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));
@@ -38,7 +38,7 @@ class StudyCourseCreate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapDispatchToProps = {
     createStudyRegulation: entitiesActions.studyRegulation.create

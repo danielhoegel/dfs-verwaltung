@@ -16,7 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
-function NoOptionsMessage({ innerProps, children, selectProps: { classes } }) {
+function NoOptionsMessage({ innerProps, children, selectProps: { classes }}) {
     return (
         <Typography
             variant='body2'
@@ -31,7 +31,7 @@ function NoOptionsMessage({ innerProps, children, selectProps: { classes } }) {
 
 const IndicatorSeparator = () => null;
 
-function DropdownIndicator({ innerProps, selectProps: { classes } }){
+function DropdownIndicator({ innerProps, selectProps: { classes }}) {
     return (
         <div {...innerProps} className={classes.dropdownIndicator} >
             <ArrowDropDownIcon />
@@ -67,7 +67,7 @@ function Control({
                 inputProps: {
                     className: classes.input,
                     inputRef: innerRef,
-                    children: children,
+                    children,
                     shrink: true,
                     ...innerProps,
                 },
@@ -92,7 +92,7 @@ function formatLabel(label, inputValue) {
         );
     }
     return label;
-};
+}
 
 function Option({
     innerRef,
@@ -146,7 +146,7 @@ function ValueContainer({ children, selectProps: { classes }}) {
     );
 }
 
-function MultiValue({ removeProps, isFocused, children, selectProps: { classes } }) {
+function MultiValue({ removeProps, isFocused, children, selectProps: { classes }}) {
     return (
         <Chip
             tabIndex={-1}
@@ -160,7 +160,7 @@ function MultiValue({ removeProps, isFocused, children, selectProps: { classes }
     );
 }
 
-function Menu({ innerProps, children, selectProps: { classes } }) {
+function Menu({ innerProps, children, selectProps: { classes }}) {
     return (
         <Paper className={classes.paper} elevation={8} {...innerProps}>
             {children}
@@ -234,21 +234,21 @@ const Autocomplete = ({
             }
         };
         onChange(fakeEvent);
-    }
+    };
 
     // NoSsr = no server side rendering -> disables Ssr for this compnent
     return (
         <NoSsr>
             <Select
                 classes={classes}
-                styles={{selectStyles}}
+                styles={{ selectStyles }}
                 options={_options}
                 components={_components}
                 onChange={handleChange}
                 isMulti={isMulti}
                 closeMenuOnSelect={_closeMenuOnSelect}
                 value={_value()}
-                theme={{ borderRadius: '30px', spacing: { controlHeight: '60px'}}}
+                theme={{ borderRadius: '30px', spacing: { controlHeight: '60px' }}}
                 {...props}
             />
         </NoSsr>

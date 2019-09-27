@@ -43,9 +43,12 @@ class SubjectDelete extends Component {
                 <Typography variant='body2'>
                     Sind Sie sicher, dass sie das Fach <strong>{data.title}</strong> entfernen möchten?
                     <br />
-                    <strong>Dadurch werden auch alle mit dem Fach assozierten Veranstaltungen und Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
+                    <strong>Dadurch werden auch alle mit dem Fach assozierten Veranstaltungen{' '}
+                    und Noten gelöscht.</strong> Diese Aktion kann nur durch eine manuelle{' '}
+                    Wiederherstellung des letzten Backups rückgängig gemacht werden.<br />
                     <br />
-                    Geben Sie zur Bestätigung das Wort <span className={classes.controlValue}>{this.controlValue}</span> ein.
+                    Geben Sie zur Bestätigung das Wort{' '}
+                    <span className={classes.controlValue}>{this.controlValue}</span> ein.
                 </Typography>
                 <Field
                     type='text'
@@ -69,7 +72,7 @@ class SubjectDelete extends Component {
             </div>
         );
     }
-};
+}
 
 const styles = theme => ({
     deleteButton: {
@@ -89,7 +92,7 @@ const styles = theme => ({
         fontFamily: 'monospace',
         fontSize: '1.25em',
     },
-})
+});
 
 const mapDispatchToProps = {
     deleteSubject: entitiesActions.subject.delete

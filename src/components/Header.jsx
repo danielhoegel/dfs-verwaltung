@@ -51,10 +51,10 @@ Header.propTypes = {
         PropTypes.object,
         PropTypes.string,
     ]),
-}
+};
 
 Header.defaultProps = {
     as: 'h2'
-}
+};
 
 export default Header;

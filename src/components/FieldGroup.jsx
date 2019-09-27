@@ -7,7 +7,7 @@ class FieldGroup extends PureComponent {
         const { width, children, style, className, classes, ...fieldGroupProps } = this.props;
         return (
             <div
-                style={{ width, ...style}}
+                style={{ width, ...style }}
                 className={cn(classes.fieldGroup, className)}
                 {...fieldGroupProps}
             >

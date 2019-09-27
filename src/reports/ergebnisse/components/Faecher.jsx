@@ -55,7 +55,7 @@ class Faecher extends Component {
                                 </tr>
                             ))}
                         </tbody>
-                    )
+                    );
                 })}
             </Fragment>
         );

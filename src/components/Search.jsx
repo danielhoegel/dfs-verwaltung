@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import 'popper.js/dist/popper';
 
-import { isNotEmpty, highlightMatch } from '../helper/helper';
-
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -18,6 +16,8 @@ import Typography from '@material-ui/core/Typography';
 import RootRef from '@material-ui/core/RootRef';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+
+import { isNotEmpty, highlightMatch } from '../helper/helper';
 
 
 const MenuOption = ({
@@ -76,43 +76,43 @@ class Search extends PureComponent {
         if (!this.props.name) {
             searchId += 1;
         }
-    } 
-    
+    }
+
     componentDidUpdate(prevProps, prevState) {
         // Adjust scroll so the active MenuItem is always in view.
         if (prevState.activeIndex !== this.state.activeIndex) {
             const { activeIndex } = this.state;
             const menu = this.menuEl.current;
-            
+
             if (menu) {
                 const menuItems = this.props.grouped
                     ? menu.querySelectorAll('.groupedItem > *')
                     : menu.children;
-                
-    
+
+
                 // scroll to the top for first element
                 if (activeIndex === 0) {
                     menu.scrollTop = 0;
                 }
-                
+
                 // scroll to the bottom for the last element
                 else if (activeIndex === menuItems.length - 1) {
                     menu.scrollTop = menu.scrollHeight;
                     // scrollHeight = (overflowing) height with all children
                 }
-                
+
                 // scroll to activeElement top/bottom
                 else {
                     const item = menuItems[activeIndex];
                     const offsetUp = item.offsetTop;
                     const offsetDown = item.offsetTop + item.offsetHeight;
                     // clientHeight = outer height with borders
-                    
+
                     // scroll up
                     if (offsetUp < menu.scrollTop) {
                         menu.scrollTop = offsetUp;
                     }
-                    
+
                     // scroll down
                     else if (offsetDown > (menu.offsetHeight + menu.scrollTop)) {
                         const offsetDiff = offsetDown - (menu.offsetHeight + menu.scrollTop);
@@ -160,8 +160,7 @@ class Search extends PureComponent {
         this.setState({ hasFocus: true });
     }
 
-    blurHandler = (e) => {
-        const currentTarget = e.currentTarget;
+    blurHandler = ({ currentTarget }) => {
         setTimeout(() => {
             if (!currentTarget.contains(document.activeElement)) {
                 this.resetInput();
@@ -173,11 +172,10 @@ class Search extends PureComponent {
         this.changeInput(e.target.value);
     }
 
-    clickHandler = (e) => {
-        const currentTarget = e.currentTarget;
+    clickHandler = ({ currentTarget }) => {
         const value = currentTarget.getAttribute('data-value');
         const group = currentTarget.getAttribute('data-group');
-        this.selectOption(value, group)
+        this.selectOption(value, group);
     }
 
     dropdownIconClickHandler = (e) => {
@@ -198,7 +196,7 @@ class Search extends PureComponent {
         switch (e.key) {
             case 'ArrowUp':
                 this.setState(state => ({
-                    activeIndex: state.activeIndex === 0 
+                    activeIndex: state.activeIndex === 0
                         ? options.length - 1
                         : state.activeIndex - 1
                 }));
@@ -223,7 +221,7 @@ class Search extends PureComponent {
                 e.preventDefault();
                 this.anchorEl.blur();
                 break;
-        
+
             default:
                 break;
         }
@@ -262,7 +260,7 @@ class Search extends PureComponent {
                 if (groupedMenuItems[option.group]) {
                     groupedMenuItems[option.group].push(OptionComponent);
                 } else {
-                    groupedMenuItems[option.group] = [ OptionComponent ];
+                    groupedMenuItems[option.group] = [OptionComponent];
                 }
             } else {
                 menuItems.push(OptionComponent);
@@ -270,7 +268,7 @@ class Search extends PureComponent {
         });
 
         if (grouped) {
-            return Object.entries(groupedMenuItems).map(([ group, listItems ]) => (
+            return Object.entries(groupedMenuItems).map(([group, listItems]) => (
                 <div className={classes.optionGroup} key={group}>
                     <Typography variant='body2' className={classes.groupHeader}>
                         {group}
@@ -280,14 +278,14 @@ class Search extends PureComponent {
                     </div>
                 </div>
             ));
-        } else {
-            return menuItems;
         }
+        return menuItems;
     }
 
     render() {
         const { classes, theme } = this.props;
-        const selectMinWidth = this.props.recalculatePopperAlignemt || (this.anchorEl.current !== null && this.anchorEl.parentNode.clientWidth);
+        const selectMinWidth = this.props.recalculatePopperAlignemt ||
+            (this.anchorEl.current !== null && this.anchorEl.parentNode.clientWidth);
         const menuIsVisible = this.state.hasFocus && isNotEmpty(this.props.options);
 
         return (
@@ -317,7 +315,7 @@ class Search extends PureComponent {
                     autoComplete='off'
                     style={{
                         paddingRight: (
-                            0 + 
+                            0 +
                             3 * !this.props.noDropdownIcon +
                             2 * !this.props.noClearIcon
                         ) * theme.spacing.unit
@@ -345,7 +343,10 @@ class Search extends PureComponent {
                     open={menuIsVisible}
                     anchorEl={this.anchorEl}
                     id={`search__${this.id}__popper`}
-                    placement={(this.props.fixedWidth && this.props.popperAlign === 'right') ? 'bottom-end' : 'bottom-start'}
+                    placement={(this.props.fixedWidth && this.props.popperAlign === 'right')
+                        ? 'bottom-end'
+                        : 'bottom-start'
+                    }
                     className={cn(classes.popper, this.props.popperClassName)}
                     style={{
                         minWidth: selectMinWidth,
@@ -474,7 +475,7 @@ Search.propTypes = {
     })).isRequired,
     onSelect: PropTypes.func.isRequired,
     onInputChange: PropTypes.func.isRequired,
-    
+
     label: PropTypes.string,
     placeholder: PropTypes.string,
 

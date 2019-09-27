@@ -23,7 +23,7 @@ class StudyRegulationUpdate extends Component {
             ))
             .then(this.props.closeModal)
             .catch(err => this.setState({ loading: false, error: err }));
-    } 
+    }
 
     render() {
         return (
@@ -39,7 +39,7 @@ class StudyRegulationUpdate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapDispatchToProps = {
     updateStudyRegulation: entitiesActions.studyRegulation.update,

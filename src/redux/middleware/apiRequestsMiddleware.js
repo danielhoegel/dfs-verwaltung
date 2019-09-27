@@ -15,21 +15,23 @@ const apiRequestMiddleware = (store) => (next) => (action) => {
                     data: res,
                     request: action
                 });
-                typeof action.resolve === 'function' &&
+                if (typeof action.resolve === 'function') {
                     action.resolve(res);
+                }
             })
             .catch(err => {
-                console.log(`%c[REQUEST FAILURE] ${action.type}`,'color: darkred', err);
+                console.log(`%c[REQUEST FAILURE] ${action.type}`, 'color: darkred', err);
                 store.dispatch({
                     type: action.type + failureSuffix,
                     error: err,
                     request: action
                 });
-                typeof action.reject === 'function' &&
+                if (typeof action.reject === 'function') {
                     action.reject(err);
+                }
             });
     }
     return next(action);
-}
+};
 
 export default apiRequestMiddleware;

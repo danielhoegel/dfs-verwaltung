@@ -39,7 +39,7 @@ const theme = createMuiTheme({
                     borderBottom: `1px solid ${customColors.borderBottom}`,
                 },
             },
-        },        
+        },
         MuiNotchedOutline: {
             // set outlined input border color
             root: {

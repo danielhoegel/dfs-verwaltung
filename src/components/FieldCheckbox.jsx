@@ -26,7 +26,7 @@ const FieldCheckbox = ({
         }};
         onChange(fakeEvent);
     };
-    
+
     return (
         <FormControlLabel
             className={cn(classes.field, className)}

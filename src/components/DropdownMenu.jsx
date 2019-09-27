@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 class DropdownMenu extends Component {
@@ -15,7 +15,7 @@ class DropdownMenu extends Component {
     handleClick = event => {
         this.setState({ anchorEl: event.currentTarget });
     };
-    
+
     handleClose = (callback) => {
         this.setState({ anchorEl: null }, () => {
             if (typeof callback === 'function') {
@@ -35,7 +35,7 @@ class DropdownMenu extends Component {
     }
 
     renderItems() {
-        return this.props.items.map(({ onClick, label, ...itemProps}, index) => (
+        return this.props.items.map(({ onClick, label, ...itemProps }, index) => (
             <MenuItem
                 key={index}
                 onClick={onClick
@@ -48,7 +48,7 @@ class DropdownMenu extends Component {
             </MenuItem>
         ));
     }
-    
+
     render() {
         const { anchorEl } = this.state;
         const { classes } = this.props;
@@ -58,7 +58,7 @@ class DropdownMenu extends Component {
             'aria-haspopup': 'true',
             onClick: this.handleClick
         };
-    
+
         return (
             <Fragment>
                 {this.props.button
@@ -85,7 +85,7 @@ class DropdownMenu extends Component {
             </Fragment>
         );
     }
-};
+}
 
 DropdownMenu.propTypes = {
     classes: PropTypes.object.isRequired,

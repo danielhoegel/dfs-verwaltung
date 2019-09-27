@@ -46,6 +46,13 @@
         "react/jsx-no-duplicate-props": ["error", { "ignoreCase": false }],
         "padded-blocks": "off",
         "curly": "off",
-        "nonblock-statement-body-position": "off"
+        "nonblock-statement-body-position": "off",
+        "no-shadow": "off",
+        "brace-style": "off",
+        "no-case-declarations": "off",
+        "object-property-newline": "off",
+        "no-continue": "off",
+        "no-mixed-operators": "off",
+        "import/prefer-default-export": "off"
     }
 }

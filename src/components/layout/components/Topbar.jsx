@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -36,7 +35,7 @@ const Topbar = ({ classes, fetchAllData, fetching }) => {
                 onClick={fetchAllData}
                 title='Aktualisiere alle Daten'
             >
-                <RefreshIcon className={cn({[classes.loadingIcon]: fetching})}/>
+                <RefreshIcon className={cn({ [classes.loadingIcon]: fetching })}/>
             </Button>
         </Toolbar>
     );
@@ -59,7 +58,7 @@ const styles = theme => ({
     },
     '@keyframes loading-anim': {
         from: { transform: 'rotate(0)' },
-        to:   { transform: 'rotate(360deg)' }
+        to: { transform: 'rotate(360deg)' }
     },
     loadingIcon: {
         animationName: 'loading-anim',

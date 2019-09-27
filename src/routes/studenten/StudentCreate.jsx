@@ -24,7 +24,7 @@ class StudentUpdate extends Component {
 
     defaultValues = {
         student: {
-            firstName : '',
+            firstName: '',
             lastName: '',
             prefix: 'Frau',
             matrikelnummer: '',
@@ -33,13 +33,13 @@ class StudentUpdate extends Component {
             birthDate: '',
             birthPlace: '',
             birthCountry: 'Deutschland',
-            
+
             address: '',
             addressExtra: '',
             postal: '',
             city: '',
             country: 'Deutschland',
-    
+
             mailPrimary: '',
             mailSecondary: '',
             phoneNumber: '',
@@ -60,7 +60,7 @@ class StudentUpdate extends Component {
         ]
     }
 
-    
+
     componentDidMount() {
         Promise.all([
             this.props.fetchStudyRegulations(),
@@ -68,7 +68,7 @@ class StudentUpdate extends Component {
         ])
         .catch(err => this.setState({ fetching: false, errors: err.message }));
     }
-    
+
     goBack = () => {
         this.props.history.goBack();
     }
@@ -98,7 +98,7 @@ class StudentUpdate extends Component {
                 return Promise.all(requests);
             })
             .then(this.goBack)
-            .catch( err => this.setState({ creating: false, error: err.message }));
+            .catch(err => this.setState({ creating: false, error: err.message }));
         }
     }
 
@@ -130,9 +130,9 @@ class StudentUpdate extends Component {
                     />
                 </div>
             );
-        } else {
-            return <CircularProgress />;
         }
+            return <CircularProgress />;
+
     }
 }
 
@@ -158,7 +158,7 @@ const mapDispatchToProps = {
     createStudent: entitiesActions.student.create,
     createStudentInformation: entitiesActions.studentInformation.create,
     createStudy: entitiesActions.study.create,
-}
+};
 
 StudentUpdate.propTypes = {
     history: PropTypes.object.isRequired,

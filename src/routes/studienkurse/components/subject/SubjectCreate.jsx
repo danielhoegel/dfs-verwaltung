@@ -8,8 +8,6 @@ import MyForm from '../../../../components/MyForm';
 import entitiesActions from '../../../../redux/entitiesActions';
 
 
-
-
 class SubjectCreate extends Component {
     state = { loading: false, error: null }
 
@@ -45,12 +43,12 @@ class SubjectCreate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = state => ({
     studyCourses: getStudyCourses(state),
     studyRegulations: getStudyRegulations(state),
-})
+});
 
 const mapDispatchToProps = {
     createSubject: entitiesActions.subject.create
@@ -62,6 +60,6 @@ SubjectCreate.propTypes = {
     createSubject: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubjectCreate);

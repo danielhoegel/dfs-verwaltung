@@ -55,7 +55,7 @@ function Printing({
     }
 
     function __fileName() {
-        return fileName + (noDateSuffix ? '' : `_${Date.now()}`) + '.pdf';
+        return `${fileName} ${noDateSuffix ? '' : `_${Date.now()}`}.pdf`;
     }
 
     function __printPage() {
@@ -64,7 +64,7 @@ function Printing({
             html: __htmlString(),
             orientation,
             styles,
-       } );
+       });
     }
 
     return children

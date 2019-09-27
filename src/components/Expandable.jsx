@@ -8,11 +8,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 class Expandable extends Component {
     /**
      * Custom Expandable component inspired by material-ui ExpansionPanel
-     * 
+     *
      * To use multiple Expandables as an accordion,
      * control the expansion in the parent state and pass
      * expanded (bool) and toggleExpanded (func) as props.
-     * 
+     *
      * The internal state is only used, if no expanded prop is passed
      */
 
@@ -29,7 +29,7 @@ class Expandable extends Component {
         } else {
             this.setState(state => ({
                 expanded: !state.expanded
-            }))
+            }));
         }
     }
 
@@ -44,7 +44,7 @@ class Expandable extends Component {
         const styles = {
             height: !body ? (this.isExpanded() ? 'auto' : 0) : (this.isExpanded() ? body.offsetHeight : 0),
             duration: !body ? 200 : (Math.floor(body.offsetHeight / 1.5))
-        }
+        };
         return styles;
     }
 

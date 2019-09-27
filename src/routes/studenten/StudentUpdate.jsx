@@ -23,7 +23,7 @@ class StudentUpdate extends Component {
         updating: false,
         error: null
     }
-    
+
     componentDidMount() {
         // fetch student data if not already available
         if (isEmpty(this.props.student)) {
@@ -36,7 +36,7 @@ class StudentUpdate extends Component {
             .catch(err => this.setState({ error: err.message, fetching: false }));
         }
     }
-    
+
     goBack = () => {
         this.props.history.goBack();
     }
@@ -58,7 +58,7 @@ class StudentUpdate extends Component {
             .filter(({ id }) => id !== undefined)
             .map(({ id }) => id);
         this.props.student.studies.forEach(study => {
-            if(!nextStudiesWithId.includes(study.id)) {
+            if (!nextStudiesWithId.includes(study.id)) {
                 requests.push(this.props.deleteStudy(study));
             }
         });
@@ -80,7 +80,7 @@ class StudentUpdate extends Component {
                 updating: false,
                 error: err.message
             });
-        })
+        });
     }
 
     render() {
@@ -111,9 +111,8 @@ class StudentUpdate extends Component {
                     />
                 </div>
             );
-        } else {
-            return <CircularProgress />;
         }
+        return <CircularProgress />;
     }
 }
 
@@ -143,7 +142,7 @@ const mapDispatchToProps = {
     deleteStudy: entitiesActions.study.delete,
     updateStudy: entitiesActions.study.update,
     createStudy: entitiesActions.study.create,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(
     withStyles(styles)(StudentUpdate)

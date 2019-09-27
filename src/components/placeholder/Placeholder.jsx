@@ -41,6 +41,6 @@ Placeholder.propTypes = {
         PropTypes.object,
         PropTypes.arrayOf(PropTypes.object),
     ]),
-}
+};
 
 export default Placeholder;

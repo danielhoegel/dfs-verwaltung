@@ -60,7 +60,7 @@ const SnackbarContentWrapper = withStyles(snackbarContentWrapperStyles)(
                     {message}
                 </span>
             }
-            action={actions.map((action, i) => React.cloneElement(action, {key: i}))}
+            action={actions.map((action, i) => React.cloneElement(action, { key: i }))}
             {...other}
         />
     );
@@ -74,7 +74,7 @@ function MessageBox({ classes, className, ...props }) {
             {...props}
         />
     );
-};
+}
 
 MessageBox.propTypes = {
     classes: PropTypes.object.isRequired,

@@ -18,16 +18,16 @@ const StudyRegulationListItem = ({
     history,
     classes,
 }) => {
+    const { id, title, description, date, studyCourseId } = regulation;
 
     const openStudyRegulation = () => {
-        history.push(`/studienkurse/${studyCourseId}/studienordnung/${id}`)
+        history.push(`/studienkurse/${studyCourseId}/studienordnung/${id}`);
     };
 
-    const { id, title, description, date, studyCourseId } = regulation;
     return (
         <ListItem button onClick={openStudyRegulation}>
             <ListItemText
-                secondary={description ? description : null}
+                secondary={description || null}
                 className={classes.regulationContent}
             >
                 <div className={classes.regulationTitle}>

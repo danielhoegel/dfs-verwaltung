@@ -6,7 +6,7 @@ import {
     getStudyRegulationByIds,
     getStudyRegulationById,
     getStudyCourseById,
-} from  '../../../redux/entitiesSelector';
+} from '../../../redux/entitiesSelector';
 
 export function getStudyCoursesWithRegulations(state) {
     return getStudyCourses(state).map(studyCourse => ({
@@ -33,4 +33,3 @@ export function getSubjectsWithSubjectCourses(state, studyRegulationId) {
         subjectCourses: getSubjectCoursesBySubjectId(state, subject.id)
     }));
 }
-
