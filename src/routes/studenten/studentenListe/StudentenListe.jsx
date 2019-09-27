@@ -121,12 +121,12 @@ class StudentenListe extends Component {
     }
 
     columns = [
-        {id: 'matrikelnummer', width: '10%', label: 'Matr.-Nr.' },
-        {id: 'firstName', width: '15%', label: 'Vorname' },
-        {id: 'lastName', width: '20%', label: 'Nachname' },
-        {id: 'studyCourse', width: '45%', label: 'Studienkurs' },
-        // {id: 'notes', width: '1%', label: '', padding: 'checkbox' },
-        {id: 'mail', width: '5%', label: '', padding: 'checkbox' }
+        { id: 'matrikelnummer', width: '10%', label: 'Matr.-Nr.' },
+        { id: 'firstName', width: '25%', label: 'Vorname' },
+        { id: 'lastName', width: '20%', label: 'Nachname' },
+        { id: 'studyCourse', width: '40%', label: 'Studienkurs' },
+        // { id: 'notes', width: '1%', label: '', padding: 'checkbox' },
+        { id: 'mail', width: '0', label: '', padding: 'checkbox' }
     ]
 
     studentenOptions() {
