@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { intersectionBy } from 'lodash';
 
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -9,14 +10,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import Search from '../../Search';
 
 import { isNotEmpty, searchInside } from '../../../helper/helper';
-import { intersectionBy } from 'lodash';
 import { getStudents, getSubjectsWithStudyCourseAndStudyRegulation } from '../../../redux/entitiesSelector';
 // import { resolve } from 'path';
 
 
 const GROUPS = {
-    'SUBJECTS': 'Fächer',
-    'STUDENTS': 'Studenten'
+    SUBJECTS: 'Fächer',
+    STUDENTS: 'Studenten'
 };
 
 
@@ -37,7 +37,7 @@ class GlobalSearch extends Component {
             this.setState({
                 searchValue: '',
                 options: [],
-            })
+            });
         }
     }
 
@@ -59,7 +59,9 @@ class GlobalSearch extends Component {
         //     studentRequests.push(axios.get(`/students?q=${searchWord}&_limit=3`));
         // });
 
-        // const subjectRequest = axios.get(`/subjects?_expand=studyCourse&_expand=studyRegulation&title_like=${trimmedSearchValue}&_limit=3`);
+        // const subjectRequest = axios.get(
+        //  `/subjects?_expand=studyCourse&_expand=studyRegulation&title_like=${trimmedSearchValue}&_limit=3`
+        // );
 
         // return axios.all(studentRequests.concat(subjectRequest))
 
@@ -84,7 +86,7 @@ class GlobalSearch extends Component {
                     return false;
                 });
             });
-            
+
             const subjectArrays = searchWords.map(searchWord => {
                 let subjectsCounter = 0;
                 return this.props.subjects.filter(subject => {
@@ -98,7 +100,7 @@ class GlobalSearch extends Component {
                     return false;
                 });
             });
-            
+
             resolve({ studentArrays, subjectArrays });
         });
     }
@@ -107,18 +109,18 @@ class GlobalSearch extends Component {
         // this.setState({ fetching: true });
 
         // remove spaces at start and end, replace multiple spaces with single space
-        const trimmedSearchValue = searchValue.trim().replace(/ +(?= )/g,'');
-    
+        const trimmedSearchValue = searchValue.trim().replace(/ +(?= )/g, '');
+
         this.getMatchingData(trimmedSearchValue)
             .then(({ subjectArrays, studentArrays }) => {
                 // remove the last element from results and save it in matchingSubjects
                 // const matchingSubjects = results.splice(-1)[0].data;
-                
+
                 // create intersection of all student requests
                 // const studentArrays = results.map(studentResult => studentResult.data);
                 const matchingStudents = intersectionBy(...studentArrays, 'id');
                 const matchingSubjects = intersectionBy(...subjectArrays, 'id');
-                
+
                 const studentOptions = matchingStudents.map(student => ({
                     label: `${student.firstName} ${student.lastName}`,
                     value: student.id,
@@ -133,7 +135,7 @@ class GlobalSearch extends Component {
                     group: GROUPS.SUBJECTS,
                 }));
 
-                this.setState({ 
+                this.setState({
                     options: studentOptions.concat(subjectOptions),
                     fetching: false,
                     students: matchingStudents, // stored just for reference
@@ -173,7 +175,7 @@ class GlobalSearch extends Component {
                     }}
                 />
           </div>
-        )
+        );
     }
 }
 

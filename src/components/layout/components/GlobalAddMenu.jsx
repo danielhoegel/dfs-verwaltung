@@ -43,8 +43,8 @@ class GlobalAddMenu extends Component {
                 <SelectButton
                     icon={<AddIcon />}
                     options={[
-                        {value: VALUES.createStudent, label: 'Student'},
-                        {value: VALUES.createGrade, label: 'Note'},
+                        { value: VALUES.createStudent, label: 'Student' },
+                        { value: VALUES.createGrade, label: 'Note' },
                     ]}
                     onClick={this.clickHandler}
                     className={this.props.className}
@@ -59,12 +59,12 @@ class GlobalAddMenu extends Component {
             </Fragment>
         );
     }
-};
+}
 
 GlobalAddMenu.propTypes = {
 };
 
-const mapDispatchToProps = {  
+const mapDispatchToProps = {
 };
 
 export default connect(null, mapDispatchToProps)(withRouter(GlobalAddMenu));

@@ -7,7 +7,7 @@ import { getTodayDate } from '../../helper/helper';
 
 function ErgebnisseReport(props) {
     function semesters() {
-        return [ ...new Set(props.subjects.map(f => f.semester)) ];
+        return [...new Set(props.subjects.map(f => f.semester))];
     }
 
     function renderUEGruppen(student, semester) {
@@ -28,15 +28,16 @@ function ErgebnisseReport(props) {
             />
         ));
     }
-    
+
     const __today = getTodayDate();
-    
+
     return (
         <div>
             {props.students.length ? props.students.map(student => (
                 <div key={student.id} className='student'>
                     <h2>
-                        Prüfungsergebnisse - Mtknr. {student.matrikelnummer} - {student.lastName}, {student.firstName} - Datum {__today}
+                        Prüfungsergebnisse - Mtknr. {student.matrikelnummer} -{' '}
+                        {student.lastName}, {student.firstName} - Datum {__today}
                     </h2>
                     {semesters().map(semester => (
                         <div key={semester}>

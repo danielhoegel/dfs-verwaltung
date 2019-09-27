@@ -4,7 +4,15 @@ import { connect } from 'react-redux';
 import omit from 'lodash/omit';
 
 import entitiesActions from '../../../../redux/entitiesActions';
-import { getStudents, getSubjects, getSubjectCourses, getStudyCourses, getStudyRegulations, getGradeById, getStudyById } from '../../../../redux/entitiesSelector';
+import {
+    getStudents,
+    getSubjects,
+    getSubjectCourses,
+    getStudyCourses,
+    getStudyRegulations,
+    getGradeById,
+    getStudyById
+} from '../../../../redux/entitiesSelector';
 import MyForm from '../../../../components/MyForm';
 import GradeFields from '../../../../components/fields/GradeFields';
 import { isNotEmpty, isDate } from '../../../../helper/helper';
@@ -14,7 +22,7 @@ class GradeCreate extends Component {
 
     submitHandler = (data) => {
         const cleanData = omit(data, ['studentId', 'subjectId']);
-        
+
         if (this.validate(cleanData)) {
             this.setState({ loading: true, error: null });
             if (cleanData.id) {
@@ -28,13 +36,13 @@ class GradeCreate extends Component {
                     .then(this.props.closeModal)
                     .catch(err => this.setState({ loading: false, error: err.message }));
             }
-        };
+        }
 
     }
 
     defaultValues = () => {
         const { grade, subjectCourses, subjects, data, study } = this.props;
-        
+
         // get subject
         let subject = {};
         if ((data && isNotEmpty(data.subjectCourseId)) || isNotEmpty(grade)) {
@@ -53,7 +61,7 @@ class GradeCreate extends Component {
                 ? study.studentId : (data && data.studentId)
                 ? data.studentId : '',
             subjectId: isNotEmpty(subject.id) ? subject.id : '',
-        }
+        };
 
         if (isNotEmpty(grade)) {
             return {
@@ -63,7 +71,7 @@ class GradeCreate extends Component {
         }
 
         return {
-            studyId: (data && isNotEmpty(data.studyId)) ? data.studyId :  '',            
+            studyId: (data && isNotEmpty(data.studyId)) ? data.studyId : '',
             subjectCourseId: (data && isNotEmpty(data.subjectCourseId)) ? data.subjectCourseId : '',
             grade: '',
             gradingSystem: isNotEmpty(subject.type) ? subject.type : 'de',
@@ -71,11 +79,11 @@ class GradeCreate extends Component {
             date: '',
             lecturer: '',
             ...extraValues
-        }
+        };
     }
 
     validate({ studyId, subjectCourseId, grade, gradingSystem, try: _try, date }) {
-        let error = [];
+        const error = [];
 
         if (!studyId)
             error.push('Bitte wähle einen Studienkurs aus.');
@@ -89,12 +97,12 @@ class GradeCreate extends Component {
         if (typeof grade !== 'number' || grade < 0 || (gradingSystem === 'de' ? grade > 18 : grade > 20))
             error.push(`Bitte gib eine gültige Note zwischen 0 und ${gradingSystem === 'de' ? 18 : 20} ein.`);
 
-        if (typeof _try !== 'number' || _try < 0 )
+        if (typeof _try !== 'number' || _try < 0)
             error.push('Bitte gib an, um den wievielten Versuch es sich handelt.');
 
         if (date !== '' && !isDate(date))
             error.push('Bitte gib ein gültiges Datumsformat in der Form YYYY-MM-DD an.');
-        
+
         // RETURN
         if (error.length) {
             this.setState({ error });
@@ -125,7 +133,7 @@ class GradeCreate extends Component {
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = (state, props) => ({
     study: getStudyById(state, props.data && props.data.studyId),
@@ -154,6 +162,6 @@ GradeCreate.propTypes = {
     deleteGrade: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     data: PropTypes.object,
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GradeCreate);

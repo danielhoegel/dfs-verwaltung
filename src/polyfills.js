@@ -1,4 +1,4 @@
-/** IE11 polyfills. **/
+/* IE11 polyfills. */
 import 'core-js/fn/promise';
 import 'core-js/fn/symbol';
 import 'core-js/fn/set';

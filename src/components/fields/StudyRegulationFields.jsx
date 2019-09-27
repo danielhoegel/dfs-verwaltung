@@ -29,7 +29,7 @@ const StudyRegulationFields = ({
                     value={values.studyCourseId}
                     options={studyCourseOptions()}
                     disabled
-                /> 
+                />
             </FieldGroup>
             <FieldGroup>
                 <Field
@@ -40,7 +40,7 @@ const StudyRegulationFields = ({
                     value={values.title}
                     required
                     autoFocus
-                /> 
+                />
                 <Field
                     name='date'
                     label='Gültig ab'
@@ -49,10 +49,10 @@ const StudyRegulationFields = ({
                     onChange={change}
                     value={values.date}
                     InputLabelProps={{ shrink: true }}
-                /> 
+                />
             </FieldGroup>
             <FieldGroup>
-                
+
             </FieldGroup>
             <FieldGroup>
                 <Field
@@ -62,7 +62,7 @@ const StudyRegulationFields = ({
                     onChange={change}
                     value={values.description}
                     multiline
-                /> 
+                />
             </FieldGroup>
             <HiddenDivider />
             <Button variant='contained' color='primary' type='submit'>Speichern</Button>

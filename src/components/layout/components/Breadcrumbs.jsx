@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ChevronRightIcon from '@material-ui/icons/ChevronRightRounded';
 
-import routes from '../../../routes.js';
+import routes from '../../../routes';
 
 // map & render your breadcrumb components however you want.
 // each `breadcrumb` has the props `key`, `location`, and `match` included!
@@ -17,7 +17,7 @@ const Breadcrumbs = ({ breadcrumbs, classes }) => (
                 <Typography
                     variant='body2'
                     color='inherit'
-                    component={(index === 0 || index === breadcrumbs.length -1 )
+                    component={(index === 0 || index === breadcrumbs.length - 1)
                         ? 'span' : NavLink
                     }
                     to={match.url}

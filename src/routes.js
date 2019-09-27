@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import EditIcon from '@material-ui/icons/EditOutlined';
 
 import StudentenListe from './routes/studenten/studentenListe/StudentenListe';
 import StudentDetails from './routes/studenten/studentenDetails/StudentDetails';
@@ -9,7 +10,6 @@ import StudyRegulation from './routes/studienkurse/StudyRegulation';
 import Playground from './routes/playground/Playground';
 import Reports from './reports/Reports';
 
-import EditIcon from '@material-ui/icons/EditOutlined';
 import { getStudentById } from './redux/entitiesSelector';
 
 
@@ -24,12 +24,12 @@ const StudentBreadcrumb = connect((state, props) => ({
 
 const ReportBreadcrumb = ({ match }) => {
     switch (match.params.report) {
-        case 'studenten':   return 'Studentenliste';
-        case 'lesb':        return 'LESB-Liste';
-        case 'ergebnisse':  return 'Prüfungsergebnisse';
-        default:            return match.params.report;
+        case 'studenten': return 'Studentenliste';
+        case 'lesb': return 'LESB-Liste';
+        case 'ergebnisse': return 'Prüfungsergebnisse';
+        default: return match.params.report;
     }
-}
+};
 
 
 /* ROUTES */
@@ -45,4 +45,3 @@ export default [
     { path: '/studienkurse/:studyCourseId/studienordnung/:studyRegulationId/:subjectId', component: StudyRegulation, exact: true, breadcrumb: null },
     { path: '/playground/:id?', component: Playground, breadcrumb: 'Playground' },
 ];
-  

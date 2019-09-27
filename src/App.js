@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -11,7 +11,7 @@ import Layout from './components/layout/Layout';
 import { isEmpty } from './helper/helper';
 
 
-class App extends Component {   
+class App extends Component {
     componentDidMount() {
         // load all data
         if (isEmpty(this.props.entities.students)) {
@@ -47,6 +47,6 @@ const mapStateToProps = state => ({
 
 const AppContainer = connect(mapStateToProps)(App);
 
-export default process.env.NODE_ENV === "development"
+export default process.env.NODE_ENV === 'development'
     ? hot(module)(AppContainer)
-    : AppContainer
+    : AppContainer;

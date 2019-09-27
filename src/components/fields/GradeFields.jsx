@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,7 +11,7 @@ import Field from '../Field';
 import FieldGroup from '../FieldGroup';
 import FieldRadioGroup from '../FieldRadioGroup';
 import HiddenDivider from '../HiddenDivider';
-import SearchSelect from '../../components/SearchSelect';
+import SearchSelect from '../SearchSelect';
 import { getStudiesByStudentId } from '../../redux/entitiesSelector';
 import { translateStudyStatus } from '../../helper/helper';
 import FieldSelect from '../FieldSelect';
@@ -34,25 +34,50 @@ const GradeFields = ({
     history
 }) => {
 
+    const subjectIdChange = e => {
+        change(e, true);
+
+        // reset subjectCourseId
+        change({ target: { name: 'subjectCourseId', value: '' }}, true);
+
+        // set gradingSystem
+        const subject = subjects.find(({ id }) => id.toString() === e.target.value.toString());
+        if (subject && subject.type && subject.type !== values.gradingSystem) {
+            change({ target: { name: 'gradingSystem', value: subject.type }}, true);
+        }
+    };
+
+    const studyIdChange = e => {
+        change(e, true);
+        // reset subjectId
+        subjectIdChange({ target: { name: 'subjectId', value: '' }});
+    };
+
+    const studentIdChange = e => {
+        change(e, true);
+        // reset studyId
+        studyIdChange({ target: { name: 'studyId', value: '' }});
+    };
+
     function studentOptions() {
-        return students.map(({ id, firstName, lastName}) => ({
+        return students.map(({ id, firstName, lastName }) => ({
             value: id,
             label: `${firstName} ${lastName}`
         }));
     }
 
     function studyOptions() {
-        const studyOptions = studies.map(({ id, studyCourseId, year, status }) => {
-            const { title } = studyCourses.find(({ id }) => id === studyCourseId);
+        const _studyOptions = studies.map(({ id, studyCourseId, year, status }) => {
+            const { title } = studyCourses.find(({ id: _id }) => _id === studyCourseId);
             return ({
                 value: id,
                 label: `${title} ${year} (${translateStudyStatus(status)})`
-            })
+            });
         });
-        if (studyOptions.length === 1 && values.studyId === '') {
-            studyIdChange({ target: { name: 'studyId', value: studyOptions[0].value }});
+        if (_studyOptions.length === 1 && values.studyId === '') {
+            studyIdChange({ target: { name: 'studyId', value: _studyOptions[0].value }});
         }
-        return studyOptions;
+        return _studyOptions;
     }
 
     function subjectOptions() {
@@ -67,43 +92,18 @@ const GradeFields = ({
     }
 
     function subjectCourseOptions() {
-        const subjectCourseOptions = subjectCourses
-            .filter(({ subjectId, participationType}) => 
+        const _subjectCourseOptions = subjectCourses
+            .filter(({ subjectId, participationType }) =>
                 participationType === 'Note' && subjectId === values.subjectId
             )
             .map(({ id, type, title }) => ({
                 value: id,
                 label: type + (title && ` (${title})`),
             }));
-        if (subjectCourseOptions.length === 1 && values.subjectCourseId === '') {
-            change({ target: { name: 'subjectCourseId', value: subjectCourseOptions[0].value }});
+        if (_subjectCourseOptions.length === 1 && values.subjectCourseId === '') {
+            change({ target: { name: 'subjectCourseId', value: _subjectCourseOptions[0].value }});
         }
-        return subjectCourseOptions;
-    }
-
-    const studentIdChange = e => {
-        change(e, true);
-        // reset studyId
-        studyIdChange({ target: { name: 'studyId', value: '' }});
-    }
-
-    const studyIdChange = e => {
-        change(e, true);
-        // reset subjectId
-        subjectIdChange({ target: { name: 'subjectId', value: '' }});
-    }
-
-    const subjectIdChange = e => {
-        change(e, true);
-        
-        // reset subjectCourseId
-        change({ target: { name: 'subjectCourseId', value: '' }}, true);
-        
-        // set gradingSystem
-        const subject = subjects.find(({ id }) => id.toString() === e.target.value.toString());
-        if (subject && subject.type && subject.type !== values.gradingSystem) {
-            change({ target: { name: 'gradingSystem', value: subject.type }}, true);
-        }
+        return _subjectCourseOptions;
     }
 
     // check missing data
@@ -139,7 +139,7 @@ const GradeFields = ({
                     style={{ margin: '8px', flex: 1 }}
                     noClearIcon
                     required
-                /> 
+                />
                 <FieldSelect
                     name='studyId'
                     value={values.studyId}
@@ -148,7 +148,7 @@ const GradeFields = ({
                     options={studyOptions()}
                     disabled={values.studentId === ''}
                     required
-                /> 
+                />
             </FieldGroup>
             <FieldGroup>
                 <SearchSelect
@@ -161,7 +161,7 @@ const GradeFields = ({
                     noClearIcon
                     disabled={values.studyId === ''}
                     required
-                /> 
+                />
                 <FieldSelect
                     name='subjectCourseId'
                     value={values.subjectCourseId}
@@ -170,7 +170,7 @@ const GradeFields = ({
                     options={subjectCourseOptions()}
                     disabled={values.subjectId === ''}
                     required
-                /> 
+                />
             </FieldGroup>
             <FieldGroup>
                 <Field
@@ -179,13 +179,13 @@ const GradeFields = ({
                     label='Anmerkung'
                     onChange={change}
                     width={0.5}
-                /> 
+                />
             </FieldGroup>
             <HiddenDivider height={2} />
             <FieldGroup>
                 <FieldGroup
                     className={classes.stackedFieldGroup}
-                    style={{ width: '30%'}}
+                    style={{ width: '30%' }}
                 >
                     <Field
                         name='grade'
@@ -197,7 +197,9 @@ const GradeFields = ({
                         required
                         variant='outlined'
                         InputLabelProps={{ shrink: true }}
-                        InputProps={{ className: classes.punkteFieldInput }} // Properties applied to the InputBase element.
+                        InputProps={{ // Properties applied to the InputBase element.
+                            className: classes.punkteFieldInput
+                        }}
                         inputProps={{ // Attributes applied to the native input element.
                             min: 0,
                             max: values.gradingSystem === 'de' ? 18 : 20,
@@ -266,7 +268,7 @@ const GradeFields = ({
                     <SaveIcon className={classes.leftIcon} />
                     Nächster Student
                 </Button> */}
-                <Button variant='contained' onClick={onCancel} style={{marginLeft: '1rem'}}>
+                <Button variant='contained' onClick={onCancel} style={{ marginLeft: '1rem' }}>
                     Abbrechen
                 </Button>
                 {grade && (
@@ -321,7 +323,7 @@ GradeFields.propTypes = {
     deleteGrade: PropTypes.func,
     grade: PropTypes.object,
     history: PropTypes.object.isRequired,
-}
+};
 
 const mapStateToProps = (state, props) => ({
     studies: getStudiesByStudentId(state, props.values.studentId),
