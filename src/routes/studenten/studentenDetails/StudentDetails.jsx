@@ -95,7 +95,7 @@ class StudentDetails extends Component {
         .then(([student, studies, studentInformation]) => {
             this.setState({
                 fetching: false,
-                tab: studies.length ? studies[0].id : 'contact'
+                tab: studies.length ? 0 : 'contact'
             });
         });
     }
@@ -146,6 +146,7 @@ class StudentDetails extends Component {
     render() {
         const { fetching, tab } = this.state;
         const { student, classes } = this.props;
+
         return (fetching || isEmpty(student)) ? <StudentDetailsLoading /> : (
             <Fragment>
                 <div>
@@ -202,10 +203,10 @@ class StudentDetails extends Component {
                             className={classes.tabsHeader}
                         >
                             <Tab value='contact' label='Kontaktdaten' />
-                            {student.studies.map(study => (
+                            {student.studies.map((study, index) => (
                                 <Tab
-                                    key={study.id}
-                                    value={study.id}
+                                    key={index}
+                                    value={index}
                                     label={
                                         `${this.props.getStudyCourseById(study.studyCourseId).title} ${study.year} \
                                         (${translateStudyStatus(study.status)})`
@@ -216,8 +217,8 @@ class StudentDetails extends Component {
                         <div className={classes.tabContainer}>
                             <div className={classes.tabContainerInside}>
                                 {tab === 'contact' && <StudentInformation student={this.props.student} />}
-                                {student.studies.map(study =>
-                                    tab === study.id && (
+                                {student.studies.map((study, index) =>
+                                    tab === index && (
                                         <SubjectList
                                             key={study.id}
                                             studentId={student.id}
