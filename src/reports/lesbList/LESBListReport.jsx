@@ -25,10 +25,8 @@ function LESBListReport(props) {
                             getGradesForStudentAndSubjectCourse={props.getGradesForStudentAndSubjectCourse}
                         />
                         <p className='anmerkung'>
-                            (aus den oben angegebenen Klausuren müssen 5 von den 6 fett gedruckten{' '}
-                            Klausuren bestanden werden, davon mindestens 1 in jedem Rechtsgebiet{' '}
-                            - sollte der/die Studierende den Studienkurs verlassen, müssen 9 von{' '}
-                            den 12 Klausuren bestanden sein)
+                            (aus den oben angegebenen Klausuren müssen 5 von den 6 Klausuren bestanden werden,{' '}
+                            davon mindestens eine in jedem Rechtsgebiet)
                         </p>
                         <LESBListeFaecher
                             student={student}

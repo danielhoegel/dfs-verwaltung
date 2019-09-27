@@ -20,10 +20,7 @@ class LESBListeFach extends Component {
                         <tr key={note.id}>
                             {index === 0 && (
                                 <Fragment>
-                                    <td
-                                        rowSpan={noten.length > 1 ? noten.length : null}
-                                        className={veranstaltung.zpk ? 'zpk' : ''}
-                                    >
+                                    <td rowSpan={noten.length > 1 ? noten.length : null} >
                                         {fach.title} {veranstaltung.title && `(${veranstaltung.title})`}
                                     </td>
                                 </Fragment>
@@ -35,20 +32,19 @@ class LESBListeFach extends Component {
                     ))}
                 </tbody>
             );
-        } else {
-            return (
-                <tbody>
-                    <tr>
-                        <td className={veranstaltung.zpk ? 'zpk' : ''} >
-                            {fach.title} {veranstaltung.title && `(${veranstaltung.title})`}
-                        </td>
-                        <td style={{ textAlign: 'center' }}>–</td>
-                        <td style={{ textAlign: 'center' }}>–</td>
-                        <td style={{ textAlign: 'center' }}>–</td>
-                    </tr>
-                </tbody>
-            )
         }
+        return (
+            <tbody>
+                <tr>
+                    <td className={veranstaltung.zpk ? 'zpk' : ''} >
+                        {fach.title} {veranstaltung.title && `(${veranstaltung.title})`}
+                    </td>
+                    <td style={{ textAlign: 'center' }}>–</td>
+                    <td style={{ textAlign: 'center' }}>–</td>
+                    <td style={{ textAlign: 'center' }}>–</td>
+                </tr>
+            </tbody>
+        );
     }
 }
 

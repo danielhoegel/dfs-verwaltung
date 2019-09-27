@@ -42,10 +42,6 @@ th:not(:last-child) {
     border-right-color: #aaa;
 }
 
-.zpk {
-    font-weight: 600;
-}
-
 .student:not(:last-child) {
     page-break-after: always;
 }
