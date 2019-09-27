@@ -12,7 +12,7 @@ import Loader from './Loader';
 class MyForm extends Component {
     static propTypes = {
         onSubmit: PropTypes.func.isRequired,
-        fields: PropTypes.func.isRequired, // React Component
+        fields: PropTypes.any.isRequired, // React Component
         defaultValues: PropTypes.object,
         loading: PropTypes.bool,
         error: PropTypes.oneOfType([

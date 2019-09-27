@@ -11,7 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 class Modal extends Component {
     static propTypes = {
-        component: PropTypes.func.isRequired,
+        component: PropTypes.any.isRequired, // React Component
         title: PropTypes.string,
         close: PropTypes.func.isRequired,
         data: PropTypes.oneOfType([
