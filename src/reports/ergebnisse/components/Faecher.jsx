@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
 
 class Faecher extends Component {
     static propTypes = {
@@ -25,6 +26,7 @@ class Faecher extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <Fragment>
                 {this.state.faecher.map(fach => {
@@ -42,7 +44,13 @@ class Faecher extends Component {
                                     </td>
                                     <td>{veranstaltung.credits}</td>
                                     <td>
-                                        {this.props.getPunkteForVeranstaltungAndStudent(veranstaltung.id, this.props.student.id)}
+                                        {veranstaltung.participationType === 'Teilnahme'
+                                            ? <span className={classes.teilnahme}>Teilnahme</span>
+                                            : this.props.getPunkteForVeranstaltungAndStudent(
+                                                veranstaltung.id,
+                                                this.props.student.id
+                                            )
+                                        }
                                     </td>
                                 </tr>
                             ))}
@@ -54,4 +62,10 @@ class Faecher extends Component {
     }
 }
 
-export default Faecher;
+const styles = theme => ({
+    teilnahme: {
+        opacity: 0.75
+    }
+});
+
+export default withStyles(styles)(Faecher);

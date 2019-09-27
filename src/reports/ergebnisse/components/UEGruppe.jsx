@@ -16,10 +16,10 @@ class UEGruppe extends Component {
             <table className='ue-table striped--body'>
                 <thead>
                     <tr>
-                        <th style={{width: '30%'}}>UE {this.props.ue}</th>
-                        <th style={{width: '55%'}}>Veranstaltung</th>
-                        <th style={{width: '7.5%'}}>Credits</th>
-                        <th style={{width: '7.5%'}}>Note</th>
+                        <th style={{ width: '30%' }}>UE {this.props.ue}</th>
+                        <th style={{ width: '50%' }}>Veranstaltung</th>
+                        <th style={{ width: '8%' }}>Credits</th>
+                        <th style={{ width: '12%' }}>Note</th>
                     </tr>
                 </thead>
                 <Faecher {...this.props} />
