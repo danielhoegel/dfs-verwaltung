@@ -50,4 +50,8 @@ th:not(:last-child) {
     margin: 2rem 0 1rem;
 }
 
+.teilnahme {
+    opacity: 0.75;
+}
+
 `;

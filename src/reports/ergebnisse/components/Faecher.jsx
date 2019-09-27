@@ -45,7 +45,7 @@ class Faecher extends Component {
                                     <td>{veranstaltung.credits}</td>
                                     <td>
                                         {veranstaltung.participationType === 'Teilnahme'
-                                            ? <span className={classes.teilnahme}>Teilnahme</span>
+                                            ? <span className='teilnahme'>Teilnahme</span>
                                             : this.props.getPunkteForVeranstaltungAndStudent(
                                                 veranstaltung.id,
                                                 this.props.student.id
@@ -62,10 +62,4 @@ class Faecher extends Component {
     }
 }
 
-const styles = theme => ({
-    teilnahme: {
-        opacity: 0.75
-    }
-});
-
-export default withStyles(styles)(Faecher);
+export default Faecher;
