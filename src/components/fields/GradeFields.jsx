@@ -95,8 +95,15 @@ const GradeFields = ({
 
     const subjectIdChange = e => {
         change(e, true);
+        
         // reset subjectCourseId
         change({ target: { name: 'subjectCourseId', value: '' }}, true);
+        
+        // set gradingSystem
+        const subject = subjects.find(({ id }) => id.toString() === e.target.value.toString());
+        if (subject && subject.type && subject.type !== values.gradingSystem) {
+            change({ target: { name: 'gradingSystem', value: subject.type }}, true);
+        }
     }
 
     // check missing data
