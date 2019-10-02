@@ -55,6 +55,7 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
                 styles={studentListReportStyles}
                 fileName='Studentenliste'
                 orientation='landscape'
+                noDateSuffix
             >
                 <MenuItem>Studentenliste</MenuItem>
             </Printing>
@@ -71,7 +72,8 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
                 styles={lesbListReportStyles}
                 fileName='LESB-Liste'
                 orientation='portrait'
-                >
+                noDateSuffix
+            >
                 <MenuItem>LESB-Liste</MenuItem>
             </Printing>
             <Printing
@@ -88,7 +90,8 @@ const StudentPrintMenu = ({ style, className, ButtonComponent, classes, ...props
                 styles={ergebnisseReportStyles}
                 fileName='Prüfungsergebnisse'
                 orientation='portrait'
-                >
+                noDateSuffix
+            >
                 <MenuItem>Prüfungsergebnisse</MenuItem>
             </Printing>
         </DropdownMenu>
