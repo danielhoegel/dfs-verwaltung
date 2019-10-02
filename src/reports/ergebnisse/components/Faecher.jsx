@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
 
 class Faecher extends Component {
     static propTypes = {
@@ -26,7 +25,6 @@ class Faecher extends Component {
     }
 
     render() {
-        const { classes } = this.props;
         return (
             <Fragment>
                 {this.state.faecher.map(fach => {
