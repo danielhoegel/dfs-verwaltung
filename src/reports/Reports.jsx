@@ -7,23 +7,33 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Fab from '@material-ui/core/Fab';
 import PrintIcon from '@material-ui/icons/PrintOutlined';
+import juice from 'juice';
 
 import HiddenDivider from '../components/HiddenDivider';
 import Placeholder from '../components/placeholder/Placeholder';
 
 import StudentenFilter from '../routes/studenten/studentenListe/components/StudentenFilter';
-import { getFilteredStudenten, getStudentenFetching, getStudentenFilter } from '../routes/studenten//redux/studentenSelectors';
-import { fetchStudenten } from '../routes/studenten//redux/studentenActions';
+import {
+    getFilteredStudenten,
+    getStudentenFetching,
+    getStudentenFilter
+} from '../routes/studenten/redux/studentenSelectors';
+import { fetchStudenten } from '../routes/studenten/redux/studentenActions';
 
+import reportStyles from './reportStyles';
 import StudentListReport from './studentList/StudentListReport';
 import studentListReportStyles from './studentList/studentListReportStyles';
 import LESBListReport from './lesbList/LESBListReport';
 import lesbListReportStyles from './lesbList/lesbListReportStyles';
 import ErgebnisseReport from './ergebnisse/ErgebnisseReport';
 import ergebnisseReportStyles from './ergebnisse/ergebnisseReportStyles';
-import juice from 'juice';
 import { printPage } from '../components/Printing';
-import { getFaecherGroupedByTyp, getVeranstaltungenForFach, getPunkteForVeranstaltungAndStudent, getFaecherDataForUEAndSemester } from '../helper/selectors';
+import {
+    getFaecherGroupedByTyp,
+    getVeranstaltungenForFach,
+    getPunkteForVeranstaltungAndStudent,
+    getFaecherDataForUEAndSemester
+} from '../helper/selectors';
 import { getSubjects, getGradesForStudentAndSubjectCourse, getStudyCourseById } from '../redux/entitiesSelector';
 
 
@@ -71,7 +81,7 @@ class Reports extends Component {
                     )
                 });
                 break;
-            
+
                 case 'lesb': this.setState({
                     fileName: 'LESB-Liste',
                     orientation: 'portrait',
@@ -87,7 +97,7 @@ class Reports extends Component {
                     )
                 });
                 break;
-    
+
                 case 'ergebnisse': this.setState({
                     fileName: 'Prüfungsergebnisse',
                     orientation: 'portrait',
@@ -104,19 +114,27 @@ class Reports extends Component {
                     )
                 });
                 break;
-    
+
                 default: break;
             }
         }
     }
 
+    __styles() {
+        const { styles } = this.state;
+        console.log(reportStyles + styles);
+        return reportStyles + styles;
+    }
+
     __htmlString() {
-        const { html, styles } = this.state;
+        const { html } = this.state;
+        const styles = this.__styles();
         return juice(`<style>${styles}</style>\n${html}`);
     }
 
     __printPage = () => {
-        const { fileName, orientation, styles, html } = this.state;
+        const { fileName, orientation, html } = this.state;
+        const styles = this.__styles();
         printPage({ fileName, orientation, styles, html });
     }
 
@@ -151,8 +169,8 @@ class Reports extends Component {
                     </div>
                 )}
             </div>
-        )
-    };
+        );
+    }
 }
 
 const styles = theme => ({
