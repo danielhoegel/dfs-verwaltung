@@ -1,8 +1,8 @@
 export default `
 
 * {
-    -webkit-print-color-adjust: exact; // Chrome, Safari
-    color-adjust: exact; // Firefox
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
 }
 
 body {
