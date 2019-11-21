@@ -50,6 +50,14 @@ function Sidebar({ location }) {
             </ListItem>
             <ListItem
                 component={NavLink}
+                to='/berichte/studenten-einfach'
+                button
+                selected={location.pathname === '/berichte/studenten-einfach'}
+            >
+                <ListItemText primary='Einfache Studentenliste' />
+            </ListItem>
+            <ListItem
+                component={NavLink}
                 to='/berichte/lesb'
                 button
                 selected={location.pathname === '/berichte/lesb'}
