@@ -1,7 +1,10 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Button } from '@material-ui/core';
+import reportStyles from '../reports/reportStyles';
+import { getReportSettings } from '../reports/redux/reportSelectors';
 
 
 export function printPage({
@@ -44,26 +47,42 @@ export function printPage({
 function Printing({
     component: Component,
     styles,
-    fileName,
+    autoFileName,
     noDateSuffix,
-    orientation,
-    children
+    autoOrientation,
+    settings,
+    children,
 }) {
+
     function __htmlString() {
         const html = renderToString(typeof Component === 'object' ? Component : <Component />);
         return html;
     }
 
+    function __styles() {
+        return reportStyles + styles;
+    }
+
     function __fileName() {
+        const { titleType, customTitle } = settings;
+        const fileName =
+              titleType === 'custom' ? customTitle
+            : titleType === 'auto' ? autoFileName
+            : '';
         return `${fileName + (noDateSuffix ? '' : `_${Date.now()}`)}`;
+    }
+
+    function __orientation() {
+        const { orientation } = settings;
+        return orientation === 'auto' ? autoOrientation : orientation;
     }
 
     function __printPage() {
         printPage({
             fileName: __fileName(),
             html: __htmlString(),
-            orientation,
-            styles,
+            styles: __styles(),
+            orientation: __orientation()
        });
     }
 
@@ -82,6 +101,7 @@ Printing.propTypes = {
     fileName: PropTypes.string,
     noDateSuffix: PropTypes.bool,
     orientation: PropTypes.oneOf(['landscape', 'portrait']).isRequired,
+    settings: PropTypes.object.isRequired,
 };
 
 Printing.defaultProps = {
@@ -89,4 +109,8 @@ Printing.defaultProps = {
     orientation: 'portrait',
 };
 
-export default Printing;
+const mapStateToProps = state => ({
+    settings: getReportSettings(state)
+});
+
+export default connect(mapStateToProps)(Printing);

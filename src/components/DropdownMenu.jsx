@@ -25,13 +25,13 @@ class DropdownMenu extends Component {
     };
 
     renderChildren() {
-        return React.Children.map(this.props.children, (child =>
-            React.cloneElement(child, {
+        return React.Children.map(this.props.children, (child => {
+            return React.cloneElement(child, {
                 onClick: child.props.onClick
                     ? () => this.handleClose(child.props.onClick)
                     : this.handleClose
-            })
-        ));
+            });
+        }));
     }
 
     renderItems() {
@@ -91,8 +91,8 @@ DropdownMenu.propTypes = {
     classes: PropTypes.object.isRequired,
     children: PropTypes.array,
     items: PropTypes.arrayOf(PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      onClick: PropTypes.func,
+        label: PropTypes.string.isRequired,
+        onClick: PropTypes.func,
     })),
 };
 

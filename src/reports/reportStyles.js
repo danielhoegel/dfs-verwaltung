@@ -14,6 +14,10 @@ h1 {
     margin-top: 0;
 }
 
+h1.empty-title {
+    border-bottom: 1px solid #aaa;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;

@@ -1,16 +1,24 @@
 import React from 'react';
 import { translateStudyStatus, formatDate } from '../../helper/helper';
 
-function StudentListReport({ students, filter, getStudyCourseById }) {
+function StudentListReport({ students, filter, getStudyCourseById, settings }) {
+    const { titleType, customTitle, showFilter } = settings;
     return (
         <div className='root'>
-            <h1>Studentenliste</h1>
-            <div>
-                Studienkurs: {filter.studyCourse ? getStudyCourseById(filter.studyCourse).title : 'Alle'}{', '}
-                Status: {filter.status ? translateStudyStatus(filter.status) : 'Alle'}{', '}
-                Jahrgang: {filter.year.length ? filter.year.join(', ') : 'Alle'}
-            </div>
-            <br />
+            {titleType !== 'hidden' && (
+                <h1 className={titleType === 'empty' ? 'empty-title' : ''}>{
+                        titleType === 'empty' ? <span>&nbsp;</span>
+                    : titleType === 'custom' ? customTitle
+                    : 'Studentenliste'
+                }</h1>
+            )}
+            {showFilter && (
+                <div style={{ marginBottom: '1.5rem' }}>
+                    Studienkurs: {filter.studyCourse ? getStudyCourseById(filter.studyCourse).title : 'Alle'}{', '}
+                    Status: {filter.status ? translateStudyStatus(filter.status) : 'Alle'}{', '}
+                    Jahrgang: {filter.year.length ? filter.year.join(', ') : 'Alle'}
+                </div>
+            )}
             {students.length ? (
                 <table border='1' className='table'>
                     <thead>

@@ -33,7 +33,6 @@ import lesbListReportStyles from './lesbList/lesbListReportStyles';
 import ErgebnisseReport from './ergebnisse/ErgebnisseReport';
 import ergebnisseReportStyles from './ergebnisse/ergebnisseReportStyles';
 import { printPage } from '../components/Printing';
-import Modal from '../components/Modal';
 import {
     getFaecherGroupedByTyp,
     getVeranstaltungenForFach,
@@ -41,8 +40,9 @@ import {
     getFaecherDataForUEAndSemester
 } from '../helper/selectors';
 import { getSubjects, getGradesForStudentAndSubjectCourse, getStudyCourseById } from '../redux/entitiesSelector';
-import MyForm from '../components/MyForm';
-import SettingsFields from './SettingsFields';
+import { getReportSettings } from './redux/reportSelectors';
+import { openSettingsModal } from './redux/reportActions';
+import ReportSettingsModal from './ReportSettingsModal';
 
 
 const StudentenlisteLoading = () => (
@@ -61,14 +61,6 @@ class Reports extends Component {
         orientation: '',
         styles: '',
         html: '',
-        settingsModalOpen: false,
-        settings: {
-            autoTitle: true,
-            title: '',
-            showTitle: true,
-            showFilter: true,
-            orientation: 'auto'
-        }
     }
 
     componentDidMount() {
@@ -92,48 +84,47 @@ class Reports extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        const { match, filteredStudenten, filter } = this.props;
-        const { orientation, title, autoTitle, showTitle } = this.state.settings;
+    componentDidUpdate(prevProps) {
+        const { match, filteredStudenten, filter, settings } = this.props;
         if (
             prevProps.match !== match ||
             prevProps.filteredStudenten !== filteredStudenten ||
-            prevState.settings !== this.state.settings
+            prevProps.settings !== settings
         ) {
             switch (match.params.report) {
                 case 'studenten': this.setState({
-                    fileName: showTitle ? (autoTitle ? 'Studentenliste' : title) : '',
-                    orientation: orientation === 'auto' ? 'landscape' : orientation,
+                    fileName: this.__fileName('Studentenliste'),
+                    orientation: this.__orientation('landscape'),
                     styles: studentListReportStyles,
                     html: renderToString(
                         <StudentListReport
                             students={filteredStudenten}
                             filter={filter}
                             getStudyCourseById={this.props.getStudyCourseById}
-                            settings={this.state.settings}
+                            settings={this.props.settings}
                         />
                     )
                 });
                 break;
 
                 case 'studenten-einfach': this.setState({
-                    fileName: showTitle ? (autoTitle ? 'Einfache Studentenliste' : title) : '',
-                    orientation: orientation === 'auto' ? 'portrait' : orientation,
+                    fileName: this.__fileName('Einfache Studentenliste'),
+                    orientation: this.__orientation('portrait'),
                     styles: studentListSimpleReportStyles,
                     html: renderToString(
                         <StudentListSimpleReport
                             students={filteredStudenten}
                             filter={filter}
                             getStudyCourseById={this.props.getStudyCourseById}
-                            settings={this.state.settings}
+                            settings={this.props.settings}
                         />
                     )
                 });
                 break;
 
                 case 'lesb': this.setState({
-                    fileName: showTitle ? (autoTitle ? 'LESB-Liste' : title) : '',
-                    orientation: orientation === 'auto' ? 'portrait' : orientation,
+                    fileName: this.__fileName('LESB-Liste'),
+                    orientation: this.__orientation('portrait'),
                     styles: lesbListReportStyles,
                     html: renderToString(
                         <LESBListReport
@@ -142,15 +133,15 @@ class Reports extends Component {
                             subjects={this.props.subjectsGrouped}
                             getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
                             getGradesForStudentAndSubjectCourse={this.props.getGradesForStudentAndSubjectCourse}
-                            settings={this.state.settings}
+                            settings={this.props.settings}
                         />
                     )
                 });
                 break;
 
                 case 'ergebnisse': this.setState({
-                    fileName: showTitle ? (autoTitle ? 'Prüfungsergebnisse' : title) : '',
-                    orientation: orientation === 'auto' ? 'portrait' : orientation,
+                    fileName: this.__fileName('Prüfungsergebnisse'),
+                    orientation: this.__orientation('portrait'),
                     styles: ergebnisseReportStyles,
                     html: renderToString(
                         <ErgebnisseReport
@@ -160,7 +151,7 @@ class Reports extends Component {
                             getVeranstaltungenForFach={this.props.getVeranstaltungenForFach}
                             getPunkteForVeranstaltungAndStudent={this.props.getPunkteForVeranstaltungAndStudent}
                             getFaecherDataForUEAndSemester={this.props.getFaecherDataForUEAndSemester}
-                            settings={this.state.settings}
+                            settings={this.props.settings}
                         />
                     )
                 });
@@ -188,18 +179,16 @@ class Reports extends Component {
         printPage({ fileName, orientation, styles, html });
     }
 
-    saveSettingsAndCloseModal = settings => {
-        this.setState({
-            settings,
-            settingsModalOpen: false
-        });
+    __fileName(autoFileName) {
+        const { titleType, customTitle } = this.props.settings;
+        return titleType === 'custom' ? customTitle
+             : titleType === 'auto' ? autoFileName
+             : '';
+    }
 
-        try {
-            localStorage.setItem('dfs_print_settings', JSON.stringify(settings));
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error);
-        }
+    __orientation(autoOrientation) {
+        const { orientation } = this.props.settings;
+        return orientation === 'auto' ? autoOrientation : orientation;
     }
 
     render() {
@@ -210,13 +199,13 @@ class Reports extends Component {
                     <div>
                         <div className={classes.flexbox}>
                             <Typography variant="h4">
-                                Report: {this.state.fileName}
+                                Bericht: {this.state.fileName}
                             </Typography>
                             <div className={classes.actionContainer}>
                                 <Button
                                     className={classes.button}
                                     title='Einstellungen'
-                                    onClick={() => this.setState({ settingsModalOpen: true })}
+                                    onClick={this.props.openSettingsModal}
                                 >
                                     <SettingsIcon className={classes.leftIcon} />
                                     Einstellungen
@@ -243,20 +232,7 @@ class Reports extends Component {
                             <PrintIcon />
                         </Fab>
 
-                        <Modal
-                            component={({ closeModal }) => (
-                                <MyForm
-                                    fields={SettingsFields}
-                                    // eslint-disable-next-line no-console
-                                    onSubmit={this.saveSettingsAndCloseModal}
-                                    defaultValues={this.state.settings}
-                                    onCancel={closeModal}
-                                />
-                            )}
-                            title='Einstellungen'
-                            close={() => this.setState({ settingsModalOpen: false })}
-                            open={this.state.settingsModalOpen}
-                        />
+                        <ReportSettingsModal />
                     </div>
                 )}
             </div>
@@ -299,6 +275,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => ({
+    settings: getReportSettings(state),
     getVeranstaltungenForFach: getVeranstaltungenForFach(state),
     getGradesForStudentAndSubjectCourse: getGradesForStudentAndSubjectCourse(state),
     getPunkteForVeranstaltungAndStudent: getPunkteForVeranstaltungAndStudent(state),
@@ -311,6 +288,10 @@ const mapStateToProps = state => ({
     subjectsGrouped: getFaecherGroupedByTyp(state),
 });
 
-export default connect(mapStateToProps, { fetchStudenten, dispatch: action => action })(
+export default connect(mapStateToProps, {
+    openSettingsModal,
+    fetchStudenten,
+    dispatch: action => action
+})(
     withStyles(styles)(Reports)
 );

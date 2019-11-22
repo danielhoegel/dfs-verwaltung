@@ -21,21 +21,40 @@ const SettingsFields = ({
     return (
         <Fragment>
             <FieldGroup>
-                <Field
-                    name='title'
-                    value={values.title}
+                <FieldRadioGroup
+                    name='titleType'
+                    value={values.titleType}
                     label='Überschrift'
                     onChange={change}
-                    disabled={!values.showTitle || values.autoTitle}
+                    options={[
+                        { value: 'auto', label: 'automatisch' },
+                        { value: 'hidden', label: 'ausgeblendet' },
+                        { value: 'empty', label: 'leer' },
+                        { value: 'custom', label: 'benutzerdefiniert' },
+                    ]}
+                    disabled={false}
                 />
             </FieldGroup>
-            <FieldGroup>
+            {(
+                <FieldGroup>
+                    <Field
+                        name='customTitle'
+                        value={values.customTitle}
+                        label='Benutzerdefinierte Überschrift'
+                        onChange={change}
+                        disabled={values.titleType !== 'custom'}
+                    />
+                </FieldGroup>
+            )}
+            {/* <FieldGroup>
                 <FieldCheckbox
                     name='showTitle'
                     value={values.showTitle}
                     label='Überschrift anzeigen'
                     onChange={change}
                 />
+            </FieldGroup>
+            <FieldGroup>
                 <FieldCheckbox
                     name='autoTitle'
                     value={values.autoTitle}
@@ -43,13 +62,16 @@ const SettingsFields = ({
                     onChange={change}
                     disabled={!values.showTitle}
                 />
-            </FieldGroup>
+            </FieldGroup> */}
             <FieldGroup>
                 <FieldCheckbox
                     name='showFilter'
                     value={values.showFilter}
                     label='Filter anzeigen'
                     onChange={change}
+                    classes={{
+                        field: classes.checkboxBase,
+                    }}
                 />
             </FieldGroup>
             <FieldGroup>
@@ -91,6 +113,11 @@ const SettingsFields = ({
 const styles = theme => ({
     leftIcon: {
         marginRight: theme.spacing.unit
+    },
+    checkboxBase: {
+        '& > span': {
+            paddingLeft: 0,
+        }
     },
 });
 
