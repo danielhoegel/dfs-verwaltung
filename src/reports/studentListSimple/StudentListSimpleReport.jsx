@@ -33,17 +33,17 @@ function StudentListReportSimple({ students, filter, getStudyCourseById, setting
                 <table border='1' className='table'>
                     <thead>
                         <tr>
-                            <th style={{ width: '7.5%' }}></th>
-                            <th>Matr.-Nr.</th>
-                            <th>Vorname</th>
-                            <th>Nachname</th>
-                            <th style={{ width: '100%' }}></th>
+                            <th style={{ width: '5%' }}>Nr.</th>
+                            <th style={{ width: '15%' }}>Matr.-Nr.</th>
+                            <th style={{ width: '20%' }}>Vorname</th>
+                            <th style={{ width: '20%' }}>Nachname</th>
+                            <th style={{ width: 'auto' }}></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map(student => (
+                        {students.map((student, index) => (
                             <tr key={student.id}>
-                                <td></td>
+                                <td style={{ textAlign: 'right' }}>{index + 1}</td>
                                 <td>{student.matrikelnummer}</td>
                                 <td>{student.firstName}</td>
                                 <td>{student.lastName}</td>
