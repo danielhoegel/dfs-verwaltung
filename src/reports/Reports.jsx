@@ -58,6 +58,7 @@ const StudentenlisteLoading = () => (
 class Reports extends Component {
     state = {
         fileName: '',
+        autoFileName: '',
         orientation: '',
         styles: '',
         html: '',
@@ -93,6 +94,7 @@ class Reports extends Component {
         ) {
             switch (match.params.report) {
                 case 'studenten': this.setState({
+                    autoFileName: 'Studentenliste',
                     fileName: this.__fileName('Studentenliste'),
                     orientation: this.__orientation('landscape'),
                     styles: studentListReportStyles,
@@ -108,6 +110,7 @@ class Reports extends Component {
                 break;
 
                 case 'studenten-einfach': this.setState({
+                    autoFileName: 'Einfache Studentenliste',
                     fileName: this.__fileName('Einfache Studentenliste'),
                     orientation: this.__orientation('portrait'),
                     styles: studentListSimpleReportStyles,
@@ -123,6 +126,7 @@ class Reports extends Component {
                 break;
 
                 case 'lesb': this.setState({
+                    autoFileName: 'LESB-Liste',
                     fileName: this.__fileName('LESB-Liste'),
                     orientation: this.__orientation('portrait'),
                     styles: lesbListReportStyles,
@@ -140,6 +144,7 @@ class Reports extends Component {
                 break;
 
                 case 'ergebnisse': this.setState({
+                    autoFileName: 'Prüfungsergebnisse',
                     fileName: this.__fileName('Prüfungsergebnisse'),
                     orientation: this.__orientation('portrait'),
                     styles: ergebnisseReportStyles,
@@ -199,7 +204,7 @@ class Reports extends Component {
                     <div>
                         <div className={classes.flexbox}>
                             <Typography variant="h4">
-                                Bericht: {this.state.fileName}
+                                Bericht: {this.state.autoFileName}
                             </Typography>
                             <div className={classes.actionContainer}>
                                 <Button
