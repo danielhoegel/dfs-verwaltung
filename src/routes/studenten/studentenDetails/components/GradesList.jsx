@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import TableCell from '@material-ui/core/TableCell';
 import EditIcon from '@material-ui/icons/EditOutlined';
 
 import { formatGrade } from '../../../../helper/gradeConverter';
@@ -23,6 +24,7 @@ const GradesList = ({
             studyId,
         });
     };
+
     const openCreateGradeModal = () => {
         openGradeModal({
             studyId,
@@ -31,36 +33,50 @@ const GradesList = ({
         });
     };
 
-    return subjectCourse.participationType === 'Note' ? (
-        <div>
-            {grades.map(grade => (
-                <div
-                    key={grade.id}
-                    className={classes.grade}
-                    onClick={() => openUpdateGradeModal(grade.id)}
-                >
-                    <EditIcon className={classes.gradeEditIcon} />
+    return (
+        <>
+            <TableCell className={classes.tableCell} style={{ textAlign: 'right' }}>
+                {subjectCourse.participationType === 'Note' ? (
                     <div>
-                        {formatGrade(grade, subject.type)}
-                        {grades.length > 1 && ` (${grade.try}. Versuch)`}
+                        {grades.length === 0 && '-'}
+                        {grades.map(grade => (
+                            <div
+                                key={grade.id}
+                                className={classes.grade}
+                                onClick={() => openUpdateGradeModal(grade.id)}
+                            >
+                                <EditIcon className={classes.gradeEditIcon} />
+                                <div>
+                                    {formatGrade(grade, subject.type)}
+                                    {grades.length > 1 && ` (${grade.try}. Versuch)`}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                </div>
-            ))}
-            <Button
-                onClick={openCreateGradeModal}
-                style={{ marginTop: grades.length && '0.25rem' }}
-                className={cn([classes.noteCreateButton, { [classes.noteCreateButtonSecondary]: grades.length > 0 }])}
-                size='small'
-                variant='outlined'
-            >
-                <AddIcon className={classes.leftIcon} />
-                {grades.length > 0 ? `${grades.length + 1}. Versuch` : 'Note'}
-            </Button>
-        </div>
-    ) : (
-        <span className='teilnahme-label'>
-            Teilnahme
-        </span>
+                ) : (
+                    <span className='teilnahme-label'>
+                        Teilnahme
+                    </span>
+                )}
+            </TableCell>
+            <TableCell className={classes.tableCell} style={{ paddingRight: 0, paddingLeft: 0 }}>
+                {subjectCourse.participationType === 'Note' && (
+                    <Button
+                        onClick={openCreateGradeModal}
+                        className={cn([
+                            classes.noteCreateButton,
+                            { [classes.noteCreateButtonSecondary]: grades.length > 0 }
+                        ])}
+                        size='small'
+                        variant='outlined'
+                        style={{ minWidth: 0 }}
+                        title= {grades.length > 0 ? `${grades.length + 1}. Versuch hinzufügen` : 'Note hinzufügen'}
+                    >
+                        <AddIcon />
+                    </Button>
+                )}
+            </TableCell>
+        </>
     );
 };
 
@@ -74,9 +90,6 @@ const styles = theme => ({
         '&:hover': {
             opacity: 1
         }
-    },
-    leftIcon: {
-        marginRight: theme.spacing.unit,
     },
     gradeEditIcon: {
         opacity: 0,

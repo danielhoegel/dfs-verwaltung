@@ -60,17 +60,16 @@ const SubjectListItem = ({
                         {subjectCourse.type}
                         {subjectCourse.title && ` (${subjectCourse.title})`}
                     </TableCell>
-                    <TableCell className={classes.tableCell} style={{ textAlign: 'right' }}>
-                        <GradesList
-                            grades={getGradesForSubjectCourse(subjectCourse.id)}
-                            subjectCourse={subjectCourse}
-                            subject={subject}
-                            studentId={studentId}
-                            studyId={study.id}
-                            openGradeModal={openGradeModal}
-                            studies={studies}
-                        />
-                    </TableCell>
+                    
+                    <GradesList
+                        grades={getGradesForSubjectCourse(subjectCourse.id)}
+                        subjectCourse={subjectCourse}
+                        subject={subject}
+                        studentId={studentId}
+                        studyId={study.id}
+                        openGradeModal={openGradeModal}
+                        studies={studies}
+                    />
                 </TableRow>
             ))}
         </TableBody>

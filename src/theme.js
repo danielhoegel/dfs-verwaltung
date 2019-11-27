@@ -107,6 +107,11 @@ const theme = createMuiTheme({
                 }
             }
         },
+        MuiTab: {
+            root: {
+                maxWidth: '320px',
+            },
+        }
     },
 });
 
