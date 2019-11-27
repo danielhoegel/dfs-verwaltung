@@ -69,7 +69,6 @@ const GradesList = ({
                         ])}
                         size='small'
                         variant='outlined'
-                        style={{ minWidth: 0 }}
                         title= {grades.length > 0 ? `${grades.length + 1}. Versuch hinzufügen` : 'Note hinzufügen'}
                     >
                         <AddIcon />
@@ -82,8 +81,9 @@ const GradesList = ({
 
 const styles = theme => ({
     noteCreateButton: {
+        minWidth: 0,
         whiteSpace: 'nowrap',
-        padding: '0 0.5rem 0 0.25rem',
+        padding: '0 0.25rem',
     },
     noteCreateButtonSecondary: {
         opacity: 0.4,
