@@ -30,7 +30,7 @@ class LESBListeFaecher extends Component {
                     .map(fach => this.props.getVeranstaltungenForFach(fach.id)
                         .filter(veranstaltung =>
                             veranstaltung.zpk &&
-                            ['Vorlesung', 'TD'].includes(veranstaltung.type)
+                            ['Vorlesung', 'CM'].includes(veranstaltung.type)
                         )
                         .map(veranstaltung =>
                             <LESBListeFach
