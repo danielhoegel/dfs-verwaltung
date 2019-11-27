@@ -8,9 +8,8 @@
     "backup": "node scripts/backup.js",
     "server:dev": "nodemon server/server.js --ignore server/datenbank.json --ignore server/server_logs.logs",
     "server": "node server/server.js",
-    "frontend": "node server-frontend.js",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server:dev\"",
-    "production": "concurrently \"npm run backup\" \"npm run server\" \"npm run frontend\"",
+    "production": "concurrently \"npm run backup\" \"npm run server\"",
     "lint": "eslint **/*.js --ignore-pattern node_modules/"
   },
   "dependencies": {

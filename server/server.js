@@ -23,8 +23,11 @@ const accessLogStream = fs.createWriteStream(path.join(logDir, 'server_logs.log'
 // setup logger
 morgan.token('time', () => time());
 const loggerFormat = '[:time] :method :url :status - :response-time ms';
-server.use(morgan(loggerFormat, { stream: accessLogStream })); // log to file
-server.use(morgan(loggerFormat)); // log to console
+const loggerOptions = {
+    skip: req => req.baseUrl !== '/api' // skip logs for every route expect for /api/...
+};
+server.use(morgan(loggerFormat, { stream: accessLogStream, ...loggerOptions })); // log to file
+server.use(morgan(loggerFormat, loggerOptions)); // log to console
 
 // allow CORS
 server.use((req, res, next) => {
@@ -37,12 +40,19 @@ server.use((req, res, next) => {
 // parse json body
 server.use(express.json());
 
-// add routes
-server.use('/', routes);
+// path for static files
+server.use(express.static(path.join(__dirname, '../build')));
 
+// add api routes
+server.use('/api', routes);
+
+// serve index.html
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 // start server
 const PORT = process.env.PORT || 4444;
 server.listen(PORT, () => {
-    console.log(`[${time()}] Backend server startet at http://localhost:${PORT}`);
+    console.log(`[${time()}] Server startet at http://localhost:${PORT}`);
 });

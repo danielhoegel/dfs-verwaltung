@@ -21,12 +21,12 @@ router.get('/', (req, res) => {
             }
         </style>
         <h1>DFS Datenbank</h1>
-        <p>Unter der Route <a href="/db">/db</a> können alle Daten abgerufen werden</p>
+        <p>Unter der Route <a href="/api/db">/db</a> können alle Daten abgerufen werden</p>
         <p>Für folgende Entitäten existieren separate Routen, die jeweils mit den Befehlen \
         GET, POST, PUT und DELETE bearbeitet werden können:</p>
         <ul>
             ${entities.map(entity => (
-                `<li><a href="/${entity}">/${entity}</a></li>`
+                `<li><a href="/api/${entity}">/${entity}</a></li>`
             )).join('')}
         </ul>
     `;
