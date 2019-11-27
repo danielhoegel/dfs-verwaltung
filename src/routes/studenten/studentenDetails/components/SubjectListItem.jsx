@@ -60,7 +60,6 @@ const SubjectListItem = ({
                         {subjectCourse.type}
                         {subjectCourse.title && ` (${subjectCourse.title})`}
                     </TableCell>
-                    
                     <GradesList
                         grades={getGradesForSubjectCourse(subjectCourse.id)}
                         subjectCourse={subjectCourse}
