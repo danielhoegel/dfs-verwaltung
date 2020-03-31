@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+const open = require('open');
 
 require('./utils/db'); // initialize db
 const routes = require('./routes/routes');
@@ -51,8 +52,9 @@ server.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
-// start server
+// start server and open in frontend in browser
 const PORT = process.env.PORT || 4444;
 server.listen(PORT, () => {
     console.log(`[${time()}] Server startet at http://localhost:${PORT}`);
+    open(`http://localhost:${PORT}`);
 });
