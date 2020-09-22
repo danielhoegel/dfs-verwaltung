@@ -48,13 +48,19 @@ server.use(express.static(path.join(__dirname, '../build')));
 server.use('/api', routes);
 
 // serve index.html
-server.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build/index.html'));
-});
+if (process.env.NODE_ENV !== 'development') {
+    server.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../build/index.html'));
+    });
+}
 
 // start server and open in frontend in browser
 const PORT = process.env.PORT || 4444;
 server.listen(PORT, () => {
     console.log(`[${time()}] Server startet at http://localhost:${PORT}`);
-    open(`http://localhost:${PORT}`);
+
+    if (process.env.NODE_ENV !== 'development') {
+        // BUG: the browser is also opening in development mode
+        open(`http://localhost:${PORT}`);
+    }
 });

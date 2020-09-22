@@ -6,7 +6,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "backup": "node scripts/backup.js",
-    "server:dev": "nodemon server/server.js --ignore server/datenbank.json --ignore server/server_logs.logs",
+    "server:dev": "SET NODE_ENV=development && nodemon server/server.js --ignore server/datenbank.json --ignore server/server_logs.logs",
     "server": "node server/server.js",
     "dev": "concurrently --kill-others \"npm run start\" \"npm run server:dev\"",
     "production": "concurrently \"npm run backup\" \"npm run server\"",
