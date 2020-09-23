@@ -38,7 +38,7 @@ export function printPage({
     prinWindow.focus(); // necessary for IE >= 10*/
 
     prinWindow.print();
-    prinWindow.close();
+    // prinWindow.close();
 
     return true;
 }
