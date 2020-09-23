@@ -3,6 +3,7 @@ import {
     getGradesForStudentAndSubjectCourse,
     getSubjectCoursesBySubjectId
 } from '../redux/entitiesSelector';
+import { generateGradeString } from './gradeConverter';
 
 
 // TODO: rename + move to entitesSelector
@@ -31,8 +32,11 @@ export const getVeranstaltungenForFach = (state) => (subjectId) => {
 
 
 // TODO: rename + move to entitesSelector
-export const getPunkteForVeranstaltungAndStudent = state => (veranstaltungID, studentID) => {
+export const getPunkteForVeranstaltungAndStudent = state => (veranstaltungID, studentID, formatted = true) => {
     const noten = getGradesForStudentAndSubjectCourse(state)(studentID, veranstaltungID);
+
+    let gradeObject = null;
+
     if (noten.length > 1) {
         let lastVersuch = noten[0];
         noten.forEach(note => {
@@ -40,12 +44,15 @@ export const getPunkteForVeranstaltungAndStudent = state => (veranstaltungID, st
                 lastVersuch = note;
             }
         });
-        return lastVersuch.grade;
+        gradeObject = lastVersuch;
+
+    } else if (noten.length > 0) {
+        gradeObject = noten[0];
     }
 
-    if (noten.length > 0) {
-        return noten[0].grade;
-    }
-
-    return null;
+    return gradeObject
+        ? formatted
+            ? generateGradeString(gradeObject.grade, gradeObject.gradingSystem)
+            : gradeObject.grade
+        : null;
 };

@@ -17,9 +17,9 @@ class LESBListeFaecher extends Component {
             <table className='striped--body'>
                 <thead>
                     <tr>
-                        <th style={{ width: '70%' }}>Fach</th>
+                        <th style={{ width: '65%' }}>Fach</th>
                         <th style={{ width: '10%', textAlign: 'center' }}>Status</th>
-                        <th style={{ width: '10%', textAlign: 'right' }}>(Punkte)</th>
+                        <th style={{ width: '15%', textAlign: 'right' }}>(Punkte)</th>
                         <th style={{ width: '10%', textAlign: 'right' }}>(Versuch)</th>
                     </tr>
                 </thead>

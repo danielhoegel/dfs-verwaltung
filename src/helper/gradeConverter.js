@@ -59,8 +59,8 @@ export function convertGrade(grade, target) {
     return target === 'de' ? convertFrToDe(grade) : convertDeToFr(grade);
 }
 
-export function generateGradeString(grade, target) {
-    return target === 'de' ? `${grade} Pkt.` : `${grade} / 20`;
+export function generateGradeString(grade, gradingSystem) {
+    return gradingSystem === 'de' ? `${grade} / 18 Pkt.` : `${grade} / 20 Pkt.`;
 }
 
 export function formatGrade(note, target) {

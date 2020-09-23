@@ -29,6 +29,7 @@ class Faecher extends Component {
             <Fragment>
                 {this.state.faecher.map(fach => {
                     const veranstaltungen = this.props.getVeranstaltungenForFach(fach.id);
+
                     return (
                         <tbody key={fach.id}>
                             {veranstaltungen.map((veranstaltung, index) => (
@@ -41,7 +42,7 @@ class Faecher extends Component {
                                         {veranstaltung.title && `, (${veranstaltung.title})`}
                                     </td>
                                     <td>{veranstaltung.credits}</td>
-                                    <td>
+                                    <td style={{ textAlign: 'right' }}>
                                         {veranstaltung.participationType === 'Teilnahme'
                                             ? <span className='teilnahme'>Teilnahme</span>
                                             : this.props.getPunkteForVeranstaltungAndStudent(

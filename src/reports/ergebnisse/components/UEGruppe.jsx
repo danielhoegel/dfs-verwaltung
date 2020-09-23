@@ -19,7 +19,7 @@ class UEGruppe extends Component {
                         <th style={{ width: '30%' }}>UE {this.props.ue}</th>
                         <th style={{ width: '50%' }}>Veranstaltung</th>
                         <th style={{ width: '8%' }}>Credits</th>
-                        <th style={{ width: '12%' }}>Note</th>
+                        <th style={{ width: '12%', textAlign: 'right' }}>Note</th>
                     </tr>
                 </thead>
                 <Faecher {...this.props} />

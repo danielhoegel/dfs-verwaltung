@@ -54,7 +54,7 @@ const GradesList = ({
                         ))}
                     </div>
                 ) : (
-                    <span className='teilnahme-label'>
+                    <span className={classes.teilnahmeLabel}>
                         Teilnahme
                     </span>
                 )}
@@ -108,6 +108,9 @@ const styles = theme => ({
                 opacity: 1,
             }
         },
+    },
+    teilnahmeLabel: {
+        opacity: 0.75
     },
 });
 

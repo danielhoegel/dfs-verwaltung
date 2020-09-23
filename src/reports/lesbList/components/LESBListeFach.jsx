@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { generateGradeString } from '../../../helper/gradeConverter';
 
 class LESBListeFach extends Component {
     static propTypes = {
@@ -26,7 +27,9 @@ class LESBListeFach extends Component {
                                 </Fragment>
                             )}
                             <td style={{ textAlign: 'center' }}>{note.grade >= 4 ? 'B' : 'NB'}</td>
-                            <td style={{ textAlign: 'right' }}>{note.grade}</td>
+                            <td style={{ textAlign: 'right' }}>
+                                {generateGradeString(note.grade, note.gradingSystem)}
+                            </td>
                             <td style={{ textAlign: 'right' }}>{note.try}</td>
                         </tr>
                     ))}
